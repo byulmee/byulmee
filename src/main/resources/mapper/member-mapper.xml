@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memId" column="mem_id"/>
+	  	<result property="memPwd" column="mem_pwd"/>
+	  	<result property="memName" column="mem_name"/>
+	  	<result property="memPostcode" column="mem_postcode"/>
+	  	<result property="memBasicAddr" column="mem_basicaddr"/>
+	  	<result property="memDetailAddr" column="mem_detailaddr"/>
+	  	<result property="memPhone" column="mem_phone"/>
+	  	<result property="memNickname" column="mem_nickname"/>
+	  	<result property="memEmail" column="mem_email"/>
+	  	<result property="memLevel" column="mem_level"/>
+	  	<result property="memDate" column="mem_Date"/>
+	  	<result property="memStatus" column="mem_status"/>
+	</resultMap>
+	
+	<insert id="insertMember">
+		insert into member
+		values(#{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
+			   #{memPhone}, #{memNickname}, #{memEmail}, 0, sysdate, default)
+	</insert>
+	
+	<select id="selectMember" resultMap="memberResultSet">
+		select *
+		from member
+		where mem_id = #{memId} and mem_status = 'Y'
+	</select>
+  
+</mapper>

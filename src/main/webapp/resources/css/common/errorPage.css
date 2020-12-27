@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+body{
+    height: 100vh;
+    background-image: url("../../images/common/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.wrapper {
+    position: relative;
+    top: 15%;
+    width: 40vw;
+    margin: auto;
+    padding: 2rem;
+    background-color: rgb(0,0,0,0.6);
+}
+
+h1{
+    width: fit-content;
+    padding: 0.5rem;
+    vertical-align: middle;
+    background-color: black;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #FF6833;
+    margin: auto;
+}
+
+p {
+    margin: auto;
+    padding: 1.7rem 0;
+    position: relative;
+    line-height: 1.4rem;
+    text-align: center;
+    color: aliceblue;
+}
+
+button {
+    font-family: 'GmarketSansMedium';
+    color: aliceblue;
+    border-style: none;
+    outline: none;
+    background: transparent;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover{
+    color: black;
+}
+
+btn4:hover::before {
+    -webkit-transform-origin: left top;
+    -ms-transform-origin: left top;
+    transform-origin: left top;
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+
+.container{
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+}

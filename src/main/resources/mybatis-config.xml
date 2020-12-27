@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.kh.byulmee.activity.model.vo.Activity" alias="Activity"/>
+		<typeAlias type="com.kh.byulmee.banner.model.vo.Banner" alias="Banner"/>
+		<typeAlias type="com.kh.byulmee.board.model.vo.CustomerQna" alias="CustomerQna"/>
+		<typeAlias type="com.kh.byulmee.board.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.byulmee.board.model.vo.PageInfo" alias="PageInfo"/>
+		<typeAlias type="com.kh.byulmee.board.model.vo.SalesQna" alias="SalesQna"/>
+		<typeAlias type="com.kh.byulmee.member.model.vo.Address" alias="Address"/>
+		<typeAlias type="com.kh.byulmee.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.byulmee.order.model.vo.Order" alias="Order"/>
+		<typeAlias type="com.kh.byulmee.product.model.vo.Product" alias="Product"/>
+		<typeAlias type="com.kh.byulmee.reply.model.vo.Reply" alias="Reply"/>
+		<typeAlias type="com.kh.byulmee.review.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.byulmee.image.model.vo.Image" alias="Image"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/member-mapper.xml"/>
+	</mappers>
+</configuration>

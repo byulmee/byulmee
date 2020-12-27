@@ -1,0 +1,138 @@
+body {
+    color: #303441;
+}
+
+#join {
+    width: 80vw;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 500px;
+    padding: 1.2rem;
+    border: 1px solid #E4E5ED;
+    border-radius: 10px;
+}
+
+input {
+    font-family: 'GmarketSansMidium' !important;
+    outline: 0;
+    padding: 0.7rem 0.6rem;
+    margin-bottom: 0.4rem;
+    border: 1px solid #E4E5ED;
+    border-radius: 5px;
+}
+
+button {
+    font-family: 'GmarketSansLight' !important;
+    border: none;
+    outline: 0;
+    width: 100px;
+    height: 34px;
+    vertical-align: middle;
+    border: 1px solid #f1f2f6;
+    border-radius: 5px;
+    margin-left: 0.2rem;
+}
+
+/* button:hover {
+    background-color: #FF6833;
+    color: #ffffff;
+} */
+
+
+.title {
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 1.2rem;
+}
+
+hr {
+    border: none;
+    background-color: #E4E5ED;
+    height: 1px;
+}
+
+#join-frame {
+    padding: 2rem 2.5rem;
+}
+
+#join-frame>li {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+#join-frame>li>label {
+    margin-bottom: 0.6rem;
+}
+
+.hint {
+    font-family: 'GmarketSansLight';
+    color: rgb(59, 59, 59);
+    font-size: 0.6rem;
+    padding-bottom: 0.4rem;
+    line-height: 0.9rem;
+}
+
+.error {
+    font-family: 'GmarketSansLight';
+    color: rgb(59, 59, 59);
+    font-size: 0.6rem;
+    padding-bottom: 0.4rem;
+    line-height: 0.9rem;
+    color: #FF6833;
+}
+
+.item-with-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 0;
+    border: 1px solid #E4E5ED;
+    border-radius: 5px;
+    padding: 0 0.2rem 0 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.item-with-btn>input {
+    padding: 0.7rem 0;
+    margin: 0;
+    border: none;
+    width: 70%;
+}
+
+#searchAddr {
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #E4E5ED;
+    color: #303441;
+}
+
+#searchAddr>i {
+    padding-right: 0.3rem;
+}
+
+#searchAddr:hover {
+    background-color: #E4E5ED;
+}
+
+.submit-btn {
+	cursor: pointer;
+    border-style: none;
+    border-radius: 3px;
+    margin: auto;
+    width: 100%;
+    height: 2.5rem;
+    background-color: #989898;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 450px) {
+    #join-frame {
+        padding: 2rem 1rem;
+    }
+
+    input[name="zipcode"]{
+        width: 60px;
+    }
+}

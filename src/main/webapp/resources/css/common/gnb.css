@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+body{
+    font-family: 'GmarketSansMedium';
+}
+
+#gnb {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gnb-menu {
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+#gnb-menu-box{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#menu-list{
+    font-size: 0.8rem;
+    display: flex;
+    align-items:center;
+}
+
+#menu-list li{
+    font-size: 0.7rem;
+    display: inline-block;
+    vertical-align: center;
+}
+
+#menu-list li:after{
+    content: '';
+    padding-left: 0.3rem;
+}
+
+#searchBox{
+    width: 60%;
+    min-width: 300px;
+    border-radius: 20px;
+    padding: 0.2rem 0.8rem;
+    padding-top: 0.3rem;
+    overflow: hidden;
+    background: #FAFAFA;
+    border:  1px solid #EEEEEE;
+    display: flex;
+    align-items: center;
+}
+
+#searchBox>div {
+    width: 0.8rem;
+    text-align: center;
+}
+
+#searchBox>div>i {
+    font-size: 0.8rem;
+    color: #AAAAAA;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#searchBar{
+    width: 100%;
+    font-family: 'GmarketSansLight';
+    font-size: 1rem;
+    border:none;
+    outline: none;
+    background: #FAFAFA;
+    vertical-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0.1rem;
+    margin: 0;
+}
+
+#searchBar::placeholder{
+    color: #DBDBDB;
+}
+
+#home-logo {
+    height: 1.5em;
+    vertical-align: middle;
+}
+
+#mk-logo{
+    height: 0.8rem;
+    vertical-align: middle;
+}
+
+#gnb-cate {
+    width: 100vw;
+    background-color: #FF6833;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cate{
+    width: 100vw;
+    text-align: center;
+}
+
+#gnb-cate li {
+    display: inline-block;
+    color:#ffff; 
+    font-size: 1rem;
+    padding: 1.2rem;
+    font-family: 'GmarketSansMedium';;
+}
+
+#home-logo, #mk-logo, #gnb-cate li,#gnb-menu li:hover {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+    #gnb-menu{
+        width: 90vw;
+        flex-direction: column; 
+        align-items: flex-end;
+    }
+    #gnb-menu-box{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        order:2;
+        vertical-align:middle;
+    }
+    #menu-list{
+        padding-bottom: 5px;
+    }
+    #searchBox{
+        width: 50%;
+        min-width: 190px;
+    }
+    #cate{
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    #home-logo {
+        height: 1.4rem;
+        vertical-align: middle;
+    }
+    
+    #gnb-cate li{
+        width: 25%;
+    }
+    #cate{
+        width: 100vw;
+        text-align: center;
+        padding: 0.8rem 0;
+    }
+    #gnb-cate li{
+        padding: 0.5rem;
+    }
+    #searchBox {
+        min-width: 100px;
+    }
+    #searchBar {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 290px) {
+    #mk-logo{ 
+    	height: 0.7rem;
+    }
+    
+    #home-logo {
+        height: 1.2rem;
+        vertical-align: bottom;
+    }
+    
+    #searchBox {
+        vertical-align: middle;
+    }
+    #menu-list li{
+        font-size: 0.4rem;
+    }
+
+    #cate li {
+        font-size: 0.9rem;
+    }
+}
