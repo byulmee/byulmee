@@ -1,7 +1,5 @@
 package com.kh.byulmee.banner.model.vo;
 
-import java.sql.Date;
-
 public class Banner {
 	private int banNo;
 	private String banAlt;

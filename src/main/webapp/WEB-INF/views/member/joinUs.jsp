@@ -57,7 +57,7 @@
             </li>
             <li>
                 <label>닉네임</label>
-                <input type="text" name="memNickname" aautocomplete="nofill">
+                <input type="text" name="memNickname" autocomplete="nofill">
             </li>
             <li>
                 <label>이메일</label>

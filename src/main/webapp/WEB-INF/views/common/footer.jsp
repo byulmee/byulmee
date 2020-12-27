@@ -21,10 +21,10 @@
             <p>
                 서울시 강남구 역삼동 테헤란로14길6 남도빌딩 3F<br />TEL.1544-9970 | 책임자: J.Shon
             </p>
-        </ul>
+        </div>
         <div class="rights">
             <a href="#"><img src="resources/images/common/logo.png" alt="별미body"></a> copyright Ⓒ 2020 JavaBom All Right Reserved
-        </ul>
+        </div>
     </footer>
 </body>
 </html>

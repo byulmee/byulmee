@@ -32,16 +32,16 @@
             </li>
             <li>
                 <label>이름 입력</label>
-                <input type="input" name="pwd" required autocomplete="nofill">
+                <input type="text" name="pwd" required autocomplete="nofill">
                 <span class="hint strong">이름을 입력해주세요.</span>
             </li>
             <li>
                 <label>휴대전화 번호 입력</label>
-                <input type="input" name="pwd" required autocomplete="nofill">
+                <input type="text" name="pwd" required autocomplete="nofill">
             </li>
             <li>
                 <label>이메일 입력</label>
-                <input type="input" name="pwd" required autocomplete="nofill">
+                <input type="text" name="pwd" required autocomplete="nofill">
             </li>
             <li>
                 <button type="submit" class="submit-btn id">아이디 찾기</button>
