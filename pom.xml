@@ -125,7 +125,7 @@
 		    <version>11.2.0.4</version>
 		</dependency>
 		
-		<!-- Spring에서 Database를 사용하기 위한 라이브러리 -->
+		<!-- Spring에서 오라를을 사용하기 위한 라이브러리 -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
@@ -182,7 +182,14 @@
 			<version>2.6</version>
 		</dependency>
 		
-		<!-- Gson -->
+		<!-- json 라이브러리 -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+		
+		<!-- Gson 라이브러리 -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
