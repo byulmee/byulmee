@@ -34,7 +34,7 @@
                 	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
                		<li class="menu-list-item" onclick="location.href='#">마이페이지</li>
                 </c:if>
-                <li class="menu-list-item" onclick="location.href='#">고객센터</li>
+                <li class="menu-list-item" onclick="location.href='QnAView.bo'">고객센터</li>
                 <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
             </ul>
         </div>
