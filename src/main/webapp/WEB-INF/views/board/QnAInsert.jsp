@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>고객센터</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
 	rel="stylesheet" />
@@ -74,13 +75,16 @@ $(document).ready(function(){
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>분류</strong></label>
 				<div class="col-sm-10">
 					<div class="select-box select-script">
-    					<label for="selectbox">선택해 주세요</label>
+    					<label for="selectbox" id="selectlabel">선택해 주세요</label>
     						<select id="selectbox" title="선택 구분">
         						<option selected="selected">선택해 주세요</option>
-        						<option>선택1</option>
-						        <option>선택2</option>
-						        <option>선택3</option>
-						        <option>선택4</option>
+        						<option>배송</option>
+						        <option>환불/반품</option>
+						        <option>주문/결제</option>
+						        <option>상품 정보</option>
+						        <option>마이페이지</option>
+						        <option>기타</option>
+						        <option>신고</option>
 						    </select>
 					</div>
 				</div>
