@@ -1,5 +1,9 @@
 package com.kh.byulmee.member.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -86,6 +90,37 @@ public class MemberController {
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			model.addAttribute("url", "loginView.me");
 			return "../common/alert";
+		}
+	}
+	
+	
+	@RequestMapping("checkId.me")
+	public void checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
+		boolean result = mService.checkId(memId) == 0 ? true : false;
+		try {
+			response.getWriter().print(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("checkNickname.me")
+	public void checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
+		boolean result = mService.checkNickname(nickname) == 0 ? true : false;
+		try {
+			response.getWriter().print(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("checkEmail.me")
+	public void checkEmail(@RequestParam("email") String email, HttpServletResponse response) {
+		boolean result = mService.checkEmail(email) == 0 ? true : false;
+		try {
+			response.getWriter().print(result);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

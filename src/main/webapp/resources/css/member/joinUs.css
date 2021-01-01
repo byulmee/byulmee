@@ -74,13 +74,17 @@ hr {
     line-height: 0.9rem;
 }
 
-.error {
+label.error {
     font-family: 'GmarketSansLight';
     color: rgb(59, 59, 59);
     font-size: 0.6rem;
     padding-bottom: 0.4rem;
     line-height: 0.9rem;
     color: #FF6833;
+}
+
+input.error {
+	border: 1px solid #FF6833;
 }
 
 .item-with-btn {
@@ -100,6 +104,15 @@ hr {
     border: none;
     width: 70%;
 }
+
+.confirm-btn {
+	cursor: pointer;
+}
+
+.confirm-btn:hover {
+	background-color: #E4E5ED;
+}
+
 
 #searchAddr {
     box-sizing: border-box;
@@ -123,7 +136,7 @@ hr {
     margin: auto;
     width: 100%;
     height: 2.5rem;
-    background-color: #989898;
+    background-color: #FF6833;
     color: #ffffff;
 }
 
