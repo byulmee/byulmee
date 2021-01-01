@@ -8,4 +8,9 @@ public interface MemberService {
 
 	Member selectMember(String memId);
 
+	int checkId(String memId);
+	
+	int checkNickname(String nickname);
+
+	int checkEmail(String email);
 }

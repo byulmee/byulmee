@@ -25,5 +25,18 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMember(String memId) {
 		return mDAO.selectMember(sqlSession, memId);
 	}
+	@Override
+	public int checkId(String memId) {
+		return mDAO.checkId(sqlSession, memId);
+	}
 
+	@Override
+	public int checkNickname(String nickname) {
+		return mDAO.checkNickname(sqlSession, nickname);
+	}
+
+	@Override
+	public int checkEmail(String email) {
+		return mDAO.checkEmail(sqlSession, email);
+	}
 }
