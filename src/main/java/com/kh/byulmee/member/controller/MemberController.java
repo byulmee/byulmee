@@ -131,6 +131,7 @@ public class MemberController {
 	@RequestMapping("myInfoView.me")
 	public String myInfoView() {
 		return "myInfo";
+	}
 	
 	@RequestMapping("checkId.me")
 	public void checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
