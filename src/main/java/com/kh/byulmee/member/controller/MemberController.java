@@ -88,4 +88,45 @@ public class MemberController {
 			return "../common/alert";
 		}
 	}
+	
+	// 손제근 추가
+	@RequestMapping("myPurView.me")
+	public String myPurView() {
+		return "myPur";
+	}
+	
+	@RequestMapping("myPurActView.me")
+	public String myPurActView() {
+		return "myPurAct";
+	}
+	
+	@RequestMapping("myPurProView.me")
+	public String myPurProView() {
+		return "myPurPro";
+	}
+	
+	@RequestMapping("myFavView.me")
+	public String myFavView() {
+		return "myFav";
+	}
+	
+	@RequestMapping("myFavActView.me")
+	public String myFavActView() {
+		return "myFavAct";
+	}
+	
+	@RequestMapping("myFavProView.me")
+	public String myFavProView() {
+		return "myFavPro";
+	}
+	
+	@RequestMapping("myFavStarView.me")
+	public String myFavStarView() {
+		return "myFavStar";
+	}
+	
+	@RequestMapping("myInfoView.me")
+	public String myInfoView() {
+		return "myInfo";
+	}
 }
