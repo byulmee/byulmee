@@ -10,4 +10,9 @@ public class BoardController {
 	public String QnAListForm() {
 		return "QnAList";
 	}
+	
+	@RequestMapping("QnAInsertView.bo")
+	public String QnAInsertForm() {
+		return "QnAInsert";
+	}
 }

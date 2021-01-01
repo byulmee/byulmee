@@ -181,7 +181,7 @@ td {
 		</div>
 		<div id="buttonArea">
 			<button type="button" class="btn btn-secondary" style="float: left"disabled>삭제</button>		
-			<button type="button" class="btn" style="float: right; background-color: #FF6833; color: white">질문 작성하기</button>	
+			<button type="button" class="btn" style="float: right; background-color: #FF6833; color: white" onclick="location.href='QnAInsertView.bo'">질문 작성하기</button>	
 		</div>
 		<div id="pagingArea">
 			<!-- 맨 처음으로 -->
