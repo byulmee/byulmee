@@ -361,7 +361,7 @@
 		<div class="content">
 			<div class="actArea">
 				<div class="headline">
-					<p class="title">신청한 활동</p>
+					<p class="title">구매한 상품</p>
 				</div>
 			<!-- 신청한 활동이 없는 경우 -->
 				<!-- <p class="nothing">신청한 활동이 없습니다.</p> -->
