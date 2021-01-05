@@ -29,6 +29,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>commonServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commonServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	
@@ -41,6 +54,21 @@
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/views/common/400errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/common/404errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/common/500errorPage.jsp</location>
 	</error-page>
 	
 	<!-- 한글 깨짐 방지 인코딩 필터 -->

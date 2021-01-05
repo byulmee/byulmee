@@ -96,7 +96,7 @@
 	    			remote: {
 	    				url: 'checkId.me',
 	    				data: { memId : function() { 
-	    							return $('#memId').val();
+	    							return $('input[name=memId]').val();
 	    						}
 	    					}
 	    			}

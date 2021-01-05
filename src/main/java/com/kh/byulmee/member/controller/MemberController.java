@@ -2,19 +2,32 @@ package com.kh.byulmee.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+import com.kh.byulmee.member.model.dto.KakaoProfile;
+import com.kh.byulmee.member.model.dto.KakaoToken;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
@@ -134,32 +147,100 @@ public class MemberController {
 	}
 	
 	@RequestMapping("checkId.me")
-	public void checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
+	@ResponseBody
+	public boolean checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
+		System.out.println(memId);
 		boolean result = mService.checkId(memId) == 0 ? true : false;
-		try {
-			response.getWriter().print(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		System.out.println(result);
+		
+		return result;
 	}
 	
 	@RequestMapping("checkNickname.me")
-	public void checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
+	@ResponseBody
+	public boolean checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
 		boolean result = mService.checkNickname(nickname) == 0 ? true : false;
-		try {
-			response.getWriter().print(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		System.out.println(result);
+		
+		return result;
 	}
 	
 	@RequestMapping("checkEmail.me")
-	public void checkEmail(@RequestParam("email") String email, HttpServletResponse response) {
+	@ResponseBody
+	public boolean checkEmail(@RequestParam("email") String email, HttpServletResponse response) {
 		boolean result = mService.checkEmail(email) == 0 ? true : false;
-		try {
-			response.getWriter().print(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/kakao")
+	public @ResponseBody String kakaoAuth(String code, HttpServletRequest request) {
+		
+		//Post 방식으로 key=value 데이터를 요청(카카오쪽으로)
+		/* java에서 url 요청하는 법 */
+		//java 클래스 사용
+		//	HttpsURLConnection
+		//라이브러리 사용
+		//	Retrofit2, OkHttp, RestTemplate
+		
+		//HTTP 요청을 위한 RestTemplate 객체 생성
+		RestTemplate rt = new RestTemplate();
+		
+		//http 헤더 생성
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		
+		//body의 파라미터 선언
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "8c2d3b0c2a33b21fc67c577be7a832e0");
+		params.add("redirect_uri", "http://localhost:9180/kakao");
+		params.add("code", code);
+		
+		//params의 body 데이터와 head를 가진 개체를 생성
+		//HttpEntiy에 담는 이유? RestTemplate.exchange()의 파라미터에 필요해서
+		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
+		
+		//요청하기
+		//	파라미터: 주소, 전송방식, http 객체, 응답받을 타입
+		ResponseEntity<String> response = rt.exchange(
+				"https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST,
+				kakaoTokenRequest,
+				String.class
+		);
+		
+		//요청 받은 값을 담기
+		//json, Gson, Simple, ObjectMapper
+		Gson gson = new Gson();
+		KakaoToken kakaoToken = gson.fromJson(response.getBody(), KakaoToken.class);
+		
+		
+		//사용자 정보 가져오기
+		RestTemplate rt2 = new RestTemplate();
+		
+		//http 헤더 생성
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", "Bearer " + kakaoToken.getAccess_token());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		
+		//header2를 담은 객체 생성
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers2);
+		
+		//요청하기
+		ResponseEntity<String> response2 = rt2.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoProfileRequest,
+				String.class
+		); 
+		
+		KakaoProfile kakaoProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
+		
+		System.out.println(kakaoProfile.getId());
+		
+		return response2.getBody();
 	}
 }

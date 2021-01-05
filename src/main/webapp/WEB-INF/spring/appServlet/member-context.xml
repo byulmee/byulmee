@@ -10,13 +10,12 @@
 	<mvc:annotation-driven />
 	
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
-   	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
    	
    	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/member/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+
 	<context:component-scan base-package="com.kh.byulmee" />
 	
 </beans>
