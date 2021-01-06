@@ -4,35 +4,34 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta name="keywords" content="Byulmee, 취미, 활동, 매칭, 플리마켓">
-<meta name="description" content="세상의 별난 취미 다 모여라! 취미 매칭 플랫폼 별미">
-<meta name="author" content="javaBom">
-<meta name="application-name" content="별미">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>별난취미_별미</title>
-<!-- <link rel="stylesheet" href="resources/css/common/cssReset.css"> -->
-<link rel="stylesheet" href="resources/css/common/gnb.css">
-<script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
+	<meta name="keywords" content="Byulmee, 취미, 활동, 매칭, 플리마켓">
+	<meta name="description" content="세상의 별난 취미 다 모여라! 취미 매칭 플랫폼 별미">
+	<meta name="author" content="javaBom">
+	<meta name="application-name" content="별미">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>별난취미_별미</title>
+	<link rel="stylesheet" href="resources/css/common/gnb.css">
+	<script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav id="gnb">
         <div id="gnb-menu">
-            <div id="gnb-menu-box">
-                <img src="resources/images/common/logo.png" id="home-logo" alt="byulmee logo" onclick="location.href='home.do'">
-                <form id="searchBox">
-                    <div>
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기" onsubmit="location.href='search.bo'">
-                </form>
-            </div>
+           <div id="gnb-menu-box">
+               <img src="resources/images/common/logo.png" id="home-logo" alt="byulmee logo" onclick="location.href='home.do'">
+           </div>
+               <form id="searchBox">
+                   <div>
+                       <i class="fas fa-search"></i>
+                   </div>
+                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기" onsubmit="location.href='search.bo'">
+               </form>
             <ul id="menu-list">
             	<c:if test="${ empty sessionScope.loginUser }">
             		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
             	</c:if>
             	<c:if test="${ !empty sessionScope.loginUser }">
                 	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
-               		<li class="menu-list-item" onclick="location.href='#">마이페이지</li>
+               		<li class="menu-list-item" onclick="location.href='myPurView.me'">마이페이지</li>
                 </c:if>
                 <li class="menu-list-item" onclick="location.href='QnAView.bo'">고객센터</li>
                 <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>

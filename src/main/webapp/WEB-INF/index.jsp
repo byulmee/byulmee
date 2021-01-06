@@ -30,7 +30,7 @@
             </c:if>
             <c:if test="${ !empty sessionScope.loginUser }">
                 <li onclick="location.href='logout.me'">로그아웃</li>
-                <li onclick="location.href='#'">마이페이지</li>
+                <li onclick="location.href='myPurView.me'">마이페이지</li>
             </c:if>
                 <li onclick="location.href='QnAView.bo'">고객센터</li>
                 <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
