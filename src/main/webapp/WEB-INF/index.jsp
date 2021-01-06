@@ -43,7 +43,7 @@
                 <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기"><i class="fas fa-search"></i>
             </div>
             <ul id="cate">
-                <li class="cate act">
+                <li class="cate act" onclick="location.href='activityList.ac'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
                 <li class="cate liv">

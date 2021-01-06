@@ -10,7 +10,7 @@
 <meta name="application-name" content="별미">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>별난취미_별미</title>
-<link rel="stylesheet" href="resources/css/common/cssReset.css">
+<!-- <link rel="stylesheet" href="resources/css/common/cssReset.css"> -->
 <link rel="stylesheet" href="resources/css/common/gnb.css">
 <script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
 </head>

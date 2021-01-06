@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +33,7 @@ body {
 }
 .outer {
 	width: 1280px; min-height:auto;  border: 5px solid white;
-	margin-left:auto; margin-right:auto; margin-top:50px;
+	margin-left:auto; margin-right:auto;
 }
 
 .thumbnail {
@@ -213,7 +213,6 @@ hr {width: 1280px; visibility: hidden;}
 	border-top: 3px solid #FF6833; 
 	font-weight: bold;
 }
-
 .detailArea{
 	height: 800px; 
 	width: 957px;
@@ -390,7 +389,7 @@ hr {width: 1280px; visibility: hidden;}
 	       		</div>
 	       		<div class="button">
 	       			<input type="button" id="button1" value="별미 찜하기">
-	       			<input type="submit" id="button2" value="신청하기">
+	       			<input type="submit" id="button2" value="신청하기" onclick="location.href='activityCheck.ac'">
 	       		</div>
 	       		<div class="starInfo">
 	       			<strong id="starInfo1">스프링</strong><br>
@@ -405,10 +404,10 @@ hr {width: 1280px; visibility: hidden;}
        <hr>
        <!-- 메뉴바 -->
        <div class="nav-area" align="center">
-			<div class="menu" id="menu1">별미 정보 </div>
-			<div class="menu">별미 후기</div>
-			<div class="menu">별미 문의</div>
-			<div class="menu">취소/환불 규정</div>
+			<div class="menu" id="menu1"><a href="#menu1">별미 정보</a></div>
+			<div class="menu"><a href="#menu2">별미 후기</a></div>
+			<div class="menu"><a href="#menu3">별미 문의</a></div>
+			<div class="menu"><a href="#menu4">취소/환불 규정</a></div>
 		</div>
        
        <!-- 본문영역 -->
@@ -417,10 +416,10 @@ hr {width: 1280px; visibility: hidden;}
        
        <!-- 메뉴바 -->
        <div class="nav-area" align="center">
-			<div class="menu">별미 정보 </div>
-			<div class="menu" id="menu2">별미 후기</div>
-			<div class="menu">별미 문의</div>
-			<div class="menu">취소/환불 규정</div>
+			<div class="menu"><a href="#menu1">별미 정보</a></div>
+			<div class="menu" id="menu2"><a href="#menu2">별미 후기</a></div>
+			<div class="menu"><a href="#menu3">별미 문의</a></div>
+			<div class="menu"><a href="#menu4">취소/환불 규정</a></div>
 		</div>
 		
 		
@@ -447,10 +446,10 @@ hr {width: 1280px; visibility: hidden;}
 		
        <!-- 메뉴바 -->
        <div class="nav-area" align="center">
-			<div class="menu">별미 정보 </div>
-			<div class="menu">별미 후기</div>
-			<div class="menu" id="menu3">별미 문의</div>
-			<div class="menu">취소/환불 규정</div>
+			<div class="menu"><a href="#menu1">별미 정보</a></div>
+			<div class="menu"><a href="#menu2">별미 후기</a></div>
+			<div class="menu" id="menu3"><a href="#menu3">별미 문의</a></div>
+			<div class="menu"><a href="#menu4">취소/환불 규정</a></div>
 		</div>
 		
 		<div class="questionArea" align="center">
@@ -484,10 +483,10 @@ hr {width: 1280px; visibility: hidden;}
 		
        <!-- 메뉴바 -->
        <div class="nav-area" align="center">
-			<div class="menu">별미 정보 </div>
-			<div class="menu">별미 후기</div>
-			<div class="menu">별미 문의</div>
-			<div class="menu" id="menu4">취소/환불 규정</div>
+			<div class="menu"><a href="#menu1">별미 정보</a></div>
+			<div class="menu"><a href="#menu2">별미 후기</a></div>
+			<div class="menu"><a href="#menu3">별미 문의</a></div>
+			<div class="menu" id="menu4"><a href="#menu4">취소/환불 규정</a></div>
 		</div>
 		
 		<div class="refundArea" align="left">
@@ -505,6 +504,7 @@ hr {width: 1280px; visibility: hidden;}
 	</div>
 	
 	<br><br><br><br><br><br><br><br>
+	<c:import url="../common/footer.jsp"/>
 
 </body>
 </html>
