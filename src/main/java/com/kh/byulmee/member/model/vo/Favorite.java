@@ -1,4 +1,4 @@
-package com.kh.byulmee.banner.model.vo;
+package com.kh.byulmee.member.model.vo;
 
 import java.sql.Date;
 
@@ -13,8 +13,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Banner {
-	private int banNo;
-	private String banAlt;
-	private String banOpen;
+public class Favorite {
+	private int favNo;
+	private Date favDate;
+	private String favStatus;
+	private int favRefcode;
+	private String favRefno;
 }
