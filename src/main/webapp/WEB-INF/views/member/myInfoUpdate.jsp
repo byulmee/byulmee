@@ -13,19 +13,28 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
+	body {
+		margin: 0;
+	}
+	
 	.outer {
 		margin-top: 50px;
 		margin-bottom: 50px;
 		margin-left: auto;
 		margin-right: auto;
+		overflow: hidden;
+		position: relative;
 		width: 1000px;
 		font-family: "Gmarket Sans TTF";
 	}
 
-/* 사이드 메뉴 */	
+/* 사이드 메뉴 */
 	.sideMenu {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		bottom: 0px;
 		width: 200px;
-		height: 513px;
 		background: #F4F4F4;
 	}
 	.profile {
@@ -42,13 +51,37 @@
 		text-align: center;
 		font-size: 14px;
 	}
-	.sideMenuList{
+	.sideMenuList {
 		text-align: center;
-		list-style: none;
 	}
 	.sideMenuUl {
-		list-style:none;
-		padding-left: 0px;
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+		position: relative;
+	}
+	.sideMenuUl > li ul.purDropdown {
+		display: none;
+		position: absolute;
+		top: 50px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
+	.sideMenuUl > li ul.favDropdown {
+		display: none;
+		position: absolute;
+		top: 100px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
+	.sideMenuUl > li:hover ul.purDropdown, .sideMenuUl > li:hover ul.favDropdown {
+		display: block;
+	}
+	.sideMenuUl > li ul.purDropdown > li, .sideMenuUl > li ul.favDropdown > li {
+		display: inline-block;
+		text-align: center;
 	}
 	.sideMenuBtn {
 		font-family: "Gmarket Sans TTF";
@@ -74,7 +107,6 @@
 /* 컨텐츠 */
 	.content {
 		min-height: 480px;
-		margin-top: -513px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
@@ -180,17 +212,41 @@
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
-					<li class="sideMenuLi">
-						<button onclick="location.href='myPurView.me'" class="sideMenuBtn">구매내역</button>
-					</li>
-					<li class="sideMenuLi">
-						<button onclick="location.href='myFavView.me'" class="sideMenuBtn">찜 목록</button>
-					</li>
-					<li class="sideMenuLi">
+					<li>
 						<button onclick="location.href='myInfoView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 관리</button>
 					</li>
-					<li class="sideMenuLi">
-						<button onclick="#" class="sideMenuBtn">스타 신청</button>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">구매내역</button>
+						<ul class="purDropdown">
+							<li>
+								<button onclick="location.href='myPurActView.me'" class="sideMenuBtn">신청한 활동</button>
+							</li>
+							<li>
+								<button onclick="location.href='myPurProView.me'" class="sideMenuBtn">구매한 상품</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">찜 목록</button>
+						<ul class="favDropdown">
+							<li>
+								<button onclick="location.href='myFavActView.me'" class="sideMenuBtn">찜한 활동</button>
+							</li>
+							<li>
+								<button onclick="location.href='myFavProView.me'" class="sideMenuBtn">찜한 상품</button>
+							</li>
+							<li>
+								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn">찜한 스타</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<c:if test="${ loginUser.memLevel == 0 }">
+		            		<button class="sideMenuBtn">스타 신청</button>
+		            	</c:if>
+		            	<c:if test="${ loginUser.memLevel == 1 }">
+		            		<button class="sideMenuBtn">작업실</button>
+		            	</c:if>
 					</li>
 				</ul>
 			</div>
@@ -280,7 +336,8 @@
 					</td>
 					<td class="colContentTd_btn">
 						<button class="button" onclick="">회원 탈퇴</button>
-						<button class="button" onclick="">저장</button>
+						<button class="button" onclick="">비밀번호 변경</button>
+						<button class="button" onclick="">개인정보 변경</button>
 					</td>
 				</tr>
 			</table>

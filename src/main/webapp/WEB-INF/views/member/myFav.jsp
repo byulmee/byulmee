@@ -12,6 +12,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	body {
+		margin: 0;
+	}
+	
 	.outer {
 		margin-top: 50px;
 		margin-bottom: 50px;

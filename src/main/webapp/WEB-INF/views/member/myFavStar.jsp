@@ -12,6 +12,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	body {
+		margin: 0;
+	}
+	
 	.outer {
 		margin-top: 50px;
 		margin-bottom: 50px;
@@ -23,13 +27,13 @@
 		font-family: "Gmarket Sans TTF";
 	}
 
-/* 사이드 메뉴 */	
+/* 사이드 메뉴 */
 	.sideMenu {
-		position:absolute;
-		top:0px;
-		left:0px;
-		bottom:0px;
-		width:200px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		bottom: 0px;
+		width: 200px;
 		background: #F4F4F4;
 	}
 	.profile {
@@ -46,13 +50,37 @@
 		text-align: center;
 		font-size: 14px;
 	}
-	.sideMenuList{
+	.sideMenuList {
 		text-align: center;
-		list-style: none;
 	}
 	.sideMenuUl {
-		list-style:none;
-		padding-left: 0px;
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+		position: relative;
+	}
+	.sideMenuUl > li ul.purDropdown {
+		display: none;
+		position: absolute;
+		top: 50px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
+	.sideMenuUl > li ul.favDropdown {
+		display: none;
+		position: absolute;
+		top: 100px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
+	.sideMenuUl > li:hover ul.purDropdown, .sideMenuUl > li:hover ul.favDropdown {
+		display: block;
+	}
+	.sideMenuUl > li ul.purDropdown > li, .sideMenuUl > li ul.favDropdown > li {
+		display: inline-block;
+		text-align: center;
 	}
 	.sideMenuBtn {
 		font-family: "Gmarket Sans TTF";
@@ -65,7 +93,17 @@
 		background: none;
 		cursor: pointer;
 	}
-	.sideMenuBtn:hover {
+	.dropdownBtn {
+		font-family: "Gmarket Sans TTF";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 50px;
+		outline: 0;
+		border: 0;
+		background: none;
+	}
+	.sideMenuBtn:hover, .dropdownBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -77,7 +115,7 @@
 	
 /* 컨텐츠 */	
 	.content {
-		min-height: 480px;
+		min-height: 500px;
 		margin-left: 250px;
 	}
 	.headline {
@@ -99,7 +137,7 @@
 		vertical-align: middle;
 		display: inline-block;
 		width: 146px;
-		height: 175px;
+		height: 185px;
 	}
 	.star:hover {
 		opacity: 0.6;
@@ -143,17 +181,41 @@
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
-					<li class="sideMenuLi">
-						<button onclick="location.href='myPurView.me'" class="sideMenuBtn">구매내역</button>
-					</li>
-					<li class="sideMenuLi">
-						<button onclick="location.href='myFavView.me'" class="sideMenuBtn" id="selectedBtn">찜 목록</button>
-					</li>
-					<li class="sideMenuLi">
+					<li>
 						<button onclick="location.href='myInfoView.me'" class="sideMenuBtn">개인정보 관리</button>
 					</li>
-					<li class="sideMenuLi">
-						<button onclick="#" class="sideMenuBtn">스타 신청</button>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">구매내역</button>
+						<ul class="purDropdown">
+							<li>
+								<button onclick="location.href='myPurActView.me'" class="sideMenuBtn">신청한 활동</button>
+							</li>
+							<li>
+								<button onclick="location.href='myPurProView.me'" class="sideMenuBtn">구매한 상품</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">찜 목록</button>
+						<ul class="favDropdown">
+							<li>
+								<button onclick="location.href='myFavActView.me'" class="sideMenuBtn">찜한 활동</button>
+							</li>
+							<li>
+								<button onclick="location.href='myFavProView.me'" class="sideMenuBtn">찜한 상품</button>
+							</li>
+							<li>
+								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn" id="selectedBtn">찜한 스타</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<c:if test="${ loginUser.memLevel == 0 }">
+		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            	</c:if>
+		            	<c:if test="${ loginUser.memLevel == 1 }">
+		            		<button onclick="#" class="sideMenuBtn">작업실</button>
+		            	</c:if>
 					</li>
 				</ul>
 			</div>
