@@ -2,8 +2,10 @@ package com.kh.byulmee.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.byulmee.member.model.dto.KakaoProfile;
@@ -33,7 +35,7 @@ import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
 
 
-@SessionAttributes("loginUser")
+@SessionAttributes({"loginUser", "oauthInfo"})
 
 @Controller
 public class MemberController {
@@ -71,7 +73,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="joinUs.me", method = RequestMethod.POST)
-	public String joinUs(@ModelAttribute Member m) {
+	public String joinUs(@ModelAttribute Member m, Model model, HttpSession session, SessionStatus status) {
+		
+		status.setComplete();
 		
 		String encodedPwd = bcrypt.encode(m.getMemPwd());
 		m.setMemPwd(encodedPwd);
@@ -79,6 +83,13 @@ public class MemberController {
 		int result = mService.insertMember(m);
 		
 		if(result > 0) {
+			if(session.getAttribute("oauthInfo") != null) {
+				status.isComplete();
+				Member loginUser = mService.selectMember(m.getMemId());
+				model.addAttribute("loginUser", loginUser);
+				return "redirect: home.do";
+			}
+			
 			return "redirect: loginView.me";
 		} else {
 			throw new MemberException();
@@ -160,7 +171,7 @@ public class MemberController {
 	@RequestMapping("checkNickname.me")
 	@ResponseBody
 	public boolean checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
-		boolean result = mService.checkNickname(nickname) == 0 ? true : false;
+		boolean result = mService.checkNickname(nickname) < 1 ? true : false;
 		
 		System.out.println(result);
 		
@@ -170,13 +181,13 @@ public class MemberController {
 	@RequestMapping("checkEmail.me")
 	@ResponseBody
 	public boolean checkEmail(@RequestParam("email") String email, HttpServletResponse response) {
-		boolean result = mService.checkEmail(email) == 0 ? true : false;
+		boolean result = mService.checkEmail(email) < 1 ? true : false;
 		
 		return result;
 	}
 	
 	@RequestMapping(value = "/kakao")
-	public @ResponseBody String kakaoAuth(String code, HttpServletRequest request) {
+	public ModelAndView kakaoAuth(String code, HttpServletRequest req, HttpServletResponse resp, Model model, ModelAndView mv) {
 		
 		//Post 방식으로 key=value 데이터를 요청(카카오쪽으로)
 		/* java에서 url 요청하는 법 */
@@ -239,8 +250,26 @@ public class MemberController {
 		
 		KakaoProfile kakaoProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
 		
-		System.out.println(kakaoProfile.getId());
+		String id = "k" + kakaoProfile.getId();
 		
-		return response2.getBody();
+		boolean isFirstVisit = mService.checkId(id) < 1 ? true : false;
+		
+		Member m = new Member();
+		if(isFirstVisit) {
+			m.setMemId(id);
+			m.setMemEmail(kakaoProfile.getKakao_account().getEmail());
+			model.addAttribute("oauthInfo", m);
+			mv.setViewName("member/joinUs");
+		} else {
+			m = mService.selectMember(id);
+			
+			if(m == null) {
+				throw new MemberException("로그인에 실패하였습니다.");
+			}
+			
+			model.addAttribute("loginUser", m);
+			mv.setViewName("../index");
+		}
+		return mv;
 	}
 }

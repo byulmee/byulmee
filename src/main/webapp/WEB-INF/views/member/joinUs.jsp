@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,21 +16,32 @@
     <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
-
-    <form id="join" action="joinUs.me" autocomplete="off" method="post"> 
+    <form id="join" action="joinUs.me" autocomplete="off" method="post">
         <h1 class="title">별미 회원가입</h1>
+        <input type="text" id="test" onkeyup="doRegTest();")>
+        
+        
         <hr>
         <ul id="join-frame">
+        	<c:if test="${!empty sessionScope.oauthInfo}">
+       			<li style="padding-top: 0;">
+       				<p style="color: #FF6833; font-size: 0.8rem; margin: auto;">간편 로그인으로 최초 로그인 시 회원 가입이 필요합니다.</p>
+        		</li>
+        	</c:if>
             <li>
                 <label>아이디</label>
                 <span class="hint">아이디는 최소 4자~15자 이내여야 하고,<br>영문자, 숫자, 특수문자(-, _)의 조합만 가능합니다.</span>
-                    <input type="text" name="memId" autocomplete="off" required>
-                    <span class="hint strong"></span>
+                    <c:if test="${!empty sessionScope.oauthInfo}">
+                    	<input type="text" name="memId" autocomplete="off" value="${oauthInfo.getMemId()}" readonly>
+                    </c:if>
+                    <c:if test="${empty sessionScope.oauthInfo}">
+	                    <input type="text" name="memId" autocomplete="off" required>
+                    </c:if>
             </li>
             <li>
                 <label>비밀번호</label>
                 <span class="hint">비밀번호는 8자~20자 이내여야 하고,<br>영문자, 특수문자, 숫자가 반드시 하나 이상 포함되어야 합니다.</span>
-                <input type="text" name="memPwd" required autocomplete="nofill">
+                <input type="password" name="memPwd" id="memPwd" onkeyup="doRegTest();" required autocomplete="nofill">
                 <input type="password" name="pwdCheck" id="pwdCheck" required autocomplete="nofill">
             </li>
             <li>
@@ -61,7 +72,12 @@
             </li>
             <li>
                 <label>이메일</label>
-                <input type="email" name="memEmail" autocomplete="off">
+                <c:if test="${!empty sessionScope.oauthInfo}">
+                	<input type="email" name="memEmail" value="${oauthInfo.getMemEmail()}" readonly>
+                </c:if>
+                 <c:if test="${empty sessionScope.oauthInfo}">
+                	<input type="email" name="memEmail" autocomplete="off">
+                </c:if>
             </li>
             <li>
                 <button type="submit" class="submit-btn">회원가입</button>
@@ -70,13 +86,35 @@
     </form>
     
     <script>
-    $(function(){
-    	var value = prompt();
-    	var test = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&-_&~`])[A-Za-z\d$@$!%*#?&]{8,}$/.test(value);
-    	console.log(test);
-    });
+	    function doRegTest() {
+	    	let test = document.querySelector("#memPwd");
+			let str = document.querySelector("#memPwd").value;
+			
+			let errorBox = document.createElement('span');
+			let errorMsg = document.createTextNode('영문, 숫자, 특수문자가 각각 1개 이상 조합되어야합니다.');
+			errorBox.appendChild(errorMsg);
+			
+			let result = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/gm.test(str);
+			
+			if(result) {
+				test.setAttribute('class', '');
+				console.log(str);
+				console.log('true');
+			} else {
+				test.setAttribute('class', 'strong');
+				document.querySelector("#memPwd").appendChild(errorBox);
+				errorBox.setAttribute('class', 'hint strong');
+				console.log(str);
+				console.log('false')
+			}
+	    }
+
+    	$.validator.addMethod("idCheck",  function( value, element ) {
+	   	   return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/g.test(value);
+	   	});
+    	
 	    $.validator.addMethod("pwdCheck",  function( value, element ) {
-	   	   return this.optional(element) || /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).$/.test(value);
+	   	   return this.optional(element) || /^.(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).$/.test(value);
 	   	});
 	    
 	    $.validator.addMethod("korChracter",  function( value, element ) {
@@ -105,7 +143,6 @@
 	    	 		required : true,
 	    			minlength : 8,
 	    			maxlength : 20,
-	    			pwdCheck: true
 	    	 	},
 	    	 	pwdCheck : {
 	    	 		required : true,
@@ -123,6 +160,7 @@
 	    	 	},
 	    	 	memNickname : {
 	    	 		required : true,
+	    	 		maxlength : 25,
 	    	 		remote : {
 	    	 			url: 'checkNickname.me',
 	    				data: { nickname : function() { 
@@ -155,7 +193,6 @@
 	    	 		required : "비밀번호는 필수 입력입니다.",
 	    			minlength : "비밀번호는 8자 이상이어야합니다.",
 	    			maxlength : "비밀번호는 20자 이내여야합니다.",
-	    			pwdCheck : "영문, 숫자, 특수문자가 1자 이상 포함되어야 합니다."
 	    	 	},
 	    	 	pwdCheck : {
 	    	 		required : "비밀번호를 한 번 더 확인해주세요.",
@@ -183,6 +220,20 @@
 	    	 	}
 	    	}
 	    });
+	    
+	    /* $('#memPwd').blur(function(){
+	    	let pwdInput = $('#memPwd');
+	    	
+	    	let result = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/gm.test(memPwd);
+	    	
+	    	if(!result) {
+	    		console.log("!");
+	    		$('input[name=memPwd]~span').text('영문, 숫자, 특수문자가 각각 1개 이상 조합되어야합니다.');
+	    	} else {
+	    		console.log("통과~");
+	    		$('input[name=memPwd]~span').text('');
+	    	}
+	    }); */
     </script>
 
 </body>

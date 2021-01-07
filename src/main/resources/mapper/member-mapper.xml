@@ -46,4 +46,5 @@
   		from member
   		where mem_email = #{email} and mem_status = 'Y'
   	</select>
+ 
 </mapper>

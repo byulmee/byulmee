@@ -34,12 +34,6 @@ button {
     margin-left: 0.2rem;
 }
 
-/* button:hover {
-    background-color: #FF6833;
-    color: #ffffff;
-} */
-
-
 .title {
     text-align: center;
     font-size: 1.4rem;
@@ -84,6 +78,11 @@ label.error {
 }
 
 input.error {
+	border: 1px solid #FF6833;
+}
+
+.strong {
+	color: #FF6833;
 	border: 1px solid #FF6833;
 }
 
