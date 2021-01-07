@@ -228,6 +228,11 @@ hr {width: 1280px; visibility: hidden;}
 	min-height:auto;
 	margin-bottom: 15px;
 }
+.reviewWriter_Main{
+	width: 800px;
+	min-height:auto;
+	margin-bottom: 15px;
+}
 #reviewWriter{
 	font-weight: bold;
 	margin-left: 10px;
@@ -249,10 +254,29 @@ hr {width: 1280px; visibility: hidden;}
 	margin-bottom: 15px;
 	border-spacing: 5px;
 }
+.reviewImageArea_Main{
+	width: 150px;
+	min-height:auto;
+	margin-right: 10px;
+}
+.reviewWriter_Main{
+	width: 800px;
+	min-height:auto;
+	margin-bottom: 15px;
+	border-spacing: 5px;
+}
+.review_flex{
+	display: flex;
+}
 .reviewImage{
 	display: table-cell;
 	width: 150px;
 	height: 150px;
+	background-color: #E9E9E9;
+}
+.reviewImage_Main{
+	width: 120px;
+	height: 120px;
 	background-color: #E9E9E9;
 }
 .reviewDetail{
@@ -261,6 +285,16 @@ hr {width: 1280px; visibility: hidden;}
 	margin-bottom: 15px;
 	margin-left: 10px;
 	font-size: 15px;
+	color: #767676;
+}
+.reviewDetail_Main{
+	display: inline-block;
+	width: 650px;
+	min-height:auto;
+	margin-bottom: 15px;
+	margin-left: 10px;
+	margin-top: 10px;
+	font-size: 13px;
 	color: #767676;
 }
 .expand{
@@ -352,7 +386,44 @@ hr {width: 1280px; visibility: hidden;}
 	font-size: 22px;
 	font-weight: bold;
 }
- 
+/* 후기 모달창 */
+.review_wrap{
+	display: none;
+	width: 680px;
+	height: 350px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -250px -350px; 0 -250px;
+	padding: 20px;
+	background: white;
+	z-index: 1;
+}
+.black_bg{
+	display: none;
+	position: fixed;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0,0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+.review_close{
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+.review_close > a{
+	display: block;
+	width: 100%;
+	height: 100%;
+	background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
 </style>
 </head>
 <body>
@@ -424,25 +495,61 @@ hr {width: 1280px; visibility: hidden;}
 		
 		
 		<div class="reviewArea">
-			<div class="reviewWriter" align="left">
-				<span id="reviewWriter">스프링</span>
-				<span id="revieDate">2020-11-28</span>
-				<span id="reviewStar">★★★★★</span>
-			</div>
-			<div class="reviewImageArea" align="left">
-				<div class="reviewImage"></div>
-				<div class="reviewImage"></div>
-				<div class="reviewImage"></div>
-			</div>
-			<div class="reviewDetail" align="left">
-				<div>텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. 그리고 밥도 안주고 텃밭만 가꾸게 시켜요<br>
-					 노잼노잼 아무도 이거 하지마세요 왜 별점이 4.8이나 되는지 모르겠네요; <br>
-					 별미텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. </div>
+			<div class="review_flex">
+				<div class="reviewImageArea_Main" align="left">
+					<div class="reviewImage_Main"></div>
+				</div>
+				<div class="reviewWriter_Main" align="left">
+					<span id="reviewWriter">스프링</span>
+					<span id="revieDate">2020-11-28</span>
+					<span id="reviewStar">★★★★★</span>
+					<div class="reviewDetail_Main">
+					텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. 그리고 밥도 안주고 텃밭만 가꾸게 시켜요
+					노잼노잼 아무도 이거 하지마세요 왜 별점이 4.8이나 되는지 모르겠네요;
+					별미텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데..
+					</div>
+				</div>
 			</div>
 			<div class="expand" align="right">
 				<input type="button" id="expandButton" value="+확대하기">
+				<div class="black_bg"></div>
+				<div class="review_wrap">
+					<div class="review_close"><a href="#"></a></div>
+					<div>
+						<div class="reviewWriter" align="left">
+						<span id="reviewWriter">스프링</span>
+						<span id="revieDate">2020-11-28</span>
+						<span id="reviewStar">★★★★★</span>
+					</div>
+					<div class="reviewImageArea" align="left">
+						<div class="reviewImage"></div>
+						<div class="reviewImage"></div>
+						<div class="reviewImage"></div>
+					</div>
+					<div class="reviewDetail" align="left">
+						<div>텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. 그리고 밥도 안주고 텃밭만 가꾸게 시켜요<br>
+							 노잼노잼 아무도 이거 하지마세요 왜 별점이 4.8이나 되는지 모르겠네요; <br>
+							 별미텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. </div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+		<script>
+			window.onload = function(){
+				function onClick(){
+					document.querySelector('.review_wrap').style.display = 'block';
+					document.querySelector('.black_bg').style.display = 'block';
+				}
+				function offClick(){
+					document.querySelector('.review_wrap').style.display = 'none';
+					document.querySelector('.black_bg').style.display = 'none';
+				}
+				
+				document.getElementById('expandButton').addEventListener('click', onClick);
+				document.querySelector('.review_close').addEventListener('click', offClick);
+			}
+		</script>
 		
        <!-- 메뉴바 -->
        <div class="nav-area" align="center">
