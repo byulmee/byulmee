@@ -8,38 +8,36 @@ public class Product {
 	private int proCharge;
 	private int proStock;
 	private int proMaximum;
-	private int salNo;
-	private int salCategory;
-	private String salTitle;
-	private int salPrice;
-	private String salUrl;
-	private String salContent;
-	private String salGuide;
-	private int salCount;
-	private Date salDate;
-	private String salStatus;
+	private int proCategory;
+	private String proTitle;
+	private int proPrice;
+	private String proUrl;
+	private String proContent;
+	private String proGuide;
+	private int proCount;
+	private Date proDate;
+	private String proStatus;
 	
 	public Product() {}
 	
-	public Product(int proNo, String memId, int proCharge, int proStock, int proMaximum, int salNo, int salCategory,
-			String salTitle, int salPrice, String salUrl, String salContent, String salGuide, int salCount,
-			Date salDate, String salStatus) {
+	public Product(int proNo, String memId, int proCharge, int proStock, int proMaximum, int proCategory,
+			String proTitle, int proPrice, String proUrl, String proContent, String proGuide, int proCount,
+			Date proDate, String proStatus) {
 		super();
 		this.proNo = proNo;
 		this.memId = memId;
 		this.proCharge = proCharge;
 		this.proStock = proStock;
 		this.proMaximum = proMaximum;
-		this.salNo = salNo;
-		this.salCategory = salCategory;
-		this.salTitle = salTitle;
-		this.salPrice = salPrice;
-		this.salUrl = salUrl;
-		this.salContent = salContent;
-		this.salGuide = salGuide;
-		this.salCount = salCount;
-		this.salDate = salDate;
-		this.salStatus = salStatus;
+		this.proCategory = proCategory;
+		this.proTitle = proTitle;
+		this.proPrice = proPrice;
+		this.proUrl = proUrl;
+		this.proContent = proContent;
+		this.proGuide = proGuide;
+		this.proCount = proCount;
+		this.proDate = proDate;
+		this.proStatus = proStatus;
 	}
 
 	public int getProNo() {
@@ -82,92 +80,85 @@ public class Product {
 		this.proMaximum = proMaximum;
 	}
 
-	public int getSalNo() {
-		return salNo;
+	public int getProCategory() {
+		return proCategory;
 	}
 
-	public void setSalNo(int salNo) {
-		this.salNo = salNo;
+	public void setProCategory(int proCategory) {
+		this.proCategory = proCategory;
 	}
 
-	public int getSalCategory() {
-		return salCategory;
+	public String getProTitle() {
+		return proTitle;
 	}
 
-	public void setSalCategory(int salCategory) {
-		this.salCategory = salCategory;
+	public void setProTitle(String proTitle) {
+		this.proTitle = proTitle;
 	}
 
-	public String getSalTitle() {
-		return salTitle;
+	public int getProPrice() {
+		return proPrice;
 	}
 
-	public void setSalTitle(String salTitle) {
-		this.salTitle = salTitle;
+	public void setProPrice(int proPrice) {
+		this.proPrice = proPrice;
 	}
 
-	public int getSalPrice() {
-		return salPrice;
+	public String getProUrl() {
+		return proUrl;
 	}
 
-	public void setSalPrice(int salPrice) {
-		this.salPrice = salPrice;
+	public void setProUrl(String proUrl) {
+		this.proUrl = proUrl;
 	}
 
-	public String getSalUrl() {
-		return salUrl;
+	public String getProContent() {
+		return proContent;
 	}
 
-	public void setSalUrl(String salUrl) {
-		this.salUrl = salUrl;
+	public void setProContent(String proContent) {
+		this.proContent = proContent;
 	}
 
-	public String getSalContent() {
-		return salContent;
+	public String getProGuide() {
+		return proGuide;
 	}
 
-	public void setSalContent(String salContent) {
-		this.salContent = salContent;
+	public void setProGuide(String proGuide) {
+		this.proGuide = proGuide;
 	}
 
-	public String getSalGuide() {
-		return salGuide;
+	public int getProCount() {
+		return proCount;
 	}
 
-	public void setSalGuide(String salGuide) {
-		this.salGuide = salGuide;
+	public void setProCount(int proCount) {
+		this.proCount = proCount;
 	}
 
-	public int getSalCount() {
-		return salCount;
+	public Date getProDate() {
+		return proDate;
 	}
 
-	public void setSalCount(int salCount) {
-		this.salCount = salCount;
+	public void setProDate(Date proDate) {
+		this.proDate = proDate;
 	}
 
-	public Date getSalDate() {
-		return salDate;
+	public String getProStatus() {
+		return proStatus;
 	}
 
-	public void setSalDate(Date salDate) {
-		this.salDate = salDate;
-	}
-
-	public String getSalStatus() {
-		return salStatus;
-	}
-
-	public void setSalStatus(String salStatus) {
-		this.salStatus = salStatus;
+	public void setProStatus(String proStatus) {
+		this.proStatus = proStatus;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [proNo=" + proNo + ", memId=" + memId + ", proCharge=" + proCharge + ", proStock=" + proStock
-				+ ", proMaximum=" + proMaximum + ", salNo=" + salNo + ", salCategory=" + salCategory + ", salTitle="
-				+ salTitle + ", salPrice=" + salPrice + ", salUrl=" + salUrl + ", salContent=" + salContent
-				+ ", salGuide=" + salGuide + ", salCount=" + salCount + ", salDate=" + salDate + ", salStatus="
-				+ salStatus + "]";
+				+ ", proMaximum=" + proMaximum + ", proCategory=" + proCategory + ", proTitle=" + proTitle
+				+ ", proPrice=" + proPrice + ", proUrl=" + proUrl + ", proContent=" + proContent + ", proGuide="
+				+ proGuide + ", proCount=" + proCount + ", proDate=" + proDate + ", proStatus=" + proStatus + "]";
 	}
+	
+	
 }
