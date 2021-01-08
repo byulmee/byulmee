@@ -554,3 +554,4 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,macos,windows,vscode,eclipse,visualstudio,visualstudiocode,git,maven
 
 Servers/
+src/main/resources/config/
