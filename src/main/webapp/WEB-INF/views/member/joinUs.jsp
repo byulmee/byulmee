@@ -18,9 +18,6 @@
 <body>
     <form id="join" action="joinUs.me" autocomplete="off" method="post">
         <h1 class="title">별미 회원가입</h1>
-        <input type="text" id="test" onkeyup="doRegTest();")>
-        
-        
         <hr>
         <ul id="join-frame">
         	<c:if test="${!empty sessionScope.oauthInfo}">
@@ -30,7 +27,7 @@
         	</c:if>
             <li>
                 <label>아이디</label>
-                <span class="hint">아이디는 최소 4자~15자 이내여야 하고,<br>영문자, 숫자, 특수문자(-, _)의 조합만 가능합니다.</span>
+                <span class="hint">아이디는 최소 4자~20자 이내여야 하고,<br>영문자, 숫자, 특수문자(-, _)의 조합만 가능합니다.</span>
                     <c:if test="${!empty sessionScope.oauthInfo}">
                     	<input type="text" name="memId" autocomplete="off" value="${oauthInfo.getMemId()}" readonly>
                     </c:if>
@@ -41,7 +38,7 @@
             <li>
                 <label>비밀번호</label>
                 <span class="hint">비밀번호는 8자~20자 이내여야 하고,<br>영문자, 특수문자, 숫자가 반드시 하나 이상 포함되어야 합니다.</span>
-                <input type="password" name="memPwd" id="memPwd" onkeyup="doRegTest();" required autocomplete="nofill">
+                <input type="password" name="memPwd" id="memPwd" required autocomplete="nofill">
                 <input type="password" name="pwdCheck" id="pwdCheck" required autocomplete="nofill">
             </li>
             <li>
@@ -73,7 +70,7 @@
             <li>
                 <label>이메일</label>
                 <c:if test="${!empty sessionScope.oauthInfo}">
-                	<input type="email" name="memEmail" value="${oauthInfo.getMemEmail()}" readonly>
+                	<input type="email" name="memEmail" value="${oauthInfo.getMemEmail()}">
                 </c:if>
                  <c:if test="${empty sessionScope.oauthInfo}">
                 	<input type="email" name="memEmail" autocomplete="off">
@@ -86,29 +83,14 @@
     </form>
     
     <script>
-	    function doRegTest() {
-	    	let test = document.querySelector("#memPwd");
-			let str = document.querySelector("#memPwd").value;
-			
-			let errorBox = document.createElement('span');
-			let errorMsg = document.createTextNode('영문, 숫자, 특수문자가 각각 1개 이상 조합되어야합니다.');
-			errorBox.appendChild(errorMsg);
-			
-			let result = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/gm.test(str);
-			
-			if(result) {
-				test.setAttribute('class', '');
-				console.log(str);
-				console.log('true');
-			} else {
-				test.setAttribute('class', 'strong');
-				document.querySelector("#memPwd").appendChild(errorBox);
-				errorBox.setAttribute('class', 'hint strong');
-				console.log(str);
-				console.log('false')
-			}
-	    }
-
+	    $.validator.addMethod("checkPwd", function(value, element) {
+	        return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
+	    },"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
+	    
+    	$.validator.addMethod("idCheck",  function( value, element ) {
+ 	   	   return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[-_])(?=.{4,})/g.test(value);
+ 	   	});
+     	
     	$.validator.addMethod("idCheck",  function( value, element ) {
 	   	   return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/g.test(value);
 	   	});
@@ -130,7 +112,7 @@
 	    		memId : {
 	    			required : true,
 	    			minlength : 4,
-	    			maxlength : 15,
+	    			maxlength : 20,
 	    			remote: {
 	    				url: 'checkId.me',
 	    				data: { memId : function() { 
@@ -143,6 +125,7 @@
 	    	 		required : true,
 	    			minlength : 8,
 	    			maxlength : 20,
+	    			checkPwd: true
 	    	 	},
 	    	 	pwdCheck : {
 	    	 		required : true,
@@ -220,21 +203,6 @@
 	    	 	}
 	    	}
 	    });
-	    
-	    /* $('#memPwd').blur(function(){
-	    	let pwdInput = $('#memPwd');
-	    	
-	    	let result = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/gm.test(memPwd);
-	    	
-	    	if(!result) {
-	    		console.log("!");
-	    		$('input[name=memPwd]~span').text('영문, 숫자, 특수문자가 각각 1개 이상 조합되어야합니다.');
-	    	} else {
-	    		console.log("통과~");
-	    		$('input[name=memPwd]~span').text('');
-	    	}
-	    }); */
     </script>
-
 </body>
 </html>

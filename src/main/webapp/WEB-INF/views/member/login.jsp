@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,15 +51,20 @@
 	    window.onpopstate = function () {
 	        history.go(1);
 		};
-		
-		$('.kakao').click(function(){
-			location.href='kakao_oauth.me';
-		});
-		
-		$(function(){
-			$('button.kakao').click(function(){
-				location.href='https://kauth.kakao.com/oauth/authorize?client_id=8c2d3b0c2a33b21fc67c577be7a832e0&redirect_uri=http://localhost:9180/kakao&response_type=code';
-			});
+		$('button.kakao').click(function(){
+			<c:set var="clientId">
+		    	<spring:eval expression="@oauthInfo['clientId']"/>
+		    </c:set>
+		    <c:set var="redirectUri">
+	    		<spring:eval expression="@oauthInfo['redirectUri']"/>
+	   		</c:set>
+			
+			const id = '<c:out value="${clientId}"/>';
+			const redirectUri = '<c:out value="${redirectUri}"/>';
+			const requestUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + id + '&redirect_uri='+ redirectUri + '&response_type=code';
+			
+			console.log(requestUrl);
+			location.href=requestUrl;
 		});
     </script>
 </body>

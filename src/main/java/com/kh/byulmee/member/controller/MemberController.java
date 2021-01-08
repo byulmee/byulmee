@@ -1,13 +1,11 @@
 package com.kh.byulmee.member.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -46,13 +44,26 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
+	@Value("#{oauthInfo['grantType']}")
+	private String grantType;
+	
+	@Value("#{oauthInfo['clientId']}")
+	private String clientId;
+	
+	@Value("#{oauthInfo['redirectUri']}")
+	private String redirectUri;
+	
 	@RequestMapping("loginView.me")
 	public String loginView() {
 		return "login";
 	}
 	
 	@RequestMapping("joinUsView.me")
-	public String joinUsView() {
+	public String joinUsView(HttpSession session, SessionStatus status) {
+		
+		if(session.getAttribute("oauthInfo") != null) {
+			status.setComplete();
+		}
 		return "joinUs";
 	}
 	
@@ -73,24 +84,25 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="joinUs.me", method = RequestMethod.POST)
-	public String joinUs(@ModelAttribute Member m, Model model, HttpSession session, SessionStatus status) {
+	public String joinUs(@ModelAttribute Member memberInfo, Model model, HttpServletRequest request) {
 		
-		status.setComplete();
+		String encodedPwd = bcrypt.encode(memberInfo.getMemPwd());
+		memberInfo.setMemPwd(encodedPwd);
 		
-		String encodedPwd = bcrypt.encode(m.getMemPwd());
-		m.setMemPwd(encodedPwd);
-		
-		int result = mService.insertMember(m);
+		int result = mService.insertMember(memberInfo);
 		
 		if(result > 0) {
+			HttpSession session = request.getSession();
+			
 			if(session.getAttribute("oauthInfo") != null) {
-				status.isComplete();
-				Member loginUser = mService.selectMember(m.getMemId());
+				session.invalidate();
+				
+				Member loginUser = mService.selectMember(memberInfo.getMemId());
 				model.addAttribute("loginUser", loginUser);
-				return "redirect: home.do";
+				return "redirect:home.do";
 			}
 			
-			return "redirect: loginView.me";
+			return "redirect:loginView.me";
 		} else {
 			throw new MemberException();
 		}
@@ -160,10 +172,7 @@ public class MemberController {
 	@RequestMapping("checkId.me")
 	@ResponseBody
 	public boolean checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
-		System.out.println(memId);
 		boolean result = mService.checkId(memId) == 0 ? true : false;
-		
-		System.out.println(result);
 		
 		return result;
 	}
@@ -172,8 +181,6 @@ public class MemberController {
 	@ResponseBody
 	public boolean checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
 		boolean result = mService.checkNickname(nickname) < 1 ? true : false;
-		
-		System.out.println(result);
 		
 		return result;
 	}
@@ -188,7 +195,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/kakao")
 	public ModelAndView kakaoAuth(String code, HttpServletRequest req, HttpServletResponse resp, Model model, ModelAndView mv) {
-		
 		//Post 방식으로 key=value 데이터를 요청(카카오쪽으로)
 		/* java에서 url 요청하는 법 */
 		//java 클래스 사용
@@ -206,8 +212,8 @@ public class MemberController {
 		//body의 파라미터 선언
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
-		params.add("client_id", "8c2d3b0c2a33b21fc67c577be7a832e0");
-		params.add("redirect_uri", "http://localhost:9180/kakao");
+		params.add("client_id", clientId);
+		params.add("redirect_uri", redirectUri);
 		params.add("code", code);
 		
 		//params의 body 데이터와 head를 가진 개체를 생성
@@ -250,7 +256,7 @@ public class MemberController {
 		
 		KakaoProfile kakaoProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
 		
-		String id = "k" + kakaoProfile.getId();
+		String id = "bmk001" + kakaoProfile.getId();
 		
 		boolean isFirstVisit = mService.checkId(id) < 1 ? true : false;
 		
@@ -267,8 +273,7 @@ public class MemberController {
 				throw new MemberException("로그인에 실패하였습니다.");
 			}
 			
-			model.addAttribute("loginUser", m);
-			mv.setViewName("../index");
+			mv.setViewName("redirect:home.do");
 		}
 		return mv;
 	}

@@ -10,7 +10,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "memPwd")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
