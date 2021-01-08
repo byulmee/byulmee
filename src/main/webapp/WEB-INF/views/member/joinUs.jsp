@@ -83,6 +83,10 @@
     </form>
     
     <script>
+    	$('.confirm-btn').on('click', function(){
+    		location.href='https://sens.apigw.ntruss.com/sms/v2?Content-Type=application/json&x-ncp-apigw-timestamp='
+    	});
+    
 	    $.validator.addMethod("checkPwd", function(value, element) {
 	        return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
 	    },"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
