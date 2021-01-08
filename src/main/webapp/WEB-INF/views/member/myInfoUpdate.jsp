@@ -245,7 +245,7 @@
 		            		<button class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
-		            		<button class="sideMenuBtn">작업실</button>
+		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
 		            	</c:if>
 					</li>
 				</ul>
