@@ -49,6 +49,16 @@
 	    window.onpopstate = function () {
 	        history.go(1);
 		};
+		
+		$('.kakao').click(function(){
+			location.href='kakao_oauth.me';
+		});
+		
+		$(function(){
+			$('button.kakao').click(function(){
+				location.href='https://kauth.kakao.com/oauth/authorize?client_id=8c2d3b0c2a33b21fc67c577be7a832e0&redirect_uri=http://localhost:9180/oauth/kakao&response_type=code';
+			});
+		});
     </script>
 </body>
 </html>
