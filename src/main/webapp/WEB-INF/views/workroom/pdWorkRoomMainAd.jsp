@@ -216,10 +216,10 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn" id="selectedBtn">활동 목록 관리</button>
+						<button onclick="" class="sideMenuBtn" >활동 목록 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn" onclick="location.href='productView.wr'">상품 목록 관리</button>
+						<button onclick="" class="sideMenuBtn" id="selectedBtn">상품 목록 관리</button>
 					</li>
 					<li class="sideMenuLi">
 						<button onclick="" class="sideMenuBtn">주문 내역 관리</button>
@@ -232,8 +232,8 @@
 		</div>
 		<div class="MainLogoText">
 			<p class="MainText">
-				스타 활동 전체보기
-				<span class="insertArea"><button class="insertBtn" onclick="location.href='activityInsertForm.wr'">활동등록</button></span>
+				스타 상품 전체보기
+				<span class="insertArea"><button class="insertBtn" onclick="location.href='productInsertForm.wr'">상품등록</button></span>
 			</p>
 		</div>
 		<div class="content">
