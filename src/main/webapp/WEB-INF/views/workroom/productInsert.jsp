@@ -130,7 +130,7 @@ label {
 	float: left;
 	text-align: right;
 	padding-left: 30px;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 .inputText>input {
@@ -213,7 +213,7 @@ img {
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div class="outer">
-	<form action="ainsert.wr" method="post" enctype="Multipart/form-data">
+	<form action="pinsert.wr" method="post" enctype="Multipart/form-data">
 		<div class="MainLogoText">
 			<p class="MainText">활동 등록</p>
 			<input type="hidden" name="memId" value="${ loginUser.memId }">
@@ -224,48 +224,48 @@ img {
 		<div class="mainInput">
 			<div class="radiogroup">
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="activity" id="Group1">
+					<input type="radio" name="productGroup" value="activity" id="Group1">
 					<label for="Group1">액티비티</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="living" id="Group2">
+					<input type="radio" name="productGroup" value="living" id="Group2">
 					<label for="Group2">리빙</label> 
 				</div>
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="health" id="Group3">
+					<input type="radio" name="productGroup" value="health" id="Group3">
 					<label for="Group3">건강/미용</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="healing" id="Group4">
+					<input type="radio" name="productGroup" value="healing" id="Group4">
 					<label for="Group4">힐링</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="food" id="Group5">
+					<input type="radio" name="productGroup" value="food" id="Group5">
 					<label for="Group5">푸드</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="career" id="Group6">
+					<input type="radio" name="productGroup" value="career" id="Group6">
 					<label for="Group6">커리어</label>
 				</div>
-				<input type="hidden" name="actCategory" id="actCategory">
+				<input type="hidden" name="proCategory" id="proCategory">
 			</div>
 			<script>
 				$(document).ready(function(){
-					$('input:radio[name=activityGroup]').on('change', function(){
+					$('input:radio[name=productGroup]').on('change', function(){
 						var category = $(this).attr('value');
 						console.log(category);
 						if(category == "activity"){
-							$('#actCategory').val("0");
+							$('#proCategory').val("0");
 						} else if(category == "living"){
-							$('#actCategory').val("1");
+							$('#proCategory').val("1");
 						} else if(category == "health"){
-							$('#actCategory').val("2");
+							$('#proCategory').val("2");
 						} else if(category == "healing"){
-							$('#actCategory').val("3");
+							$('#proCategory').val("3");
 						} else if(category == "food"){
-							$('#actCategory').val("4");
+							$('#proCategory').val("4");
 						} else {
-							$('#actCategory').val("5");
+							$('#proCategory').val("5");
 						}
 					});
 				});
@@ -276,20 +276,17 @@ img {
 					<button type="button" id="thumbnailbtn">썸네일 등록</button>
 				</div>
 				<div class="inputText">
-					제목&nbsp;&nbsp;<input type="text" name="actTitle" class="inputValue" id="inputTitle"><br> 
-					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle"><br>
-					활동비&nbsp;&nbsp;<input type="text" name="actPrice" class="inputValue"	id="inputTitle"><br> 
-					활동기간&nbsp;&nbsp;<input	type="text" name="actStartday" class="inputTime" id="inputTitle" placeholder="2020.11.30 14:00"> -&nbsp;&nbsp;
-					<input type="text" name="actEndday" class="inputTime" id="inputTitle" placeholder="2020.11.30 14:00"><br> 
-					활동 장소&nbsp;&nbsp;<input type="text" name="actPlace" class="inputValue" id="inputTitle"><br>
-					참여 가능 인원&nbsp;&nbsp;<input type="text" name="actPeople" class="inputValue" id="inputTitle"><br> 
-					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle"><br> 
-					관련 상품 링크&nbsp;&nbsp;<input type="text" name="actUrl" class="inputValue" id="inputTitle" placeholder="http://">
+					제목&nbsp;&nbsp;<input type="text" name="proTitle" class="inputValue" id="inputTitle"><br> 
+					상품 가격&nbsp;&nbsp;<input type="text" name="proPrice" class="inputValue" id="inputTitle"><br> 
+					배송비&nbsp;&nbsp;<input type="text" name="proCharge" class="inputValue" id="inputTitle"><br>
+					상품 재고&nbsp;&nbsp;<input type="text" name="proStock" class="inputValue" id="inputTitle"><br>
+					최대 구매 가능 수량&nbsp;&nbsp;<input type="text" name="proMaximum" class="inputValue" id="inputTitle"><br> 
+					관련 활동 링크&nbsp;&nbsp;<input type="text" name="proUrl" class="inputValue" id="inputTitle" placeholder="http://">
 				</div>
 			</div>
 		</div>
 		<div class="InputName">
-			<p class="inputName">활동 이미지 등록</p>
+			<p class="inputName">상품 이미지 등록</p>
 		</div>
 			 
 			 
@@ -371,13 +368,13 @@ img {
 			<p class="inputName">본문 작성</p>
 		</div>
 		<div class="TextArea">
-			<textarea type="text" name="actContent" class="form-control" id="inputContent" style="height: 300px"></textarea>
+			<textarea type="text" name="proContent" class="form-control" id="inputContent" style="height: 300px"></textarea>
 		</div>
 		<div class="InputName">
 			<p class="inputName">구매 유의 사항 및 환불 규정</p>
 		</div>
 		<div class="TextArea">
-			<textarea type="text" name="actGuide" class="form-control" id="inputContent" style="height: 150px"></textarea>
+			<textarea type="text" name="proGuide" class="form-control" id="inputContent" style="height: 150px"></textarea>
 		</div>
 		<div id="buttonArea">
 			<button type="submit" id="insertBtn" class="btn btn mb-3">등록</button>
