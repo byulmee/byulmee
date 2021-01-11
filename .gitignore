@@ -555,4 +555,8 @@ MigrationBackup/
 
 Servers/
 
-# git rm --cached auploadFiles\ -r
+#설정정보
+src/main/resources/config/
+
+#이미지 저장 폴더
+auploadFiles/
