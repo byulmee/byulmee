@@ -57,9 +57,9 @@
             </li>
             <li>
                 <label>휴대전화</label>
-                <span class="hint">연락처를 등록하려면 인증이 필요합니다.<br>"인증하기"를 눌러 확인해주세요.</span>
+                <span class="hint">휴대전화 인증이 필요합니다.<br>"인증하기"를 눌러 인증코드를 확인  입력해주세요.</span>
                 <div class="item-with-btn">
-                    <input type="text" name="memePhone" autocomplete="nofill">
+                    <input type="text" name="memPhone" autocomplete="nofill">
                     <button type="button" class="confirm-btn">인증하기</button>
                 </div>
             </li>
@@ -84,7 +84,16 @@
     
     <script>
     	$('.confirm-btn').on('click', function(){
-    		location.href='https://sens.apigw.ntruss.com/sms/v2?Content-Type=application/json&x-ncp-apigw-timestamp='
+    		$.ajax({
+    			url: 'validatePhone.me',
+    			data: {'memPhone':function(){
+    							return $('input[name=memPhone]').val();		
+    						}
+    				   },
+    			success: function(data) {
+    				console.log(data);
+    			}
+    		});
     	});
     
 	    $.validator.addMethod("checkPwd", function(value, element) {

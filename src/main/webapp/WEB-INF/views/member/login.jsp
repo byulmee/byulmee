@@ -52,19 +52,16 @@
 	        history.go(1);
 		};
 		$('button.kakao').click(function(){
-			<c:set var="clientId">
-		    	<spring:eval expression="@oauthInfo['clientId']"/>
+			<c:set var="kClientId">
+		    	<spring:eval expression="@keys['k.clientId']"/>
 		    </c:set>
-		    <c:set var="redirectUri">
-	    		<spring:eval expression="@oauthInfo['redirectUri']"/>
+		    <c:set var="kRedirectUri">
+	    		<spring:eval expression="@keys['k.redirectUri']"/>
 	   		</c:set>
 			
-			const id = '<c:out value="${clientId}"/>';
-			const redirectUri = '<c:out value="${redirectUri}"/>';
+			const id = '<c:out value="${kClientId}"/>';
+			const redirectUri = '<c:out value="${kRedirectUri}"/>';
 			const requestUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + id + '&redirect_uri='+ redirectUri + '&response_type=code';
-			
-			console.log(requestUrl);
-			location.href=requestUrl;
 		});
     </script>
 </body>

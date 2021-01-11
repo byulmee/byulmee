@@ -1,6 +1,0 @@
-kakao:
-  grant_type: authorization_code
-  client_id: 8c2d3b0c2a33b21fc67c577be7a832e0
-  redirect_uri: http://localhost:9180/byulmee/oauth/kakao
-  code: code
-  

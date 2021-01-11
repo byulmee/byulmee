@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.member.model.vo.Member;
 
+/* by다혜: 회원 정보 처리 DAO */
 @Repository("mDAO")
 public class MemberDAO {
 
