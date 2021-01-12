@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="activityMapper">
+
+	<resultMap type="Activity" id="activityResultSet">
+		<id property="actNo" column="ACT_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="actPhone" column="ACT_PHONE"/>
+		<result property="actStartday" column="ACT_STARTDAY"/>
+		<result property="actEndday" column="ACT_ENDDAY"/>
+		<result property="actPlace" column="ACT_PLACE"/>
+		<result property="actPeople" column="ACT_PEOPLE"/>
+		<result property="actRequestend" column="ACT_REQUESTEND"/>
+		<result property="actCategory" column="ACT_CATEGORY"/>
+		<result property="actTitle" column="ACT_TITLE"/>
+		<result property="actPrice" column="ACT_PRICE"/>
+		<result property="actUrl" column="ACT_URL"/>
+		<result property="actContent" column="ACT_CONTENT"/>
+		<result property="actGuide" column="ACT_GUIDE"/>
+		<result property="actCount" column="ACT_COUNT"/>
+		<result property="actDate" column="ACT_DATE"/>
+		<result property="actStatus" column="ACT_STATUS"/>
+	</resultMap>
+	
+	<!-- 게시물 조회수 증가 -->
+	<update id="addReadCount">
+		update activity
+		set act_count = act_count + 1
+		where act_no = #{acId}
+	</update>
+	
+	<select id="selectActivity" resultMap="activityResultSet">
+		select *
+		from activity
+		where act_no=#{acId} and act_status='Y'
+	</select>
+	
+
+</mapper>
