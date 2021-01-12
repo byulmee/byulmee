@@ -1,5 +1,7 @@
 package com.kh.byulmee.image.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +21,10 @@ public class ImageServiceImpl implements ImageService {
 	public int insertImage(Image i) {
 		
 		return iDAO.insertImage(sqlSession, i);
+	}
+
+	@Override
+	public ArrayList<Image> selectImage(int acId) {
+		return iDAO.selectImage(sqlSession, acId);
 	}
 }

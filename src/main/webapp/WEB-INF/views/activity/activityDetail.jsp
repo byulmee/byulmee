@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +58,18 @@ body {
 	background-color: gray;
 	margin-left: 162px;
 	margin-top: 100px;
+}
+
+#thumbImg {
+	width: 500px;
+	height: 500px;
+	object-fit: fill;
+}
+
+#titleImg {
+	width: 800px;
+	height: auto;
+	object-fit: fill;
 }
 
 .product-info {
@@ -259,9 +271,9 @@ hr {
 }
 
 .detailArea {
-	height: 800px;
+	height: auto;
 	width: 957px;
-	background-color: #E9E9E9;
+	background-color: white;
 }
 
 .reviewArea {
@@ -587,6 +599,7 @@ hr {
 .rec-list.last {
 	margin-bottom: 80px;
 }
+
 </style>
 </head>
 <body>
@@ -596,7 +609,7 @@ hr {
 		<!-- 상단 섬네일, 상품 정보 -->
 		<div class="top">
 			<div class="thumbnail" align="center">
-				<img id="titleImg">
+				<img src="${ thumb }" id="thumbImg">
 			</div>
 
 			<div class="product-info" align="left">
@@ -649,7 +662,11 @@ hr {
 		</div>
 
 		<!-- 본문영역 -->
-		<div class="detailArea"></div>
+		<div class="detailArea">
+			<c:forEach var="content" items="${ content }">
+				<img src="${ content }" id="titleImg">
+			</c:forEach>
+		</div>
 
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
