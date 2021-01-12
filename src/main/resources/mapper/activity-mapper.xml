@@ -34,6 +34,15 @@
 		from activity
 		where act_no=#{acId} and act_status='Y'
 	</select>
-	
 
+	<!-- 활동 게시물 등록 -->
+	<insert id="insertActivity" useGeneratedKeys="true" keyProperty="actNo" keyColumn="ACT_NO">
+  		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
+  								ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
+  								ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
+  								ACT_COUNT, ACT_DATE, ACT_STATUS)
+  		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
+  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
+	</insert>
+  
 </mapper>

@@ -7,25 +7,30 @@ import org.springframework.stereotype.Service;
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
 
-@Service("acService")
+@Service("aService")
 public class ActivityServiceImpl implements ActivityService {
 	
 	@Autowired
-	private ActivityDAO acDAO;
+	private SqlSessionTemplate sqlSession;
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private ActivityDAO aDAO;
 
+	@Override
+	public int insertActivity(Activity a) {
+		int actNo = aDAO.insertActivity(sqlSession, a);
+		return actNo;
+	}
+	
 	@Override
 	public Activity selectActivity(int acId) {
 		
-		int result = acDAO.addReadCount(sqlSession, acId);
+		int result = aDAO.addReadCount(sqlSession, acId);
 		
 		Activity ac = null;
 		if(result > 0) {
-			ac = acDAO.selectActivity(sqlSession, acId);
+			ac = aDAO.selectActivity(sqlSession, acId);
 		}
-		
 		return ac;
 	}
 
