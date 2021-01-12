@@ -166,14 +166,14 @@
 		opacity: 0.4;
 		cursor: pointer;
 	}
-	.actArea {
+	.listArea {
 		min-height: 480px;
 	}
-	.act {
+	.list {
 		display: inline-block;
 		height: 140px;
 	}
-	.act:hover {
+	.list:hover {
 		opacity: 0.6;
 		cursor: pointer;
 	}
@@ -242,14 +242,14 @@
 			</div>
 		</div>
 		<div class="content">
-			<div class="actArea">
+			<div class="listArea">
 				<div class="headline">
 					<p class="title">찜한 활동</p>
 				</div>
 			<!-- 찜한 활동이 없는 경우 -->
 				<!-- <p class="nothing">찜한 활동이 없습니다.</p> -->
 			<!-- 찜한 활동이 있는 경우 반복문 시작 -->	
-				<div class="act" onclick="openModal('modal1')">
+				<div class="list" onclick="openModal('modal1')">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/surfing.jpg">
 					</div>
@@ -265,7 +265,7 @@
 					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/flower.png">
 					</div>
@@ -281,7 +281,7 @@
 					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/drawing.jpg">
 					</div>
@@ -297,7 +297,7 @@
 					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/leather.jpg">
 					</div>
@@ -313,7 +313,7 @@
 					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/write.jpg">
 					</div>
@@ -335,5 +335,7 @@
 			<!-- <hr class="line"> -->
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
 </body>
 </html>

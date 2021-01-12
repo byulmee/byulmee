@@ -140,18 +140,7 @@
 	.profileTd {
 		width: 200px;
 		height: 501px;
-		vertical-align: middle;
 		background: #F4F4F4;
-	}
-	.profileImgChange {
-		text-align: center;
-		font-size: 16px;
-		color: gray;
-	}
-	.profileImgDelete {
-		text-align: center;
-		font-size: 16px;
-		color: gray;
 	}
 	.colNameTd {
 		padding-left: 5px;
@@ -260,6 +249,14 @@
 						<button class="button" onclick="">사진 삭제</button>
 					</td>
 					<td class="colNameTd">
+						아이디
+					</td>
+					<td class="colContentTd">
+						<input type="text" name="id" id="id" class="input">
+					</td>
+				</tr>
+				<tr>
+					<td class="colNameTd">
 						이름
 					</td>
 					<td class="colContentTd">
@@ -275,7 +272,7 @@
 						<a class="alert_gray">사용 가능한 닉네임입니다.</a>
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td class="colNameTd">
 						새 비밀번호
 					</td>
@@ -291,7 +288,7 @@
 						<input type="password" name="newPwdCheck" id="newPwdCheck" class="input">
 						<a class="alert_orange">비밀번호가 일치하지 않습니다.</a>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td class="colNameTd">
 						이메일
@@ -343,5 +340,7 @@
 			</table>
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
 </body>
 </html>

@@ -265,5 +265,7 @@
 			<hr class="line">
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
 </body>
 </html>

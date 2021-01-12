@@ -168,14 +168,14 @@
 		color: white;
 		cursor: default;
 	}
-	.actArea {
+	.listArea {
 		min-height: 480px;
 	}
-	.act {
+	.list {
 		display: inline-block;
 		height: 140px;
 	}
-	.act:hover {
+	.list:hover {
 		opacity: 0.6;
 		cursor: pointer;
 	}
@@ -411,14 +411,14 @@
 			</div>
 		</div>
 		<div class="content">
-			<div class="actArea">
+			<div class="listArea">
 				<div class="headline">
 					<p class="title">구매한 상품</p>
 				</div>
 			<!-- 신청한 활동이 없는 경우 -->
 				<!-- <p class="nothing">신청한 활동이 없습니다.</p> -->
 			<!-- 신청한 활동이 있는 경우 반복문 시작 -->	
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/surfing.jpg">
 					</div>
@@ -436,7 +436,7 @@
 					<button class="button" onclick="openModal('reviewWrite')">리뷰작성</button>
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/flower.png">
 					</div>
@@ -454,7 +454,7 @@
 					<button class="button">리뷰작성</button>
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/drawing.jpg">
 					</div>
@@ -472,7 +472,7 @@
 					<button class="button" disabled>작성완료</button>
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/leather.jpg">
 					</div>
@@ -490,7 +490,7 @@
 					<button class="button" disabled>작성완료</button>
 				</div>
 				<hr class="line">
-				<div class="act">
+				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/write.jpg">
 					</div>
@@ -606,6 +606,8 @@
 			</table>
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
 	
 	<script>
 		function openModal(modalname) {
