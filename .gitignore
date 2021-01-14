@@ -554,4 +554,9 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,macos,windows,vscode,eclipse,visualstudio,visualstudiocode,git,maven
 
 Servers/
+
+#설정정보
 src/main/resources/config/
+
+#이미지 저장 폴더
+auploadFiles/
