@@ -224,7 +224,7 @@ img {
 		<div class="mainInput">
 			<div class="radiogroup">
 				<div class="radio">
-					<input type="radio" name="activityGroup" value="activity" id="Group1">
+					<input type="radio" name="activityGroup" value="activity" id="Group1" checked="checked">
 					<label for="Group1">액티비티</label>
 				</div>
 				<div class="radio">
@@ -251,6 +251,22 @@ img {
 			</div>
 			<script>
 				$(document).ready(function(){
+					var setCategory = $("input:radio[name=activityGroup]:checked").val();
+					if(setCategory == "activity"){
+						$('#actCategory').val("0");
+					} else if(setCategory == "living"){
+						$('#actCategory').val("1");
+					} else if(setCategory == "health"){
+						$('#actCategory').val("2");
+					} else if(setCategory == "healing"){
+						$('#actCategory').val("3");
+					} else if(setCategory == "food"){
+						$('#actCategory').val("4");
+					} else {
+						$('#actCategory').val("5");
+					}
+					
+					
 					$('input:radio[name=activityGroup]').on('change', function(){
 						var category = $(this).attr('value');
 						console.log(category);

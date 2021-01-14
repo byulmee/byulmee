@@ -2,6 +2,7 @@ package com.kh.byulmee.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,46 +92,6 @@ public class MemberController {
 			model.addAttribute("url", "loginView.me");
 			return "../common/alert";
 		}
-	}
-	
-	@RequestMapping("myPurView.me")
-	public String myPurView() {
-		return "myPur";
-	}
-	
-	@RequestMapping("myPurActView.me")
-	public String myPurActView() {
-		return "myPurAct";
-	}
-	
-	@RequestMapping("myPurProView.me")
-	public String myPurProView() {
-		return "myPurPro";
-	}
-	
-	@RequestMapping("myFavView.me")
-	public String myFavView() {
-		return "myFav";
-	}
-	
-	@RequestMapping("myFavActView.me")
-	public String myFavActView() {
-		return "myFavAct";
-	}
-	
-	@RequestMapping("myFavProView.me")
-	public String myFavProView() {
-		return "myFavPro";
-	}
-	
-	@RequestMapping("myFavStarView.me")
-	public String myFavStarView() {
-		return "myFavStar";
-	}
-	
-	@RequestMapping("myInfoView.me")
-	public String myInfoView() {
-		return "myInfo";
 	}
 	
 	@RequestMapping("checkId.me")

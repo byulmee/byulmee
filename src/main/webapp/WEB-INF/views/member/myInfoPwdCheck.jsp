@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -28,7 +27,7 @@
 		font-family: "Gmarket Sans TTF";
 	}
 
-/* 사이드 메뉴 */
+/* 사이드 메뉴 */	
 	.sideMenu {
 		position: absolute;
 		top: 0px;
@@ -38,7 +37,6 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		text-align: center;
 		padding: 25px;
 	}
 	.profileImg {
@@ -95,7 +93,17 @@
 		background: none;
 		cursor: pointer;
 	}
-	.sideMenuBtn:hover {
+	.dropdownBtn {
+		font-family: "Gmarket Sans TTF";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 50px;
+		outline: 0;
+		border: 0;
+		background: none;
+	}
+	.sideMenuBtn:hover, .dropdownBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -105,20 +113,19 @@
 		cursor: pointer;
 	}
 	
-/* 컨텐츠 */
+/* 컨텐츠 */	
 	.content {
-		min-height: 480px;
+		min-height: 500px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
+		height: 60px;
 		padding: 5px;
-		padding-bottom: 2px;
-		border: 1px solid #9F9F9F;
+		border: none;
 		background: white;
-		font-size: 14px;
 		font-family: "Gmarket Sans TTF";
 		cursor:pointer;
 		outline: 0;
@@ -128,62 +135,51 @@
 		color: white;
 		cursor: pointer;
 	}
+	#text {
+		font-size: 12px;
+	}
 	table {
-		width: 750px;
+		margin-left: auto;
+		margin-right: auto;
 		border-collapse: collapse;
 	}
-	table td {
-		border-bottom: 2px solid #F4F4F4;
-	}
-	table tr:last-child td {
-		border: 0;
-	}
-	.colNameTd {
-		padding-left: 70px;
-		text-align: left;
+	.tdName {
+		border: 1px solid #C4C4C4;
 		width: 80px;
-		height: 60px;
-	}
-	.alert_gray {
-		font-size: 14px;
-		color: #C4C4C4;
-	}
-	.alert_orange {
-		font-size: 14px;
-		color: #FF6833;
-	}
-	.colContentTd {
 		text-align: left;
-		width: 420px;
+		background: #F4F4F4;
+		padding: 5px;
 	}
-	.colContentTd_btn {
-		height: 60px;	
+	.tdContent {
+		border: 1px solid #C4C4C4;
+		text-align: left;
+		padding: 5px;
+	}
+	.tdButton {
+		border: 1px solid #C4C4C4;
 		vertical-align: middle;
-		text-align: center;
 	}
-	.input {
+	.inputIdField {
+		width: 140px;
 		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 250px;	
+		border: none;
+		background: white;
+		color: black;
+		font-family: "Gmarket Sans TTF";
+		font-size: 16px;
 	}
-	#post {
+	.inputPwdField {
+		width: 140px;
 		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 60px;		
+		border: none;
 	}
-	#address1 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 500px;		
-	}
-	#address2 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 500px;		
+	#test {
+		display: table-cell;
+		margin: 0;
+		padding: 0;
+		width: 750px;
+		height: 500px;
+		vertical-align: middle;
 	}
 </style>
 </head>
@@ -196,8 +192,6 @@
 	    	<div class="profile">
 				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
 				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
-				<button class="button" onclick="">사진 변경</button>
-				<button class="button" onclick="">사진 삭제</button>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -240,100 +234,36 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content">
-			<table>
-				<tr>
-					<td class="colNameTd">
-						아이디
-					</td>
-					<td class="colContentTd">
-						<input type="text" name="id" id="id" class="input" value="<c:out value="${ loginUser.memId }"/>" disabled>
-					</td>
-				</tr>
-				<tr>
-					<td class="colNameTd">
-						이름
-					</td>
-					<td class="colContentTd">
-						<input type="text" name="name" id="name" class="input" value="<c:out value="${ loginUser.memName }"/>" disabled>
-					</td>
-				</tr>
-				<tr>
-					<td class="colNameTd">
-						닉네임
-					</td>
-					<td class="colContentTd">
-						<input type="text" name="nickname" id="nickname" class="input" value="<c:out value="${ loginUser.memNickname }"/>">
-						<a class="alert_gray">사용 가능한 닉네임입니다.</a>
-					</td>
-				</tr>
-				<!-- <tr>
-					<td class="colNameTd">
-						새 비밀번호
-					</td>
-					<td class="colContentTd">
-						<input type="password" name="newPwd" id="newPwd" class="input">
-					</td>
-				</tr>
-				<tr>
-					<td class="colNameTd">
-						새 비밀번호 확인
-					</td>
-					<td class="colContentTd">
-						<input type="password" name="newPwdCheck" id="newPwdCheck" class="input">
-						<a class="alert_orange">비밀번호가 일치하지 않습니다.</a>
-					</td>
-				</tr> -->
-				<tr>
-					<td class="colNameTd">
-						이메일
-					</td>
-					<td class="colContentTd">
-						<input type="text" name="email" id="email" class="input" value="<c:out value="${ loginUser.memEmail }"/>">
-						<a class="alert_orange">중복된 이메일 주소입니다.</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="colNameTd">
-						휴대전화
-					</td>
-					<td class="colContentTd">
-						<input type="text" name="phone" id="phone" class="input" value="<c:out value="${ loginUser.memPhone }"/>">
-						<button class="button" onclick="">인증</button>
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="3" class="colNameTd">
-						주소
-					</td>
-					<td class="colContentTd" style="border:0">
-						<input type="text" name="post" id="post" class="postcodify_postcode5"  value="<c:out value="${ loginUser.memPostcode }"/>">
-						<button type="button" class="button" id="postcodify_search_button">검색</button>
-					</td>
-				</tr>
-				<tr>
-					<td class="colContentTd">
-						<input type="text" name="address1" id="address1" class="postcodify_address"  value="<c:out value="${ loginUser.memBasicAddr }"/>">
-					</td>
-				<tr>
-					<td class="colContentTd">
-						<input type="text" name="address2" id="address2" class="postcodify_extra_info"  value="<c:out value="${ loginUser.memDetailAddr }"/>">
-					</td>
-				</tr>
-				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-				<script>
-					$(function(){
-						$("#postcodify_search_button").postcodifyPopUp();
-					});
-				</script>
-				<tr>
-					<td colspan="2" class="colContentTd_btn">
-						<button class="button" onclick="">취소</button>
-						<button class="button" onclick="">확인</button>
-					</td>
-				</tr>
-			</table>
-		</div>
+		<form id="myInfoPwdCheck" action="myInfoPwdCheck.me" method="post" autocomplete="off">
+			<div class="content">
+				<div id="test">
+					<p id="text">
+						개인 정보 보호를 위해 비밀번호를 한번 더 입력해주세요.
+					</p>
+					<table>
+						<tr>
+							<td class="tdName">
+								아이디
+							</td>
+							<td class="tdContent">
+								<input type="text" class="inputIdField" value="<c:out value="${ loginUser.memId }"/>" disabled>
+							</td>
+							<td rowspan="2" class="tdButton">
+								<button type="submit" class="button">확인</button>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdName">
+								비밀번호
+							</td>
+							<td class="tdContent">
+								<input type="password" class="inputPwdField" name="memPwd">
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</form>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
