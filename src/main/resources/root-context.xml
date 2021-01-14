@@ -32,5 +32,5 @@
 	</bean>
 	
   <!-- properties를 어노테이션으로 불러오기 위한 설정 -->
-  <util:properties id="keys" location="classpath:/config/app.properties" />
+  <util:properties id="keys" location="classpath:config/app.properties" />
 </beans>
