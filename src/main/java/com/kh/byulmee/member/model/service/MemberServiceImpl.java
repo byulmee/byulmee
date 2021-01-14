@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.kh.byulmee.member.model.dao.MemberDAO;
 import com.kh.byulmee.member.model.vo.Member;
 
+/* by다혜: 회원 정보 추가, 업데이트, 조회 처리 Sevice */
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
 	
