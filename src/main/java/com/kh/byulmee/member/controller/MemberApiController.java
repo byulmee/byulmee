@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import com.kh.byulmee.member.model.service.MemberApiService;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
 
-@SessionAttributes({"loginUser", "oauthInfo"})
+@SessionAttributes({"loginUser", "oauthInfo", "phoneValidator"})
 
 /* by다혜: 회원 등록, 인증 처리 컨트롤러 */
 @Controller
@@ -94,6 +95,17 @@ public class MemberApiController {
 	}
 	
 	
+	/******** by다혜: 휴대전화 인증 메세지 발송 ********/
+	@RequestMapping(value="validatePhone.me", method=RequestMethod.POST)
+	@ResponseBody
+	public String validatePhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
+		
+		String result = mApiService.sendMmsRequest(memPhone);
+
+		return result;
+	}
+	
+	
 	/******** by다혜: 로그인&아웃 메소드 ********/
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
 	public String login(@RequestParam("memId") String memId, @RequestParam("memPwd")String memPwd, Model model) {
@@ -126,33 +138,38 @@ public class MemberApiController {
 	/******** by다혜: 간편 로그인 메소드 ********/
 	/*	
 	 *  모든 간편 로그인은 최초 로그인 시 반드시 회원 가입 필요
+	 *  회원가입을 진행하지 않으면 로그인 불가
 	 */
 	
 	/* by다혜: kakao 간편 로그인 */
 	@RequestMapping(value = "/kakao")
 	public ModelAndView kakaoAuth(String code, HttpServletRequest req, HttpServletResponse resp, Model model, ModelAndView mv) {
+		//카카오 토큰을 받은 후 이용자 정보 획득
 		KakaoToken kakaoToken = mApiService.getKakaoToken(code);
 		KakaoProfile kakaoProfile = mApiService.getKakaoUser(kakaoToken);
 		
-		//별미에서 사용할 카카오 간편 로그인 아이디 생성 후 아이디가 있는지 조회
+		//별미에서 사용할 카카오 간편 로그인 아이디 생성 후 해당 아이디로 회원가입했는지 확인
 		String id = "bmk001" + kakaoProfile.getId();
 		Member m = new Member();
 		boolean isFirstVisit = mService.checkId(id) < 1 ? true : false;
 		
 		if(isFirstVisit) {
+			//최초 방문일 경우 회원가입 페이지로 이동
 			m.setMemId(id);
 			m.setMemEmail(kakaoProfile.getKakao_account().getEmail());
+			
 			model.addAttribute("oauthInfo", m);
 			mv.setViewName("member/joinUs");
 		} else {
+			//이미 가입된 상태라면 로그인 세션 추가한 후 메인으로 redirect
 			m = mService.selectMember(id);
 			
 			if(m == null) {
 				throw new MemberException("로그인에 실패하였습니다.");
 			}
 			
-			mv.setViewName("redirect:home.do");
 			model.addAttribute("loginUser", m);
+			mv.setViewName("redirect:home.do");
 		}
 		return mv;
 	}

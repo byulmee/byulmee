@@ -19,7 +19,7 @@
 	
 	<insert id="insertMember">
 		insert into member
-		values(#{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
+		values(SEQ_MEMID.nextval, #{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
 			   #{memPhone}, #{memNickname}, #{memEmail}, 0, sysdate, default)
 	</insert>
 	

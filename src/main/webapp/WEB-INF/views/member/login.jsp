@@ -38,7 +38,7 @@
             </li>
             <li>
                 <button type="submit" class="submit-btn">로그인</button>
-                <button type="button" class="submit-btn kakao"><i class="fas fa-comment" onclick="location.href='#'"></i>카카오로 시작하기</button>
+                <button type="button" class="submit-btn kakao"><i class="fas fa-comment"></i>카카오로 시작하기</button>
                 <button type="button" class="submit-btn fb"><i class="fab fa-facebook" onclick="location.href='#'"></i>페이스북으로 시작하기</button>
             </li>
             <li>
@@ -62,6 +62,8 @@
 			const id = '<c:out value="${kClientId}"/>';
 			const redirectUri = '<c:out value="${kRedirectUri}"/>';
 			const requestUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + id + '&redirect_uri='+ redirectUri + '&response_type=code';
+			
+			location.href=requestUrl;
 		});
     </script>
 </body>

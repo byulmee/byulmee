@@ -2,6 +2,10 @@ body {
     color: #303441;
 }
 
+button:hover{
+	cursor: pointer;
+}
+
 #join {
     width: 80vw;
     margin: auto;
@@ -83,7 +87,6 @@ input.error {
 
 .strong {
 	color: #FF6833;
-	border: 1px solid #FF6833;
 }
 
 .item-with-btn {
@@ -95,6 +98,22 @@ input.error {
     border-radius: 5px;
     padding: 0 0.2rem 0 0.5rem;
     margin-bottom: 0.2rem;
+}
+
+.item-with-btn>button {
+	background-color: #ffffff;
+}
+
+.item-with-btn>button:hover{ 
+	background-color: #E4E5ED;
+}
+
+.disable-bg { 
+	background-color: #E4E5ED;
+}
+
+.strong {
+	border: 1px solid #FF6833;
 }
 
 .item-with-btn>input {
@@ -112,6 +131,25 @@ input.error {
 	background-color: #E4E5ED;
 }
 
+#memPhone-status, #memPhone-status.hint{
+	padding: 0;
+	margin: 0;
+} 
+
+#memPhone-status-error, #memPhone-status-error.hint {
+	padding: 0;
+	margin: 0;
+}
+
+#postcode-error {
+	padding: 0;
+	margin: 0;
+}
+
+#memPhone-error{
+	padding: 0;
+	margin: 0;
+}
 
 #searchAddr {
     box-sizing: border-box;
