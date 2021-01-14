@@ -14,6 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
+	private int memNo;
 	private String memId;
 	private String memPwd;
 	private String memName;

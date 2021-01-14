@@ -105,7 +105,7 @@
 	    	 		required : true,
 	    			minlength : 8,
 	    			maxlength : 20,
-	    			pwdCheck: true
+	    			pwdCheck: fasle
 	    	 	},
 	    	 	pwdCheck : {
 	    	 		required : true,
