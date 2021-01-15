@@ -76,14 +76,18 @@
 	    <div class="rec-list">
 	        <ul class="list">
 	            <li class="list-item item1">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	            	<div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="zz">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목너무길어무길어</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item2">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	               <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">예쁜텃밭가꿔요첫텃밭
 	                </div>
@@ -91,21 +95,27 @@
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item3">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	               	<div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item4">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목제목제목멪곰제곰제</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item5">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
@@ -125,35 +135,45 @@
 	    <div class="rec-list">
 	        <ul class="list">
 	            <li class="list-item item1">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item2">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item3">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item4">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item5">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	            	<div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
@@ -173,35 +193,45 @@
 	    <div class="rec-list last">
 	        <ul class="list">
 	            <li class="list-item item1">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item2">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item3">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item4">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+					<div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                 <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
 	                <span class="list-social">⭐️4.9 9999개의 평가</span>
 	            </li>
 	            <li class="list-item item5">
-	                <img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                <div class="img-frame">
+	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
+	                </div>
 	                <span>nickName</span>
 	                <div class="list-cate">[카테고리]제목제목</div>
 	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +16,7 @@
 </head>
 <body>
 	<c:import url="../common/gnb.jsp"/>
-    
+	
     <form id="login" action="login.me" method="post" autocomplete="off">
         <h1 class="title">별미 방문을 환영합니다!</h1>
         <hr>
@@ -36,7 +38,7 @@
             </li>
             <li>
                 <button type="submit" class="submit-btn">로그인</button>
-                <button type="button" class="submit-btn kakao"><i class="fas fa-comment" onclick="location.href='#'"></i>카카오로 시작하기</button>
+                <button type="button" class="submit-btn kakao"><i class="fas fa-comment"></i>카카오로 시작하기</button>
                 <button type="button" class="submit-btn fb"><i class="fab fa-facebook" onclick="location.href='#'"></i>페이스북으로 시작하기</button>
             </li>
             <li>
@@ -49,15 +51,19 @@
 	    window.onpopstate = function () {
 	        history.go(1);
 		};
-		
-		$('.kakao').click(function(){
-			location.href='kakao_oauth.me';
-		});
-		
-		$(function(){
-			$('button.kakao').click(function(){
-				location.href='https://kauth.kakao.com/oauth/authorize?client_id=8c2d3b0c2a33b21fc67c577be7a832e0&redirect_uri=http://localhost:9180/oauth/kakao&response_type=code';
-			});
+		$('button.kakao').click(function(){
+			<c:set var="kClientId">
+		    	<spring:eval expression="@keys['k.clientId']"/>
+		    </c:set>
+		    <c:set var="kRedirectUri">
+	    		<spring:eval expression="@keys['k.redirectUri']"/>
+	   		</c:set>
+			
+			const id = '<c:out value="${kClientId}"/>';
+			const redirectUri = '<c:out value="${kRedirectUri}"/>';
+			const requestUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + id + '&redirect_uri='+ redirectUri + '&response_type=code';
+			
+			location.href=requestUrl;
 		});
     </script>
 </body>
