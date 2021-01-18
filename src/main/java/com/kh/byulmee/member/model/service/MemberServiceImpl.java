@@ -40,4 +40,9 @@ public class MemberServiceImpl implements MemberService {
 	public int checkEmail(String email) {
 		return mDAO.checkEmail(sqlSession, email);
 	}
+
+	@Override
+	public Member selectActivityWriter(int acId) {
+		return mDAO.selectActivityWriter(sqlSession, acId);
+	}
 }

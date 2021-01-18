@@ -186,7 +186,7 @@ a img {
    <div id="pattern" class="pattern">
     <ul class="list img-list">
          <li>
-            <a href="#" class="inner" onclick="location.href='activityDetail.ac?acId=3'">
+            <a href="#" class="inner" onclick="location.href='activityDetail.ac?acId=1'">
                 <div class="image" style="width:140px;">
                     <img src="./images/1.PNG" id="image"alt="텃밭"  />
                 </div>

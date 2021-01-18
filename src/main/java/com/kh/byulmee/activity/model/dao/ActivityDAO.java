@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.member.model.vo.Member;
 
 @Repository("aDAO")
 public class ActivityDAO {
@@ -20,5 +21,7 @@ public class ActivityDAO {
 		public Activity selectActivity(SqlSessionTemplate sqlSession, int acId) {
 		return sqlSession.selectOne("activityMapper.selectActivity", acId);	
 	}
+
+
 
 }

@@ -13,4 +13,6 @@ public interface MemberService {
 	int checkNickname(String nickname);
 
 	int checkEmail(String email);
+
+	Member selectActivityWriter(int acId);
 }

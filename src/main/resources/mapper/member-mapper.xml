@@ -47,5 +47,13 @@
   		from member
   		where mem_email = #{email} and mem_status = 'Y'
   	</select>
+  	
+ 	<select id="selectActivityWriter" resultMap="memberResultSet">
+		select *
+		from member
+		where mem_id = (select mem_id 
+						from activity 
+						where act_no = #{acId})
+	</select> 	
  
 </mapper>

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=juwreae5tk"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=juwreae5tk&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
@@ -129,6 +131,15 @@ body {
 	cursor: pointer;
 }
 
+#amount{
+	width: 20px;
+	border: none;
+	text-align: center;
+	font-size: 15px;
+	color: black;
+	font-family: 'GmarketSansMedium';
+}
+
 #option3 {
 	font-size: 12px;
 	color: #9E9E9E;
@@ -144,7 +155,14 @@ body {
 }
 
 #all-price2 {
+	width: 90px;
+	border: none;
 	font-size: 25px;
+	color: black;
+	font-family: 'GmarketSansMedium';
+}
+input:focus {
+	outline:none;
 }
 
 #all-price3 {
@@ -160,7 +178,7 @@ body {
 	background: white;
 	border-radius: 18px;
 	color: #9B9B9B;
-	width: 200px;
+	width: 197px;
 	height: 76px;
 	text-align: center;
 	font-size: 18px;
@@ -173,7 +191,7 @@ body {
 	background: #FF6833;
 	border-radius: 18px;
 	color: white;
-	width: 200px;
+	width: 197px;
 	height: 76px;
 	text-align: center;
 	font-size: 18px;
@@ -191,6 +209,11 @@ body {
 	border-top: 1px solid #E9E9E9;
 	border-bottom: 1px solid #E9E9E9;
 	text-align: center;
+	background-color: #f8f8f8;
+}
+
+#star_img {
+	vertical-align: middle;
 }
 
 #starInfo1 {
@@ -219,6 +242,8 @@ body {
 	font-size: 12px;
 	outline: 0;
 	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
 }
 
 #star-button2 {
@@ -232,6 +257,8 @@ body {
 	font-size: 12px;
 	outline: 0;
 	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
 }
 
 hr {
@@ -274,6 +301,16 @@ hr {
 	height: auto;
 	width: 957px;
 	background-color: white;
+}
+
+#place, #starMessage{
+	font-size: 20px;
+	margin: 50px 0 15px 0;
+	font-family: 'GmarketSansBold';
+}
+
+#starMessage2{
+	line-height: 120%;
 }
 
 .reviewArea {
@@ -409,13 +446,6 @@ hr {
 	font-size: 13px;
 	margin-right: 20px;
 	color: #9E9E9E;
-}
-
-.questionWrite {
-	margin-top: 20px;
-	width: 700px;
-	height: 100px;
-	border: 1px solid #E9E9E9;
 }
 
 #questionButton {
@@ -600,6 +630,20 @@ hr {
 	margin-bottom: 80px;
 }
 
+#acId {
+	display: none;
+}
+
+#pagingArea {
+	text-align: center; 
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#pagingArea > button {
+	font-size: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -613,7 +657,9 @@ hr {
 			</div>
 
 			<div class="product-info" align="left">
-				<div id="title">[${ category }] ${ activity.actTitle }</div>
+				<div id="title">[${ category }] ${ activity.actTitle }
+					<input type="hidden" name="acId" value="123">
+				</div>
 				<div class="price">
 					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
 				</div>
@@ -622,27 +668,91 @@ hr {
 						id="star3">1,800개의 평가</span>
 				</div>
 				<div class="option">
-					<span id="option1">인원선택&nbsp;</span> <span><button id="minus">-</button></span>
-					<span id="option2"> &nbsp; 1 &nbsp; </span> <span><button
-							id="plus">+</button></span> <span id="option3">잔여 인원 : 7명</span>
+					<span id="option1">인원선택&nbsp;</span> 
+					<span><button id="minus" onclick="cntNum(-1);">-</button></span>
+					<span id="option2"><input type="text" id="amount" name="amount" value="1" onchange="setNum();" readonly></span> 
+					<span><button id="plus" onclick="cntNum(1);">+</button></span> 
+					<span id="option3">잔여 인원 : 7명</span>
 				</div>
 				<div class="all-price">
-					<span id="all-price1">총 활동비</span> <span id="all-price2"><b>100,000</b></span>
+					<span id="all-price1">총 활동비</span> 
+					<span id="all-price2"><input type="text" id="all-price2" name="all-price2" value="${ activity.actPrice }" onchange="setNum();" readonly></span>
 					<span id="all-price3">원</span>
 				</div>
 				<div class="button">
-					<input type="button" id="button1" value="별미 찜하기"> <input
-						type="submit" id="button2" value="신청하기"
+					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기"> 
+					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기"
 						onclick="location.href='activityCheck.ac'">
 				</div>
 				<div class="starInfo">
-					<strong id="starInfo1">스프링</strong><br> <span id="starInfo2">010-1111-2222&nbsp;</span>
-					<span id="starInfo3"> &nbsp;&nbsp;abcd123@naver.com</span><br>
-					<input type="button" id="star-button1" value="+작업실 방문하기"> <input
-						type="button" id="star-button2" value="+스타 찜하기">
+					<span><img src="resources/images/common/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
+					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
+					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
+					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
 				</div>
 			</div>
 		</div>
+		
+		<script>
+			// 수량 버튼 클릭에 따라 총 활동비와 수량 변경
+			var cnt = 1;
+			var amount = document.getElementById("amount");
+			var price = document.getElementById("price").innerHTML;
+			
+			function cntNum(n){
+				cnt += n;
+				checkNum();
+			}
+			
+			function setNum(){
+				cnt = Number(amount.value);
+				checkNum();
+			}
+			
+			function checkNum(){
+				if(cnt < 1){
+					cnt = 1
+				} else if(cnt > 99){
+					cnt = 99;
+					alert("남은  수량이 없습니다.");
+				}
+				amount.value = cnt;
+				var total = String(price * cnt);
+				total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ 				document.getElementById("all-price2").innerHTML = total;
+			}
+		
+			// 글번호 가져오기 (찜하기에 활용)
+			var acId = "<c:out value='${ activity.actNo}'/>";
+			$(function(){
+				$('#button1').click(function(){
+					location.href='activityFavorite.fa?acId=' + acId;
+				});
+			});
+			
+			// 가격에 천단위 ,(콤마)추가
+		    $(document).ready(function(){
+				var price = $('#price').text();
+		        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		        $('#price').html(price);
+		    });
+			
+			// 토탈금액에 천단위 ,(콤마)추가
+		    $(document).ready(function(){
+				var total = $('#all-price2').html();
+				total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		        $('#all-price2').html(total);
+		    });
+			
+			// 스타 휴대폰에 -(하이픈)추가
+			$(document).ready(function(){
+				var starPhone = $('#starInfo2').text();
+				starPhone = starPhone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-");
+				$('#starInfo2').html(starPhone);
+			});
+		</script>
 
 		<hr>
 		<!-- 메뉴바 -->
@@ -666,7 +776,214 @@ hr {
 			<c:forEach var="content" items="${ content }">
 				<img src="${ content }" id="titleImg">
 			</c:forEach>
+			<div id="place">Q 어디에서 진행되나요?</div>
+			<div id="map" style="width:800px; height:400px;"></div>
+			<div id="starMessage">스타 한마디</div>
+			<div id="starMessage2">${ contentText }</div>
 		</div>
+
+		<!-- 네이버 지도 api -->
+		<script>
+		var mapOptions = {
+		    center: new naver.maps.LatLng(37.3595704, 127.105399),
+		    zoom: 10
+		};
+		
+		var map = new naver.maps.Map("map", {
+		    center: new naver.maps.LatLng(37.3595316, 127.1052133),
+		    zoom: 15,
+		    mapTypeControl: true
+		});
+
+		var infoWindow = new naver.maps.InfoWindow({
+		    anchorSkew: true
+		});
+
+		map.setCursor('pointer');
+
+		function searchCoordinateToAddress(latlng) {
+
+		    infoWindow.close();
+
+		    naver.maps.Service.reverseGeocode({
+		        coords: latlng,
+		        orders: [
+		            naver.maps.Service.OrderType.ADDR,
+		            naver.maps.Service.OrderType.ROAD_ADDR
+		        ].join(',')
+		    }, function(status, response) {
+// 		        if (status === naver.maps.Service.Status.ERROR) {
+// 		            return alert('Something Wrong!');
+// 		        }
+
+		        var items = response.v2.results,
+		            address = '',
+		            htmlAddresses = [];
+
+		        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
+		            item = items[i];
+		            address = makeAddress(item) || '';
+		            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
+
+		            htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
+		        }
+
+		        infoWindow.setContent([
+		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
+		            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+		            htmlAddresses.join('<br />'),
+		            '</div>'
+		        ].join('\n'));
+
+		        infoWindow.open(map, latlng);
+		    });
+		}
+
+		function searchAddressToCoordinate(address) {
+		    naver.maps.Service.geocode({
+		        query: address
+		    }, function(status, response) {
+		        if (status === naver.maps.Service.Status.ERROR) {
+		            return alert('Something Wrong!');
+		        }
+
+		        if (response.v2.meta.totalCount === 0) {
+		            return alert('totalCount' + response.v2.meta.totalCount);
+		        }
+
+		        var htmlAddresses = [],
+		            item = response.v2.addresses[0],
+		            point = new naver.maps.Point(item.x, item.y);
+
+		        if (item.roadAddress) {
+		            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+		        }
+
+		        if (item.jibunAddress) {
+		            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+		        }
+
+		        if (item.englishAddress) {
+		            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+		        }
+
+		        infoWindow.setContent([
+		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
+		            '<h4 style="margin-top:5px;">별미 장소 : '+ address +'</h4><br />',
+		            htmlAddresses.join('<br />'),
+		            '</div>'
+		        ].join('\n'));
+
+		        map.setCenter(point);
+		        infoWindow.open(map, point);
+		    });
+		}
+
+		function initGeocoder() {
+		    if (!map.isStyleMapReady) {
+		        return;
+		    }
+
+		    map.addListener('click', function(e) {
+		        searchCoordinateToAddress(e.coord);
+		    });
+
+		    $('#address').on('keydown', function(e) {
+		        var keyCode = e.which;
+
+		        if (keyCode === 13) { // Enter Key
+		            searchAddressToCoordinate($('#address').val());
+		        }
+		    });
+
+		    $('#submit').on('click', function(e) {
+		        e.preventDefault();
+
+		        searchAddressToCoordinate($('#address').val());
+		    });
+
+		    var place = "<c:out value='${ activity.actPlace}'/>";
+		    searchAddressToCoordinate(place);
+		}
+
+		function makeAddress(item) {
+		    if (!item) {
+		        return;
+		    }
+
+		    var name = item.name,
+		        region = item.region,
+		        land = item.land,
+		        isRoadAddress = name === 'roadaddr';
+
+		    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
+
+		    if (hasArea(region.area1)) {
+		        sido = region.area1.name;
+		    }
+
+		    if (hasArea(region.area2)) {
+		        sigugun = region.area2.name;
+		    }
+
+		    if (hasArea(region.area3)) {
+		        dongmyun = region.area3.name;
+		    }
+
+		    if (hasArea(region.area4)) {
+		        ri = region.area4.name;
+		    }
+
+		    if (land) {
+		        if (hasData(land.number1)) {
+		            if (hasData(land.type) && land.type === '2') {
+		                rest += '산';
+		            }
+
+		            rest += land.number1;
+
+		            if (hasData(land.number2)) {
+		                rest += ('-' + land.number2);
+		            }
+		        }
+
+		        if (isRoadAddress === true) {
+		            if (checkLastString(dongmyun, '면')) {
+		                ri = land.name;
+		            } else {
+		                dongmyun = land.name;
+		                ri = '';
+		            }
+
+		            if (hasAddition(land.addition0)) {
+		                rest += ' ' + land.addition0.value;
+		            }
+		        }
+		    }
+
+		    return [sido, sigugun, dongmyun, ri, rest].join(' ');
+		}
+
+		function hasArea(area) {
+		    return !!(area && area.name && area.name !== '');
+		}
+
+		function hasData(data) {
+		    return !!(data && data !== '');
+		}
+
+		function checkLastString (word, lastString) {
+		    return new RegExp(lastString + '$').test(word);
+		}
+
+		function hasAddition (addition) {
+		    return !!(addition && addition.value);
+		}
+
+		naver.maps.onJSContentLoaded = initGeocoder;
+		naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+		</script>
+
 
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
@@ -684,7 +1001,7 @@ hr {
 			</div>
 		</div>
 
-
+		<!-- 별미 후기 -->
 		<div class="reviewArea">
 			<div class="review_flex">
 				<div class="reviewImageArea_Main" align="left">
@@ -699,7 +1016,7 @@ hr {
 				</div>
 			</div>
 			<div class="expand" align="right">
-				<input type="button" id="expandButton" value="+확대하기">
+				<input type="button" id="expandButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+확대하기">
 				<div class="black_bg"></div>
 				<div class="review_wrap">
 					<div class="review_close">
@@ -758,33 +1075,39 @@ hr {
 			</div>
 		</div>
 
-		<div class="questionArea" align="center">
-			<span class="question" id="question1">스프링</span> <span
-				class="question" id="question2">텃밭 문의합니다</span> <span
-				class="question" id="question3">2020-11-28</span> <span
-				class="question" id="question4">+내용보기</span>
-		</div>
-		<div class="questionArea" align="center">
-			<span class="question" id="question1">스프링</span> <span
-				class="question" id="question2">텃밭 문의합니다</span> <span
-				class="question" id="question3">2020-11-28</span> <span
-				class="question" id="question4">+내용보기</span>
-		</div>
-		<div class="questionArea" align="center">
-			<span class="question" id="question1">스프링</span> <span
-				class="question" id="question2">텃밭 문의합니다</span> <span
-				class="question" id="question3">2020-11-28</span> <span
-				class="question" id="question4">+내용보기</span>
-		</div>
-		<div class="questionArea" align="center">
-			<span class="question" id="question1">스프링</span> <span
-				class="question" id="question2">텃밭 문의합니다</span> <span
-				class="question" id="question3">2020-11-28</span> <span
-				class="question" id="question4">+내용보기</span>
-		</div>
 
-		<div class="questionWrite"></div>
-		<input type="button" id="questionButton" value="문의하기">
+
+		<!-- 후기 영역 -->
+		<div class="question" align="center">
+			<div class="questionArea" align="center">
+				<span class="question" id="question1"></span> 
+				<span class="question" id="question2"></span> 
+				<span class="question" id="question3"></span> 
+				<span class="question" id="question4">+내용보기</span>
+				<div class="question" id="question5"></div>
+			</div>
+		</div>	
+		<script>
+			var acId = "<c:out value='${ activity.actNo}'/>";
+			
+			$.ajax({
+				url: 'salesQnaList.ac',
+				data: {acId:acId},
+				success: function(data){
+					console.log(data);
+					
+					for(var i in data){
+						$('#question1').text(data[i].memId);
+						$('#question2').text(data[i].salqnaTitle);
+						$('#question3').text(data[i].salqnaDate);
+						$('#question5').text(data[i].salqnaContent);
+					}
+					
+				}
+			});
+		</script>
+
+		<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기">
 
 
 		<!-- 메뉴바 -->
@@ -808,7 +1131,7 @@ hr {
 		</div>
 
 		<div class="declare" align="right">
-			<input type="button" id="declareButton" value="불편사항 신고하기">
+			<input type="button" id="declareButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansLight';" value="불편사항 신고하기">
 		</div>
 
 		<div class="recommendArea" align="center">

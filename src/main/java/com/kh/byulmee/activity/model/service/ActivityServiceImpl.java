@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.member.model.vo.Member;
 
 @Service("aService")
 public class ActivityServiceImpl implements ActivityService {
@@ -33,5 +34,7 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 		return ac;
 	}
+
+
 
 }

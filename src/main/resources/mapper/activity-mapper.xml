@@ -21,6 +21,7 @@
 		<result property="actDate" column="ACT_DATE"/>
 		<result property="actStatus" column="ACT_STATUS"/>
 	</resultMap>
+
 	
 	<!-- 게시물 조회수 증가 -->
 	<update id="addReadCount">
@@ -44,5 +45,7 @@
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
+	
+
   
 </mapper>

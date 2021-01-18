@@ -29,4 +29,8 @@ public class MemberDAO {
 	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
 		return sqlSession.selectOne("memberMapper.checkEmail", email);
 	}
+	
+	public Member selectActivityWriter(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("memberMapper.selectActivityWriter", acId);
+	}	
 }
