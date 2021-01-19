@@ -19,16 +19,12 @@
         <hr>
         <ul id="login-frame">
             <li id="find-opt">
-                <div>
-                    <div class="radio">
-                        <input type="radio" id="findOpt1" name="findOpt" value="phone">
-                        <label for="findOpt1">휴대전화 인증</label>
-                    </div>
-                    <div class="radio">
-                        <input type="radio" id="findOpt2" name="findOpt" value="email">
-                        <label for="findOpt2">이메일 인증</label>
-                    </div>
-                </div>
+				<div class="wrap">
+					<input type="radio" name="findOpt" id="radio0" class="checkbox">
+					<label for="radio0" class="input-label radio">휴대전화 인증</label>
+					<input type="radio" name="findOpt" id="radio1" class="checkbox">
+					<label for="radio1" class="input-label radio">이메일 인증</label>
+				</div>
             </li>
             <li>
                 <label>휴대전화</label>
@@ -37,13 +33,9 @@
                     <input type="text" name="phone" autocomplete="nofill" readonly>
                     <button class="confirm-btn">인증하기</button>
                 </div>
-            </li>
-            <li>
-                <label>이메일 입력</label>
-                <span class="hint">회원 가입 시 등록한 이메일을 입력해주세요.</span>
                 <div class="item-with-btn">
-                    <input type="text" name="phone" autocomplete="nofill">
-                    <button class="confirm-btn">인증코드 발송</button>
+                    <input type="text" name="phone" autocomplete="nofill" readonly>
+                    <button class="confirm-btn">확인</button>
                 </div>
             </li>
             <li>
@@ -60,5 +52,6 @@
             </li>
         </ul>
     </form>
+    <script type="text/javascript" src="resources/js/member/findPwd.js"></script>
 </body>
 </html>
