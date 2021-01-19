@@ -1,5 +1,8 @@
 package com.kh.byulmee.member.model.service;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +38,48 @@ public class MemberServiceImpl implements MemberService {
 	public int checkNickname(String nickname) {
 		return mDAO.checkNickname(sqlSession, nickname);
 	}
-
+	
+	@Override
+	public int checkPhone(String memPhone) {
+		return mDAO.checkPhone(sqlSession, memPhone);
+	}
+	
 	@Override
 	public int checkEmail(String email) {
 		return mDAO.checkEmail(sqlSession, email);
+	}
+
+	@Override
+	public String findIdWithPhone(String data) {
+		JSONObject json = null;
+		Member member = new Member();
+		
+		try {
+			json = (JSONObject)new JSONParser().parse(data);
+			
+			member.setMemName((String)json.get("memName"));
+			member.setMemPhone((String)json.get("memInfo"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println(member);
+		return mDAO.findIdWithPhone(sqlSession, member);
+	}
+
+	@Override
+	public String findIdWithEmail(String data) {
+		JSONObject json = null;
+		Member member = new Member();
+		
+		try {
+			json = (JSONObject)new JSONParser().parse(data);
+			
+			member.setMemName((String)json.get("memName"));
+			member.setMemEmail((String)json.get("memInfo"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return mDAO.findIdWithEmail(sqlSession, member);
 	}
 }

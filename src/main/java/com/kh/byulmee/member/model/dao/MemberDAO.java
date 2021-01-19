@@ -21,6 +21,10 @@ public class MemberDAO {
 	public int checkId(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("memberMapper.checkId", memId);
 	}
+	
+	public int checkPhone(SqlSessionTemplate sqlSession, String memPhone) {
+		return sqlSession.selectOne("memberMapper.checkPhone", memPhone);
+	}
 
 	public int checkNickname(SqlSessionTemplate sqlSession, String nickname) {
 		return sqlSession.selectOne("memberMapper.checkNickname", nickname);
@@ -28,5 +32,13 @@ public class MemberDAO {
 
 	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
 		return sqlSession.selectOne("memberMapper.checkEmail", email);
+	}
+
+	public String findIdWithPhone(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.findIdWithPhone", member);
+	}
+	
+	public String findIdWithEmail(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.findIdWithEmail", member);
 	}
 }

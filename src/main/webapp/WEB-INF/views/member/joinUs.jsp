@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,10 +30,20 @@
                 <label>아이디</label>
                 <span class="hint">아이디는 최소 4자~20자 이내여야 하고,<br>영문자, 숫자, 특수문자(-, _)의 조합만 가능합니다.</span>
                     <c:if test="${!empty sessionScope.oauthInfo}">
+                    <c:set var="id" value="${oauthInfo.getMemId()}"/>
                     	<input type="text" name="memId" autocomplete="off" value="${oauthInfo.getMemId()}" readonly>
+                    	<c:choose>
+                    		<c:when test="${fn:contains(id, 'bmk')}">
+                    			<input type="hidden" name="memLoginType" value="K">
+                    		</c:when>
+                    		<c:otherwise>
+                    			<input type="hidden" name="memLoginType" value="O">
+                    		</c:otherwise>
+                    	</c:choose>
                     </c:if>
                     <c:if test="${empty sessionScope.oauthInfo}">
 	                    <input type="text" name="memId" autocomplete="off" required>
+	                    <input type="hidden" name="memLoginType" value="B">
                     </c:if>
             </li>
             <li>
@@ -98,13 +109,59 @@
     var userCode; //사용자가 입력한 인증코드
     var numbers = []; //발송했던 인증번호를 저장하기 위한 배열
     var requestStatus; //sms 발송 상태 정의
+    var memLoginType = $('input[name=memLoginType]').val(); //맴버 회원가입 유형(ex 별미 직접 가입 or 간편로그인)을 판단하기 위한 변수
+	
+	$('.sendCode').on('click', function(){
+		
+		if($('input[name=memPhone]').val() !== "" && $('input[name=memPhone]').hasClass("error") === false) {
+		
+			//별미에 직접 회원 가입할 경우, 중복된 휴대폰 번호인지 먼저 검증
+			if(memLoginType == 'B') {
+				$.ajax({
+					type: "POST",
+					url: 'checkPhone.me',
+					data: {'memPhone':function(){
+					            		return $('input[name=memPhone]').val();		
+					          		}
+					    	  },
+					success: function(data) {
+						if(data == false) {
+							$('#memPhone-error').css('display','block').text('이미 가입된 번호입니다.');
+							return false;
+						} else {
+							sendCodeAndCheck();
+						}
+					}
+				});
+			} else {
+				sendCodeAndCheck();
+			}
+		} else {
+			$('#memPhone-error').text('유효한 전화번호인지 확인해주세요.');
+		}
+		 
+	});
 
-    $('.sendCode').on('click', function(){
+    //인증코드 확인하기
+    $('.confirm-btn').on('click', function(){
+      userCode = $('input[name=confirmCode]').val();
 
-      if($('input[name=memPhone]').val() !== "" && $('input[name=memPhone]').hasClass("error") === false) {
-
-        //문자 인증 요청 전송 후 발송한 정보 가져오기
-        $.ajax({
+      if(userCode == sysCode){
+        $('.test').removeClass('strong').addClass('disable-bg');
+        $('#confirmCode').css('backgroundColor', '#E4E5ED').attr('readonly', 'true');
+        $('.confirm-btn').attr('disabled','disabled').css('backgroundColor', '#E4E5ED');
+        $('#memPhone-status-error').hide();
+        clearInterval(counter);
+        $('#memPhone-status').html('<span style="color:blue;">인증되었습니다.');
+      } else {
+        $('#memPhone-status-error').html('<span style="color:red;">인증번호를 다시 확인해주세요.');
+        $('.test').addClass('strong');
+      }
+    });
+    
+  	//문자 인증 요청 전송 후 발송한 정보 가져오기
+	function sendCodeAndCheck() {
+       $.ajax({
           type: "POST",
           url: 'validatePhone.me',
           dataType: 'json',
@@ -149,28 +206,8 @@
             } 
           }
         });
-      } else {
-        $('#memPhone-error').text('유효한 전화번호인지 확인해주세요.');
-      }
-    });
-
-    //인증코드 확인하기
-    $('.confirm-btn').on('click', function(){
-      userCode = $('input[name=confirmCode]').val();
-
-      if(userCode == sysCode){
-        $('.test').removeClass('strong').addClass('disable-bg');
-        $('#confirmCode').css('backgroundColor', '#E4E5ED').attr('readonly', 'true');
-        $('.confirm-btn').attr('disabled','disabled').css('backgroundColor', '#E4E5ED');
-        $('#memPhone-status-error').hide();
-        clearInterval(counter);
-        $('#memPhone-status').html('<span style="color:blue;">인증되었습니다.');
-      } else {
-        $('#memPhone-status-error').html('<span style="color:red;">인증번호를 다시 확인해주세요.');
-        $('.test').addClass('strong');
-      }
-    });
-
+	}
+  	
     //인증코드 중복 확인
     function sysCodeDuplicateCheck() {
       let isDuplicated = false;

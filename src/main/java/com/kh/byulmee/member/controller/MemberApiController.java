@@ -5,11 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +51,7 @@ public class MemberApiController {
 		
 		String encodedPwd = bcrypt.encode(memberInfo.getMemPwd());
 		memberInfo.setMemPwd(encodedPwd);
+		System.out.println(memberInfo.getMemLoginType());
 		
 		int result = mService.insertMember(memberInfo);
 		
@@ -82,6 +86,14 @@ public class MemberApiController {
 	@ResponseBody
 	public boolean checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
 		boolean result = mService.checkNickname(nickname) < 1 ? true : false;
+		
+		return result;
+	}
+	
+	@RequestMapping("checkPhone.me")
+	@ResponseBody
+	public boolean checkPhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
+		boolean result = mService.checkPhone(memPhone) < 1 ? true : false;
 		
 		return result;
 	}
@@ -157,6 +169,7 @@ public class MemberApiController {
 			//최초 방문일 경우 회원가입 페이지로 이동
 			m.setMemId(id);
 			m.setMemEmail(kakaoProfile.getKakao_account().getEmail());
+			m.setMemLoginType("K");
 			
 			model.addAttribute("oauthInfo", m);
 			mv.setViewName("member/joinUs");
@@ -173,4 +186,28 @@ public class MemberApiController {
 		}
 		return mv;
 	}
+
+
+	
+	/******** by다혜: ID 찾기 메소드 ********/
+	@RequestMapping(value = "findIdWithPhone.me", method = RequestMethod.POST)
+	@ResponseBody
+	public String findIdWithPhone(@RequestBody String data) {
+		
+		String result = mService.findIdWithPhone(data);
+		System.out.println("result " + result);
+		return result;
+	}
+
+	@RequestMapping(value = "findIdWithEmail.me", method = RequestMethod.POST)
+	@ResponseBody
+	public String findIdWithEmail(@RequestBody String data) {
+		
+		String result = mService.findIdWithEmail(data);
+		
+		return result;
+	}
+
+
+
 }

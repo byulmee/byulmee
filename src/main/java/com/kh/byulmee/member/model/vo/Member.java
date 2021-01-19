@@ -27,4 +27,5 @@ public class Member {
 	private int memLevel;
 	private Date memDate;
 	private String memStatus;
+	private String memLoginType;
 }
