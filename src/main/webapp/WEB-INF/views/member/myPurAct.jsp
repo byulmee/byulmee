@@ -16,6 +16,7 @@
 <style>
 	body {
 		margin: 0;
+		overflow:scroll
 	}
 	
 	.outer {
@@ -61,7 +62,17 @@
 		padding: 0px;
 		position: relative;
 	}
+	.sideMenuUl > li ul.myinfoDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 0px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
 	.sideMenuUl > li ul.purDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 50px;
@@ -70,6 +81,7 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.favDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 100px;
@@ -77,10 +89,14 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
-	.sideMenuUl > li:hover ul.purDropdown, .sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.myinfoDropdown,
+	.sideMenuUl > li:hover ul.purDropdown,
+	.sideMenuUl > li:hover ul.favDropdown {
 		display: block;
 	}
-	.sideMenuUl > li ul.purDropdown > li, .sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.myinfoDropdown > li
+	.sideMenuUl > li ul.purDropdown > li,
+	.sideMenuUl > li ul.favDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -95,7 +111,6 @@
 		background: none;
 		cursor: pointer;
 	}
-
 	.sideMenuBtn:hover {
 		background: #FF6833;
 		color: white;
@@ -108,19 +123,38 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 480px;
+		min-height: 500px;
 		margin-left: 250px;
+		border-top: 2px solid #FF6833;
 	}
-	.headline {
-		height: 50px;
+	ul li {
+		list-style-type: none;
+	}
+	.tab-box {
+		width: 750px;
+	}
+	.tab-box ul {
+		height: 40px;
+	}
+	.tab-box li {
+		float: left;
+		width: 50%;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		font-size: 18px;
 		background: #FF6833;
+		color: rgba(255, 255, 255, 0.5);
+		cursor: pointer;
 	}
-	.title {
-		display: inline-block;
+	.tab-box li:hover {
+		background: #FF6833;
+		color: rgba(255, 255, 255, 1);
+		cursor: pointer;
+	}
+	.tab-box li.selected {
 		color: white;
-		margin: 12px;
-		font-size: 26px;
-		width: 650px;
+		background: #FF6833;
 	}
 	.imgDiv {
 		display: inline-block;
@@ -180,11 +214,23 @@
 		opacity: 0.6;
 		cursor: pointer;
 	}
-	.nothing {
-		height: 22px;
+	#wrap {
+		display: table-cell;
 		margin: 0;
-		padding-top: 204px;
+		padding: 0;
+		width: 750px;
+		height: 460px;
+		vertical-align: middle;
 		text-align: center;
+		border-bottom: 2px solid #FF6833;
+	}
+	table {
+		margin-left: auto;
+		margin-right: auto;
+		border-collapse: collapse;
+	}
+	.nothing {
+		width: 100%;
 		font-size: 24px;
 	}
 	.line {
@@ -192,7 +238,7 @@
 		margin: 0px;
 	}
 	
-/* 모달창 */	
+/* 모달창 기본 css */	
 	#modalBG {
 		display: none;
 		position: fixed; 
@@ -201,6 +247,7 @@
 		top: 0;
 		left: 0; 
 		background: rgba(0,0,0,0.6);
+		z-index: 999;
 	}
 	.modal-con {
 		display: none;
@@ -211,6 +258,7 @@
 		min-width: 30%;
 		min-height: 50%;
 		background: #fff;
+		z-index: 1000;
 	}
 	.modal-con .con {
 		font-size: 15px;
@@ -285,9 +333,6 @@
 		width: 1px;
 		height: 1px;
 		opacity: 0;
-	}
-	.star-input>.input.focus{
-		outline: 1px dotted #ddd;
 	}
 	.star-input>.input>label{
 		width: 20px;
@@ -373,7 +418,21 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button onclick="location.href='myInfoView.me'" class="sideMenuBtn">개인정보 관리</button>
+						<button class="sideMenuBtn" style="cursor: default;">개인정보 관리</button>
+						<ul class="myinfoDropdown">
+							<li>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">구매내역</button>
@@ -413,11 +472,22 @@
 		</div>
 		<div class="content">
 			<div class="listArea">
-				<div class="headline">
-					<p class="title">신청한 활동</p>
+				<div class="tab-box">
+					<ul>
+						<li onclick="location.href='myPurActView.me'" class="selected">신청한 활동</li>
+						<li onclick="location.href='myPurProView.me'">구매한 상품</li>
+					</ul>
 				</div>
 			<!-- 신청한 활동이 없는 경우 -->
-				<!-- <p class="nothing">신청한 활동이 없습니다.</p> -->
+				<!-- <div id="wrap">
+					<table>
+						<tr>
+							<td class="nothing">
+								신청한 활동이 없습니다.
+							</td>
+						</tr>
+					</table>
+				</div> -->
 			<!-- 신청한 활동이 있는 경우 반복문 시작 -->	
 				<div class="list">
 					<div class="imgDiv">
@@ -511,8 +581,6 @@
 				<hr class="line">
 			<!-- 반복문 종료 -->
 			</div>
-		<!-- 찜한 활동이 없는 경우 -->
-			<!-- <hr class="line"> -->
 		</div>
 	</div>
 
@@ -575,7 +643,7 @@
 			</table>
 		</div>
 	</div>
-		<!-- 리뷰작성 모달창 -->
+	<!-- 리뷰작성 모달창 -->
 	<div class="modal-con reviewWrite">
 		<a href="javascript:;" class="close"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
 		<div class="con">
@@ -584,16 +652,16 @@
 					<td>
 						<div class="star-input">
 							<div class="input">
-								<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
-								<input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
-								<input type="radio" name="star-input" id="p3" value="1.5"><label for="p3">1.5</label>
-								<input type="radio" name="star-input" id="p4" value="2"><label for="p4">2</label>
-								<input type="radio" name="star-input" id="p5" value="2.5"><label for="p5">2.5</label>
-								<input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
-								<input type="radio" name="star-input" id="p7" value="3.5"><label for="p7">3.5</label>
-								<input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
-								<input type="radio" name="star-input" id="p9" value="4.5"><label for="p9">4.5</label>
-								<input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
+								<input type="radio" name="star-input" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
+								<input type="radio" name="star-input" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
+								<input type="radio" name="star-input" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
+								<input type="radio" name="star-input" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
+								<input type="radio" name="star-input" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
+								<input type="radio" name="star-input" id="p6" value="3" class="radio"><label for="p6" class="label">3</label>
+								<input type="radio" name="star-input" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
+								<input type="radio" name="star-input" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
+								<input type="radio" name="star-input" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
+								<input type="radio" name="star-input" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
 							</div>
 							<br>
 						</div>

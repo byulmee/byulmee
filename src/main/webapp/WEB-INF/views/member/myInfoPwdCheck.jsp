@@ -14,6 +14,7 @@
 <style>
 	body {
 		margin: 0;
+		overflow:scroll
 	}
 	
 	.outer {
@@ -59,7 +60,17 @@
 		padding: 0px;
 		position: relative;
 	}
+	.sideMenuUl > li ul.myinfoDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 0px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
 	.sideMenuUl > li ul.purDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 50px;
@@ -68,6 +79,7 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.favDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 100px;
@@ -75,10 +87,14 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
-	.sideMenuUl > li:hover ul.purDropdown, .sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.myinfoDropdown,
+	.sideMenuUl > li:hover ul.purDropdown,
+	.sideMenuUl > li:hover ul.favDropdown {
 		display: block;
 	}
-	.sideMenuUl > li ul.purDropdown > li, .sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.myinfoDropdown > li
+	.sideMenuUl > li ul.purDropdown > li,
+	.sideMenuUl > li ul.favDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -122,9 +138,11 @@
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
-		height: 60px;
+		width: 80px;
+		margin-top: 5px;
 		padding: 5px;
-		border: none;
+		padding-bottom: 2px;
+		border: 1px solid #C4C4C4;
 		background: white;
 		font-family: "Gmarket Sans TTF";
 		cursor:pointer;
@@ -135,8 +153,44 @@
 		color: white;
 		cursor: pointer;
 	}
+	ul li {
+		list-style-type: none;
+	}
+	.tab-box {
+		width: 750px;
+	}
+	.tab-box ul {
+		height: 40px;
+	}
+	.tab-box li {
+		float: left;
+		width: 25%;
+		height: 40px;
+		line-height: 40px; /* 중앙정렬 */
+		text-align: center;
+		font-size: 18px;
+		background: #FF6833;
+		color: rgba(255, 255, 255, 0.5);
+		cursor: pointer;
+	}
+	.tab-box li:hover {
+		background: #FF6833;
+		color: rgba(255, 255, 255, 1);
+		cursor: pointer;
+	}
+	.tab-box li.selected {
+		color: white;
+		background: #FF6833;
+	}
+	#title {
+		font-size: 22px;
+		margin: 0px;
+		padding: 10px;
+	}
 	#text {
 		font-size: 12px;
+		margin: 0px;
+		padding: 0px 10px 10px 10px;
 	}
 	table {
 		margin-left: auto;
@@ -145,13 +199,14 @@
 	}
 	.tdName {
 		border: 1px solid #C4C4C4;
-		width: 80px;
+		width: 160px;
 		text-align: left;
 		background: #F4F4F4;
 		padding: 5px;
 	}
 	.tdContent {
 		border: 1px solid #C4C4C4;
+		width: 160px;
 		text-align: left;
 		padding: 5px;
 	}
@@ -160,25 +215,23 @@
 		vertical-align: middle;
 	}
 	.inputIdField {
-		width: 140px;
+		width: 150px;
 		outline: 0;
 		border: none;
 		background: white;
 		color: black;
-		font-family: "Gmarket Sans TTF";
-		font-size: 16px;
 	}
 	.inputPwdField {
-		width: 140px;
+		width: 150px;
 		outline: 0;
 		border: none;
 	}
-	#test {
+	#wrap {
 		display: table-cell;
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 500px;
+		height: 460px;
 		vertical-align: middle;
 	}
 </style>
@@ -196,7 +249,21 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button onclick="location.href='myInfoView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 관리</button>
+						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">개인정보 관리</button>
+						<ul class="myinfoDropdown">
+							<li>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<button class="sideMenuBtn" style="cursor: default;">구매내역</button>
@@ -234,11 +301,22 @@
 				</ul>
 			</div>
 		</div>
-		<form id="myInfoPwdCheck" action="myInfoPwdCheck.me" method="post" autocomplete="off">
+		<form action="myInfoPwdCheck.me" method="post" autocomplete="off">
 			<div class="content">
-				<div id="test">
+				<div class="tab-box">
+					<ul>
+						<li onclick="location.href='myInfoPwdCheckView.me'" class="selected">개인정보 변경</li>
+						<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
+						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
+					</ul>
+				</div>
+				<div id="wrap">
+					<p id="title">
+						비밀번호 확인
+					</p>
 					<p id="text">
-						개인 정보 보호를 위해 비밀번호를 한번 더 입력해주세요.
+						개인 정보 보호를 위해 비밀번호를 한 번 더 입력해주세요.
 					</p>
 					<table>
 						<tr>
@@ -247,9 +325,6 @@
 							</td>
 							<td class="tdContent">
 								<input type="text" class="inputIdField" value="<c:out value="${ loginUser.memId }"/>" disabled>
-							</td>
-							<td rowspan="2" class="tdButton">
-								<button type="submit" class="button">확인</button>
 							</td>
 						</tr>
 						<tr>
@@ -261,6 +336,8 @@
 							</td>
 						</tr>
 					</table>
+					<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
+					<button type="submit" class="button">확인</button>
 				</div>
 			</div>
 		</form>

@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -29,7 +28,7 @@
 		font-family: "Gmarket Sans TTF";
 	}
 
-/* 사이드 메뉴 */
+/* 사이드 메뉴 */	
 	.sideMenu {
 		position: absolute;
 		top: 0px;
@@ -39,7 +38,6 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		text-align: center;
 		padding: 25px;
 	}
 	.profileImg {
@@ -111,7 +109,17 @@
 		background: none;
 		cursor: pointer;
 	}
-	.sideMenuBtn:hover {
+	.dropdownBtn {
+		font-family: "Gmarket Sans TTF";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 50px;
+		outline: 0;
+		border: 0;
+		background: none;
+	}
+	.sideMenuBtn:hover, .dropdownBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -121,7 +129,7 @@
 		cursor: pointer;
 	}
 	
-/* 컨텐츠 */
+/* 컨텐츠 */	
 	.content {
 		min-height: 500px;
 		margin-left: 250px;
@@ -158,7 +166,7 @@
 		float: left;
 		width: 25%;
 		height: 40px;
-		line-height: 40px; /* 중앙정렬 */
+		line-height: 40px;
 		text-align: center;
 		font-size: 18px;
 		background: #FF6833;
@@ -179,64 +187,41 @@
 		margin: 0px;
 		padding: 10px;
 	}
+	#text {
+		font-size: 12px;
+		margin: 0px;
+		padding: 0px 10px 10px 10px;
+	}
 	table {
-		width: 750px;
+		margin-left: auto;
+		margin-right: auto;
 		border-collapse: collapse;
 	}
-	table td {
-		border-top: 2px solid #F4F4F4;
-		border-bottom: 2px solid #F4F4F4;
-	}
-	table tr:last-child td {
-		border: 0;
-	}
-	.colNameTd {
-		padding-left: 70px;
+	.tdName {
+		border: 1px solid #C4C4C4;
+		width: 160px;
 		text-align: left;
-		width: 80px;
-		height: 50px;
-	}
-	.alert_gray {
-		font-size: 14px;
-		color: #C4C4C4;
-	}
-	.alert_orange {
-		font-size: 14px;
-		color: #FF6833;
-	}
-	.colContentTd {
-		font-size: 14px;
-		text-align: left;
-		width: 420px;
-	}
-	.colContentTd_btn {
+		background: #F4F4F4;
 		padding: 5px;
+	}
+	.tdContent {
+		border: 1px solid #C4C4C4;
+		width: 160px;
+		text-align: left;
+		padding: 5px;
+	}
+	.inputPwdField {
+		width: 150px;
+		outline: 0;
+		border: none;
+	}
+	#wrap {
+		display: table-cell;
+		margin: 0;
+		padding: 0;
+		width: 750px;
+		height: 460px;
 		vertical-align: middle;
-		text-align: center;
-	}
-	.input {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 250px;	
-	}
-	#post {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 60px;		
-	}
-	#address1 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
-	}
-	#address2 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
 	}
 </style>
 </head>
@@ -256,10 +241,10 @@
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
-								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 변경</button>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
+								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn" id="selectedBtn">비밀번호 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
@@ -305,95 +290,51 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content">
-			<div class="tab-box">
-				<ul>
-					<li onclick="location.href='myInfoPwdCheckView.me'" class="selected">개인정보 변경</li>
-					<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
-					<li onclick="location.href=''">프로필사진 변경</li>
-					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
-				</ul>
+		<form action="myPwdUpdate.me" method="post">
+			<div class="content">
+				<div class="tab-box">
+					<ul>
+						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
+						<li onclick="location.href='myPwdUpdateView.me'" class="selected">비밀번호 변경</li>
+						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
+					</ul>
+				</div>
+				<div id="wrap">
+					<p id="title">
+						비밀번호 변경
+					</p>
+					<table>
+						<tr>
+							<td class="tdName">
+								현재 비밀번호
+							</td>
+							<td class="tdContent">
+								<input type="password" class="inputPwdField" name="memPwd">
+							</td>
+						</tr>
+						<tr>
+							<td class="tdName">
+								새 비밀번호
+							</td>
+							<td class="tdContent">
+								<input type="password" class="inputPwdField" name="newPwd1">
+							</td>
+						</tr>
+						<tr>
+							<td class="tdName">
+								새 비밀번호 확인
+							</td>
+							<td class="tdContent">
+								<input type="password" class="inputPwdField" name="newPwd2">
+							</td>
+						</tr>
+					</table>
+					<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
+					<button type="submit" class="button">확인</button>
+				</div>
 			</div>
-			<form action="myInfoUpdate.me" method="post">
-				<p id="title">개인정보 변경</p>
-				<table>
-					<tr>
-						<td class="colNameTd">
-							아이디
-						</td>
-						<td class="colContentTd">
-							${ loginUser.memId }
-							<input type="hidden" name="memId" id="id" value="${ loginUser.memId }">
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이름
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memName" id="name" class="input" value="<c:out value="${ loginUser.memName }"/>">
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							닉네임
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memNickname" id="nickname" class="input" value="<c:out value="${ loginUser.memNickname }"/>">
-							<a class="alert_gray">사용 가능한 닉네임입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이메일
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memEmail" id="email" class="input" value="<c:out value="${ loginUser.memEmail }"/>">
-							<a class="alert_orange">중복된 이메일 주소입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							휴대전화
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memPhone" id="phone" class="input" value="<c:out value="${ loginUser.memPhone }"/>">
-							<button class="button" onclick="">인증</button>
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="3" class="colNameTd">
-							주소
-						</td>
-						<td class="colContentTd" style="border:0">
-							우편번호&nbsp;&nbsp;&nbsp;<input type="text" name="memPostcode" id="post" class="postcodify_postcode5"  value="<c:out value="${ loginUser.memPostcode }"/>">
-							<button type="button" class="button" id="postcodify_search_button">검색</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="colContentTd" style="border:0">
-							기본주소&nbsp;&nbsp;&nbsp;<input type="text" name="memBasicAddr" id="address1" class="postcodify_address"  value="<c:out value="${ loginUser.memBasicAddr }"/>">
-						</td>
-					<tr>
-						<td class="colContentTd">
-							상세주소&nbsp;&nbsp;&nbsp;<input type="text" name="memDetailAddr" id="address2" class="postcodify_extra_info"  value="<c:out value="${ loginUser.memDetailAddr }"/>">
-						</td>
-					</tr>
-					<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-					<script>
-						$(function(){
-							$("#postcodify_search_button").postcodifyPopUp();
-						});
-					</script>
-					<tr>
-						<td colspan="2" class="colContentTd_btn">
-							<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
-							<button type="submit" class="button">확인</button>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
+		</form>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>

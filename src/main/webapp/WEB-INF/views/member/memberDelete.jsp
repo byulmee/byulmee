@@ -28,7 +28,7 @@
 		width: 1000px;
 		font-family: "Gmarket Sans TTF";
 	}
-
+	
 /* 사이드 메뉴 */
 	.sideMenu {
 		position: absolute;
@@ -39,7 +39,6 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		text-align: center;
 		padding: 25px;
 	}
 	.profileImg {
@@ -63,7 +62,6 @@
 		position: relative;
 	}
 	.sideMenuUl > li ul.myinfoDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 0px;
@@ -72,7 +70,6 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.purDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 50px;
@@ -81,7 +78,6 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.favDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 100px;
@@ -111,7 +107,17 @@
 		background: none;
 		cursor: pointer;
 	}
-	.sideMenuBtn:hover {
+	.dropdownBtn {
+		font-family: "Gmarket Sans TTF";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 50px;
+		outline: 0;
+		border: 0;
+		background: none;
+	}
+	.sideMenuBtn:hover, .dropdownBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -131,19 +137,26 @@
 	}
 	.button {
 		width: 80px;
-		margin-top: 5px;
 		padding: 5px;
 		padding-bottom: 2px;
 		border: 1px solid #C4C4C4;
 		background: white;
 		font-family: "Gmarket Sans TTF";
-		cursor:pointer;
+		cursor: pointer;
 		outline: 0;
 	}
 	.button:hover {
 		background: #FF6833;
 		color: white;
 		cursor: pointer;
+	}
+	#wrap {
+		display: table-cell;
+		margin: 0;
+		padding: 0;
+		width: 750px;
+		height: 460px;
+		vertical-align: middle;
 	}
 	ul li {
 		list-style-type: none;
@@ -180,63 +193,51 @@
 		padding: 10px;
 	}
 	table {
-		width: 750px;
+		margin-left: auto;
+		margin-right: auto;
 		border-collapse: collapse;
 	}
-	table td {
-		border-top: 2px solid #F4F4F4;
-		border-bottom: 2px solid #F4F4F4;
-	}
-	table tr:last-child td {
-		border: 0;
-	}
-	.colNameTd {
-		padding-left: 70px;
+	.tdContent {
+		border: 1px solid #C4C4C4;
 		text-align: left;
-		width: 80px;
-		height: 50px;
 	}
-	.alert_gray {
-		font-size: 14px;
-		color: #C4C4C4;
+	.tdCheck {
+		padding: 10px;
 	}
-	.alert_orange {
-		font-size: 14px;
-		color: #FF6833;
-	}
-	.colContentTd {
-		font-size: 14px;
-		text-align: left;
-		width: 420px;
-	}
-	.colContentTd_btn {
-		padding: 5px;
-		vertical-align: middle;
+	.warnTitle {
 		text-align: center;
+		margin: 0px;
+		padding: 25px;
+		font-size: 18px;
 	}
-	.input {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 250px;	
+	.warnContent1 {
+		margin: 0px;
+		padding: 0px 25px 5px 25px;
+		font-size: 14px;
 	}
-	#post {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 60px;		
+	.warnContent2 {
+		margin: 0px;
+		padding: 0px 25px 25px 25px;
+		font-size: 14px;
 	}
-	#address1 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
+	input[id="leaveCheck"] {
+		display: none;
 	}
-	#address2 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
+	input[id="leaveCheck"]+label {
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		border: 1px solid #bcbcbc;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	input[id="leaveCheck"]:checked+label {
+		background:
+			url(${ pageContext.servletContext.contextPath }/resources/images/myPage/check.png);
+	}
+	#agree {
+		padding: 5px;
+		font-size: 14px;
 	}
 </style>
 </head>
@@ -256,7 +257,7 @@
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
-								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 변경</button>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
@@ -265,7 +266,7 @@
 								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
+								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn" id="selectedBtn">회원 탈퇴</button>
 							</li>
 						</ul>
 					</li>
@@ -305,97 +306,63 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content">
-			<div class="tab-box">
-				<ul>
-					<li onclick="location.href='myInfoPwdCheckView.me'" class="selected">개인정보 변경</li>
-					<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
-					<li onclick="location.href=''">프로필사진 변경</li>
-					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
-				</ul>
+		<form action="myInfoPwdCheck.me" method="post" autocomplete="off">
+			<div class="content">
+				<div class="tab-box">
+					<ul>
+						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
+						<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
+						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='memberDeleteView.me'" class="selected">회원 탈퇴</li>
+					</ul>
+				</div>
+				<div id="wrap">
+					<p id="title">회원 탈퇴</p>
+					<table>
+						<tr>
+							<td class="tdContent">
+								<p class="warnTitle">지금까지 이용해주셔서 감사드립니다. 탈퇴하기 전 아래 유의사항을
+									확인해주세요.</p>
+								<p class="warnContent1">- 탈퇴하신 아이디는 복구가 불가능하며, 추후 동일한 아이디로
+									재가입이 되지 않습니다.</p>
+								<p class="warnContent2">- 회원 탈퇴 시 등록한 게시물은 삭제되지 않으므로, 삭제를
+									원하시면 회원 탈퇴 전에 삭제해 주시기 바랍니다.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdCheck">
+								<!-- <input type="checkbox" id="leaveCheck">유의사항을 모두 확인했으며, 이에 동의합니다. -->
+								<input type="checkbox" id="leaveCheck"> <label
+								for="leaveCheck"></label><span id="agree">유의사항을 모두 확인했으며, 이에 동의합니다.</span>
+							</td>
+						</tr>
+					</table>
+					<button type="button" class="button"
+						onclick="location.href='myPageMainView.me'">취소</button>
+					<button type="button" class="button" onclick="checkValidate(this)">탈퇴</button>
+				</div>
 			</div>
-			<form action="myInfoUpdate.me" method="post">
-				<p id="title">개인정보 변경</p>
-				<table>
-					<tr>
-						<td class="colNameTd">
-							아이디
-						</td>
-						<td class="colContentTd">
-							${ loginUser.memId }
-							<input type="hidden" name="memId" id="id" value="${ loginUser.memId }">
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이름
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memName" id="name" class="input" value="<c:out value="${ loginUser.memName }"/>">
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							닉네임
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memNickname" id="nickname" class="input" value="<c:out value="${ loginUser.memNickname }"/>">
-							<a class="alert_gray">사용 가능한 닉네임입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이메일
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memEmail" id="email" class="input" value="<c:out value="${ loginUser.memEmail }"/>">
-							<a class="alert_orange">중복된 이메일 주소입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							휴대전화
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memPhone" id="phone" class="input" value="<c:out value="${ loginUser.memPhone }"/>">
-							<button class="button" onclick="">인증</button>
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="3" class="colNameTd">
-							주소
-						</td>
-						<td class="colContentTd" style="border:0">
-							우편번호&nbsp;&nbsp;&nbsp;<input type="text" name="memPostcode" id="post" class="postcodify_postcode5"  value="<c:out value="${ loginUser.memPostcode }"/>">
-							<button type="button" class="button" id="postcodify_search_button">검색</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="colContentTd" style="border:0">
-							기본주소&nbsp;&nbsp;&nbsp;<input type="text" name="memBasicAddr" id="address1" class="postcodify_address"  value="<c:out value="${ loginUser.memBasicAddr }"/>">
-						</td>
-					<tr>
-						<td class="colContentTd">
-							상세주소&nbsp;&nbsp;&nbsp;<input type="text" name="memDetailAddr" id="address2" class="postcodify_extra_info"  value="<c:out value="${ loginUser.memDetailAddr }"/>">
-						</td>
-					</tr>
-					<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-					<script>
-						$(function(){
-							$("#postcodify_search_button").postcodifyPopUp();
-						});
-					</script>
-					<tr>
-						<td colspan="2" class="colContentTd_btn">
-							<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
-							<button type="submit" class="button">확인</button>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
+		</form>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		function checkValidate(leaveChk) {
+			console.log(leaveChk);
+			var check = document.getElementById('leaveCheck').checked;
+			
+			if(check) {
+				var bool = confirm('정말 회원 탈퇴를 하시겠습니까?');
+				
+				if(bool) {
+					location.href='mdelete.me';
+				}
+			} else {
+				alert('유의사항을 확인하고 동의해 주세요.');
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>

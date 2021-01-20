@@ -16,6 +16,7 @@
 <style>
 	body {
 		margin: 0;
+		overflow:scroll
 	}
 	
 	.outer {
@@ -61,7 +62,17 @@
 		padding: 0px;
 		position: relative;
 	}
+	.sideMenuUl > li ul.myinfoDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 0px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+	}
 	.sideMenuUl > li ul.purDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 50px;
@@ -70,6 +81,7 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.favDropdown {
+		list-style: none;
 		display: none;
 		position: absolute;
 		top: 100px;
@@ -77,10 +89,14 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
-	.sideMenuUl > li:hover ul.purDropdown, .sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.myinfoDropdown,
+	.sideMenuUl > li:hover ul.purDropdown,
+	.sideMenuUl > li:hover ul.favDropdown {
 		display: block;
 	}
-	.sideMenuUl > li ul.purDropdown > li, .sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.myinfoDropdown > li
+	.sideMenuUl > li ul.purDropdown > li,
+	.sideMenuUl > li ul.favDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -107,19 +123,38 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 480px;
+		min-height: 500px;
 		margin-left: 250px;
+		border-top: 2px solid #FF6833;
 	}
-	.headline {
-		height: 50px;
+	ul li {
+		list-style-type: none;
+	}
+	.tab-box {
+		width: 750px;
+	}
+	.tab-box ul {
+		height: 40px;
+	}
+	.tab-box li {
+		float: left;
+		width: 50%;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		font-size: 18px;
 		background: #FF6833;
+		color: rgba(255, 255, 255, 0.5);
+		cursor: pointer;
 	}
-	.title {
-		display: inline-block;
+	.tab-box li:hover {
+		background: #FF6833;
+		color: rgba(255, 255, 255, 1);
+		cursor: pointer;
+	}
+	.tab-box li.selected {
 		color: white;
-		margin: 12px;
-		font-size: 26px;
-		width: 650px;
+		background: #FF6833;
 	}
 	.imgDiv {
 		display: inline-block;
@@ -179,11 +214,23 @@
 		opacity: 0.6;
 		cursor: pointer;
 	}
-	.nothing {
-		height: 22px;
+	#wrap {
+		display: table-cell;
 		margin: 0;
-		padding-top: 204px;
+		padding: 0;
+		width: 750px;
+		height: 460px;
+		vertical-align: middle;
 		text-align: center;
+		border-bottom: 2px solid #FF6833;
+	}
+	table {
+		margin-left: auto;
+		margin-right: auto;
+		border-collapse: collapse;
+	}
+	.nothing {
+		width: 100%;
 		font-size: 24px;
 	}
 	.line {
@@ -372,7 +419,21 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button onclick="location.href='myInfoView.me'" class="sideMenuBtn">개인정보 관리</button>
+						<button class="sideMenuBtn" style="cursor: default;">개인정보 관리</button>
+						<ul class="myinfoDropdown">
+							<li>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+							</li>
+							<li>
+								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">구매내역</button>
@@ -412,12 +473,23 @@
 		</div>
 		<div class="content">
 			<div class="listArea">
-				<div class="headline">
-					<p class="title">구매한 상품</p>
+				<div class="tab-box">
+					<ul>
+						<li onclick="location.href='myPurActView.me'">신청한 활동</li>
+						<li onclick="location.href='myPurProView.me'" class="selected">구매한 상품</li>
+					</ul>
 				</div>
-			<!-- 신청한 활동이 없는 경우 -->
-				<!-- <p class="nothing">신청한 활동이 없습니다.</p> -->
-			<!-- 신청한 활동이 있는 경우 반복문 시작 -->	
+			<!-- 구매한 상품이 없는 경우 -->
+				<!-- <div id="wrap">
+					<table>
+						<tr>
+							<td class="nothing">
+								구매한 상품이 없습니다.
+							</td>
+						</tr>
+					</table>
+				</div> -->
+			<!-- 구매한 상품이 있는 경우 반복문 시작 -->	
 				<div class="list">
 					<div class="imgDiv">
 						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/surfing.jpg">
@@ -510,8 +582,6 @@
 				<hr class="line">
 			<!-- 반복문 종료 -->
 			</div>
-		<!-- 찜한 활동이 없는 경우 -->
-			<!-- <hr class="line"> -->
 		</div>
 	</div>
 

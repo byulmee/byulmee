@@ -29,7 +29,7 @@
 		font-family: "Gmarket Sans TTF";
 	}
 
-/* 사이드 메뉴 */
+/* 사이드 메뉴 */	
 	.sideMenu {
 		position: absolute;
 		top: 0px;
@@ -39,7 +39,6 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		text-align: center;
 		padding: 25px;
 	}
 	.profileImg {
@@ -111,7 +110,17 @@
 		background: none;
 		cursor: pointer;
 	}
-	.sideMenuBtn:hover {
+	.dropdownBtn {
+		font-family: "Gmarket Sans TTF";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 50px;
+		outline: 0;
+		border: 0;
+		background: none;
+	}
+	.sideMenuBtn:hover, .dropdownBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -121,7 +130,7 @@
 		cursor: pointer;
 	}
 	
-/* 컨텐츠 */
+/* 컨텐츠 */	
 	.content {
 		min-height: 500px;
 		margin-left: 250px;
@@ -130,13 +139,14 @@
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
-		width: 80px;
-		margin-top: 5px;
+		height: 60px;
+		width: 150px;
 		padding: 5px;
-		padding-bottom: 2px;
 		border: 1px solid #C4C4C4;
 		background: white;
+		color: #747474;
 		font-family: "Gmarket Sans TTF";
+		font-size: 16px;
 		cursor:pointer;
 		outline: 0;
 	}
@@ -174,69 +184,18 @@
 		color: white;
 		background: #FF6833;
 	}
-	#title {
-		font-size: 22px;
-		margin: 0px;
-		padding: 10px;
-	}
 	table {
+		margin-left: auto;
+		margin-right: auto;
+		border-spacing: 10px;
+	}
+	#wrap {
+		display: table-cell;
+		margin: 0;
+		padding: 0;
 		width: 750px;
-		border-collapse: collapse;
-	}
-	table td {
-		border-top: 2px solid #F4F4F4;
-		border-bottom: 2px solid #F4F4F4;
-	}
-	table tr:last-child td {
-		border: 0;
-	}
-	.colNameTd {
-		padding-left: 70px;
-		text-align: left;
-		width: 80px;
-		height: 50px;
-	}
-	.alert_gray {
-		font-size: 14px;
-		color: #C4C4C4;
-	}
-	.alert_orange {
-		font-size: 14px;
-		color: #FF6833;
-	}
-	.colContentTd {
-		font-size: 14px;
-		text-align: left;
-		width: 420px;
-	}
-	.colContentTd_btn {
-		padding: 5px;
+		height: 460px;
 		vertical-align: middle;
-		text-align: center;
-	}
-	.input {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 250px;	
-	}
-	#post {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 60px;		
-	}
-	#address1 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
-	}
-	#address2 {
-		outline: 0;
-		border: 1px solid #9F9F9F;
-		height: 23px;
-		width: 400px;		
 	}
 </style>
 </head>
@@ -256,7 +215,7 @@
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
-								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 변경</button>
+								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
@@ -308,91 +267,35 @@
 		<div class="content">
 			<div class="tab-box">
 				<ul>
-					<li onclick="location.href='myInfoPwdCheckView.me'" class="selected">개인정보 변경</li>
+					<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
 					<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
 					<li onclick="location.href=''">프로필사진 변경</li>
 					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
 				</ul>
 			</div>
-			<form action="myInfoUpdate.me" method="post">
-				<p id="title">개인정보 변경</p>
+			<div id="wrap">
 				<table>
 					<tr>
-						<td class="colNameTd">
-							아이디
+						<td>
+							<button class="button" onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</button>
 						</td>
-						<td class="colContentTd">
-							${ loginUser.memId }
-							<input type="hidden" name="memId" id="id" value="${ loginUser.memId }">
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이름
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memName" id="name" class="input" value="<c:out value="${ loginUser.memName }"/>">
+						<td>
+							<!-- <button class="button" onclick="openModal('pwdUpdate')">비밀번호 변경</button> -->
+							<button class="button" onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</button>
 						</td>
 					</tr>
 					<tr>
-						<td class="colNameTd">
-							닉네임
+						<td>
+							<button class="button" onclick="">프로필사진 변경</button>
+							<!-- <button class="button" onclick="">사진 변경</button>
+							<button class="button" onclick="">사진 삭제</button> -->
 						</td>
-						<td class="colContentTd">
-							<input type="text" name="memNickname" id="nickname" class="input" value="<c:out value="${ loginUser.memNickname }"/>">
-							<a class="alert_gray">사용 가능한 닉네임입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							이메일
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memEmail" id="email" class="input" value="<c:out value="${ loginUser.memEmail }"/>">
-							<a class="alert_orange">중복된 이메일 주소입니다.</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="colNameTd">
-							휴대전화
-						</td>
-						<td class="colContentTd">
-							<input type="text" name="memPhone" id="phone" class="input" value="<c:out value="${ loginUser.memPhone }"/>">
-							<button class="button" onclick="">인증</button>
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="3" class="colNameTd">
-							주소
-						</td>
-						<td class="colContentTd" style="border:0">
-							우편번호&nbsp;&nbsp;&nbsp;<input type="text" name="memPostcode" id="post" class="postcodify_postcode5"  value="<c:out value="${ loginUser.memPostcode }"/>">
-							<button type="button" class="button" id="postcodify_search_button">검색</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="colContentTd" style="border:0">
-							기본주소&nbsp;&nbsp;&nbsp;<input type="text" name="memBasicAddr" id="address1" class="postcodify_address"  value="<c:out value="${ loginUser.memBasicAddr }"/>">
-						</td>
-					<tr>
-						<td class="colContentTd">
-							상세주소&nbsp;&nbsp;&nbsp;<input type="text" name="memDetailAddr" id="address2" class="postcodify_extra_info"  value="<c:out value="${ loginUser.memDetailAddr }"/>">
-						</td>
-					</tr>
-					<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-					<script>
-						$(function(){
-							$("#postcodify_search_button").postcodifyPopUp();
-						});
-					</script>
-					<tr>
-						<td colspan="2" class="colContentTd_btn">
-							<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
-							<button type="submit" class="button">확인</button>
+						<td>
+							<button class="button" onclick="location.href='memberDeleteView.me'">회원 탈퇴</button>
 						</td>
 					</tr>
 				</table>
-			</form>
+			</div>
 		</div>
 	</div>
 	
