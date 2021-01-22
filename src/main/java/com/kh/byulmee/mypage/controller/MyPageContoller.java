@@ -1,5 +1,6 @@
 package com.kh.byulmee.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.board.model.vo.Pagination;
+import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.service.MypageService;
+import com.kh.byulmee.order.model.vo.Order;
 
 @SessionAttributes("loginUser")
 
@@ -29,24 +35,40 @@ public class MyPageContoller {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
-	@RequestMapping("myPurView.me")
-	public String myPurView() {
-		return "myPur";
-	}
-	
+//	@RequestMapping("myPurActView.me")
+//	public String myPurActView() {
+//		return "myPurAct";
+//	}
+
 	@RequestMapping("myPurActView.me")
-	public String myPurActView() {
-		return "myPurAct";
+	public ModelAndView myPurActView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getOrderListCount(id);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Order> o = mpService.selectOrderList(pi, id);
+		
+		System.out.println("pi : " + pi);
+		if(o != null) {
+			mv.addObject("o", o);
+			mv.addObject("pi", pi);
+			mv.setViewName("myPurAct");
+		} else {
+			throw new MemberException("게시글 전체 조회에 실패했습니다.");
+		}
+		
+		return mv;
 	}
 	
 	@RequestMapping("myPurProView.me")
 	public String myPurProView() {
 		return "myPurPro";
-	}
-	
-	@RequestMapping("myFavView.me")
-	public String myFavView() {
-		return "myFav";
 	}
 	
 	@RequestMapping("myFavActView.me")
@@ -89,10 +111,10 @@ public class MyPageContoller {
 	}
 	
 	
-	@RequestMapping("myInfoUpdateView.me")
-	public String myInfoUpdateView() {
-		return "myInfoUpdate";
-	}
+//	@RequestMapping("myInfoUpdateView.me")
+//	public String myInfoUpdateView() {
+//		return "myInfoUpdate";
+//	}
 	
 	@RequestMapping("myInfoUpdate.me")
 	public String myInfoUpdate(@ModelAttribute Member m, Model model) {
@@ -157,8 +179,6 @@ public class MyPageContoller {
 			model.addAttribute("msg", "기존 비밀번호가 틀렸습니다.");
 			model.addAttribute("url", "myPwdUpdateView.me");
 			return "../common/alert";
-//			String referer = request.getHeader("Referer");
-//		    return "redirect:"+ referer;
 		}
 	}
 	

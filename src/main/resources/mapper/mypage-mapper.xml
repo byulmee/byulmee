@@ -42,4 +42,72 @@
 		set mem_status='N'
 		where mem_id=#{memId}
 	</update>
+	
+	<select id="getOrderListCount" resultType="_int">
+		select count(*)
+		from orders
+		where ord_status='Y' and ord_id = #{memId}
+	</select>
+	
+	<!-- <select id="selectOrderList" resultMap="orderResultSet">
+		select *
+		from orders
+		where ord_status='Y' and ord_id=#{memId}
+		order by ord_no desc
+	</select> -->
+	
+	<!-- <select id="selectOrderList" resultMap="orderResultSet">
+		select *
+		from aolist
+		where ord_status='Y' and ord_id=#{memId}
+		order by ord_no desc
+	</select> -->
+	
+	<select id="selectOrderList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_id as orders, o.ord_count, o.ord_date, o.ord_name, o.ord_phone, o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request, o.ord_payno, o.ord_pay, o.ord_pay_way, o.ord_status, o.ord_refcode, o.ord_refno,
+        		a.act_no, a.mem_id as activity, a.act_phone, a.act_startday, a.act_endday, a.act_place, a.act_people, a.act_requestend, a.act_category, a.act_title, a.act_price, a.act_url, a.act_content, a.act_guide, a.act_count, a.act_date, a.act_status
+		from orders o left outer join activity a on o.ord_refno = a.act_no
+		where o.ord_status = 'Y' and o.ord_id = #{memId}
+		order by o.ord_no desc
+	</select>
+	
+	<resultMap type="Order" id="orderResultSet">
+		<id property="ordNo" column="ORD_NO"/>
+		<result property="ordId" column="ORD_ID"/>
+		<result property="ordCount" column="ORD_COUNT"/>
+		<result property="ordDate" column="ORD_DATE"/>
+		<result property="ordName" column="ORD_NAME"/>
+		<result property="ordPhone" column="ORD_PHONE"/>
+		<result property="ordPostcode" column="ORD_POSTCODE"/>
+		<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+		<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+		<result property="ordRequest" column="ORD_REQUEST"/>
+		<result property="ordPayno" column="ORD_PAYNO"/>
+		<result property="ordPay" column="ORD_PAY"/>
+		<result property="ordPayWay" column="ORD_PAY_WAY"/>
+		<result property="ordStatus" column="ORD_STATUS"/>
+		<result property="ordRefcode" column="ORD_REFCODE"/>
+		<result property="ordRefno" column="ORD_REFNO"/>
+		<collection property="activity" resultMap="activityResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Activity" id="activityResultSet">
+		<id property="actNo" column="ACT_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="actPhone" column="ACT_PHONE"/>
+		<result property="actStartday" column="ACT_STARTDAY"/>
+		<result property="actEndday" column="ACT_ENDDAY"/>
+		<result property="actPlace" column="ACT_PLACE"/>
+		<result property="actPeople" column="ACT_PEOPLE"/>
+		<result property="actRequestend" column="ACT_REQUESTEND"/>
+		<result property="actCategory" column="ACT_CATEGORY"/>
+		<result property="actTitle" column="ACT_TITLE"/>
+		<result property="actPrice" column="ACT_PRICE"/>
+		<result property="actUrl" column="ACT_URL"/>
+		<result property="actContent" column="ACT_CONTENT"/>
+		<result property="actGuide" column="ACT_GUIDE"/>
+		<result property="actCount" column="ACT_COUNT"/>
+		<result property="actDate" column="ACT_DATE"/>
+		<result property="actStatus" column="ACT_STATUS"/>
+	</resultMap>
 </mapper>

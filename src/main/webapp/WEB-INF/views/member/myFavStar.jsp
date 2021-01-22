@@ -219,7 +219,7 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button class="sideMenuBtn" style="cursor: default;">개인정보 관리</button>
+						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
 								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>

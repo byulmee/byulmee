@@ -13,6 +13,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/summernote/summernote-lite.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/summernote/summernote-lite.css">
 <style>
 	body {
 		margin: 0;
@@ -156,22 +159,40 @@
 		color: white;
 		background: #FF6833;
 	}
+	.listArea {
+		min-height: 480px;
+	}
+	.list {
+		display: inline-block;
+		width: 100%;
+		height: 120px;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	.hoverDiv {
+		display: inline-block;
+		width: 650px;
+		height: 120px;
+	}
+	.hoverDiv:hover {
+		opacity: 0.6;
+		cursor: pointer;
+	}
 	.imgDiv {
 		display: inline-block;
-		width: 140px;
-		height: 140px;
+		width: 120px;
+		height: 120px;
 		vertical-align: middle;
 	}
 	.img {
 		display: table-cell;
 		width: 100px;
 		height: 100px;
-		padding: 20px;
+		padding: 10px;
 		object-fit: cover;
 		vertical-align: middle;
 	}
 	.textDiv {
-		width: 500px;
+		width: 400px;
 		margin: 0;
 		display: inline-block;
 		vertical-align: middle;
@@ -180,6 +201,7 @@
 		width: 90px;
 		display: inline-block;
 		vertical-align: middle;
+		text-align: right;
 	}
 	.button {
 		margin: 5px;
@@ -202,17 +224,6 @@
 		background: gray;
 		color: white;
 		cursor: default;
-	}
-	.listArea {
-		min-height: 480px;
-	}
-	.list {
-		display: inline-block;
-		height: 140px;
-	}
-	.list:hover {
-		opacity: 0.6;
-		cursor: pointer;
 	}
 	#wrap {
 		display: table-cell;
@@ -260,28 +271,32 @@
 		background: #fff;
 		z-index: 1000;
 	}
+	.reviewWrite {
+		z-index: 1500;
+	}
 	.modal-con .con {
 		font-size: 15px;
 		line-height: 1.3;
 		padding: 30px;
 	}
-	.modal-con .close {
+	.modal-con .closeModal {
 		display: block;
 		position: absolute;
-		line-height: 30px;
+		line-height: 15px;
 		right: 0px;
 		top: 0x;
 	}
 	.xImg {
-		padding: 10px;
+		padding: 10px 10px 0px 0px;
 		width: 15px;
 		height: 15px;
 		object-fit: cover;
 		cursor: pointer;
+		opacity: 0.2;
 	}
 	.xImg:hover {
-		opacity: 0.4;
 		cursor: pointer;
+		opacity: 1;
 	}
 /* 상세내역 모달창 */		
 	.detailTable {
@@ -311,15 +326,15 @@
 	.star-input>.input,
 	.star-input>.input>label:hover,
 	.star-input>.input>input:focus+label,
-	.star-input>.input>input:checked+label{
+	.star-input>.input>input:checked+label {
 		display: inline-block;
 		vertical-align: top;
 		background: url("resources/images/myPage/star.png") no-repeat;
 	}
-	.star-input{
+	.star-input {
 		-space: nowrap;
 	}
-	.star-input>.input{
+	.star-input>.input {
 		display:inline-block;
 		width: 200px;
 		background-size: 200px;
@@ -328,13 +343,13 @@
 		overflow: hidden;
 		position: relative;
 	}
-	.star-input>.input>input{
+	.star-input>.input>input {
 		position: absolute;
 		width: 1px;
 		height: 1px;
 		opacity: 0;
 	}
-	.star-input>.input>label{
+	.star-input>.input>label {
 		width: 20px;
 		height: 0;
 		padding: 38px 0 0 0;
@@ -347,61 +362,79 @@
 	}
 	.star-input>.input>label:hover,
 	.star-input>.input>input:focus+label,
-	.star-input>.input>input:checked+label{
+	.star-input>.input>input:checked+label {
 		background-size: 200px;
 		background-position: 0 bottom;
 	}
-	.star-input>.input>label:hover~label{
+	.star-input>.input>label:hover~label {
 		background-image: none;
 	}
-	.star-input>.input>label[for="p1"]{ 
+	.star-input>.input>label[for="p1"] { 
 		width: 21px;
 		z-index: 10;
 	}
-	.star-input>.input>label[for="p2"]{ 
+	.star-input>.input>label[for="p2"] { 
 		width: 40px;
 		z-index: 9;
 	}
-	.star-input>.input>label[for="p3"]{ 
+	.star-input>.input>label[for="p3"] { 
 		width: 60px;
 		z-index: 8;
 	}
-	.star-input>.input>label[for="p4"]{ 
+	.star-input>.input>label[for="p4"] { 
 		width: 80px;
 		z-index: 7;
 	}
-	.star-input>.input>label[for="p5"]{ 
+	.star-input>.input>label[for="p5"] { 
 		width: 100px;
 		z-index: 6;
 	}
-	.star-input>.input>label[for="p6"]{ 
+	.star-input>.input>label[for="p6"] { 
 		width: 120px;
 		z-index: 5;
 	}
-	.star-input>.input>label[for="p7"]{ 
+	.star-input>.input>label[for="p7"] { 
 		width: 139px;
 		z-index: 4;
 	}
-	.star-input>.input>label[for="p8"]{ 
+	.star-input>.input>label[for="p8"] { 
 		width: 160px;
 		z-index: 3;
 	}
-	.star-input>.input>label[for="p9"]{ 
+	.star-input>.input>label[for="p9"] { 
 		width: 179px;
 		z-index: 2;
 	}
-	.star-input>.input>label[for="p10"]{ 
+	.star-input>.input>label[for="p10"] { 
 		width: 200px;
 		z-index: 1;
 	}
-	output{
+	output {
 		display: inline-block;
 		width: 50px;
 		height: 38px;
 		font-family: "Gmarket Sans TTF";
-		font-weight: light;
-		text-align: right;
+		text-align: center;
 		vertical-align: middle;
+	}
+	.pagingArea {
+		text-align: center; 
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.pageBtn {
+		display: inline-block;
+		font-family: initial;
+		font-size: 12px;
+		width: 20px;
+		border: 1px solid gray;
+	}
+	.pageBtnSelected {
+		display: inline-block;
+		font-family: initial;
+		font-size: 12px;
+		width: 20px;
+		border: 1px solid red;
 	}
 </style>
 </head>
@@ -418,7 +451,7 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button class="sideMenuBtn" style="cursor: default;">개인정보 관리</button>
+						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
 								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
@@ -461,7 +494,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -479,202 +512,192 @@
 					</ul>
 				</div>
 			<!-- 신청한 활동이 없는 경우 -->
-				<!-- <div id="wrap">
-					<table>
-						<tr>
-							<td class="nothing">
-								신청한 활동이 없습니다.
+				<c:if test="${ o.size() == 0 }">
+					<div id="wrap">
+						<table>
+							<tr>
+								<td class="nothing">
+									신청한 활동이 없습니다.
+								</td>
+							</tr>
+						</table>
+					</div>
+				</c:if>
+			<!-- 신청한 활동이 있는 경우 반복문 시작 -->
+				<c:if test="${ o.size() > 0 }">
+					<c:forEach var="o" items="${ o }">
+						<div class="list">
+							<div class="hoverDiv">
+								<div class="imgDiv">
+									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/surfing.jpg">
+								</div>
+								<div class="textDiv">
+									<p class="text">
+										${ o.activity.actTitle }<br><br>
+										${ o.ordPay } 원&nbsp;&nbsp;|&nbsp;&nbsp;${ o.ordDate } 신청
+									</p>
+								</div>
+							</div>
+							<div class="btnDiv">
+								<button class="button" onclick="openModal('detail')">상세내역</button>
+								<button class="button">문의하기</button>
+								<button class="button" onclick="openModal('reviewWrite')">리뷰작성</button>
+							</div>
+						</div>
+						
+						<!-- 상세내역 모달창 -->
+						<div class="modal-con detail">
+							<a href="javascript:;" class="closeModal"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
+							<div class="con">
+								<table class="detailTable">
+									<tr>
+										<td colspan="3" class="detailTitle">활동 신청 상세내역</td>
+									</tr>
+									<tr>
+										<td rowspan="5" class="tdName">활동 정보</td>
+										<td class="tdName">활동명</td>
+										<td width="600px;">${ o.activity.actTitle }</td>
+									</tr>
+									<tr>
+										<td class="tdName">스타</td>
+										<td>${ o.activity.memId }</td>
+									</tr>
+									<tr>
+										<td class="tdName">신청일</td>
+										<td>${ o.ordDate }</td>
+									</tr>
+									<tr>
+										<td class="tdName">활동 기간</td>
+										<td>${ o.activity.actStartday } ~ ${ o.activity.actEndday }</td>
+									</tr>
+									<tr>
+										<td class="tdName">활동 장소</td>
+										<td>${ o.activity.actPlace }</td>
+									</tr>
+									<tr>
+										<td rowspan="4" class="tdName">결제 정보</td>
+										<td class="tdName">활동비</td>
+										<td>${ o.activity.actPrice }</td>
+									</tr>
+									<tr>
+										<td class="tdName">신청 인원</td>
+										<td>${ o.ordCount }</td>
+									</tr>
+									<tr>
+										<td class="tdName">총 결제 금액</td>
+										<td>${ o.ordPay }</td>
+									</tr>
+									<tr>
+										<td class="tdName">결제 수단</td>
+										<td>${ o.ordPayWay }</td>
+									</tr>
+									<tr>
+										<td rowspan="4" class="tdName">배송 정보</td>
+										<td class="tdName">신청자</td>
+										<td>${ o.ordName }</td>
+									</tr>
+									<tr>
+										<td class="tdName">연락처</td>
+										<td>${ o.ordPhone }</td>
+									</tr>
+									<tr>
+										<td class="tdName">주소</td>
+										<td>${ o.ordBasicaddr } ${ o.ordDetailaddr }</td>
+									</tr>
+									<tr>
+										<td class="tdName">추가 요청 사항</td>
+										<td>${ o.ordRequest }</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- 리뷰작성 모달창 -->
+						<div class="modal-con reviewWrite">
+							<a href="javascript:;" class="closeModal"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
+							<div class="con">
+								<table class="reviewTable">
+									<tr>
+										<td>
+											<div class="star-input">
+												<div class="input">
+													<input type="radio" name="star-input" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
+													<input type="radio" name="star-input" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
+													<input type="radio" name="star-input" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
+													<input type="radio" name="star-input" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
+													<input type="radio" name="star-input" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
+													<input type="radio" name="star-input" id="p6" value="3" class="radio" checked><label for="p6" class="label">3</label>
+													<input type="radio" name="star-input" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
+													<input type="radio" name="star-input" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
+													<input type="radio" name="star-input" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
+													<input type="radio" name="star-input" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<output for="star-input"><b class="score">3</b><b> 점</b></output>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea id="summernote" name="editordata"></textarea>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</c:forEach>
+					<table class="pagingArea">
+						<tr align="center" height="20">
+							<td colspan="6">
+								<!-- [이전] -->
+								<c:if test="${ pi.currentPage <= 1 }">
+									<a class="pageBtn">&lt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage > 1 }">
+									<c:url var="before" value="myPurActView.me">
+										<c:param name="page" value="${ pi.currentPage - 1 }"/>
+									</c:url>
+									<a href="${ before }" class="pageBtn">&lt;</a>
+								</c:if>
+								
+								<!-- 페이지 -->
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<%-- <font color="red" size="4"><b>[${ p }]</b></font> --%>
+										<a class="pageBtnSelected">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="myPurActView.me">
+											<c:param name="page" value="${ p }"/>
+										</c:url>
+										<a href="${ pagination }" class="pageBtn">${ p }</a>
+									</c:if>
+								</c:forEach>
+								
+								<!-- [다음] -->
+								<c:if test="${ pi.currentPage >= pi.maxPage }">
+									<a class="pageBtn">&gt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage < pi.maxPage }">
+									<c:url var="after" value="myPurActView.me">
+										<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									</c:url> 
+									<a href="${ after }" class="pageBtn">&gt;</a>
+								</c:if>
 							</td>
 						</tr>
 					</table>
-				</div> -->
-			<!-- 신청한 활동이 있는 경우 반복문 시작 -->	
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/surfing.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							강릉 겨울서핑 & 렌탈권<br><br>
-							2020.12.14<br><br>
-							35,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<button class="button" onclick="openModal('detail')">상세내역</button>
-					<button class="button">문의하기</button>
-					<button class="button" onclick="openModal('reviewWrite')">리뷰작성</button>
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/flower.png">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							인테리어소품 드라이리스 만들기<br><br>
-							2020.11.21<br><br>
-							39,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<button class="button" onclick="openModal('detail')">상세내역</button>
-					<button class="button">문의하기</button>
-					<button class="button">리뷰작성</button>
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/drawing.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							힐링하며 그리는 유화 원데이 클래스<br><br>
-							2020.10.01<br><br>
-							25,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<button class="button" onclick="openModal('detail')">상세내역</button>
-					<button class="button">문의하기</button>
-					<button class="button" disabled>작성완료</button>
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/leather.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							감성저격 물성형 입체 가죽공예<br><br>
-							2020.09.08<br><br>
-							180,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<button class="button" onclick="openModal('detail')">상세내역</button>
-					<button class="button">문의하기</button>
-					<button class="button" disabled>작성완료</button>
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/write.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							또박또박 만년필로 반듯함을 씁니다, 펜글씨 클래스<br><br>
-							2020.06.14<br><br>
-							169,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<button class="button" onclick="openModal('detail')">상세내역</button>
-					<button class="button">문의하기</button>
-					<button class="button" disabled>작성완료</button>
-				</div>
-				<hr class="line">
+					<hr class="line">
+				</c:if>
 			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>
-
+	
 	<div id="modalBG"><!-- 배경 --></div>
-	<!-- 상세내역 모달창 -->
-	<div class="modal-con detail">
-		<a href="javascript:;" class="close"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
-		<div class="con">
-			<table class="detailTable">
-				<tr>
-					<td colspan="4" class="detailTitle">활동 신청 상세내역</td>
-				</tr>
-				<tr>
-					<td class="tdName">활동명</td>
-					<td colspan="3">강릉 겨울서핑 & 렌탈권</td>
-				</tr>
-				<tr>
-					<td class="tdName">신청일</td>
-					<td colspan="3">2020.12.14</td>
-				</tr>
-				<tr>
-					<td class="tdName">활동비</td>
-					<td colspan="3">35,000원</td>
-				</tr>
-				<tr>
-					<td class="tdName">활동기간</td>
-					<td colspan="3">2020.12.21 06:00 ~ 2020.12.21 22:00</td>
-				</tr>
-				<tr>
-					<td class="tdName">활동장소</td>
-					<td colspan="3">강원 양양군 현남면 죽도해수욕장</td>
-				</tr>
-				<tr>
-					<td colspan="4" class="modalTableTitle">결제정보</td>
-				</tr>
-				<tr>
-					<td class="tdName">신청자</td>
-					<td width="300px;">강건강</td>
-					<td class="tdName">활동비</td>
-					<td width="300px;">35,000원</td>
-				</tr>
-				<tr>
-					<td class="tdName">연락처</td>
-					<td>010-2222-3333</td>
-					<td class="tdName">신청인원</td>
-					<td>2명</td>
-				</tr>
-				<tr>
-					<td class="tdName">주소</td>
-					<td>서울시 강남구 역삼동 132-4번지 101호</td>
-					<td class="tdName">결제금액</td>
-					<td>70,000원</td>
-				</tr>
-				<tr>
-					<td class="tdName">추가사항</td>
-					<td>없음</td>
-					<td class="tdName">결제수단</td>
-					<td>삼성카드 5188-****-****-2342</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<!-- 리뷰작성 모달창 -->
-	<div class="modal-con reviewWrite">
-		<a href="javascript:;" class="close"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
-		<div class="con">
-			<table class="reviewTable">
-				<tr>
-					<td>
-						<div class="star-input">
-							<div class="input">
-								<input type="radio" name="star-input" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
-								<input type="radio" name="star-input" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
-								<input type="radio" name="star-input" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
-								<input type="radio" name="star-input" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
-								<input type="radio" name="star-input" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
-								<input type="radio" name="star-input" id="p6" value="3" class="radio"><label for="p6" class="label">3</label>
-								<input type="radio" name="star-input" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
-								<input type="radio" name="star-input" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
-								<input type="radio" name="star-input" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
-								<input type="radio" name="star-input" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
-							</div>
-							<br>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<output for="star-input"><b class="score">0</b><b> 점</b></output>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
 	
 	<c:import url="../common/footer.jsp"/>
 	
@@ -685,7 +708,7 @@
 			$("." + modalname).fadeIn(300);
 		}
 
-		$("#modalBG, .close").on('click', function() {
+		$("#modalBG, .closeModal").on('click', function() {
 			$("#modalBG").fadeOut(300);
 			$(".modal-con").fadeOut(300);
 		});
@@ -717,6 +740,29 @@
 			});
 		};
 		starRating();
+		
+		$(document).ready(function() {
+			$('#summernote').summernote({
+				toolbar: [
+					['fontname', ['fontname']],
+					['fontsize', ['fontsize']],
+					['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+					['color', ['forecolor','color']],
+					['para', ['paragraph']],
+					['insert',['picture']],
+					['view', ['help']]
+				],
+				fontNames: ['맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체',
+							'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+				fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20',
+							'22', '24', '28', '30', '36', '50', '72'],
+				width: 650,
+				height: 400,
+				disableResizeEditor: true,
+				lang: "ko-KR"
+			});
+			$('.note-statusbar').hide();
+		});
 	</script>
 </body>
 </html>

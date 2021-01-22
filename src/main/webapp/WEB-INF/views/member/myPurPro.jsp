@@ -13,6 +13,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/summernote/summernote-lite.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/summernote/summernote-lite.css">
 <style>
 	body {
 		margin: 0;
@@ -156,6 +159,18 @@
 		color: white;
 		background: #FF6833;
 	}
+	.listArea {
+		min-height: 480px;
+	}
+	.list {
+		display: inline-block;
+		height: 140px;
+	}
+	.list:hover {
+		opacity: 0.6;
+		cursor: pointer;
+		border-bottom: 1px solid #D4D4D4;
+	}
 	.imgDiv {
 		display: inline-block;
 		width: 140px;
@@ -203,17 +218,6 @@
 		color: white;
 		cursor: default;
 	}
-	.listArea {
-		min-height: 480px;
-	}
-	.list {
-		display: inline-block;
-		height: 140px;
-	}
-	.list:hover {
-		opacity: 0.6;
-		cursor: pointer;
-	}
 	#wrap {
 		display: table-cell;
 		margin: 0;
@@ -247,6 +251,7 @@
 		top: 0;
 		left: 0; 
 		background: rgba(0,0,0,0.6);
+		z-index: 999;
 	}
 	.modal-con {
 		display: none;
@@ -257,29 +262,34 @@
 		min-width: 30%;
 		min-height: 50%;
 		background: #fff;
+		z-index: 1000;
+	}
+	#summernote {
+		z-index: 1500;
 	}
 	.modal-con .con {
 		font-size: 15px;
 		line-height: 1.3;
 		padding: 30px;
 	}
-	.modal-con .close {
+	.modal-con .closeModal {
 		display: block;
 		position: absolute;
-		line-height: 30px;
+		line-height: 15px;
 		right: 0px;
 		top: 0x;
 	}
 	.xImg {
-		padding: 10px;
+		padding: 10px 10px 0px 0px;
 		width: 15px;
 		height: 15px;
 		object-fit: cover;
 		cursor: pointer;
+		opacity: 0.2;
 	}
 	.xImg:hover {
-		opacity: 0.4;
 		cursor: pointer;
+		opacity: 1;
 	}
 /* 상세내역 모달창 */		
 	.detailTable {
@@ -309,15 +319,15 @@
 	.star-input>.input,
 	.star-input>.input>label:hover,
 	.star-input>.input>input:focus+label,
-	.star-input>.input>input:checked+label{
+	.star-input>.input>input:checked+label {
 		display: inline-block;
 		vertical-align: top;
 		background: url("resources/images/myPage/star.png") no-repeat;
 	}
-	.star-input{
+	.star-input {
 		-space: nowrap;
 	}
-	.star-input>.input{
+	.star-input>.input {
 		display:inline-block;
 		width: 200px;
 		background-size: 200px;
@@ -326,16 +336,13 @@
 		overflow: hidden;
 		position: relative;
 	}
-	.star-input>.input>input{
+	.star-input>.input>input {
 		position: absolute;
 		width: 1px;
 		height: 1px;
 		opacity: 0;
 	}
-	.star-input>.input.focus{
-		outline: 1px dotted #ddd;
-	}
-	.star-input>.input>label{
+	.star-input>.input>label {
 		width: 20px;
 		height: 0;
 		padding: 38px 0 0 0;
@@ -348,59 +355,58 @@
 	}
 	.star-input>.input>label:hover,
 	.star-input>.input>input:focus+label,
-	.star-input>.input>input:checked+label{
+	.star-input>.input>input:checked+label {
 		background-size: 200px;
 		background-position: 0 bottom;
 	}
-	.star-input>.input>label:hover~label{
+	.star-input>.input>label:hover~label {
 		background-image: none;
 	}
-	.star-input>.input>label[for="p1"]{ 
+	.star-input>.input>label[for="p1"] { 
 		width: 21px;
 		z-index: 10;
 	}
-	.star-input>.input>label[for="p2"]{ 
+	.star-input>.input>label[for="p2"] { 
 		width: 40px;
 		z-index: 9;
 	}
-	.star-input>.input>label[for="p3"]{ 
+	.star-input>.input>label[for="p3"] { 
 		width: 60px;
 		z-index: 8;
 	}
-	.star-input>.input>label[for="p4"]{ 
+	.star-input>.input>label[for="p4"] { 
 		width: 80px;
 		z-index: 7;
 	}
-	.star-input>.input>label[for="p5"]{ 
+	.star-input>.input>label[for="p5"] { 
 		width: 100px;
 		z-index: 6;
 	}
-	.star-input>.input>label[for="p6"]{ 
+	.star-input>.input>label[for="p6"] { 
 		width: 120px;
 		z-index: 5;
 	}
-	.star-input>.input>label[for="p7"]{ 
+	.star-input>.input>label[for="p7"] { 
 		width: 139px;
 		z-index: 4;
 	}
-	.star-input>.input>label[for="p8"]{ 
+	.star-input>.input>label[for="p8"] { 
 		width: 160px;
 		z-index: 3;
 	}
-	.star-input>.input>label[for="p9"]{ 
+	.star-input>.input>label[for="p9"] { 
 		width: 179px;
 		z-index: 2;
 	}
-	.star-input>.input>label[for="p10"]{ 
+	.star-input>.input>label[for="p10"] { 
 		width: 200px;
 		z-index: 1;
 	}
-	output{
+	output {
 		display: inline-block;
 		width: 50px;
 		height: 38px;
 		font-family: "Gmarket Sans TTF";
-		font-weight: light;
 		text-align: right;
 		vertical-align: middle;
 	}
@@ -419,7 +425,7 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button class="sideMenuBtn" style="cursor: default;">개인정보 관리</button>
+						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
 								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
@@ -588,7 +594,7 @@
 	<div id="modalBG"><!-- 배경 --></div>
 	<!-- 상세내역 모달창 -->
 	<div class="modal-con detail">
-		<a href="javascript:;" class="close"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
+		<a href="javascript:;" class="closeModal"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
 		<div class="con">
 			<table class="detailTable">
 				<tr>
@@ -646,34 +652,41 @@
 	</div>
 		<!-- 리뷰작성 모달창 -->
 	<div class="modal-con reviewWrite">
-		<a href="javascript:;" class="close"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
+		<a href="javascript:;" class="closeModal"><img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png"></a>
 		<div class="con">
-			<table class="reviewTable">
-				<tr>
-					<td>
-						<div class="star-input">
-							<div class="input">
-								<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
-								<input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
-								<input type="radio" name="star-input" id="p3" value="1.5"><label for="p3">1.5</label>
-								<input type="radio" name="star-input" id="p4" value="2"><label for="p4">2</label>
-								<input type="radio" name="star-input" id="p5" value="2.5"><label for="p5">2.5</label>
-								<input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
-								<input type="radio" name="star-input" id="p7" value="3.5"><label for="p7">3.5</label>
-								<input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
-								<input type="radio" name="star-input" id="p9" value="4.5"><label for="p9">4.5</label>
-								<input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
+			<form method="post">
+				<table class="reviewTable">
+					<tr>
+						<td>
+							<div class="star-input">
+								<div class="input">
+									<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
+									<input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
+									<input type="radio" name="star-input" id="p3" value="1.5"><label for="p3">1.5</label>
+									<input type="radio" name="star-input" id="p4" value="2"><label for="p4">2</label>
+									<input type="radio" name="star-input" id="p5" value="2.5"><label for="p5">2.5</label>
+									<input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
+									<input type="radio" name="star-input" id="p7" value="3.5"><label for="p7">3.5</label>
+									<input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
+									<input type="radio" name="star-input" id="p9" value="4.5"><label for="p9">4.5</label>
+									<input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
+								</div>
+								<br>
 							</div>
-							<br>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<output for="star-input"><b class="score">0</b><b> 점</b></output>
-					</td>
-				</tr>
-			</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<output for="star-input"><b class="score">0</b><b> 점</b></output>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<textarea id="summernote" name="editordata"></textarea>
+						</td>
+					</tr>
+				</table>
+			</form>
 		</div>
 	</div>
 	
@@ -686,7 +699,7 @@
 			$("." + modalname).fadeIn(300);
 		}
 
-		$("#modalBG, .close").on('click', function() {
+		$("#modalBG, .closeModal").on('click', function() {
 			$("#modalBG").fadeOut(300);
 			$(".modal-con").fadeOut(300);
 		});
@@ -718,6 +731,19 @@
 			});
 		};
 		starRating();
+		
+		$(document).ready(function() {
+			//여기 아래 부분
+			$('#summernote').summernote({
+				height: 300,                 // 에디터 높이
+				minHeight: null,             // 최소 높이
+				maxHeight: null,             // 최대 높이
+				focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+				lang: "ko-KR",					// 한글 설정
+				placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+		          
+			});
+		});
 	</script>
 </body>
 </html>
