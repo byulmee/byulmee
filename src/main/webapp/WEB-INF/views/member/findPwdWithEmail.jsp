@@ -20,9 +20,9 @@
         <ul id="login-frame">
             <li id="find-opt">
 				<div class="wrap">
-					<input type="radio" name="findOpt" id="radio0" class="checkbox" checked>
+					<input type="radio" name="findOpt" id="radio0" class="checkbox">
 					<label for="radio0" class="input-label radio">휴대전화 인증</label>
-					<input type="radio" name="findOpt" id="radio1" class="checkbox">
+					<input type="radio" name="findOpt" id="radio1" class="checkbox" checked>
 					<label for="radio1" class="input-label radio">이메일 인증</label>
 				</div>
             </li>
@@ -32,7 +32,7 @@
                 <label for="memId" class="hint strong"></label>
             </li>
             <li>
-                <label id="opt-title">휴대전화 번호</label>
+                <label id="opt-title">이메일 주소</label>
                 <span class="hint">"인증번호 발송"을 눌러 인증번호를 확인해주세요.</span>
                 <div class="item-with-btn info-input-box">
                     <input type="text" name="memInfo" autocomplete="off">
@@ -45,7 +45,6 @@
                 </div>
                 <span id="valCodeStatus" class="hint"></span>
                 <label for="valCode" class="hint strong"></label>
-                
             </li>
             <li id="input-pwd" style="display:none;">
                 <label>새 비밀번호 입력</label>
@@ -55,7 +54,7 @@
             <li id="input-pwd-check" style="display:none;">
                 <label>비밀번호 확인</label>
                 <input type="password" name="pwdCheck" autocomplete="nofill">
-                <label for="pwdCheck" class="hint strong"></label>
+            	<label for="pwdCheck" class="hint strong"></label>
             </li>
             <li>
                 <button type="button" class="submit-btn reset">비밀번호 재설정</button>

@@ -27,12 +27,12 @@
             </li>
             <li>
                 <label for="name">이름 입력</label>
-                <input type="text" name="memName" required autocomplete="nofill">
+                <input type="text" name="memName" required autocomplete="off">
                 <span id="memName-error" class="hint strong"></span>
             </li>
             <li id="opt-input-area">
                 <label for="memInfo" class="opt-input-title">휴대전화 번호 입력</label>
-                <input type="text" name="memInfo" class="memPhone" required autocomplete="nofill">
+                <input type="text" name="memInfo" class="memPhone" required autocomplete="off">
                 <span id="memInfo-error" class="hint strong"></span>
             </li>
             <li>

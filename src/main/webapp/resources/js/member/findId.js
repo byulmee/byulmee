@@ -55,13 +55,13 @@ memInfo.addEventListener('keyup', function() {
 	let inputText = memInfo.value;
 	
 	if(memInfo.classList.contains('memPhone')) {
-		if(inputText === null || inputText == '' || /^01[(?:0|1[6-9](\d{3,4})(\d{4})$/.test(inputText) == false) {
+		if(inputText === null || inputText == '' || !/^01[(?:0|1[6-9](\d{3,4})(\d{4})$/.test(inputText)) {
 			memInfo_error.innerHTML = '유효한 전화번호를 입력했는지 다시 확인해주세요.<br>전화번호는 -를 제외하고 작성해주세요.';
 		} else {
 			memInfo_error.innerHTML = '';
 		}
 	} else if(memInfo.classList.contains('memEmail')) {
-		if(inputText === null || inputText == '' || /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(inputText) == false) {
+		if(inputText === null || inputText == '' || !/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(inputText)) {
 			memInfo_error.innerHTML = '유효한 이메일을 입력했는지 다시 확인해주세요.';
 		} else {
 			memInfo_error.innerHTML = '';
@@ -91,12 +91,10 @@ submit_btn.addEventListener("click", function() {
 	
 	httpRequest.onload = function(){ //요청에 대한 응답을받으면
 		result_id = callback(); //응답 받은 ID를 불러옴
-		console.log("result_id1 " + result_id);
 		
 		modal('my_modal');
 		
 		if(result_id != '') {
-			console.log("result_id success " + result_id);
 			document.querySelector('.modal-message').innerHTML = '회원님의 아이디는 <span style="color: #FF6833;">' + result_id + '</span> 입니다.';
 		} else {
 			document.querySelector('.modal-message').innerText = '존재하지 않는 회원입니다.';
@@ -115,7 +113,6 @@ submit_btn.addEventListener("click", function() {
 	
 	httpRequest.open(method, url, isSync);
 	httpRequest.setRequestHeader('Content-Type', 'application/json');
-	console.log('확인하자' + JSON.stringify(data));
 	httpRequest.send(JSON.stringify(data));
 }
 	
@@ -133,7 +130,6 @@ function callback() {
 		if(httpRequest.status === 200 || httpRequest.status === 201) { //응답 상태가 정상일 때
 			let result = httpRequest.responseText;
 			//ie: JSON 지원 안하는 버전에서 파싱eval("("+xmlhttp.responseText+")");
-			console.log(result);
 			return result;
 		}
 	}

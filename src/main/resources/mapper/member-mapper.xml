@@ -66,5 +66,22 @@
   		from member
   		where mem_Name = #{memName} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
   	</select>
+  	
+  	<update id="resetPwd">
+  		update member
+  		set mem_pwd = #{memPwd}
+  		where mem_id = #{memId}
+  	</update>
  
+   	<select id="CheckIdWithEmail" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  	
+  	<select id="CheckIdWithPhone" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
 </mapper>

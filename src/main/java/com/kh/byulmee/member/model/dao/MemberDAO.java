@@ -41,4 +41,16 @@ public class MemberDAO {
 	public String findIdWithEmail(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.findIdWithEmail", member);
 	}
+
+	public int resetPwd(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.resetPwd", member);
+	}
+
+	public int CheckIdWithEmail(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.CheckIdWithEmail", member);
+	}
+	
+	public int CheckIdWithPhone(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.CheckIdWithPhone", member);
+	}
 }

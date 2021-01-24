@@ -7,7 +7,7 @@ body {
 	margin: auto;
 }
 
-.checkbox[type=checkbox], .checkbox[type=radio] {display:none;}
+.checkbox[type=radio] {display:none;}
 label.input-label { 
   display: inline-block;
   vertical-align: middel;
@@ -227,12 +227,8 @@ hr {
 
 .confirm-btn {
     margin: 0;
-    font-size: 0.6rem;
-}
-
-.confirm-btn:hover {
-    background-color: #FF6833;
-    color: #ffffff;
+    font-family: 'GmarketSansLight';
+    font-size: 0.7rem;
 }
 
 @media screen and (max-width: 450px) {

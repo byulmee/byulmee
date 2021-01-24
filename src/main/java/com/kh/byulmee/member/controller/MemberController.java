@@ -36,6 +36,11 @@ public class MemberController {
 	public String findPwdView() {
 		return "findPwd";
 	}
+	
+	@RequestMapping("findPwdWithEmailView.me")
+	public String findPwdWithEmailView() {
+		return "findPwdWithEmail";
+	}
 
 	@RequestMapping("myPurView.me")
 	public String myPurView() {

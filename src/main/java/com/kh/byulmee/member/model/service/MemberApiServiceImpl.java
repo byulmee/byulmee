@@ -3,11 +3,20 @@ package com.kh.byulmee.member.model.service;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.simple.JSONArray;
@@ -29,6 +38,7 @@ import com.kh.byulmee.member.model.dao.MemberDAO;
 import com.kh.byulmee.member.model.dto.KakaoProfile;
 import com.kh.byulmee.member.model.dto.KakaoToken;
 import com.kh.byulmee.member.model.dto.SmsResponse;
+import com.kh.byulmee.member.model.vo.Member;
 
 /* by다혜: 간편 로그인 및 인증 처리 Sevice */
 @Service("mApiService")
@@ -52,6 +62,12 @@ public class MemberApiServiceImpl implements MemberApiService {
 	private String smsServiceId;
 	@Value("#{keys['n.from']}")
 	private String from;
+	
+	@Value("#{keys['g.smtp.account']}")
+	private String smtpAccount;
+	@Value("#{keys['g.smtp.password']}")
+	private String smtpPassword;
+	
 	
 	
 	/******** by다혜: 카카오 인증&인가 메소드 ********/
@@ -107,6 +123,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		return kakaoProfile;
 	}
 
+	
 	
 	/******** by다혜: MSM 발송 메소드 ********/
 	@Override
@@ -220,4 +237,58 @@ public class MemberApiServiceImpl implements MemberApiService {
 		
 		return resultToJson;
 	}
+	
+	
+	
+	/******** by다혜: Email 발송 메소드 ********/
+	@Override
+	public String getEmailCode(Member member) {
+		
+		String memEmail = member.getMemEmail();
+		String code = getRandomCode();
+		
+		//이메일 서버에 접근하기 위한 정보 입력
+		Properties props = System.getProperties();
+		props.setProperty("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587");
+		
+		//인증 정보를 담은 세션 생성
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(smtpAccount, smtpPassword);
+			}
+		});
+
+		
+		MimeMessage message = new MimeMessage(session);
+		
+		try {
+			//발송 시간
+			message.setSentDate(new Date());
+			message.setFrom(new InternetAddress("noReply@byulmee.com", "별난취미_별미"));
+			InternetAddress to = new InternetAddress(memEmail);
+			message.addRecipient(Message.RecipientType.TO, to);
+			message.setSubject("[별미]비밀번호 재설정을 위한 인증번호를 입력해주세요.");
+			String emailBody = "<div style=\"width: 100%; margin-bottom: 25px; padding: 30px 0; text-align: center;\"><br>" +
+							   "	<span style=\"font-size: 16px; color: #FF6833; font-weight: 900; padding: 5px 0; margin: auto;\">별난취미_별미</span>" +
+							   "    <image src=\"https://user-images.githubusercontent.com/59134456/105507509-a12df100-5d0e-11eb-991a-d187e4bafea9.png\" height=\"32px;\" style=\"margin: auto;\"/>" + 
+							   "    <hr style=\"width: 50%; height: 1px; margin-top: 20px; border:0; background-color: #FF6833;\">" + 
+							   "</div>" + 
+							   "<h1 style=\"width: 30%; margin: auto; border-radius: 20px; text-align: center; padding: 30px; background-color: #FDF5E6; font-size: 18px;\">인증 번호<br><span style=\"color: #FF6833; font-size: 32px;\">" + code + "<span></h1>" + 
+							   "<p style=\"text-align: center; font-size: 16px; line-height: 1.5rem; padding: 15px 0;\">비밀번호를 재설정하기 위한 인증 번호입니다.<br>비밀번호 변경을 위해 발송된 인증번호를 정확히 입력해주세요.</p>";
+			message.setContent(emailBody, "text/html; charset=utf-8");
+			
+			Transport.send(message);
+		} catch (MessagingException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			code = "이메일 전송 실패";
+		}
+		
+		return code;
+	}
+
+
 }

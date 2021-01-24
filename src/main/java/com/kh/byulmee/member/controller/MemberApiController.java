@@ -1,12 +1,13 @@
 package com.kh.byulmee.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.byulmee.member.model.dto.KakaoProfile;
 import com.kh.byulmee.member.model.dto.KakaoToken;
 import com.kh.byulmee.member.model.exception.MemberException;
@@ -35,9 +35,11 @@ import com.kh.byulmee.member.model.vo.Member;
 @Controller
 public class MemberApiController {
 	
+	//회원 정보 관리
 	@Autowired
 	private MemberService mService;
 	
+	//인증 API 관련
 	@Autowired
 	private MemberApiService mApiService;
 	
@@ -51,7 +53,6 @@ public class MemberApiController {
 		
 		String encodedPwd = bcrypt.encode(memberInfo.getMemPwd());
 		memberInfo.setMemPwd(encodedPwd);
-		System.out.println(memberInfo.getMemLoginType());
 		
 		int result = mService.insertMember(memberInfo);
 		
@@ -77,50 +78,35 @@ public class MemberApiController {
 	@RequestMapping("checkId.me")
 	@ResponseBody
 	public boolean checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
-		boolean result = mService.checkId(memId) == 0 ? true : false;
 		
-		return result;
+		return mService.checkId(memId) == 0 ? true : false;
 	}
 	
 	@RequestMapping("checkNickname.me")
 	@ResponseBody
 	public boolean checkNickname(@RequestParam("nickname") String nickname, HttpServletResponse response) {
-		boolean result = mService.checkNickname(nickname) < 1 ? true : false;
 		
-		return result;
+		return mService.checkNickname(nickname) < 1 ? true : false;
 	}
 	
 	@RequestMapping("checkPhone.me")
 	@ResponseBody
 	public boolean checkPhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
-		boolean result = mService.checkPhone(memPhone) < 1 ? true : false;
 		
-		return result;
+		return mService.checkPhone(memPhone) < 1 ? true : false;
 	}
 	
 	@RequestMapping("checkEmail.me")
 	@ResponseBody
 	public boolean checkEmail(@RequestParam("email") String email, HttpServletResponse response) {
-		boolean result = mService.checkEmail(email) < 1 ? true : false;
 		
-		return result;
-	}
-	
-	
-	/******** by다혜: 휴대전화 인증 메세지 발송 ********/
-	@RequestMapping(value="validatePhone.me", method=RequestMethod.POST)
-	@ResponseBody
-	public String validatePhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
-		
-		String result = mApiService.sendMmsRequest(memPhone);
-
-		return result;
+		return mService.checkEmail(email) < 1 ? true : false;
 	}
 	
 	
 	/******** by다혜: 로그인&아웃 메소드 ********/
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
-	public String login(@RequestParam("memId") String memId, @RequestParam("memPwd")String memPwd, Model model) {
+	public String login(@RequestParam("memId") String memId, @RequestParam("memPwd")String pwdInput, Model model) {
 		
 		Member m = mService.selectMember(memId);
 		
@@ -129,8 +115,14 @@ public class MemberApiController {
 			model.addAttribute("url", "loginView.me");
 			return "../common/alert";
 		}
+	
+		System.out.println(m);
+		String storedPwd =  m.getMemPwd();
 		
-		if(bcrypt.matches(memPwd, m.getMemPwd())) {
+		System.out.println(m.getMemPwd());
+		System.out.println(storedPwd);
+		
+		if(bcrypt.matches(pwdInput, storedPwd)) {
 			model.addAttribute("loginUser", m);
 			return "redirect:home.do";
 		} else {
@@ -144,6 +136,44 @@ public class MemberApiController {
 	public String logout(SessionStatus status) {
 		status.setComplete();
 		return "redirect:home.do";
+	}
+	
+	
+	/******** by다혜: 휴대전화 인증 메세지 발송 ********/
+	@RequestMapping(value="validatePhone.me", method=RequestMethod.POST)
+	@ResponseBody
+	public String validatePhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
+
+		return mApiService.sendMmsRequest(memPhone);
+	}
+	
+	
+	/******** by다혜: 이메일 인증 메소드 ********/
+	@RequestMapping(value = "validateEmail.me", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String validateEmail(@RequestParam("memInfo") String memEmail, @RequestParam("memId") String memId) {
+		String code = "";
+		int status = 0;
+		Member member = new Member();
+		member.setMemId(memId);
+		member.setMemEmail(memEmail);
+
+		if(mService.CheckIdWithEmail(member) > 0 ) {
+			
+			code = mApiService.getEmailCode(member);
+			status = 200;
+		} else {
+			code = "아이디 혹은 이메일이 올바른지 다시 확인해주세요.";
+			status = 406;
+		}
+		
+		JSONObject json = new JSONObject();
+		json.put("code", code);
+		json.put("status", status);
+		
+		String result = json.toJSONString();
+		
+		return result;
 	}
 	
 	
@@ -194,20 +224,31 @@ public class MemberApiController {
 	@ResponseBody
 	public String findIdWithPhone(@RequestBody String data) {
 		
-		String result = mService.findIdWithPhone(data);
-		System.out.println("result " + result);
-		return result;
+		return mService.findIdWithPhone(data);
 	}
 
 	@RequestMapping(value = "findIdWithEmail.me", method = RequestMethod.POST)
 	@ResponseBody
 	public String findIdWithEmail(@RequestBody String data) {
 		
-		String result = mService.findIdWithEmail(data);
-		
-		return result;
+		return mService.findIdWithEmail(data);
 	}
-
-
-
+	
+	
+	/******** by다혜: 비밀번호 변경 메소드 ********/
+	@RequestMapping(value="resetPwd.me", method = RequestMethod.POST)
+	@ResponseBody
+	public String resetPwd(@RequestBody Member member) {
+		
+		String memPwd= member.getMemPwd();
+		String encodedPwd = bcrypt.encode(memPwd);
+		member.setMemPwd(encodedPwd);
+		
+		
+		System.out.println(member.getMemId() + ", " + encodedPwd);
+		
+		System.out.println(mService.resetPwd(member));
+		
+		return mService.resetPwd(member);
+	}
 }

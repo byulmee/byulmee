@@ -12,13 +12,17 @@ public interface MemberService {
 	
 	int checkNickname(String nickname);
 	
+	int checkPhone(String memPhone);
 	
-
-	int checkEmail(String email);
+	public int checkEmail(String memEmail);
 
 	String findIdWithPhone(String data);
 	
 	String findIdWithEmail(String data);
-
-	int checkPhone(String memPhone);
+	
+	int CheckIdWithPhone(Member member);
+	
+	int CheckIdWithEmail(Member member);
+	
+	String resetPwd(Member member);
 }
