@@ -125,20 +125,20 @@ function sendCodeAndCheck() {
       success: function(data) {
 
         //발송한 랜덤 코드와 수신 상태 받아오기
-        requestStatus = data['status'];
-        sysCode = data['code'];
-
+        requestStatus = data.status;
+        sysCode = data.code;
+		
         //이미 전송한 적이 있는 번호인지 검증 후 중복되었을 경우 재전송 요청
         let isDuplicated = sysCodeDuplicateCheck();
 
-        if(!isDuplicated) {
+		if(!isDuplicated) {
           numbers.push(sysCode);
         } else {
           requestStatus = "500";
         }
 
         //성공적으로 sms 전송한 경우
-        if(requestStatus == '202') {
+        if(requestStatus == '200') {
           //인증하기 재전송 못하도록 화면 처리
           $('.sendCode').attr('disabled','disabled').css('backgroundColor', '#E4E5ED');
           $('input[name=memPhone]').attr('readonly', 'true').addClass('disable-bg');
@@ -167,9 +167,9 @@ function sysCodeDuplicateCheck() {
 
   for(var i in numbers) {
 
-    if(number[i] == sysCode) {
-      isDuplicated = true;
-      break;
+    if(numbers[i] == sysCode) {
+		isDuplicated = true;
+		break;
     }
   }
 

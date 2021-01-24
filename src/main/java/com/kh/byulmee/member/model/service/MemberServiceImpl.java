@@ -72,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		System.out.println(member);
+
 		return mDAO.findIdWithPhone(sqlSession, member);
 	}
 
@@ -111,7 +111,6 @@ public class MemberServiceImpl implements MemberService {
 	public String resetPwd(Member member) {
 		
 		Member checkMemExisted = mDAO.selectMember(sqlSession, member.getMemId());
-		System.out.println("serviceImpl m 확인: " + checkMemExisted);
 		
 		//해당 유저가 존재하는지 검사 후 비밀번호 변경
 		if(checkMemExisted != null) {

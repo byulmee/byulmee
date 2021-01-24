@@ -73,7 +73,6 @@ public class MemberApiServiceImpl implements MemberApiService {
 	/******** by다혜: 카카오 인증&인가 메소드 ********/
 	@Override
 	public KakaoToken getKakaoToken(String code) {
-		System.out.println(kClientId + "" + kRedirectUri);
 		RestTemplate rt = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();

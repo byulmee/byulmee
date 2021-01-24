@@ -25,7 +25,6 @@ let val_code; //발송한 번호
 
 //옵션 변경 시 페이지 초기화
 opt_phone.addEventListener('click', function(){
-	console.log('hihi');
 	location.href='findPwdView.me';
 });
 opt_email.addEventListener('click', function(){
@@ -99,15 +98,11 @@ async function sendCodeAndCheck(url) {
 	let checkIdRes = await fetch('checkId.me?memId='+input_id.value);
  	let idNotExisted = await checkIdRes.text();
 	
-	console.log(idNotExisted);
-	
 	if(idNotExisted != 'true') { //존재하는 아이디라면
 	
 		//step2아이디와 입력 정보를 대조하여 회원 조회
 		let sendCodeRes = await fetch(url + '?memId=' + input_id.value + '&memInfo=' + input_info.value);
-		console.log(sendCodeRes);
 		let code = await sendCodeRes.json();
-		console.log(code);
 		
 		if(code.status == 200) {
 			//화면 처리
@@ -125,10 +120,8 @@ async function sendCodeAndCheck(url) {
 			//타이머 시작
 			countDown();
 			
-			console.log('성공 ' + val_code);
 			
 		} else {
-			console.log('실패 ' + code.code);
 			info_error.innerHTML = code.code;
 			input_info.focus();
 			input_info_btn.disabled = false;
@@ -233,11 +226,9 @@ async function resetPwd() {
 	}
 
 	let response = await fetch('resetPwd.me', init);
-	console.log(response);
 	
 	let data = await response.text();
 	
-	console.log(data);
 	
 	if(data == 'success') {
 		alert('비밀번호 변경에 성공했습니다.\n로그인 페이지로 이동합니다.');
@@ -252,7 +243,6 @@ async function resetPwd() {
 
 //비밀번호 재설정
 submit_new_pwd_btn.addEventListener('click', function(){
-	console.log('비밀번호를 바꿔보자');
 	
 	pwdCheck_error.innerText = '';
 	
@@ -263,15 +253,12 @@ submit_new_pwd_btn.addEventListener('click', function(){
 		input_info.blur();
 		info_error.innerText = '입력값을 다시 확인해주세요.';
 	} else if(input_val_code.value == '' || valCode_error.innerText != '') {
-		console.log('1');
 		input_val_code.blur();
 		valCode_error.innerText = '인증번호를 다시 확인해주세요.';
 	} else if(input_pwd.value == '' || pwd_error.innerText != '') {
-		console.log('2');
 		input_pwd.blur();
 		pwd_error.innerText = '비밀번호를 다시 확인해주세요.';
 	} else if(input_pwdCheck.value == '' || pwdCheck_error.innerText != '') {
-		console.log('3');
 		input_pwdCheck.blur();
 		pwdCheck_error.innerText = '비밀번호를 다시 확인해주세요.';
 	} else {

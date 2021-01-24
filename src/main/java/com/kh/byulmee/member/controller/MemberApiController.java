@@ -116,11 +116,7 @@ public class MemberApiController {
 			return "../common/alert";
 		}
 	
-		System.out.println(m);
 		String storedPwd =  m.getMemPwd();
-		
-		System.out.println(m.getMemPwd());
-		System.out.println(storedPwd);
 		
 		if(bcrypt.matches(pwdInput, storedPwd)) {
 			model.addAttribute("loginUser", m);
@@ -272,11 +268,6 @@ public class MemberApiController {
 		String memPwd= member.getMemPwd();
 		String encodedPwd = bcrypt.encode(memPwd);
 		member.setMemPwd(encodedPwd);
-		
-		
-		System.out.println(member.getMemId() + ", " + encodedPwd);
-		
-		System.out.println(mService.resetPwd(member));
 		
 		return mService.resetPwd(member);
 	}

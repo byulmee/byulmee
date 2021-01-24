@@ -125,7 +125,6 @@ submit_btn.addEventListener("click", function() {
 //	* responseText: text 형식으로 데이터를 받음
 function callback() {
 	if (httpRequest.readyState === httpRequest.DONE) { //요청이 완료되면
-		console.log(httpRequest.responseText);
 	
 		if(httpRequest.status === 200 || httpRequest.status === 201) { //응답 상태가 정상일 때
 			let result = httpRequest.responseText;
