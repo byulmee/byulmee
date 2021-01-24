@@ -223,15 +223,22 @@ public class MemberApiServiceImpl implements MemberApiService {
 				String.class
 		);
 		
+		
+		//response 응답 결과 
 		Gson gson = new Gson();
 		SmsResponse smsResp = gson.fromJson(response.getBody(), SmsResponse.class);
 		
-
 		JSONObject result = new JSONObject();
-		result.put("code", randomCode);
+		if(response != null) {
+			result.put("code", randomCode);
+			result.put("status", 200);
+			
+		} else {
+			result.put("code", "인증번호를 발송하지 못했습니다.\n잠시후 다시 시도해주세요.");
+			result.put("status", 405);
+		}
+		
 		result.put("to", memPhone);
-		result.put("status", smsResp.getStatusCode());
-		result.put("statusName", smsResp.getStatusName());
 		
 		String resultToJson = gson.toJson(result);
 		

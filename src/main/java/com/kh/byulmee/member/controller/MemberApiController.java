@@ -142,9 +142,36 @@ public class MemberApiController {
 	/******** by다혜: 휴대전화 인증 메세지 발송 ********/
 	@RequestMapping(value="validatePhone.me", method=RequestMethod.POST)
 	@ResponseBody
-	public String validatePhone(@RequestParam("memPhone") String memPhone, HttpServletResponse response) {
+	public String validatePhone(@RequestParam("memInfo") String memPhone) {
 
 		return mApiService.sendMmsRequest(memPhone);
+	}
+	
+	/******** by다혜: 휴대전화 인증 메세지 발송 ********/
+	@RequestMapping("validatePhoneFinePwd.me")
+	@ResponseBody
+	public String validatePhoneFinePwd(@RequestParam("memInfo") String memPhone, @RequestParam("memId") String memId) {
+		
+		Member member = new Member();
+		member.setMemId(memId);
+		member.setMemPhone(memPhone);
+		
+		String result = "";
+		
+		if(mService.CheckIdWithPhone(member) > 0 ) {
+			result = mApiService.sendMmsRequest(memPhone);
+		} else {
+			String code = "아이디 혹은 이메일이 올바른지 다시 확인해주세요.";
+			int status = 406;
+			
+			JSONObject json = new JSONObject();
+			json.put("code", code);
+			json.put("status", status);
+			
+			result = json.toJSONString();
+		}
+		
+		return result;
 	}
 	
 	
@@ -152,11 +179,13 @@ public class MemberApiController {
 	@RequestMapping(value = "validateEmail.me", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String validateEmail(@RequestParam("memInfo") String memEmail, @RequestParam("memId") String memId) {
-		String code = "";
-		int status = 0;
+		
 		Member member = new Member();
 		member.setMemId(memId);
 		member.setMemEmail(memEmail);
+		
+		String code = "";
+		int status = 0;
 
 		if(mService.CheckIdWithEmail(member) > 0 ) {
 			

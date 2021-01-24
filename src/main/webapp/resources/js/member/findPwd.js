@@ -69,7 +69,7 @@ input_info_btn.addEventListener('click', function(){
 		input_info_btn.disabled = true;
 		
 		//인증발송과 확인
-		sendCodeAndCheck('validatePhone.me');
+		sendCodeAndCheck('validatePhoneFinePwd.me');
 		input_info_btn.disabled = true;
 		
 	} else if(input_id.value != '' && opt_email.checked && input_info.value != '' && info_error.innerText == ''){
@@ -98,7 +98,9 @@ async function sendCodeAndCheck(url) {
 	//step1.존재하는 아이디인지 확인
 	let checkIdRes = await fetch('checkId.me?memId='+input_id.value);
  	let idNotExisted = await checkIdRes.text();
-
+	
+	console.log(idNotExisted);
+	
 	if(idNotExisted != 'true') { //존재하는 아이디라면
 	
 		//step2아이디와 입력 정보를 대조하여 회원 조회
@@ -106,7 +108,8 @@ async function sendCodeAndCheck(url) {
 		console.log(sendCodeRes);
 		let code = await sendCodeRes.json();
 		console.log(code);
-		if(code.status === 200) {
+		
+		if(code.status == 200) {
 			//화면 처리
 			input_id.readOnly = true;
 			input_id.style.backgroundColor = '#E4E5ED';
@@ -249,7 +252,9 @@ async function resetPwd() {
 
 //비밀번호 재설정
 submit_new_pwd_btn.addEventListener('click', function(){
-  console.log('비밀번호를 바꿔보자');
+	console.log('비밀번호를 바꿔보자');
+	
+	pwdCheck_error.innerText = '';
 	
 	if(input_id.value == '' || id_error.innerText != '') {
 		input_id.blur();
@@ -270,6 +275,7 @@ submit_new_pwd_btn.addEventListener('click', function(){
 		input_pwdCheck.blur();
 		pwdCheck_error.innerText = '비밀번호를 다시 확인해주세요.';
 	} else {
+		pwdCheck_error.innerText = '';
 		resetPwd();
 	}
 });

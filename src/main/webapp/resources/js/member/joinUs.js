@@ -118,7 +118,7 @@ function sendCodeAndCheck() {
       type: "POST",
       url: 'validatePhone.me',
       dataType: 'json',
-      data: {'memPhone':function(){
+      data: {'memInfo':function(){
               return $('input[name=memPhone]').val();		
             }
            },
