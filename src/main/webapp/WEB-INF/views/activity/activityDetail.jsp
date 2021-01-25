@@ -428,7 +428,7 @@ hr {
  	table-layout: fixed;
 } 
 
-.question td{
+.question td:not(.noqna){
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
 } 
@@ -439,7 +439,11 @@ hr {
  	white-space: nowrap;
 } 
 
-.question tr:hover{
+.noqna {
+	text-align: center;
+}
+
+.question tr:not(.noqna):hover{
  	background-color: #f9f9f9;
 } 
 
@@ -1246,6 +1250,7 @@ hr {
 					var $salqnaDetail;
 					var $salqnaNo;
 					var $salqnaReply;
+					var $noqna;
 					
 					if(data.length > 0){
 						for(var i in data){
@@ -1273,10 +1278,10 @@ hr {
 							$question.append($tr3);
 						}
 					} else{
-						$tr = $('<tr>');
-						$salqnaTitle = $('<td>').text('등록된 질문이 없습니다.');
+						$tr = $('<tr class="noqna">');
+						$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
 						
-						$tr.append($salqnaTitle);
+						$tr.append($noqna);
 						$question.append($tr);
 					}
 				}

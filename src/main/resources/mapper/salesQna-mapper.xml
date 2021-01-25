@@ -39,11 +39,12 @@
 		        )
 		    <![CDATA[where rownum <= 5]]>
 		    )
+		where salqna_refno = #{acId}   
 		order by salqna_no desc
 	</select>
 	
 	<insert id="insertQna">
 		insert into sales_qna
-		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'A', sysdate, #{salqnaContent}, default, #{salqnaRefcode}, #{salqnaRefno})
+		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'A', sysdate, #{salqnaContent}, default, 0, #{salqnaRefno})
 	</insert>
 </mapper>
