@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
+
 import com.kh.byulmee.board.model.vo.PageInfo;
+
+import com.kh.byulmee.member.model.vo.Member;
+
 
 @Service("aService")
 public class ActivityServiceImpl implements ActivityService {
@@ -24,6 +28,20 @@ public class ActivityServiceImpl implements ActivityService {
 		int actNo = aDAO.insertActivity(sqlSession, a);
 		return actNo;
 	}
+	
+	@Override
+	public Activity selectActivity(int acId) {
+		
+		int result = aDAO.addReadCount(sqlSession, acId);
+		
+		Activity ac = null;
+		if(result > 0) {
+			ac = aDAO.selectActivity(sqlSession, acId);
+		}
+		return ac;
+	}
+
+
 
 	@Override
 	public int getListCount() {

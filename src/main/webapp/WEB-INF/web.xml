@@ -29,6 +29,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>commonServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commonServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	
@@ -41,6 +54,21 @@
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/views/common/400errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/common/404errorPage.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/common/500errorPage.jsp</location>
 	</error-page>
 	
 	<!-- 한글 깨짐 방지 인코딩 필터 -->
@@ -84,7 +112,20 @@
 		<servlet-name>boardServlet</servlet-name>
 		<url-pattern>*.bo</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- activity 관련 URL 요청 처리 -->
+	<servlet>
+		<servlet-name>activityServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/activity-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>activityServlet</servlet-name>
+		<url-pattern>*.ac</url-pattern>
+	</servlet-mapping>
 
 	<!-- workroom 관련 URL 요청 처리 -->
 	<servlet>
@@ -99,4 +140,34 @@
 		<servlet-name>workroomServlet</servlet-name>
 		<url-pattern>*.wr</url-pattern>
 	</servlet-mapping>
+	
+	<!-- favorite 관련 URL 요청 처리 -->
+	<servlet>
+		<servlet-name>favoriteServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/favorite-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>favoriteServlet</servlet-name>
+		<url-pattern>*.fa</url-pattern>
+	</servlet-mapping>
+	
+	<!-- salesQna 관련 URL 요청 처리 -->
+	<servlet>
+		<servlet-name>salesQnaServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/salesqna-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>salesQnaServlet</servlet-name>
+		<url-pattern>*.sq</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>

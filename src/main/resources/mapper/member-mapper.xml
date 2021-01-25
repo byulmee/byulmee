@@ -3,7 +3,8 @@
 <mapper namespace="memberMapper">
 	
 	<resultMap type="Member" id="memberResultSet">
-	  	<id property="memId" column="mem_id"/>
+	  	<id property="memNo" column="mem_no"/>
+	  	<result property="memId" column="mem_id"/>
 	  	<result property="memPwd" column="mem_pwd"/>
 	  	<result property="memName" column="mem_name"/>
 	  	<result property="memPostcode" column="mem_postcode"/>
@@ -15,12 +16,13 @@
 	  	<result property="memLevel" column="mem_level"/>
 	  	<result property="memDate" column="mem_Date"/>
 	  	<result property="memStatus" column="mem_status"/>
+	  	<result property="memLoginType" column="mem_login_type"/>
 	</resultMap>
 	
 	<insert id="insertMember">
 		insert into member
-		values(#{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
-			   #{memPhone}, #{memNickname}, #{memEmail}, 0, sysdate, default)
+		values(SEQ_MEMID.nextval, #{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
+			   #{memPhone}, #{memNickname}, #{memEmail}, 0, sysdate, default, #{memLoginType})
 	</insert>
 	
 	<select id="selectMember" resultMap="memberResultSet">
@@ -29,10 +31,16 @@
 		where mem_id = #{memId} and mem_status = 'Y'
 	</select>
 	
-	  	<select id="checkId" resultType="_int">
+	<select id="checkId" resultType="_int">
   		select count(*)
   		from member
   		where mem_id = #{memId} and mem_status = 'Y'
+  	</select>
+  	
+  	<select id="checkPhone" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
   	</select>
   	
   	<select id="checkNickname" resultType="_int">
@@ -45,5 +53,43 @@
   		select count(*)
   		from member
   		where mem_email = #{email} and mem_status = 'Y'
+  	</select>
+  	
+   	<select id="CheckIdWithEmail" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  	
+  	<select id="CheckIdWithPhone" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  
+    	<select id="findIdWithPhone" resultType="string">
+  		select mem_id
+  		from member
+  		where mem_Name = #{memName} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  	
+  	<select id="findIdWithEmail" resultType="string">
+  		select mem_id
+  		from member
+  		where mem_Name = #{memName} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  	
+  	<update id="resetPwd">
+  		update member
+  		set mem_pwd = #{memPwd}
+  		where mem_id = #{memId}
+  	</update>
+
+  	<select id="selectActivityWriter" resultMap="memberResultSet">
+  		select *
+  		from member
+  		where mem_id = (select mem_id 
+						from activity 
+						where act_no = #{acId})
   	</select>
 </mapper>

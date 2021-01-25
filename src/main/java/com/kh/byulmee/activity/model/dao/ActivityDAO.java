@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.member.model.vo.Member;
+
 
 @Repository("aDAO")
 public class ActivityDAO {
@@ -17,6 +19,15 @@ public class ActivityDAO {
 		int actNo = a.getActNo();
 		return actNo;
 	}
+		
+	public int addReadCount(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.update("activityMapper.addReadCount", acId);
+	}
+		public Activity selectActivity(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("activityMapper.selectActivity", acId);	
+	}
+
+
 
 	public int getListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("activityMapper.getListCount");

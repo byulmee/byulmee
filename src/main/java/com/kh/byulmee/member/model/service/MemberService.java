@@ -11,6 +11,20 @@ public interface MemberService {
 	int checkId(String memId);
 	
 	int checkNickname(String nickname);
+	
+	int checkPhone(String memPhone);
+	
+	int checkEmail(String memEmail);
 
-	int checkEmail(String email);
+	String findIdWithPhone(String data);
+	
+	String findIdWithEmail(String data);
+	
+	int CheckIdWithPhone(Member member);
+	
+	int CheckIdWithEmail(Member member);
+	
+	String resetPwd(Member member);
+  
+  Member selectActivityWriter(int acId);
 }

@@ -46,11 +46,11 @@ ul, li {
 }
 
 #gnb-menu-box{
-    width: 20%;
+    width: 30%;
 }
 
 #menu-list{
-	width: 20%;
+	width: 30%;
 	display: felx;
    	justify-content: flex-end;
     font-size: 0.8rem;
@@ -70,7 +70,7 @@ ul, li {
 }
 
 #searchBox{
-    width: 55%;
+    width: 45%;
     min-width: 300px;
     border-radius: 20px;
     padding: 0.2rem 0.8rem;
