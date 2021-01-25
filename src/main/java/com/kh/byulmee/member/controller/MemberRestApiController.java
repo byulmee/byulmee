@@ -22,7 +22,7 @@ import com.kh.byulmee.member.model.service.MemberApiService;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
 
-@SessionAttributes("oauthInfo")
+@SessionAttributes({"loginUser", "oauthInfo"})
 
 @RestController
 public class MemberRestApiController {
