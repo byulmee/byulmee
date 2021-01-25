@@ -56,7 +56,7 @@ public class MyPageContoller {
 		
 		
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		ArrayList<Image> img = mpService.selectProfileImg(memNo);
+		Image img = mpService.selectProfileImg(memNo);
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -210,15 +210,26 @@ public class MyPageContoller {
 	@RequestMapping("profileImageUpdateView.me")
 	public ModelAndView profileImageUpdateView(ModelAndView mv, HttpServletRequest request, Model model) {
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		ArrayList<Image> img = mpService.selectProfileImg(memNo);
+		Image img = mpService.selectProfileImg(memNo);
+	
+		mv.addObject("img", img);
+		System.out.println("selImg : " + img);
+		mv.setViewName("myProfileImage");
+	
+		return mv;
+	}
+	
+	@RequestMapping("profileImgDeleteView.me")
+	public ModelAndView profileImgDeleteView(ModelAndView mv, HttpServletRequest request, Model model) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		
-		if(img != null) {
-			mv.addObject("img", img);
-			mv.setViewName("myProfileImage");
-		} else {
-			throw new MemberException("프로필사진 변경 페이지 접속에 실패했습니다.");
-		}
+		mpService.deleteProfileImg(memNo);
+		Image img = mpService.selectProfileImg(memNo);
 		
+		mv.addObject("img", img);
+		System.out.println("delImg : " + img);
+		mv.setViewName("myProfileImage");
+
 		return mv;
 	}
 	
@@ -245,7 +256,7 @@ public class MyPageContoller {
 				i.setImgPath(imgPath);
 				i.setImgLevel(0);
 				i.setImgRefcode(0);
-				i.setImgRefno(Integer.toString(memNo));
+				i.setImgRefno(memNo);
 			}
 			
 			result = iService.insertImage(i);
@@ -346,7 +357,7 @@ public class MyPageContoller {
 				i.setImgPath(imgPath);
 				i.setImgLevel(0);
 				i.setImgRefcode(3);
-				i.setImgRefno(Integer.toString(revNo));
+				i.setImgRefno(revNo);
 			}
 			
 			result1 = iService.insertImage(i);
@@ -364,7 +375,7 @@ public class MyPageContoller {
 				i.setImgPath(imgPath);
 				i.setImgLevel(1);
 				i.setImgRefcode(3);
-				i.setImgRefno(Integer.toString(revNo));
+				i.setImgRefno(revNo);
 			}
 			
 			result2 = iService.insertImage(i);
@@ -382,7 +393,7 @@ public class MyPageContoller {
 				i.setImgPath(imgPath);
 				i.setImgLevel(2);
 				i.setImgRefcode(3);
-				i.setImgRefno(Integer.toString(revNo));
+				i.setImgRefno(revNo);
 			}
 			
 			result3 = iService.insertImage(i);
@@ -432,22 +443,5 @@ public class MyPageContoller {
 			e.printStackTrace();
 		}
 		return i;
-	}
-	
-	@RequestMapping("profileImgDeleteView.me")
-	public ModelAndView profileImgDeleteView(ModelAndView mv, HttpServletRequest request, Model model) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		
-		mpService.deleteProfileImg(memNo);
-		ArrayList<Image> img = mpService.selectProfileImg(memNo);
-		
-		if(img != null) {
-			mv.addObject("img", img);
-			mv.setViewName("myProfileImage");
-		} else {
-			throw new MemberException("프로필사진 변경 페이지 접속에 실패했습니다.");
-		}
-		
-		return mv;
 	}
 }

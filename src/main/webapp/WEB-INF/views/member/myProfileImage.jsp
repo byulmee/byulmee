@@ -206,16 +206,29 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-	    		<c:forEach var="i" items="${ img }">
-	    			<div class="profileDiv">
-						<c:if test="${ i.imgStatus == 'Y' }">
-							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
 	    				</c:if>
-	    				<c:if test="${ i.imgStatus == 'N' }">
+	    				<c:if test="${ img.imgStatus == 'N' }">
 							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 	    				</c:if>
-	    			</div>
-				</c:forEach>
+    				</c:if>
+    				<%-- <c:if test="${ img.size() != 0 }">
+	    				<c:forEach var="i" items="${ img }">
+		    					<c:if test="${ i.imgStatus == 'Y' }">
+									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+			    				</c:if>
+			    				<c:if test="${ i.imgStatus == 'N' }">
+									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+			    				</c:if>
+	    				</c:forEach>
+	    			</c:if> --%>
+    			</div>
 				<p class="nickname"> <c:out value="${ loginUser.memName } (${ loginUser.memNickname }) 님"/> </p>
 			</div>
 			<div class="sideMenuList">
@@ -287,16 +300,32 @@
 					<table>
 						<tr>
 							<td colspan="3">
-								<c:forEach var="i" items="${ img }">
-									<div class="profileDiv">
-										<c:if test="${ i.imgStatus == 'Y' }">
-											<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+								<div class="profileDiv">
+				    				<%-- <c:if test="${ img.size() == 0 }">
+										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+				    				</c:if>
+					    			<c:if test="${ img.size() != 0 }">
+					    				<c:forEach var="i" items="${ img }">
+						    					<c:if test="${ i.imgStatus == 'Y' }">
+													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+							    				</c:if>
+							    				<c:if test="${ i.imgStatus == 'N' }">
+													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+							    				</c:if>
+					    				</c:forEach>
+					    			</c:if> --%>
+					    			<c:if test="${ empty img }">
+										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+				    				</c:if>
+				    				<c:if test="${ !empty img }">
+				    					<c:if test="${ img.imgStatus == 'Y' }">
+											<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
 					    				</c:if>
-					    				<c:if test="${ i.imgStatus == 'N' }">
+					    				<c:if test="${ img.imgStatus == 'N' }">
 											<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 					    				</c:if>
-					    			</div>
-								</c:forEach>
+				    				</c:if>
+								</div>
 							</td>
 						</tr>
 						<tr>

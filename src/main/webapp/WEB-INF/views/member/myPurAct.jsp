@@ -574,11 +574,19 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<c:forEach var="i" items="${ img }">
-	    			<div class="profileDiv">
-						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
-	    			</div>
-				</c:forEach>
+				<div class="profileDiv">
+	    			<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+				</div>
 				<p class="nickname"> <c:out value="${ loginUser.memName } (${ loginUser.memNickname }) 님"/> </p>
 			</div>
 			<div class="sideMenuList">

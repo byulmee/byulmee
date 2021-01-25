@@ -52,8 +52,12 @@ public class MypageDAO {
 		return sqlSession.insert("mypageMapper.insertProfileImage", i);
 	}
 
-	public ArrayList<Image> selectProfileImg(SqlSessionTemplate sqlSession, int memNo) {
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImg", memNo);
+	public Image selectProfileImg(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("mypageMapper.selectProfileImg", memNo);
+	}
+
+	public int deleteProfileImg(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("mypageMapper.deleteProfileImg", memNo);
 	}
 
 	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
@@ -66,11 +70,7 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.updateReviewStatus", r);
 	}
 
-	public int deleteProfileImg(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.update("mypageMapper.deleteProfileImg", memNo);
-	}
-
-	public ArrayList<Image> selectProfileImgN(SqlSessionTemplate sqlSession, int memNo) {
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImgN", memNo);
-	}
+//	public ArrayList<Image> selectProfileImgN(SqlSessionTemplate sqlSession, int memNo) {
+//		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImgN", memNo);
+//	}
 }

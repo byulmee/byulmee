@@ -64,8 +64,13 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public ArrayList<Image> selectProfileImg(int memNo) {
+	public Image selectProfileImg(int memNo) {
 		return mpDAO.selectProfileImg(sqlSession, memNo);
+	}
+
+	@Override
+	public int deleteProfileImg(int memNo) {
+		return mpDAO.deleteProfileImg(sqlSession, memNo);
 	}
 
 	@Override
@@ -79,13 +84,8 @@ public class MypageServiceImpl implements MypageService {
 		return mpDAO.updateReviewStatus(sqlSession, r);
 	}
 
-	@Override
-	public int deleteProfileImg(int memNo) {
-		return mpDAO.deleteProfileImg(sqlSession, memNo);
-	}
-
-	@Override
-	public ArrayList<Image> selectProfileImgN(int memNo) {
-		return mpDAO.selectProfileImgN(sqlSession, memNo);
-	}
+//	@Override
+//	public ArrayList<Image> selectProfileImgN(int memNo) {
+//		return mpDAO.selectProfileImgN(sqlSession, memNo);
+//	}
 }

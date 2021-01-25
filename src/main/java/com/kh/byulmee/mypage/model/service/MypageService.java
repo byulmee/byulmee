@@ -28,13 +28,13 @@ public interface MypageService {
 
 	int insertProfileImage(Image img);
 
-	ArrayList<Image> selectProfileImg(int memNo);
+	Image selectProfileImg(int memNo);
+
+	int deleteProfileImg(int memNo);
 
 	int insertReview(Review r);
 
 	int updateReviewStatus(Review r);
 
-	int deleteProfileImg(int memNo);
-
-	ArrayList<Image> selectProfileImgN(int memNo);
+//	ArrayList<Image> selectProfileImgN(int memNo);
 }
