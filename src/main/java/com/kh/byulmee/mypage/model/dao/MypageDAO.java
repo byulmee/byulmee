@@ -8,8 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.order.model.vo.Order;
+import com.kh.byulmee.review.model.vo.Review;
 
 @Repository("mpDAO")
 public class MypageDAO {
@@ -39,5 +41,24 @@ public class MypageDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectOrderList", id, rowBounds);
+	}
+
+	// ajax 부분
+	public ArrayList<Order> selectDetailList(SqlSessionTemplate sqlSession, int ordNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectDetailList", ordNo);
+	}
+
+	public int insertProfileImage(SqlSessionTemplate sqlSession, Image i) {
+		return sqlSession.insert("mypageMapper.insertProfileImage", i);
+	}
+
+	public ArrayList<Image> selectProfileImg(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImg", memNo);
+	}
+
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		sqlSession.insert("mypageMapper.insertReview", r);
+		int revNo = r.getRevNo();
+		return revNo;
 	}
 }

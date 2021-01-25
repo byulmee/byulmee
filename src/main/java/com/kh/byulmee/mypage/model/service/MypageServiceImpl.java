@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.dao.MypageDAO;
 import com.kh.byulmee.order.model.vo.Order;
+import com.kh.byulmee.review.model.vo.Review;
 
 @Service("mpService")
 public class MypageServiceImpl implements MypageService {
@@ -49,5 +51,26 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public ArrayList<Order> selectOrderList(PageInfo pi, String id) {
 		return mpDAO.selectOrderList(sqlSession, pi, id);
+	}
+
+	@Override
+	public ArrayList<Order> selectDetailList(int ordNo) {
+		return mpDAO.selectDetailList(sqlSession, ordNo);
+	}
+
+	@Override
+	public int insertProfileImage(Image i) {
+		return mpDAO.insertProfileImage(sqlSession, i);
+	}
+
+	@Override
+	public ArrayList<Image> selectProfileImg(int memNo) {
+		return mpDAO.selectProfileImg(sqlSession, memNo);
+	}
+
+	@Override
+	public int insertReview(Review r) {
+		int revNo = mpDAO.insertReview(sqlSession, r);
+		return revNo;
 	}
 }

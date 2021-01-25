@@ -107,17 +107,7 @@
 		background: none;
 		cursor: pointer;
 	}
-	.dropdownBtn {
-		font-family: "Gmarket Sans TTF";
-		font-size: 18px;
-		padding-top: 5px;
-		width: 200px;
-		height: 50px;
-		outline: 0;
-		border: 0;
-		background: none;
-	}
-	.sideMenuBtn:hover, .dropdownBtn:hover {
+	.sideMenuBtn:hover {
 		background: #FF6833;
 		color: white;
 	}

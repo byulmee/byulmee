@@ -56,6 +56,11 @@ public class WorkRoomController {
 									@RequestParam("thumbnailImg3") MultipartFile thumbnailImg3, 
 									@RequestParam("thumbnailImg4") MultipartFile thumbnailImg4,
 									HttpServletRequest request) {
+		System.out.println("thumbnailImg5 : " + thumbnailImg5);
+		System.out.println("thumbnailImg1 : " + thumbnailImg1);
+		System.out.println("thumbnailImg2 : " + thumbnailImg2);
+		System.out.println("thumbnailImg3 : " + thumbnailImg3);
+		System.out.println("thumbnailImg4 : " + thumbnailImg4);
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;

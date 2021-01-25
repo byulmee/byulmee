@@ -3,6 +3,8 @@ package com.kh.byulmee.order.model.vo;
 import java.sql.Date;
 
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +19,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Order {
 	private int ordNo;
-	private String ordId;
+	private String memId;
 	private int ordCount;
 	private Date ordDate;
 	private String ordName;
@@ -34,4 +36,6 @@ public class Order {
 	private int ordRefno;
 	
 	private Activity activity;
+	private Member member;
+	private Image image;
 }

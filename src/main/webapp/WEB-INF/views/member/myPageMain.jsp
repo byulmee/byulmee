@@ -110,17 +110,7 @@
 		background: none;
 		cursor: pointer;
 	}
-	.dropdownBtn {
-		font-family: "Gmarket Sans TTF";
-		font-size: 18px;
-		padding-top: 5px;
-		width: 200px;
-		height: 50px;
-		outline: 0;
-		border: 0;
-		background: none;
-	}
-	.sideMenuBtn:hover, .dropdownBtn:hover {
+	.sideMenuBtn:hover {
 		background: #FF6833;
 		color: white;
 	}
@@ -221,7 +211,7 @@
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+								<button onclick="location.href='profileImageUpdateView.me'" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
@@ -269,7 +259,7 @@
 				<ul>
 					<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
 					<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
-					<li onclick="location.href=''">프로필사진 변경</li>
+					<li onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</li>
 					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
 				</ul>
 			</div>
@@ -280,13 +270,12 @@
 							<button class="button" onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</button>
 						</td>
 						<td>
-							<!-- <button class="button" onclick="openModal('pwdUpdate')">비밀번호 변경</button> -->
 							<button class="button" onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button class="button" onclick="">프로필사진 변경</button>
+							<button class="button" onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</button>
 							<!-- <button class="button" onclick="">사진 변경</button>
 							<button class="button" onclick="">사진 삭제</button> -->
 						</td>
