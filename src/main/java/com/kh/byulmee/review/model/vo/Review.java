@@ -16,10 +16,11 @@ import lombok.ToString;
 public class Review {
 	private int revNo;
 	private String memId;
-	private int revRating;
-	private Date revDate;
+	private double revRating;
 	private String revContent;
+	private Date revDate;
 	private String revStatus;
 	private int revRefcode;
 	private int revRefno;
+	private int ordNo;
 }

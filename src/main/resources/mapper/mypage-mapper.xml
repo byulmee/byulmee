@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mypageMapper">
+	<select id="selectOne" resultMap="memberResultSet">
+		select *
+		from member
+		where mem_id=#{memId}
+			and mem_status='Y'
+	</select>
+	
+	<update id="updateMyInfo">
+		update member
+		set mem_name=#{memName}, mem_nickname=#{memNickname}, mem_email=#{memEmail}, mem_phone=#{memPhone},
+			mem_postcode=#{memPostcode}, mem_basicaddr=#{memBasicAddr}, mem_detailaddr=#{memDetailAddr}
+		where mem_id=#{memId}
+	</update>
+
+	<update id="updateMyPwd">
+		update member
+		set mem_pwd=#{newPwd}
+		where mem_id=#{memId}
+	</update>
+	
+	<update id="deleteMember">
+		update member
+		set mem_status='N'
+		where mem_id=#{memId}
+	</update>
+	
+	<select id="getOrderListCount" resultType="_int">
+		select count(*)
+		from orders
+		where ord_status='Y' and mem_id = #{memId}
+	</select>
+	
+	<!-- <select id="selectOrderList" resultMap="orderResultSet">
+		select *
+		from orders
+		where ord_status='Y' and ord_id=#{memId}
+		order by ord_no desc
+	</select> -->
+	
+	<select id="selectOrderList" resultMap="orderResultSet">
+		<!-- 1. 일반 쿼리 join 방식 -->
+		<!-- select o.ord_no, o.mem_id as ord_id, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
+		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request, o.ord_payno,
+		        o.ord_pay, o.ord_pay_way, o.ord_review, o.ord_status, o.ord_refcode, o.ord_refno,
+		        a.act_no, a.mem_id as act_id, a.act_phone, a.act_startday, a.act_endday, a.act_place,
+		        a.act_title, a.act_price, a.act_status,
+		        m.mem_no, m.mem_id, m.mem_name, m.mem_nickname, m.mem_email
+		from orders o 
+		    left outer join activity a on o.ord_refno = a.act_no
+		    left outer join member m on a.mem_id = m.mem_id
+		where o.ord_status = 'Y' and o.mem_id = #{memId}
+		order by o.ord_no desc -->
+		
+		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
+		        a.act_no, a.act_title,
+                i.img_name
+		from orders o 
+		    left outer join activity a on o.ord_refno = a.act_no
+            left outer join image i on a.act_no = i.img_refno
+		where o.ord_status = 'Y' and o.mem_id = #{memId} and i.img_level=0
+		order by o.ord_no desc
+	</select>
+
+	<select id="selectDetailList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
+		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
+		        o.ord_pay, o.ord_pay_way, o.ord_status,
+		        a.act_no, a.mem_id as act_id, a.act_startday, a.act_endday, a.act_place,
+		        a.act_title, a.act_price, a.act_status,
+		        m.mem_no, m.mem_nickname
+		from orders o 
+		    left outer join activity a on o.ord_refno = a.act_no
+		    left outer join member m on a.mem_id = m.mem_id
+		where o.ord_status = 'Y' and o.ord_no = #{ordNo}
+		order by o.ord_no desc
+	</select>
+	
+	<!-- ajax 이미지 가져오는 쿼리 -->
+	<!-- <select id="selectDetailList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
+		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
+		        o.ord_pay, o.ord_pay_way, o.ord_status,
+		        a.act_no, a.mem_id as act_id, a.act_startday, a.act_endday, a.act_place,
+		        a.act_title, a.act_price, a.act_status,
+		        m.mem_no, m.mem_nickname, i.img_name
+		from orders o 
+		    left outer join activity a on o.ord_refno = a.act_no
+		    left outer join member m on a.mem_id = m.mem_id
+		    left outer join image i on a.act_no = i.img_refno
+		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and i.img_level=0
+		order by o.ord_no desc
+	</select> -->
+	
+	<select id="selectProfileImg" resultMap="imageResultSet">
+		select img_name, img_status
+		from (select *
+				from image
+				where img_level = 0 and img_refcode = 0 and img_refno = #{memNo}
+				order by img_no desc)
+		where rownum = 1
+	</select>
+	
+	<update id="deleteProfileImg">
+		update image
+		set img_status='N'
+		where img_status='Y' and img_refcode=0 and img_refno=#{memNo}
+	</update>
+	
+	<!-- <select id="selectProfileImgN" resultMap="imageResultSet">
+		select img_status
+		from (select *
+				from image
+				where img_level = 0 and img_status = 'N' and img_refcode = 0 and img_refno = #{memNo}
+				order by img_no desc)
+		where rownum = 1
+	</select> -->
+	
+	<insert id="insertReview" useGeneratedKeys="true" keyProperty="revNo" keyColumn="REV_NO">
+		insert into review (REV_NO, MEM_ID, REV_RATING, REV_CONTENT, REV_DATE, REV_STATUS, REV_REFCODE, REV_REFNO, ORD_NO)
+		VALUES (seq_revid.nextval, #{memId}, #{revRating}, #{revContent}, sysdate, default, #{revRefcode}, #{revRefno}, #{ordNo})
+	</insert>
+	
+	<update id="updateReviewStatus">
+		update orders
+		set ord_review='Y'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_status='Y' and ord_refcode=#{revRefcode} and ord_refno=#{revRefno}
+	</update>
+	
+	<resultMap type="Order" id="orderResultSet">
+		<id property="ordNo" column="ORD_NO"/>
+		<result property="memId" column="ORD_ID"/>
+		<result property="ordCount" column="ORD_COUNT"/>
+		<result property="ordDate" column="ORD_DATE"/>
+		<result property="ordName" column="ORD_NAME"/>
+		<result property="ordPhone" column="ORD_PHONE"/>
+		<result property="ordPostcode" column="ORD_POSTCODE"/>
+		<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+		<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+		<result property="ordRequest" column="ORD_REQUEST"/>
+		<result property="ordPayno" column="ORD_PAYNO"/>
+		<result property="ordPay" column="ORD_PAY"/>
+		<result property="ordPayWay" column="ORD_PAY_WAY"/>
+		<result property="ordReview" column="ORD_REVIEW"/>
+		<result property="ordStatus" column="ORD_STATUS"/>
+		<result property="ordRefcode" column="ORD_REFCODE"/>
+		<result property="ordRefno" column="ORD_REFNO"/>
+		<collection property="activity" resultMap="activityResultSet"/>
+		<collection property="member" resultMap="memberResultSet"/>
+		<collection property="image" resultMap="imageResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Activity" id="activityResultSet">
+		<id property="actNo" column="ACT_NO"/>
+		<result property="memId" column="ACT_ID"/>
+		<result property="actPhone" column="ACT_PHONE"/>
+		<result property="actStartday" column="ACT_STARTDAY"/>
+		<result property="actEndday" column="ACT_ENDDAY"/>
+		<result property="actPlace" column="ACT_PLACE"/>
+		<result property="actPeople" column="ACT_PEOPLE"/>
+		<result property="actRequestend" column="ACT_REQUESTEND"/>
+		<result property="actCategory" column="ACT_CATEGORY"/>
+		<result property="actTitle" column="ACT_TITLE"/>
+		<result property="actPrice" column="ACT_PRICE"/>
+		<result property="actUrl" column="ACT_URL"/>
+		<result property="actContent" column="ACT_CONTENT"/>
+		<result property="actGuide" column="ACT_GUIDE"/>
+		<result property="actCount" column="ACT_COUNT"/>
+		<result property="actDate" column="ACT_DATE"/>
+		<result property="actStatus" column="ACT_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="MEM_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="memPwd" column="MEM_PWD"/>
+	  	<result property="memName" column="MEM_NAME"/>
+	  	<result property="memPostcode" column="MEM_POSTCODE"/>
+	  	<result property="memBasicAddr" column="MEM_BASICADDR"/>
+	  	<result property="memDetailAddr" column="MEM_DETAILADDR"/>
+	  	<result property="memPhone" column="MEM_PHONE"/>
+	  	<result property="memNickname" column="MEM_NICKNAME"/>
+	  	<result property="memEmail" column="MEM_EMAIL"/>
+	  	<result property="memLevel" column="MEM_LEVEL"/>
+	  	<result property="memDate" column="MEM_DATE"/>
+	  	<result property="memStatus" column="MEM_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Image" id="imageResultSet">
+	  	<id property="imgNo" column="IMG_NO"/>
+	  	<result property="imgOrigin" column="IMG_ORIGIN"/>
+	  	<result property="imgName" column="IMG_NAME"/>
+	  	<result property="imgPath" column="IMG_PATH"/>
+	  	<result property="imgDate" column="IMG_DATE"/>
+	  	<result property="imgLevel" column="IMG_LEVEL"/>
+	  	<result property="imgStatus" column="IMG_STATUS"/>
+	  	<result property="imgRefcode" column="IMG_REFCODE"/>
+	  	<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+	
+</mapper>
