@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
+<!-- 공지사항 -->
+  <select id="getNoticeListCount" resultType="_int">
+  	select count(*)
+  	from notice
+  </select>
   
+  <select id="selectNoticeList" resultMap="noticeResultSet">
+  	select *
+  	from notice
+  		 join member using(mem_id)
+  	where not_status = 'Y'
+  	order by not_no desc
+  </select>
+  
+  <resultMap type="Notice" id="noticeResultSet">
+  	 <id property="notNo" column="NOT_NO"/>
+  	 <result property="memId" column="MEM_ID"/>
+  	 <result property="notTitle" column="NOT_TITLE"/>
+  	 <result property="notContent" column="NOT_CONTENT"/>
+  	 <result property="nickName" column="MEM_NAME"/>
+  	 <result property="notCount" column="NOT_COUNT"/>
+  	 <result property="notDate" column="NOT_DATE"/>
+  	 <result property="notStatus" column="NOT_STATUS"/>
+  </resultMap>
+  
+  <insert id="insertNotice">
+  	insert into notice
+  	values(seq_notid.nextval, #{memId}, #{notTitle}, #{notContent}, default, sysdate, default)
+  </insert>
+  
+ <select id="selectNotice" resultMap="noticeResultSet">
+ 	select *
+ 	from notice
+ 		 join member using(mem_id)
+ 	where not_no = #{notNo} and not_status = 'Y'
+ </select>
+ 
+ <update id="updateNotice">
+ 	update notice
+ 	set not_title = #{notTitle}, not_content = #{notContent}
+ 	where not_no = #{notNo}
+ </update>
+ 
+ <update id="updateNotCount">
+ 	update notice
+ 	set not_count = not_count + 1
+ 	where not_no = #{notNo}
+ </update>
+ 
+ <update id="noticeDelete">
+ 	update notice
+ 	set not_status = 'N'
+ 	where not_no = #{notNo}
+ </update>
+ 
+ <!-- QnA -->
+ <select id="getQnAListCount" resultType="_int">
+   	select count(*)
+  	from customer_qna
+ </select>
+
+ <select id="selectCusQnAList" resultMap="cusQnAResultSet">
+	select *
+	from customer_qna
+		 join member using(mem_id)
+	where cusqna_status = 'Y'
+	order by cusqna_no desc
+ </select>
+
+ <resultMap type="CustomerQna" id="cusQnAResultSet">
+	<id property="cusqnaNo" column="CUSQNA_NO"/>
+	<result property="memId" column="MEM_ID"/>
+	<result property="cusqnaTitle" column="CUSQNA_TITLE"/>
+	<result property="cusqnaCategory" column="CUSQNA_CATEGORY"/>
+	<result property="cusqnaContent" column="CUSQNA_CONTENT"/>
+	<result property="nickName" column="MEM_NICKNAME"/>
+	<result property="cusqnaCount" column="CUSQNA_COUNT"/>
+	<result property="cusqnaDate" column="CUSQNA_DATE"/>
+	<result property="cusqnaStatus" column="CUSQNA_STATUS"/>
+ </resultMap>
+
 </mapper>

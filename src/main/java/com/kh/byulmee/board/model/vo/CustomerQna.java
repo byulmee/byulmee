@@ -19,6 +19,7 @@ public class CustomerQna {
 	private String cusqnaTitle;
 	private int cusqnaCategory;
 	private String cusqnaContent;
+	private String nickName;
 	private int cusqnaCount;
 	private Date cusqnaDate;
 	private String cusqnaStatus;

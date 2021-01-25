@@ -19,6 +19,44 @@
 				default, #{imgRefcode}, #{imgRefno})
 	</insert>
 	
+
+	<select id="selectList" resultMap="imageResultSet">
+		select *
+		from image
+		where img_status = 'Y' and img_refcode = #{code}
+		order by img_no desc
+	</select>
+	
+	<resultMap type="Image" id="imageResultSet">
+		<id property="imgNo" column="IMG_NO"/>
+		<result property="imgOrigin" column="IMG_ORIGIN"/>
+		<result property="imgName" column="IMG_NAME"/>
+		<result property="imgPath" column="IMG_PATH"/>
+		<result property="imgDate" column="IMG_DATE"/>
+		<result property="imgLevel" column="IMG_LEVEL"/>
+		<result property="imgStatus" column="IMG_STATUS"/>
+		<result property="imgRefcode" column="IMG_REFCODE"/>
+		<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+	
+	<select id="selectImgList" resultMap="imageResultSet">
+		select *
+		from image
+		where img_refcode = #{imgRefcode} and img_refno = #{imgRefno}
+	</select>
+	
+	<delete id="deleteImage">
+		delete 
+		from image
+		where img_refcode = #{imgRefcode} and img_refno = #{imgRefno}
+	</delete>
+	
+	<delete id="delImg">
+		delete
+		from image
+		where img_name = #{imgName} and img_level = #{imgLevel}
+	</delete>
+
 	<select id="selectImage" resultMap="imageResultSet">
 		select *
 		from image
@@ -30,4 +68,5 @@
 		from image
 		where img_refcode=3 and img_refno=#{revImgNo} and img_status='Y'
 	</select>
+
 </mapper>

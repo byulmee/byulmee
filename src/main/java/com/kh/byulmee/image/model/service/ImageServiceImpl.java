@@ -24,6 +24,31 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
+	public ArrayList<Image> selectList(int code) {
+		
+		return iDAO.selectList(sqlSession, code);
+	}
+
+	@Override
+	public ArrayList<Image> selectImgList(Image i) {
+		
+		return iDAO.selectImgList(sqlSession, i);
+	}
+
+	@Override
+	public int deleteImage(Image i) {
+		
+		return iDAO.deleteImage(sqlSession, i);
+	}
+
+	@Override
+	public void delImg(Image deli) {
+		
+		iDAO.delImg(sqlSession, deli);
+	}
+
+	
+
 	public ArrayList<Image> selectImage(int acId) {
 		return iDAO.selectImage(sqlSession, acId);
 	}
@@ -32,4 +57,5 @@ public class ImageServiceImpl implements ImageService {
 	public ArrayList<Image> selectReviewImage(int revImgNo) {
 		return iDAO.selectReviewImage(sqlSession, revImgNo);
 	}
+
 }
