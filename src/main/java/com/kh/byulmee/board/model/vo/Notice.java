@@ -18,6 +18,7 @@ public class Notice {
 	private String memId;
 	private String notTitle;
 	private String notContent;
+	private String nickName;
 	private int notCount;
 	private Date notDate;
 	private String notStatus;

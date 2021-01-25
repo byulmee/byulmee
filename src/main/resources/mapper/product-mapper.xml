@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+	<insert id="insertProduct" useGeneratedKeys="true" keyProperty="proNo" keyColumn="PRO_NO">
+		insert into product(PRO_NO, MEM_ID, PRO_CHARGE, PRO_STOCK, 
+							PRO_MAXIMUM, PRO_CATEGORY, PRO_TITLE, 
+							PRO_PRICE, PRO_URL, PRO_CONTENT, 
+							PRO_GUIDE, PRO_COUNT, PRO_DATE, PRO_STATUS)
+		VALUES (seq_proid.nextval, #{memId}, #{proCharge}, 
+				#{proStock}, #{proMaximum}, #{proCategory}, 
+				#{proTitle}, #{proPrice}, #{proUrl}, 
+				#{proContent}, #{proGuide}, default, sysdate, default)
+	</insert>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from product
+	</select>
+	
+	<select id="selectList" resultMap="productResultSet">
+		select *
+		from product
+		order by pro_no desc
+	</select>
+	
+	<resultMap type="Product" id="productResultSet">
+		<id property="proNo" column="PRO_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="proCharge" column="PRO_CHARGE"/>
+		<result property="proStock" column="PRO_STOCK"/>
+		<result property="proMaximum" column="PRO_MAXIMUM"/>
+		<result property="proCategory" column="PRO_CATEGORY"/>
+		<result property="proTitle" column="PRO_TITLE"/>
+		<result property="proPrice" column="PRO_PRICE"/>
+		<result property="proUrl" column="PRO_URL"/>
+		<result property="proContent" column="PRO_CONTENT"/>
+		<result property="proGuide" column="PRO_GUIDE"/>
+		<result property="proCount" column="PRO_COUNT"/>
+		<result property="proDate" column="PRO_DATE"/>
+		<result property="proStatus" column="PRO_STATUS"/>
+	</resultMap>
+	
+	<select id="selectPro" resultMap="productResultSet">
+		select *
+		from product
+		where pro_no = #{proNo}
+	</select>
+	
+	<update id="proUnableUpdate">
+		update product
+		set pro_status ='N'
+		where pro_no = #{proNo}
+	</update>
+	
+	<update id="proAbleUpdate">
+		update product
+		set pro_status = 'Y'
+		where pro_no = #{proNo}
+	</update>
+	
+	 <delete id="deletePro">
+	 	delete
+	 	from product
+	 	where pro_no = #{proNo}
+	 </delete>
+	 
+	 <update id="updateProduct">
+	 	update product
+	 	set pro_charge = #{proCharge}, pro_stock = #{proStock}, pro_maximum = #{proMaximum},
+	 		pro_category = #{proCategory}, pro_title = #{proTitle}, pro_price = #{proPrice},
+	 		pro_url = #{proUrl}, pro_content = #{proContent}, pro_guide = #{proGuide}
+	 	where pro_no = #{proNo}
+	 </update>
+</mapper>

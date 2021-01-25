@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import com.kh.byulmee.member.model.dto.KakaoProfile;
 import com.kh.byulmee.member.model.dto.KakaoToken;
 import com.kh.byulmee.member.model.dto.SmsResponse;
+import com.kh.byulmee.member.model.vo.Member;
 
 public interface MemberApiService {
 
@@ -20,4 +21,5 @@ public interface MemberApiService {
 
 	String sendMmsRequest(String memPhone);
 
+	String getEmailCode(Member member);
 }

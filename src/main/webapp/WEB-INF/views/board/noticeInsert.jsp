@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${ pageContext.servletContext.contextPath }/js/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
 	rel="stylesheet" />
@@ -46,24 +46,25 @@
 		<h2 align="center" style="padding-top: 15px; font-weight: bold">공지사항
 			등록</h2>
 		<hr>
-		<form>
+		<form action="notInsert.bo" method="post">
+			<input type="hidden" name="memId" value="${ loginUser.memId }">
 			<div class="form-group row">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
-					<input type="text" name="title" class="form-control"
+					<input type="text" name="notTitle" class="form-control"
 						id="inputTitle">
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
 				<div class="col-sm-10">
-					<textarea type="text" name="content" class="form-control"
-						id="inputContent" style="height: 400px"></textarea>
+					<textarea type="text" name="notContent" class="form-control"
+						id="inputContent" style="height: 600px"></textarea>
 				</div>
 			</div>
 			<div id="buttonArea">
 			<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">등록</button>
-			<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="#">취소</button>
+			<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='noticeListView.bo'">취소</button>
 			</div>
 		</form>
 	</div>

@@ -61,60 +61,64 @@ label {
 	padding-left: 10px;
 }
 
-.radio {
+.checkbox[type=radio] {display:none;}
+
+/* .radio {
 	position: relative;
 	display: inline;
 	font-size: 0.9rem;
+} */
+
+label.input-label { 
+  display: inline-block;
+  vertical-align: middel;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
-.radio input[type='radio'] {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0
-}
-
-.radio input[type='radio']+label {
+label.input-label::before {
+	vertical-align: middle;
 	display: inline-block;
-	position: relative;
-	cursor: pointer;
-	padding-left: 1.4rem;
-	margin-right: 0.8rem;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-}
-/*  color: rgb(59, 59, 59);
-    color: #747474; */
-.radio input[type='radio']+label:before {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: -3px;
-	width: 1rem;
-	height: 1rem;
-	text-align: center;
-	background: #747474;
-	border-radius: 100%;
-	background-color: #FF6833;
+	margin:0 5px;
+	font-family: FontAwesome;
+	font-size: 1.2rem;
+	color: #E4E5ED;
+	-webkit-transition: transform 0.2s ease-out, color 0.2s ease;
+	-moz-transition: transform 0.2s ease-out, color 0.2s ease;
+	-ms-transition: transform 0.2s ease-out, color 0.2s ease;
+	-o-transition: transform 0.2s ease-out, color 0.2s ease;
+	transition: transform 0.2s ease-out, color 0.2s ease;
+	-webkit-transform: scale3d(0.8,0.8,1);
+	-moz-transform: scale3d(0.8,0.8,1);
+	-ms-transform: scale3d(0.8,0.8,1);
+	-o-transform: scale3d(0.8,0.8,1);
+	transform: scale3d(0.8,0.8,1);
 }
 
-.radio input[type='radio']:checked+label:after {
-	content: '';
-	position: absolute;
-	top: 0px;
-	left: 3px;
-	padding: 0;
-	width: 10px;
-	height: 10px;
-	background: #ffffff;
-	border-radius: 100%;
+label.input-label.radio::before {
+	content: "\f1db";
+}
+input.checkbox + label.input-label:hover::before {
+	-webkit-transform: scale3d(1,1,1);
+	-moz-transform: scale3d(1,1,1);
+	-ms-transform: scale3d(1,1,1);
+	-o-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
 }
 
+input.checkbox:checked + label.input-label::before {
+  display: inline-block; 
+  font-family: FontAwesome; 
+  color:#FF6833;
+  -webkit-transform: scale3d(1,1,1);
+  -moz-transform: scale3d(1,1,1);
+  -ms-transform: scale3d(1,1,1);
+  -o-transform: scale3d(1,1,1);
+  transform: scale3d(1,1,1);
+}
+input.checkbox:checked + label.input-label.radio::before {
+    content:"\f192";
+}
 
 
 .thumbnailArea {
@@ -215,7 +219,7 @@ img {
 	<div class="outer">
 	<form action="pinsert.wr" method="post" enctype="Multipart/form-data">
 		<div class="MainLogoText">
-			<p class="MainText">활동 등록</p>
+			<p class="MainText">상품 등록</p>
 			<input type="hidden" name="memId" value="${ loginUser.memId }">
 		</div>
 		<div class="InputName">
@@ -223,34 +227,37 @@ img {
 		</div>
 		<div class="mainInput">
 			<div class="radiogroup">
-				<div class="radio">
-					<input type="radio" name="productGroup" value="activity" id="Group1">
-					<label for="Group1">액티비티</label>
-				</div>
-				<div class="radio">
-					<input type="radio" name="productGroup" value="living" id="Group2">
-					<label for="Group2">리빙</label> 
-				</div>
-				<div class="radio">
-					<input type="radio" name="productGroup" value="health" id="Group3">
-					<label for="Group3">건강/미용</label>
-				</div>
-				<div class="radio">
-					<input type="radio" name="productGroup" value="healing" id="Group4">
-					<label for="Group4">힐링</label>
-				</div>
-				<div class="radio">
-					<input type="radio" name="productGroup" value="food" id="Group5">
-					<label for="Group5">푸드</label>
-				</div>
-				<div class="radio">
-					<input type="radio" name="productGroup" value="career" id="Group6">
-					<label for="Group6">커리어</label>
-				</div>
+				<input type="radio" class="checkbox" name="productGroup" value="activity" id="Group1" checked="checked">
+				<label for="Group1" class="input-label radio">액티비티</label>
+				<input type="radio" class="checkbox" name="productGroup" value="living" id="Group2">
+				<label for="Group2" class="input-label radio">리빙</label> 				
+				<input type="radio" class="checkbox" name="productGroup" value="health" id="Group3">
+				<label for="Group3" class="input-label radio">건강/미용</label>				
+				<input type="radio" class="checkbox" name="productGroup" value="healing" id="Group4">
+				<label for="Group4" class="input-label radio">힐링</label>	
+				<input type="radio" class="checkbox" name="productGroup" value="food" id="Group5">
+				<label for="Group5" class="input-label radio">푸드</label>
+				<input type="radio" class="checkbox" name="productGroup" value="career" id="Group6">
+				<label for="Group6" class="input-label radio">커리어</label>		
 				<input type="hidden" name="proCategory" id="proCategory">
 			</div>
 			<script>
 				$(document).ready(function(){
+					var setCategory = $("input:radio[name=productGroup]:checked").val();
+					if(setCategory == "activity"){
+						$('#proCategory').val("0");
+					} else if(setCategory == "living"){
+						$('#proCategory').val("1");
+					} else if(setCategory == "health"){
+						$('#proCategory').val("2");
+					} else if(setCategory == "healing"){
+						$('#proCategory').val("3");
+					} else if(setCategory == "food"){
+						$('#proCategory').val("4");
+					} else {
+						$('#proCategory').val("5");
+					}
+					
 					$('input:radio[name=productGroup]').on('change', function(){
 						var category = $(this).attr('value');
 						console.log(category);
