@@ -14,9 +14,7 @@ public interface MemberService {
 	
 	int checkPhone(String memPhone);
 	
-	public int checkEmail(String memEmail);
-
-	int checkEmail(String email);
+	int checkEmail(String memEmail);
 
 	String findIdWithPhone(String data);
 	

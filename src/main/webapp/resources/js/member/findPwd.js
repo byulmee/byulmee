@@ -68,7 +68,7 @@ input_info_btn.addEventListener('click', function(){
 		input_info_btn.disabled = true;
 		
 		//인증발송과 확인
-		sendCodeAndCheck('validatePhoneFinePwd.me');
+		sendCodeAndCheck('validatePhoneFindPwd.me');
 		input_info_btn.disabled = true;
 		
 	} else if(input_id.value != '' && opt_email.checked && input_info.value != '' && info_error.innerText == ''){

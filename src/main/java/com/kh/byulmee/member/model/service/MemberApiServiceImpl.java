@@ -1,5 +1,6 @@
 package com.kh.byulmee.member.model.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +22,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,61 +71,14 @@ public class MemberApiServiceImpl implements MemberApiService {
 	@Value("#{keys['g.smtp.password']}")
 	private String smtpPassword;
 	
-	
-	
-	/******** by다혜: 카카오 인증&인가 메소드 ********/
-	@Override
-	public KakaoToken getKakaoToken(String code) {
-		RestTemplate rt = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
-		
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", kClientId);
-		params.add("redirect_uri", kRedirectUri);
-		params.add("code", code);
-		
-		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
-		
-		ResponseEntity<String> response = rt.exchange(
-				"https://kauth.kakao.com/oauth/token",
-				HttpMethod.POST,
-				kakaoTokenRequest,
-				String.class
-		);
-	
-		Gson gson = new Gson();
-		KakaoToken kakaoToken = gson.fromJson(response.getBody(), KakaoToken.class);
-		
-		return kakaoToken;
-	}
-
-	@Override
-	public KakaoProfile getKakaoUser(KakaoToken kakaoToken) {
-		RestTemplate rt = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + kakaoToken.getAccess_token());
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
-		
-		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
-		
-		ResponseEntity<String> response = rt.exchange(
-				"https://kapi.kakao.com/v2/user/me",
-				HttpMethod.POST,
-				kakaoProfileRequest,
-				String.class
-		);
-		
-		Gson gson = new Gson();
-		KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
-		
-		return kakaoProfile;
-	}
-
-	
+	@Value("#{keys['fb.clientId']}")
+	private String fbClientId;
+	@Value("#{keys['fb.redirectUri']}")
+	private String fbRedirectUri;
+	@Value("#{keys['fb.clientToken']}")
+	private String fbClientToken;
+	@Value("#{keys['fb.version']}")
+	private String fbVersion;
 	
 	/******** by다혜: MSM 발송 메소드 ********/
 	@Override
@@ -296,5 +252,85 @@ public class MemberApiServiceImpl implements MemberApiService {
 		return code;
 	}
 
+	
+	
+	/******** by다혜: 카카오 인증&인가 메소드 ********/
+	@Override
+	public KakaoToken getKakaoToken(String code) {
+		RestTemplate rt = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", kClientId);
+		params.add("redirect_uri", kRedirectUri);
+		params.add("code", code);
+		
+		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
+		
+		ResponseEntity<String> response = rt.exchange(
+				"https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST,
+				kakaoTokenRequest,
+				String.class
+		);
+	
+		Gson gson = new Gson();
+		KakaoToken kakaoToken = gson.fromJson(response.getBody(), KakaoToken.class);
+		
+		return kakaoToken;
+	}
 
+	@Override
+	public KakaoProfile getKakaoUser(KakaoToken kakaoToken) {
+		RestTemplate rt = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer " + kakaoToken.getAccess_token());
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
+		
+		ResponseEntity<String> response = rt.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoProfileRequest,
+				String.class
+		);
+		
+		Gson gson = new Gson();
+		KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
+		
+		return kakaoProfile;
+	}
+	
+	/******** by다혜: facebook 인증 메소드 ********/
+//	@Override
+//	public String getFacebookToken() {
+//		
+//		String url = "https://graph.facebook.com/v2.8/oauth/access_token?"+
+//				 	"client_id=" + fbClientId +
+//				 	"&redirect_uri=" + fbRedirectUri +
+//				 	"&client_secret=" + fbClientToken +
+//				 	"&code=" + fbVersion;
+//		
+//		String faceBookAccessToken = "";
+//		try {
+//			HttpClient client = HttpClientBuilder.create().build();
+//			HttpGet getRequest = new HttpGet(url);
+//			
+//			String rawJsonString = client.execute(getRequest, new BasicResponseHandler());
+//			
+//			JSONObject jsonObject = (JSONObject)(new JSONParser().parse(rawJsonString));
+//			
+//			faceBookAccessToken = (String) jsonObject.get("access_token");
+//		
+//		} catch (IOException | ParseException e) {
+//			e.printStackTrace();
+//		}
+	
+//		return faceBookAccessToken;
+//	}
 }

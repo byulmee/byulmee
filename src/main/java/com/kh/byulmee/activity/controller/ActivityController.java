@@ -114,6 +114,7 @@ public class ActivityController {
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
 		}
+		
 		return mv;
 	}
 	
