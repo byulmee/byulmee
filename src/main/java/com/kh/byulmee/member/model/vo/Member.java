@@ -18,7 +18,7 @@ public class Member {
 	private String memId;
 	private String memPwd;
 	private String memName;
-	private int memPostcode;
+	private String memPostcode;
 	private String memBasicAddr;
 	private String memDetailAddr;
 	private String memPhone;
@@ -27,4 +27,5 @@ public class Member {
 	private int memLevel;
 	private Date memDate;
 	private String memStatus;
+	private String memLoginType;
 }
