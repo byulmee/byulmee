@@ -222,7 +222,7 @@
 		<div class="sideMenu">
 	    	<div class="profile">
 				<!-- <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> -->
-				<img class="profileImg" src="../../../images/a.PNG">
+				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/a.PNG">
 				<p class="nickname"> 앤 해서웨이 </p>
 				
 			</div>
