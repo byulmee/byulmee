@@ -99,6 +99,12 @@ public class ActivityController {
 				content4 = "resources\\auploadFiles\\" + image.get(i).getImgName();
 			}
 		}
+		System.out.println(image);
+		System.out.println("thumb " + thumb);
+		System.out.println("content1 " + content1);
+		System.out.println("content2 " + content2);
+		System.out.println("content3 " + content3);
+		System.out.println("content4 " + content4);
 		
 		if(activity != null && image != null) {
 			mv.addObject("activity", activity)
