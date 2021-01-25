@@ -186,7 +186,7 @@ input.checkbox:checked + label.input-label.radio::before {
 		width: 180px; height:190px; border:2px solid darkgray;
 		text-align:center; display:table-cell; vertical-align:middle; display: inline-block;
 }
-img {
+#contentImg1, #contentImg2, #contentImg3, #contentImg4 {
 	width: 175px; height: 180px;
 }
 

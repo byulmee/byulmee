@@ -59,26 +59,6 @@
   	order by act_no desc
   </select>
   
-  <resultMap type="Activity" id="activityResultSet">
-  	<id property="actNo" column="ACT_NO"/>
-  	<result property="memId" column="MEM_ID"/>
-  	<result property="actPhone" column="ACT_PHONE"/>
-  	<result property="actStartday" column="ACT_STARTDAY"/>
-  	<result property="actEndday" column="ACT_ENDDAY"/>
-  	<result property="actPlace" column="ACT_PLACE"/>
-  	<result property="actPeople" column="ACT_PEOPLE"/>
-  	<result property="actRequestend" column="ACT_REQUESTEND"/>
-  	<result property="actCategory" column="ACT_CATEGORY"/>
-  	<result property="actTitle" column="ACT_TITLE"/>
-  	<result property="actPrice" column="ACT_PRICE"/>
-  	<result property="actUrl" column="ACT_URL"/>
-  	<result property="actContent" column="ACT_CONTENT"/>
-  	<result property="actGuide" column="ACT_GUIDE"/>
-  	<result property="actCount" column="ACT_COUNT"/>
-  	<result property="actDate" column="ACT_DATE"/>
-  	<result property="actStatus" column="ACT_STATUS"/>
-  </resultMap>
-  
   <select id="selectAct" resultMap="activityResultSet">
   	select *
   	from activity

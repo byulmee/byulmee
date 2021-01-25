@@ -26,19 +26,7 @@
 		where img_status = 'Y' and img_refcode = #{code}
 		order by img_no desc
 	</select>
-	
-	<resultMap type="Image" id="imageResultSet">
-		<id property="imgNo" column="IMG_NO"/>
-		<result property="imgOrigin" column="IMG_ORIGIN"/>
-		<result property="imgName" column="IMG_NAME"/>
-		<result property="imgPath" column="IMG_PATH"/>
-		<result property="imgDate" column="IMG_DATE"/>
-		<result property="imgLevel" column="IMG_LEVEL"/>
-		<result property="imgStatus" column="IMG_STATUS"/>
-		<result property="imgRefcode" column="IMG_REFCODE"/>
-		<result property="imgRefno" column="IMG_REFNO"/>
-	</resultMap>
-	
+
 	<select id="selectImgList" resultMap="imageResultSet">
 		select *
 		from image
