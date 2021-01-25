@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -193,7 +193,7 @@ img {
 	float: right;
 }
 
-#buttonArea > button {
+#insertBtn {
 	text-align: center;
 	margin-top: 15px;
 	margin-right: 10px;
@@ -211,22 +211,66 @@ img {
 }
 
 
+#insertBtn:hover {
+	background: #ECECEC;
+	color: #585858;
+}
+
+ #cancelBtn {
+ 	text-align: center;
+	margin-top: 15px;
+	margin-right: 10px;
+	font-family: "G마켓 산스 TTF Medium";
+	font-size: 13px;
+	padding-top: 5px;
+	width: 130px;
+	height: 35px;
+	outline: 0;
+	border: 0;
+	cursor: pointer;
+	background: #ECECEC;
+	color: #585858;
+	border-radius: 25px;
+ }
+
+#cancelBtn:hover {
+	background: #FF6833;
+	color: white;
+}
+
+#unableBtn, #ableBtn {
+ 	text-align: center;
+	margin-top: 15px;
+	margin-right: 10px;
+	font-family: "G마켓 산스 TTF Medium";
+	font-size: 13px;
+	padding-top: 5px;
+	width: 130px;
+	height: 35px;
+	outline: 0;
+	border: 0;
+	cursor: pointer;
+	border-radius: 25px;	
+}
+
 </style>
 </head>
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div class="outer">
-	<form action="ainsert.wr" method="post" enctype="Multipart/form-data">
+	<form action="aupdate.wr" method="post" enctype="Multipart/form-data">
 		<div class="MainLogoText">
 			<p class="MainText">활동 등록</p>
 			<input type="hidden" name="memId" value="${ loginUser.memId }">
+			<input type="hidden" name="actNo" value="${ activity.actNo }">
+			<input type="hidden" name="page" value="${ page }">
 		</div>
 		<div class="InputName">
 			<p class="inputName">필수 입력</p>
 		</div>
 		<div class="mainInput">
 			<div class="radiogroup">
-				<input type="radio" class="checkbox" name="activityGroup" value="activity" id="Group1" checked="checked">
+				<input type="radio" class="checkbox" name="activityGroup" value="activity" id="Group1"> 
 				<label for="Group1" class="input-label radio">액티비티</label>
 				<input type="radio" class="checkbox" name="activityGroup" value="living" id="Group2">
 				<label for="Group2" class="input-label radio">리빙</label> 				
@@ -238,23 +282,23 @@ img {
 				<label for="Group5" class="input-label radio">푸드</label>
 				<input type="radio" class="checkbox" name="activityGroup" value="career" id="Group6">
 				<label for="Group6" class="input-label radio">커리어</label>		
-				<input type="hidden" name="actCategory" id="actCategory">
+				<input type="hidden" name="actCategory" id="actCategory" value="${ activity.actCategory }">
 			</div>
 			<script>
 				$(document).ready(function(){
-					var setCategory = $("input:radio[name=activityGroup]:checked").val();
-					if(setCategory == "activity"){
-						$('#actCategory').val("0");
-					} else if(setCategory == "living"){
-						$('#actCategory').val("1");
-					} else if(setCategory == "health"){
-						$('#actCategory').val("2");
-					} else if(setCategory == "healing"){
-						$('#actCategory').val("3");
-					} else if(setCategory == "food"){
-						$('#actCategory').val("4");
+					var setCategory = $('#actCategory').val();
+					if(setCategory == "0"){
+						$('#Group1').prop("checked", true);
+					} else if(setCategory == "1"){
+						$('#Group2').prop("checked", true);
+					} else if(setCategory == "2"){
+						$('#Group3').prop("checked", true);
+					} else if(setCategory == "3"){
+						$('#Group4').prop("checked", true);
+					} else if(setCategory == "4"){
+						$('#Group5').prop("checked", true);
 					} else {
-						$('#actCategory').val("5");
+						$('#Group6').prop("checked", true);
 					}
 					
 					
@@ -279,19 +323,23 @@ img {
 			</script>
 			<div class="inputGroup">
 				<div class="thumbnailArea">
-					<img id="thumbnail" name="thumbnail" src="${ pageContext.servletContext.contextPath }/resources/images/board/imgdefault.PNG">
+				<c:forEach var="i" items="${ ilist }" >
+					<c:if test="${ i.imgLevel eq '0' }">
+						<img id="thumbnail" name="thumbnail" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+					</c:if>
+				</c:forEach>
 					<button type="button" id="thumbnailbtn">썸네일 등록</button>
 				</div>
 				<div class="inputText">
-					제목&nbsp;&nbsp;<input type="text" name="actTitle" class="inputValue" id="inputTitle"><br> 
-					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle"><br>
-					활동비&nbsp;&nbsp;<input type="text" name="actPrice" class="inputValue"	id="inputTitle"><br> 
-					활동기간&nbsp;&nbsp;<input	type="text" name="actStartday" class="inputTime" id="inputTitle" placeholder="2020-11-30"> -&nbsp;&nbsp;
-					<input type="text" name="actEndday" class="inputTime" id="inputTitle" placeholder="2020-11-30"><br> 
-					활동 장소&nbsp;&nbsp;<input type="text" name="actPlace" class="inputValue" id="inputTitle"><br>
-					참여 가능 인원&nbsp;&nbsp;<input type="text" name="actPeople" class="inputValue" id="inputTitle"><br> 
-					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle"><br> 
-					관련 상품 링크&nbsp;&nbsp;<input type="text" name="actUrl" class="inputValue" id="inputTitle" placeholder="http://">
+					제목&nbsp;&nbsp;<input type="text" name="actTitle" class="inputValue" id="inputTitle" value="${ activity.actTitle }"><br> 
+					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle" value="${ activity.actPhone }"><br>
+					활동비&nbsp;&nbsp;<input type="text" name="actPrice" class="inputValue"	id="inputTitle" value="${ activity.actPrice }"><br> 
+					활동기간&nbsp;&nbsp;<input	type="text" name="actStartday" class="inputTime" id="inputTitle" placeholder="2020-11-30" value="${ activity.actStartday }"> -&nbsp;&nbsp;
+					<input type="text" name="actEndday" class="inputTime" id="inputTitle" placeholder="2020-11-30" value="${ activity.actEndday }"><br> 
+					활동 장소&nbsp;&nbsp;<input type="text" name="actPlace" class="inputValue" id="inputTitle" value="${ activity.actPlace }"><br>
+					참여 가능 인원&nbsp;&nbsp;<input type="text" name="actPeople" class="inputValue" id="inputTitle" value="${ activity.actPeople }"><br> 
+					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle" value="${ activity.actRequestend }"><br> 
+					관련 상품 링크&nbsp;&nbsp;<input type="text" name="actUrl" class="inputValue" id="inputTitle" placeholder="http://" value="${ activity.actUrl }">
 				</div>
 			</div>
 		</div>
@@ -300,16 +348,32 @@ img {
 		</div>
 			<div class="ImgArea">
 				 <span id="contentImgArea1">
-					<img id="contentImg1" name="contentImg1" src="${ pageContext.servletContext.contextPath }/resources/images/board/addImage.PNG"> 
+				 <c:forEach var="i" items="${ ilist }">
+				 	<c:if test="${ i.imgLevel eq '1' }">
+				 		<img id="contentImg1" name="contentImg1" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+				 	</c:if>
+				 </c:forEach>		 
 				 </span>
 				 <span id="contentImgArea2">
-					<img id="contentImg2" name="contentImg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/addImage.PNG"> 
+				 <c:forEach var="i" items="${ ilist }">
+				 	<c:if test="${ i.imgLevel eq '2' }">
+				 		<img id="contentImg2" name="contentImg2" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+				 	</c:if>
+				 </c:forEach> 
 				 </span>
 				 <span id="contentImgArea3">
-					<img id="contentImg3" name="contentImg3" src="${ pageContext.servletContext.contextPath }/resources/images/board/addImage.PNG"> 
+				 <c:forEach var="i" items="${ ilist }">
+				 	<c:if test="${ i.imgLevel eq '3' }">
+				 		<img id="contentImg3" name="contentImg3" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+				 	</c:if>
+				 </c:forEach> 
 				 </span>
 				 <span id="contentImgArea4">
-					<img id="contentImg4" name="contentImg4" src="${ pageContext.servletContext.contextPath }/resources/images/board/addImage.PNG"> 
+				 <c:forEach var="i" items="${ ilist }">
+				 	<c:if test="${ i.imgLevel eq '4' }">
+				 		<img id="contentImg4" name="contentImg4" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+				 	</c:if>
+				 </c:forEach> 
 				 </span>
 				 <!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
@@ -319,6 +383,17 @@ img {
 					<input type="file" id="thumbnailImg4" multiple="multiple" name="thumbnailImg4" onchange="LoadImg(this,4)">
 					<input type="file" id="thumbnailImg5" multiple="multiple" name="thumbnailImg5" onchange="LoadImg(this,5)">
 				</div>
+				
+				<c:forEach var="i" items="${ ilist }">
+					<c:choose>
+						<c:when test="${ i.imgLevel eq '0' }"><input type="hidden" name="imgName1" id="imgName1" value="${ i.imgName }"></c:when>	
+						<c:when test="${ i.imgLevel eq '1' }"><input type="hidden" name="imgName2" id="imgName2" value="${ i.imgName }"></c:when>	
+						<c:when test="${ i.imgLevel eq '2' }"><input type="hidden" name="imgName3" id="imgName3" value="${ i.imgName }"></c:when>	
+						<c:when test="${ i.imgLevel eq '3' }"><input type="hidden" name="imgName4" id="imgName4" value="${ i.imgName }"></c:when>	
+						<c:when test="${ i.imgLevel eq '4' }"><input type="hidden" name="imgName5" id="imgName5" value="${ i.imgName }"></c:when>					
+					</c:choose>
+				</c:forEach>
+				
 				
 				<script>
 						// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
@@ -376,18 +451,39 @@ img {
 			<p class="inputName">본문 작성</p>
 		</div>
 		<div class="TextArea">
-			<textarea type="text" name="actContent" class="form-control" id="inputContent" style="height: 300px"></textarea>
+			<textarea type="text" name="actContent" class="form-control" id="inputContent" style="height: 300px">${ activity.actContent }</textarea>
 		</div>
 		<div class="InputName">
 			<p class="inputName">구매 유의 사항 및 환불 규정</p>
 		</div>
 		<div class="TextArea">
-			<textarea type="text" name="actGuide" class="form-control" id="inputContent" style="height: 150px"></textarea>
+			<textarea type="text" name="actGuide" class="form-control" id="inputContent" style="height: 150px">${ activity.actGuide }</textarea>
 		</div>
 		<div id="buttonArea">
-			<button type="submit" id="insertBtn" class="btn btn mb-3">등록</button>
+			<button type="button" id="cancelBtn" class="btn btn mb-3">삭제</button>
+			<button type="button" id="unableBtn" class="btn btn mb-3" onclick="location.href='actunable.wr?actNo=${ activity.actNo }&page=${ page }'" style="<c:if test="${ activity.actStatus eq 'Y' }">background: #ECECEC; color: #585858</c:if>
+					<c:if test="${ activity.actStatus eq 'N' }">background: #FF6833; color: white</c:if>">비활성</button>
+			<button type="button" id="ableBtn" class="btn btn mb-3" onclick="location.href='actable.wr?actNo=${ activity.actNo }&page=${ page }'" style="<c:if test="${ activity.actStatus eq 'Y' }">background: #FF6833; color: white</c:if>
+					<c:if test="${ activity.actStatus eq 'N' }">background: #ECECEC; color: #585858</c:if>">활성</button>
+			<button type="submit" id="insertBtn" class="btn btn mb-3">수정하기</button>
 		</div>
 		</form>
 	</div>
+	<script>
+		$(function (){
+			$('#cancelBtn').click(function(){
+				var imgName1 = $("#imgName1").val();
+				var imgName2 = $("#imgName2").val();
+				var imgName3 = $("#imgName3").val();
+				var imgName4 = $("#imgName4").val();
+				var imgName5 = $("#imgName5").val();
+
+				var chk = confirm("정말 삭제하시겠습니까?");
+				if(chk) {
+					location.href="delActivity.wr?actNo=${ activity.actNo }&page=${ page }" + "&imgName1=" + imgName1+ "&imgName2=" + imgName2+ "&imgName3=" + imgName3 + "&imgName4=" + imgName4+ "&imgName5=" + imgName5;
+				}
+			});
+		});
+	</script>
 </body>
 </html>

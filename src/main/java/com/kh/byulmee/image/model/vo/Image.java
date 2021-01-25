@@ -22,5 +22,5 @@ public class Image {
 	private int imgLevel;
 	private String imgStatus;
 	private int imgRefcode;
-	private String imgRefno;
+	private int imgRefno;
 }

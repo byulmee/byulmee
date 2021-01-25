@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
 	rel="stylesheet" />
@@ -58,6 +59,9 @@
 thead {
 	background-color: #F4F4F4;
 }
+tbody {
+	min-height: 250px;
+}
 
 tr {
 	text-align: center;
@@ -100,8 +104,6 @@ td {
 			<table class="table table-hover" id="listArea">
 				<thead>
 					<tr>
-						<th scope="col" class="text-center" width="2%"><input
-							type="checkbox" name="noticeNum1" value="noticeNum1"></th>
 						<th scope="col" class="text-center" width="5%">No</th>
 						<th scope="col" class="text-center" width="10%">조회수</th>
 						<th scope="col" class="text-center" width="30%">제목</th>
@@ -110,86 +112,76 @@ td {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>1</th>
-						<th>23</th>
-						<th>별미 이용 안내</th>
-						<th>관리자</th>
-						<th>2020-11-28</th>
-					<tr>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>2</th>
-						<th>42</th>
-						<th>2020년 12월 14일 업데이트 안내</th>
-						<th>관리자</th>
-						<th>2020-12-12</th>
-					<tr>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>3</th>
-						<th>25</th>
-						<th>2020년 12월 21일 업데이트 안내</th>
-						<th>관리자</th>
-						<th>2020-12-19</th>
-					<tr>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>4</th>
-						<th>56</th>
-						<th>2020년 12월 28일 업데이트 안내</th>
-						<th>관리자</th>
-						<th>2020-12-25</th>
-					<tr>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>5</th>
-						<th>32</th>
-						<th>2020년 12월 31일 연말 공지사항</th>
-						<th>관리자</th>
-						<th>2020-12-28</th>
-					<tr>
-					<tr>
-						<th><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></th>
-						<th>6</th>
-						<th>28</th>
-						<th>2021년 01월 01일 새해 공지사항</th>
-						<th>관리자</th>
-						<th>2020-12-30</th>
-					<tr>
+					<c:forEach var="n" items="${ list }">
+						<tr class="notice">
+							<td>${ n.notNo }
+							<%-- <input type="hidden" name="notNo" value="${ n.notNo }"> --%></td>
+							<td>${ n.notCount }</td>
+							<td>${ n.notTitle }</td>
+							<td>${ n.nickName }</td>
+							<td>${ n.notDate }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			
 		</div>
-		<div id="buttonArea">
-			<button type="button" class="btn btn-secondary" style="float: left"disabled>삭제</button>		
-			<button type="button" class="btn" style="float: right; background-color: #FF6833; color: white" onclick="location.href='noticeInsertView.bo'">공지사항 작성하기</button>	
-		</div>
-		<div id="pagingArea">
-			<!-- 맨 처음으로 -->
-			<button class="btn btn-light" onclick="#">&lt;&lt;</button>
-			<!-- 이전 페이지로 -->
-			<button class="btn btn-light" onclick="#" id="beforeBtn">&lt;</button>
-			
-			<!-- 숫자 목록 버튼 -->
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">1</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">2</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">3</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">...</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">20</button>
-			
-			<!-- 다음 페이지로 -->
-			<button class="btn btn-light" onclick="#" id="afterBtn">&gt;</button>
-			<!-- 맨 끝으로 -->
-			<button class="btn btn-light" onclick="#">&gt;&gt;</button>
-		</div>
+		<c:if test="${ loginUser.memId eq 'admin' }">
+			<div id="buttonArea">
+				<!-- <button type="button" class="btn btn-secondary" style="float: left"disabled>삭제</button>	 -->	
+				<button type="button" class="btn" style="float: right; background-color: #FF6833; color: white" onclick="location.href='noticeInsertView.bo'">공지사항 작성하기</button>	
+			</div>
+		</c:if>
+			<div id="pagingArea">
+				<!-- 이전 페이지로 -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="noticeListView.bo">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+				</c:if>
+				
+				<!-- 숫자 목록 버튼 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="noticeListView.bo">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+					</c:if>
+				</c:forEach>
+				
+				<!-- 다음 페이지로 -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="noticeListView.bo">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+				</c:if>
+			</div>
 	</div>
+		<script>
+		$(function() {
+			$('.notice').mouseenter(function(){
+				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': '#585858', 'font-weight':'normal'});
+			}).click(function(){
+				var notNo=$(this).children('td').eq(0).text();
+				console.log(notNo);
+				location.href='notDetail.bo?notNo=' + notNo + '&page=' + ${pi.currentPage};
+			});
+		});
+	</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--
 	메인컬러 - #FF6833
 	메인폰트 - font-family: "G마켓 산스 TTF Medium";
@@ -96,6 +96,7 @@
 	.content {
 		margin-left: 250px;
 		border: 2px solid #ECECEC;
+		min-height: 700px;
 	}
 	.MainLogoText {
 		margin-left: 250px;
@@ -132,26 +133,32 @@
 		font-size: 20px;
 		margin-bottom: 20px;
 	}
-	table {
+	.activityArea {
 		border-collapse: collapse;
 		width: 750px;
+		min-height: 620px;
+		/* text-align: center; */
 	}
-	
-	.imgTd {
-		width: 120px;
-		text-align: center;
-		padding-top: 10px;
+	.activity {
+		margin-top: 20px;
+		margin-left: 45px;
+		vertical-align: middle;
+		display: inline-block;
+		width: 149px;
+		height: 290px;
 	}
+
 	.img {
 		width: 200px;
 		height: 200px;
-		padding: 10px;
+		padding: 10px; 
 		vertical-align: middle;
 		object-fit: cover;
 	}
 	.text {
-		font-size: 15px;
+		font-size: 14px;
 		font-family: "G마켓 산스 TTF Medium";
+		padding-left: 10px;
 	}
 	.text:hover {
 		color: #FF6833;
@@ -173,7 +180,7 @@
 	.priceText {
 		text-align: left;
 		margin-bottom: 0px;
-		margin-left: 20px;
+		margin-left: 10px;
 	}
 	
 	.btnimg2 {
@@ -183,16 +190,15 @@
 	}
 	
 	.priceText2 {
-		margin-top: 0px;
 		text-align: left;
 		font-size: 8px;
 		color: #9E9E9E;
-		margin-left: 20px;
+		margin-left: 10px;
 	}
 	
 	#pagingArea {
 		text-align: center; 
-		margin-top: 15px;
+		margin-top: 30px;
 		margin-bottom: 15px;
 	}
 
@@ -216,16 +222,16 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn" id="selectedBtn">활동 목록 관리</button>
+						<button class="sideMenuBtn" id="selectedBtn">활동 목록 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn" onclick="location.href='productView.wr'">상품 목록 관리</button>
+						<button onclick="location.href='productView.wr'" class="sideMenuBtn">상품 목록 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn">주문 내역 관리</button>
+						<button onclick="location.href='orderView.wr'" class="sideMenuBtn">주문 내역 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="" class="sideMenuBtn">고객 문의 관리</button>
+						<button onclick="location.href='customerView.wr'" class="sideMenuBtn">고객 문의 관리</button>
 					</li>
 				</ul>
 			</div>
@@ -237,79 +243,112 @@
 			</p>
 		</div>
 		<div class="content">
-			
-			<table class="mainTable">
-				<!-- 최근 참여한 활동 -->
-				
-				<!-- 반복문 사용 -->
-				<tr>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
+			<div class="activityArea">
+				<c:forEach var="a" items="${ alist }">
+				<%-- <div class="activity">
+					<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
+					<p class="text">[운동] 같이하는 테니스 일일레슨</p>
+					<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
+					<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>	
+					</div>				
+				--%>
+					<c:if test="${ a.actStatus eq 'Y' }">
+					<div class="activity">
+						<input type="hidden" name="actNo" value="${ a.actNo }">
+						<c:forEach var="i" items="${ ilist }">
+							<c:if test="${ a.actNo eq i.imgRefno and i.imgLevel eq '0'}">
+								<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+							</c:if>
+						</c:forEach>
+						<p class="text">[<c:choose>
+							<c:when test="${ a.actCategory eq '0' }">액티비티</c:when>	
+							<c:when test="${ a.actCategory eq '1' }">리빙</c:when>
+							<c:when test="${ a.actCategory eq '2' }">건강/미용</c:when>
+							<c:when test="${ a.actCategory eq '3' }">힐링</c:when>
+							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
+							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
+						</c:choose>] ${ a.actTitle }</p>
+						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">${ a.actPrice }원</p>
 						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
+					</div>
+					</c:if>
+					<c:if test="${ a.actStatus eq 'N' }">
+					<div class="activity" style="opacity: 0.5">
+						<input type="hidden" name="actNo" value="${ a.actNo }">
+						<c:forEach var="i" items="${ ilist }">
+							<c:if test="${ a.actNo eq i.imgRefno and i.imgLevel eq '0'}">
+								<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+							</c:if>
+						</c:forEach>
+						<p class="text">[<c:choose>
+							<c:when test="${ a.actCategory eq '0' }">액티비티</c:when>	
+							<c:when test="${ a.actCategory eq '1' }">리빙</c:when>
+							<c:when test="${ a.actCategory eq '2' }">건강/미용</c:when>
+							<c:when test="${ a.actCategory eq '3' }">힐링</c:when>
+							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
+							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
+						</c:choose>] ${ a.actTitle }</p>
+						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">${ a.actPrice }원</p>
 						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-					<td class="imgTd">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
-						<p class="text">
-							[운동] 같이하는 테니스 일일레슨
-						</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</td>
-				</tr>
-			</table>
+					</div>
+					</c:if>
+				</c:forEach>
+			</div>
 			<div id="pagingArea">
 				<!-- 이전 페이지로 -->
-				<button class="btn btn-light" onclick="#" id="beforeBtn">&lt;</button>
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="wookroomView.wr">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">1</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">2</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">3</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">...</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">20</button>
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="wookroomView.wr">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+					</c:if>
+				</c:forEach>
 				
 				<!-- 다음 페이지로 -->
-				<button class="btn btn-light" onclick="#" id="afterBtn">&gt;</button>
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="wookroomView.wr">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
+	<script>
+		$(function() {
+			$('.activity').mouseenter(function(){
+				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': '#585858', 'font-weight':'normal'});
+			}).click(function(){
+				var actNo=$(this).children('input').val();
+				console.log(actNo);
+				location.href='actupdateform.wr?actNo=' + actNo + '&page=' + ${pi.currentPage};
+			});
+		});
+
+		$('#selectedBtn').on('click', function(){
+			location.reload();
+		});
+	</script>
 </body>
 </html>

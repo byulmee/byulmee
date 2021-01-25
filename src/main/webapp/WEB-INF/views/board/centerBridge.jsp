@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>고객센터</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
 	rel="stylesheet" />
@@ -41,14 +42,13 @@
 		height: 300px;
 		border: 2px solid;
 		border-radius: 15px;
-		padding-top: 45px;
+		padding-top: 35px;
 		padding-left: 43px;
 		text-align:center; 
 		position:relative; 
 		margin:0 auto; 
 	}
 	.QnABtnArea {
-		border: 2px solid;
 		width: 250px;
 		height: 200px;
 		float: left;
@@ -66,7 +66,7 @@
 	
 	.NoticeBtnArea {
 		margin-left: 10px;
-		border: 2px solid;
+		
 		width: 250px;
 		height: 200px;
 		float: left;
@@ -88,18 +88,25 @@
 		cursor: pointer;
 	}
 	
+	.mainText {
+		padding-right: 40px;
+	}
+	
 </style>
 </head>
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div class="outer">
 		<div class="mainframe">
+			<div class="mainText">
+				<h2>고객센터</h2>
+			</div>
 			<div class="QnABtnArea">
 				<img class="QnAImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/qnaIcon.PNG">
 				<button type="button" id="qnaBtn" class="btn btn mb-3" onclick="location.href='QnAView.bo'">Q&A게시판으로 이동</button>
 			</div>
 			<div class="NoticeBtnArea">
-				<img class="NoticeImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/noticeIcon.png">
+				<img class="NoticeImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/noticeIcon.png"><br>
 				<button type="button" id="noticeBtn" class="btn btn mb-3" onclick="location.href='noticeListView.bo'">공지게시판으로 이동</button>
 			</div>
 		</div>

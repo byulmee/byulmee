@@ -27,5 +27,6 @@
 		<mapper resource="mapper/board-mapper.xml"/>
 		<mapper resource="mapper/activity-mapper.xml"/>
 		<mapper resource="mapper/image-mapper.xml"/>
+		<mapper resource="mapper/product-mapper.xml"/>
 	</mappers>
 </configuration>

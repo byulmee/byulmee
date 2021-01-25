@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,31 +43,32 @@
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div id="mainFrame" style="padding-left: 10%; padding-right: 10%;">
-		<h2 align="center" style="padding-top: 15px; font-weight: bold">공지사항
-			등록</h2>
+		<h2 align="center" style="padding-top: 15px; font-weight: bold">
+			공지사항 수정
+		</h2>
 		<hr>
-		<form action="notInsert.bo" method="post">
-			<input type="hidden" name="memId" value="${ loginUser.memId }">
+		<form action="notUpdate.bo" method="post">
 			<div class="form-group row">
-				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+				<input type="hidden" name="notNo" value="${ notice.notNo }">
+				<input type="hidden" name="page" value="${ page }">
+				<label for="inputTitle" class="col-sm-1 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
 					<input type="text" name="notTitle" class="form-control"
-						id="inputTitle">
+						id="inputTitle" value="${ notice.notTitle }">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+				<label for="inputContent" class="col-sm-1 col-form-label"><strong>내용</strong></label>
 				<div class="col-sm-10">
 					<textarea type="text" name="notContent" class="form-control"
-						id="inputContent" style="height: 600px"></textarea>
+						id="inputContent" style="height: 600px">${ notice.notContent }</textarea>
 				</div>
 			</div>
 			<div id="buttonArea">
-			<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">등록</button>
-			<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='noticeListView.bo'">취소</button>
+				<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">수정</button>
+				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='notDetail.bo?notNo=${ notice.notNo }&page=${ page }'">취소</button>
 			</div>
 		</form>
 	</div>
-
 </body>
 </html>
