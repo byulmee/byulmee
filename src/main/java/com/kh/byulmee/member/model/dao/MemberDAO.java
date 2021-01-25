@@ -53,4 +53,8 @@ public class MemberDAO {
 	public int CheckIdWithPhone(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.CheckIdWithPhone", member);
 	}
+  
+  public Member selectActivityWriter(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("memberMapper.selectActivityWriter", acId);
+	}	
 }

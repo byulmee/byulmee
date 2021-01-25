@@ -123,4 +123,9 @@ public class MemberServiceImpl implements MemberService {
 			return "user_not_found";
 		}
 	}
+
+	@Override
+	public Member selectActivityWriter(int acId) {
+		return mDAO.selectActivityWriter(sqlSession, acId);
+	}
 }

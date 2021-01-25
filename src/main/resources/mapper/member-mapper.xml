@@ -55,7 +55,19 @@
   		where mem_email = #{email} and mem_status = 'Y'
   	</select>
   	
-  	<select id="findIdWithPhone" resultType="string">
+   	<select id="CheckIdWithEmail" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  	
+  	<select id="CheckIdWithPhone" resultType="_int">
+  		select count(*)
+  		from member
+  		where mem_id = #{memId} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
+  	</select>
+  
+    	<select id="findIdWithPhone" resultType="string">
   		select mem_id
   		from member
   		where mem_Name = #{memName} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
@@ -72,16 +84,12 @@
   		set mem_pwd = #{memPwd}
   		where mem_id = #{memId}
   	</update>
- 
-   	<select id="CheckIdWithEmail" resultType="_int">
-  		select count(*)
+
+  	<select id="selectActivityWriter" resultMap="memberResultSet">
+  		select *
   		from member
-  		where mem_id = #{memId} and mem_email = #{memEmail} and mem_status = 'Y' and mem_login_type = 'B'
-  	</select>
-  	
-  	<select id="CheckIdWithPhone" resultType="_int">
-  		select count(*)
-  		from member
-  		where mem_id = #{memId} and mem_phone = #{memPhone} and mem_status = 'Y' and mem_login_type = 'B'
+  		where mem_id = (select mem_id 
+						from activity 
+						where act_no = #{acId})
   	</select>
 </mapper>

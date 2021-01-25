@@ -16,6 +16,8 @@ public interface MemberService {
 	
 	public int checkEmail(String memEmail);
 
+	int checkEmail(String email);
+
 	String findIdWithPhone(String data);
 	
 	String findIdWithEmail(String data);
@@ -25,4 +27,6 @@ public interface MemberService {
 	int CheckIdWithEmail(Member member);
 	
 	String resetPwd(Member member);
+  
+  Member selectActivityWriter(int acId);
 }

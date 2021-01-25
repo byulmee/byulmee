@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="imageMapper">
+	<resultMap type="Image" id="imageResultSet">
+		<id property="imgNo" column="IMG_NO"/>
+		<result property="imgOrigin" column="IMG_ORIGIN"/>
+		<result property="imgName" column="IMG_NAME"/>
+		<result property="imgPath" column="IMG_PATH"/>
+		<result property="imgDate" column="IMG_DATE"/>
+		<result property="imgLevel" column="IMG_LEVEL"/>
+		<result property="imgStatus" column="IMG_STATUS"/>
+		<result property="imgRefcode" column="IMG_REFCODE"/>
+		<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+
 	<insert id="insertImage">
 		insert into image
 		values(seq_imgid.nextval, #{imgOrigin}, #{imgName}, #{imgPath}, sysdate, #{imgLevel},
 				default, #{imgRefcode}, #{imgRefno})
 	</insert>
+	
+	<select id="selectImage" resultMap="imageResultSet">
+		select *
+		from image
+		where img_refcode=1 and img_refno=#{acId} and img_status='Y'
+	</select>
+	
+	<select id="selectReviewImage" resultMap="imageResultSet">
+		select *
+		from image
+		where img_refcode=3 and img_refno=#{revImgNo} and img_status='Y'
+	</select>
 </mapper>
