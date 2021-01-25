@@ -325,6 +325,14 @@ public class MyPageContoller {
 							   @RequestParam("reviewImgFile2") MultipartFile reviewImgFile2,
 							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
 							   Model model) {
+		
+		String memId = r.getMemId();
+		
+		int result1 = 0;
+		int result2 = 0;
+		int result3 = 0;
+		int revNo = mpService.insertReview(r);
+		
 		System.out.println("getRevNo : " + r.getRevNo());
 		System.out.println("getMemId : " + r.getMemId());
 		System.out.println("getRevRating : " + r.getRevRating());
@@ -334,11 +342,6 @@ public class MyPageContoller {
 		System.out.println("getRevRefcode : " + r.getRevRefcode());
 		System.out.println("getRevRefno : " + r.getRevRefno());
 		System.out.println("getOrdNo : " + r.getOrdNo());
-		
-		int result1 = 0;
-		int result2 = 0;
-		int result3 = 0;
-		int revNo = mpService.insertReview(r);
 		
 		Image reviewImg = new Image();
 		Image i = new Image();
@@ -401,6 +404,7 @@ public class MyPageContoller {
 						   + "result2" + result2 + ", " + "result3" + result3);
 		
 		if(revNo > 0) {
+			mpService.updateReviewStatus(r);
 			model.addAttribute("msg", "리뷰작성이 완료되었습니다.");
 			model.addAttribute("url", "myPurActView.me");
 			return "../common/alert";

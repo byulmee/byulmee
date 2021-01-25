@@ -44,7 +44,7 @@
 		<!-- 1. 일반 쿼리 join 방식 -->
 		<!-- select o.ord_no, o.mem_id as ord_id, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
 		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request, o.ord_payno,
-		        o.ord_pay, o.ord_pay_way, o.ord_status, o.ord_refcode, o.ord_refno,
+		        o.ord_pay, o.ord_pay_way, o.ord_review, o.ord_status, o.ord_refcode, o.ord_refno,
 		        a.act_no, a.mem_id as act_id, a.act_phone, a.act_startday, a.act_endday, a.act_place,
 		        a.act_title, a.act_price, a.act_status,
 		        m.mem_no, m.mem_id, m.mem_name, m.mem_nickname, m.mem_email
@@ -54,7 +54,7 @@
 		where o.ord_status = 'Y' and o.mem_id = #{memId}
 		order by o.ord_no desc -->
 		
-		select o.ord_no, o.ord_date, o.ord_pay,
+		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
 		        a.act_no, a.act_title,
                 i.img_name
 		from orders o 
@@ -108,6 +108,12 @@
 		VALUES (seq_revid.nextval, #{memId}, #{revRating}, #{revContent}, sysdate, default, #{revRefcode}, #{revRefno}, #{ordNo})
 	</insert>
 	
+	<update id="updateReviewStatus">
+		update orders
+		set ord_review='Y'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_status='Y' and ord_refcode=#{revRefcode} and ord_refno=#{revRefno}
+	</update>
+	
 	<resultMap type="Order" id="orderResultSet">
 		<id property="ordNo" column="ORD_NO"/>
 		<result property="memId" column="ORD_ID"/>
@@ -122,6 +128,7 @@
 		<result property="ordPayno" column="ORD_PAYNO"/>
 		<result property="ordPay" column="ORD_PAY"/>
 		<result property="ordPayWay" column="ORD_PAY_WAY"/>
+		<result property="ordReview" column="ORD_REVIEW"/>
 		<result property="ordStatus" column="ORD_STATUS"/>
 		<result property="ordRefcode" column="ORD_REFCODE"/>
 		<result property="ordRefno" column="ORD_REFNO"/>

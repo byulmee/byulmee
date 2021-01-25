@@ -28,9 +28,10 @@ public class Order {
 	private String ordBasicaddr;
 	private String ordDetailaddr;
 	private String ordRequest;
-	private int ordPayno;
+	private String ordPayno;
 	private int ordPay;
 	private int ordPayWay;
+	private String ordReview;
 	private String ordStatus;
 	private int ordRefcode;
 	private int ordRefno;

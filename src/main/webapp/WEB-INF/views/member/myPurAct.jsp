@@ -676,7 +676,12 @@
 							<div class="btnDiv">
 								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
 								<button class="button">문의하기</button>
-								<button class="reviewActBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
+								<c:if test="${ o.ordReview == 'N' }">
+									<button class="reviewActBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
+								</c:if>
+								<c:if test="${ o.ordReview == 'Y' }">
+									<button class="button" disabled>작성완료</button>
+								</c:if>
 							</div>
 						</div>
 					</c:forEach>

@@ -17,8 +17,8 @@ public class Review {
 	private int revNo;
 	private String memId;
 	private double revRating;
-	private Date revDate;
 	private String revContent;
+	private Date revDate;
 	private String revStatus;
 	private int revRefcode;
 	private int revRefno;

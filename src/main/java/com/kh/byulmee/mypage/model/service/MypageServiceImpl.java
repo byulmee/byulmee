@@ -73,4 +73,9 @@ public class MypageServiceImpl implements MypageService {
 		int revNo = mpDAO.insertReview(sqlSession, r);
 		return revNo;
 	}
+
+	@Override
+	public int updateReviewStatus(Review r) {
+		return mpDAO.updateReviewStatus(sqlSession, r);
+	}
 }

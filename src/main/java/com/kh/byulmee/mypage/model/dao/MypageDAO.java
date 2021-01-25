@@ -61,4 +61,8 @@ public class MypageDAO {
 		int revNo = r.getRevNo();
 		return revNo;
 	}
+
+	public int updateReviewStatus(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("mypageMapper.updateReviewStatus", r);
+	}
 }
