@@ -192,7 +192,7 @@
 		<div class="sideMenu">
 	    	<div class="profile">
 				<!-- <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> -->
-				<img class="profileImg" src="../../../images/a.PNG">
+				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/a.PNG">
 				<p class="nickname"> 앤 해서웨이 </p>
 				
 			</div>
@@ -235,85 +235,85 @@
 								<td>1</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="img" src="../../../images/new.PNG"></td>
+								<td><img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>2</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>3</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>4</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>5</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>6</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>7</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>8</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>9</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>10</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>11</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>12</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>13</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 							<tr>
 								<td>14</td>
 								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
 								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
+								<td><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
 							</tr>
 						</tbody>
 					</table>

@@ -217,7 +217,6 @@
 				<%--  <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> --%>
 				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/a.PNG">
 				<p class="nickname"> 앤 해서웨이 </p>
-				
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">

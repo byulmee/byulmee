@@ -16,7 +16,7 @@ public class Address {
 	private String memId;
 	private String addPlace;
 	private String addName;
-	private int addPostcode;
+	private String addPostcode;
 	private String addBasicaddr;
 	private String addDetailaddr;
 	private String addPhone;

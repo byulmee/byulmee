@@ -19,14 +19,13 @@
 				default, #{imgRefcode}, #{imgRefno})
 	</insert>
 	
-
 	<select id="selectList" resultMap="imageResultSet">
 		select *
 		from image
 		where img_status = 'Y' and img_refcode = #{code}
 		order by img_no desc
 	</select>
-	
+
 	<select id="selectImgList" resultMap="imageResultSet">
 		select *
 		from image

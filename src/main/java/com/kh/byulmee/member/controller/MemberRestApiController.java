@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.byulmee.member.model.dto.KakaoProfile;
@@ -21,10 +22,12 @@ import com.kh.byulmee.member.model.service.MemberApiService;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
 
+@SessionAttributes({"loginUser", "oauthInfo"})
+
 @RestController
 public class MemberRestApiController {
 
-	//APIs
+	//인증 관련 API 처리
 		@Autowired
 		private MemberService mService;
 		
