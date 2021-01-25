@@ -15,8 +15,35 @@
 	
 	<select id="selectQnaList" resultMap="salesQnaResultSet">
 		select *
-		from sales_qna
-		where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
+		from (
+		    select *
+		    from sales_qna
+		    where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
+		    order by salqna_no desc
+		    )
+		<![CDATA[where rownum <= 5]]>
+	</select>
+	
+	<select id="selectQnaExceptList" resultMap="salesQnaResultSet">
+		select *
+		from (
+		    select *
+		    from sales_qna
+		    minus
+		    select *
+		    from (
+		        select *
+		        from sales_qna
+		        where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
+		        order by salqna_no desc
+		        )
+		    <![CDATA[where rownum <= 5]]>
+		    )
 		order by salqna_no desc
 	</select>
+	
+	<insert id="insertQna">
+		insert into sales_qna
+		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'A', sysdate, #{salqnaContent}, default, #{salqnaRefcode}, #{salqnaRefno})
+	</insert>
 </mapper>

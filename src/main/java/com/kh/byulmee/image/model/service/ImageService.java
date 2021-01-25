@@ -10,4 +10,6 @@ public interface ImageService {
 
 	ArrayList<Image> selectImage(int acId);
 
+	ArrayList<Image> selectReviewImage(int revImgNo);
+
 }

@@ -22,6 +22,12 @@
 	<select id="selectImage" resultMap="imageResultSet">
 		select *
 		from image
-		where img_refno=#{acId} and img_status='Y'
+		where img_refcode=1 and img_refno=#{acId} and img_status='Y'
+	</select>
+	
+	<select id="selectReviewImage" resultMap="imageResultSet">
+		select *
+		from image
+		where img_refcode=3 and img_refno=#{revImgNo} and img_status='Y'
 	</select>
 </mapper>

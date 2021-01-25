@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.member.model.service.FavoriteService;
 
@@ -22,8 +23,11 @@ public class FavoriteController {
 		
 		int result = fService.insertActivityFavorite(acId);
 		
-		System.out.println(result);
+		if(result > 0) {
+			return "redirect:activityDetail.ac?acId=" + acId;
+		} else {
+			throw new ActivityException("활동 찜하기에 실패하였습니다.");
+		}
 		
-		return null;
 	}
 }

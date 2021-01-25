@@ -14,4 +14,12 @@ public class SalesQnaDAO {
 		return (ArrayList)sqlSession.selectList("salesQnaMapper.selectQnaList", acId);
 	}
 
+	public ArrayList<SalesQna> selectQnaExceptList(SqlSessionTemplate sqlSession, int acId) {
+		return (ArrayList)sqlSession.selectList("salesQnaMapper.selectQnaExceptList", acId);
+	}
+
+	public int insertQna(SqlSessionTemplate sqlSession, SalesQna sq) {
+		return sqlSession.insert("salesQnaMapper.insertQna", sq);
+	}
+
 }

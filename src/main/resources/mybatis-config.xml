@@ -29,5 +29,7 @@
 		<mapper resource="mapper/image-mapper.xml"/>
 		<mapper resource="mapper/favorite-mapper.xml"/>
 		<mapper resource="mapper/salesQna-mapper.xml"/>
+		<mapper resource="mapper/reply-mapper.xml"/>
+		<mapper resource="mapper/review-mapper.xml"/>
 	</mappers>
 </configuration>

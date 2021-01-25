@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
 <style>
 @font-face {
     font-family: 'GmarketSansMedium';
@@ -43,13 +44,19 @@ body {
 /* } */
 
 .thumbnail {
-    float: left;
-    width: 500px;
-    height: 500px;
-    box-sizing: border-box;
-    background-color: gray;
-    margin-left: 162px;
-    margin-top : 20px;
+	float: left;
+	width: 500px;
+	height: 500px;
+	box-sizing: border-box;
+	background-color: gray;
+	margin-left: 162px;
+	margin-top: 12px;
+}
+
+#thumbImg {
+	width: 500px;
+	height: 500px;
+	object-fit: fill;
 }
 
 .product-info{
@@ -60,7 +67,7 @@ body {
     margin-top : 20px;
 }
 #title{
-	margin-top: 15px;
+	margin-top: 7px;
 	font-size: 25px;
 }
 .price{
@@ -70,7 +77,7 @@ body {
 	font-size: 30px;
 }
 .star{
-    margin-top: 10px;
+    margin-top: 20px;
 }
 #star1{
 	font-size: 15px;
@@ -152,51 +159,65 @@ body {
 #material2{
 	font-size: 13px;
 }
-.starInfo{
-	padding-top: 15px;
+.starInfo {
+	padding-top: 12px;
 	line-height: 30px;
-	margin-top: 25px;
+	margin-top: 19px;
 	width: 407px;
 	height: 109px;
-	border-top: 1px solid #E9E9E9; 
-	border-bottom: 1px solid #E9E9E9; 
+	border-top: 1px solid #E9E9E9;
+	border-bottom: 1px solid #E9E9E9;
 	text-align: center;
+	background-color: #f8f8f8;
 }
-#starInfo1{
+
+#star_img {
+	vertical-align: middle;
+}
+
+#starInfo1 {
 	font-size: 18px;
 }
-#starInfo2{
+
+#starInfo2 {
 	color: #9B9B9B;
 	font-size: 15px;
 }
-#starInfo3{
+
+#starInfo3 {
 	color: #9B9B9B;
 	font-size: 15px;
-	border-left: 1px solid #E9E9E9; 
+	border-left: 1px solid #E9E9E9;
 }
-#star-button1{
-	border: 1px solid #888888; 
-	background: #F0F0F0; 
-	border-radius: 5px; 
-	color: #888888; 
-	width: 110px; 
-	height: 20px; 
-	text-align: center; 
+
+#star-button1 {
+	border: 1px solid #888888;
+	background: #F0F0F0;
+	border-radius: 5px;
+	color: #888888;
+	width: 110px;
+	height: 20px;
+	text-align: center;
 	font-size: 12px;
 	outline: 0;
-	cursor: pointer; 
+	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
 }
-#star-button2{
-	border: 1px solid #888888; 
-	background: white; 
-	border-radius: 5px; 
-	color: #888888; 
-	width: 110px; 
-	height: 20px; 
-	text-align: center; 
+
+#star-button2 {
+	border: 1px solid #888888;
+	background: white;
+	border-radius: 5px;
+	color: #888888;
+	width: 110px;
+	height: 20px;
+	text-align: center;
 	font-size: 12px;
 	outline: 0;
-	cursor: pointer; 
+	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
 }
 
 hr {width: 1280px; visibility: hidden;} 
@@ -293,15 +314,14 @@ td{
        <!-- 상단 섬네일, 상품 정보 -->
       <div class="top">
 	       <div class="thumbnail" align="center">
-	      	 <img id="titleImg">
+	      	 <img src="${ thumb }" id="thumbImg">
 	       </div>
 	       
 	       <div class="product-info" align="left">
-	       		<div id="title">[힐링] 나만의 텃밭 가꾸기</div>
-	       		<div class="price">
-	       			<span id="price">50,000</span>
-	       			<span id="one">원</span>
-	       		</div>
+				<div id="title">[${ category }] ${ activity.actTitle }</div>
+				<div class="price">
+					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
+				</div>
 	       		<div class="star">
 		       		<span id="star1">★★★★★</span>
 		       		<span id="star2">4.8</span>
@@ -309,36 +329,53 @@ td{
 	       		</div>
 	       		<div class="option">
 		       		<span id="option1">신청 인원</span>
-		       		<span id="option2">2명</span>
+		       		<span id="option2">${ amount }명</span>
 	       		</div>
 	       		<div class="all-price">
 	       			<span id="all-price1">총 활동비</span>
-	       			<span id="all-price2"><b>100,000</b>&nbsp;원</span>
+	       			<span id="all-price2"><b>${ price }</b>원</span>
 	       		</div>
 	       		<div class="address-info">
 	       			<span id="address-info1">활동 장소</span>
-	       			<span id="address-info2">서울시 강남구 역삼동 남도빌딩 옥상 텃밭</span>
+	       			<span id="address-info2">${ activity.actPlace }</span>
 	       			<input type="button" id="address-button" value="지도보기">
 	       		</div>
 	       		<div class="period">
 	       			<span id="period1">활동 기간</span>
-	       			<span id="period2">20.12.21~21.01.20</span>
+	       			<span id="period2">${ activity.actStartday } ~ ${ activity.actEndday }</span>
 	       		</div>
 	       		<div class="material">
 	       			<span id="material1">준비물 링크</span>
-	       			<span id="material2"><a href="xxx">http://www.byulmeemarket.com/1301240</a></span>
+	       			<span id="material2"><a href="${ activity.actUrl }">${ activity.actUrl }</a></span>
 	       		</div>
 	       		
 	       		
-	       		<div class="starInfo">
-	       			<strong id="starInfo1">스프링</strong><br>
-	       			<span id="starInfo2">010-1111-2222&nbsp;</span>
-	       			<span id="starInfo3"> &nbsp;&nbsp;abcd123@naver.com</span><br>
-	       			<input type="button" id="star-button1" value="+작업실 방문하기">
-	       			<input type="button" id="star-button2" value="+스타 찜하기">
-	       		</div>
+				<div class="starInfo">
+					<span><img src="resources/images/common/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
+					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
+					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
+					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
+				</div>
 	       </div>
        </div> 
+       
+       <script>
+		// 가격에 천단위 ,(콤마)추가
+	    $(document).ready(function(){
+			var price = $('#price').text();
+	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        $('#price').html(price);
+	    });
+		
+		// 스타 휴대폰에 -(하이픈)추가
+		$(document).ready(function(){
+			var starPhone = $('#starInfo2').text();
+			starPhone = starPhone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-");
+			$('#starInfo2').html(starPhone);
+		});
+       </script>
        
        <hr><hr><hr><hr>
        

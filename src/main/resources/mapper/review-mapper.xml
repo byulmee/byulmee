@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+
+	<resultMap type="Review" id="reviewResultSet">
+		<id property="revNo" column="REV_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="revRating" column="REV_RATING"/>
+		<result property="revDate" column="REV_DATE"/>
+		<result property="revContent" column="REV_CONTENT"/>
+		<result property="revStatus" column="REV_STATUS"/>
+		<result property="revRefcode" column="REV_REFCODE"/>
+		<result property="revRefno" column="REV_REFNO"/>
+	</resultMap>
+
+	<select id="selectReviewList" resultMap="reviewResultSet">
+		select *
+		from (
+		    select *
+		    from review
+		    	join member using(mem_id)
+		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y'
+		    order by rev_no desc
+		    )
+		<![CDATA[where rownum <= 5]]>
+	</select>
+</mapper>

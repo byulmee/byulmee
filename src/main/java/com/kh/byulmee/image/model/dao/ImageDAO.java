@@ -19,5 +19,9 @@ public class ImageDAO {
 	public ArrayList<Image> selectImage(SqlSessionTemplate sqlSession, int acId) {
 		return (ArrayList)sqlSession.selectList("imageMapper.selectImage", acId);
 	}
+
+	public ArrayList<Image> selectReviewImage(SqlSessionTemplate sqlSession, int revImgNo) {
+		return (ArrayList)sqlSession.selectList("imageMapper.selectReviewImage", revImgNo);
+	}
 	
 }

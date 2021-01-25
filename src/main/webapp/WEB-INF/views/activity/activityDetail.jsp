@@ -68,7 +68,7 @@ body {
 	object-fit: fill;
 }
 
-#titleImg {
+.titleImg {
 	width: 800px;
 	height: auto;
 	object-fit: fill;
@@ -154,19 +154,20 @@ body {
 	color: #9E9E9E;
 }
 
-#all-price2 {
-	width: 90px;
-	border: none;
-	font-size: 25px;
-	color: black;
-	font-family: 'GmarketSansMedium';
-}
 input:focus {
 	outline:none;
 }
 
 #all-price3 {
 	font-size: 15px;
+}
+
+#all-price-fix{
+	width: 103px;
+	border: none;
+	font-size: 25px;
+	color: black;
+	font-family: 'GmarketSansMedium';
 }
 
 .button {
@@ -203,7 +204,7 @@ input:focus {
 .starInfo {
 	padding-top: 12px;
 	line-height: 30px;
-	margin-top: 25px;
+	margin-top: 22px;
 	width: 407px;
 	height: 109px;
 	border-top: 1px solid #E9E9E9;
@@ -217,15 +218,18 @@ input:focus {
 }
 
 #starInfo1 {
+	padding-top: 10px;
 	font-size: 18px;
 }
 
 #starInfo2 {
+	padding-top: 10px;
 	color: #9B9B9B;
 	font-size: 15px;
 }
 
 #starInfo3 {
+	padding-top: 10px;
 	color: #9B9B9B;
 	font-size: 15px;
 	border-left: 1px solid #E9E9E9;
@@ -238,7 +242,6 @@ input:focus {
 	color: #888888;
 	width: 110px;
 	height: 20px;
-	text-align: center;
 	font-size: 12px;
 	outline: 0;
 	cursor: pointer;
@@ -253,7 +256,6 @@ input:focus {
 	color: #888888;
 	width: 110px;
 	height: 20px;
-	text-align: center;
 	font-size: 12px;
 	outline: 0;
 	cursor: pointer;
@@ -318,10 +320,12 @@ hr {
 	min-height: auto;
 }
 
+.review_flex{
+	border-spacing: 15px;
+}
+
 .reviewWriter {
-	width: 800px;
-	min-height: auto;
-	margin-bottom: 15px;
+	width: 100px;
 }
 
 .reviewWriter_Main {
@@ -330,22 +334,17 @@ hr {
 	margin-bottom: 15px;
 }
 
-#reviewWriter {
-	font-weight: bold;
-	margin-left: 10px;
-}
-
-#revieDate {
-	font-weight: bold;
+#reviewDate {
 	color: #9E9E9E;
-	font-size: 15px;
-	margin-left: 10px;
+	font-size: 13px;
+	text-align: right;
 }
 
 #reviewStar {
 	color: #ffd400;
 	font-size: 15px;
 	margin-left: 10px;
+	text-align: right;
 }
 
 .reviewImageArea {
@@ -356,9 +355,9 @@ hr {
 }
 
 .reviewImageArea_Main {
-	width: 150px;
-	min-height: auto;
-	margin-right: 10px;
+	width: 100px;
+	height: 100px;
+	background-color: gray;
 }
 
 .reviewWriter_Main {
@@ -366,10 +365,6 @@ hr {
 	min-height: auto;
 	margin-bottom: 15px;
 	border-spacing: 5px;
-}
-
-.review_flex {
-	display: flex;
 }
 
 .reviewImage {
@@ -395,12 +390,6 @@ hr {
 }
 
 .reviewDetail_Main {
-	display: inline-block;
-	width: 650px;
-	min-height: auto;
-	margin-bottom: 15px;
-	margin-left: 10px;
-	margin-top: 10px;
 	font-size: 13px;
 	color: #767676;
 }
@@ -411,41 +400,119 @@ hr {
 }
 
 #expandButton {
+	cursor: pointer;
+}
+
+#expandButton:hover {
+	color: black;
+}
+
+#expandButton {
 	border: 0;
 	background-color: white;
 	color: #9E9E9E;
 }
 
-.questionArea {
+.question {
+ 	width: 800px;
+ 	line-height: 40px;
+ 	margin-top: 10px;
+ 	table-layout: fixed;
+} 
+
+.questionExcept {
+	visibility: collapse;
+ 	width: 800px;
+ 	line-height: 40px;
+ 	margin-bottom: 10px;
+ 	table-layout: fixed;
+} 
+
+.question td{
+ 	border-bottom: 1px solid #E9E9E9;
+ 	text-align: left;
+} 
+
+#memId, #salqnaTitle, #salqnaDate, #salqnaDetail{
+ 	text-overflow: ellipsis;
+ 	overflow: hidden;
+ 	white-space: nowrap;
+} 
+
+.question tr:hover{
+ 	background-color: #f9f9f9;
+} 
+
+.questionExcept td{
+ 	border-bottom: 1px solid #E9E9E9;
+ 	text-align: left;
+} 
+
+.questionExcept tr:hover{
+ 	background-color: #f9f9f9;
+} 
+
+#salqnaTitle, #salqnaTitleExcept {
+ 	font-size: 15px;
+ 	margin-right: 400px;
+}
+
+#salqnaDate, #salqnaDateExcept {
+ 	font-size: 13px;
+ 	margin-right: 20px;
+ 	color: #9E9E9E;
+ 	text-align: center;
+}
+
+#salqnaDetail, #salqnaDetailExcept {
+ 	font-size: 12px;
+ 	margin-right: 20px;
+ 	color: #9E9E9E;
+ 	text-align: right;
+}
+
+#salqnaNo, #salqnaNoExcept {
+ 	visibility: hidden; 
+}
+
+.trContent{
+ 	display: none;
+}
+
+.show {
+	display:table-row; 
+	height: auto;
+	font-size:12px;
+}
+
+.salqnaReply{
+ 	display: none; 
+	background-color: red;
+	height: 50px;
 	width: 800px;
-	line-height: 40px;
-	border-bottom: 1px solid #E9E9E9;
-	margin-bottom: 10px;
-	margin-top: 10px;
 }
 
-#question1 {
-	font-weight: bold;
-	margin-right: 20px;
+#repArea{
+	display:table-row; 
+	height: auto;
+	font-size:12px;
 }
 
-#question2 {
-	font-size: 15px;
-	font-weight: bold;
-	margin-right: 400px;
+.trQuestion td {
+	cursor:pointer;
 }
 
-#question3 {
+#all-question {
+	width: 800px;
+	text-align: right;
 	font-size: 13px;
-	font-weight: bold;
-	margin-right: 20px;
+	cursor: pointer;
 	color: #9E9E9E;
+	margin-right: 15px;
 }
 
-#question4 {
-	font-size: 13px;
-	margin-right: 20px;
-	color: #9E9E9E;
+#all-question:hover{
+	color: black;
 }
 
 #questionButton {
@@ -514,7 +581,7 @@ hr {
 	margin: -250px -350px; 0 -250 px;
 	padding: 20px;
 	background: white;
-	z-index: 1;
+	z-index: 1000;
 }
 
 .black_bg {
@@ -526,7 +593,7 @@ hr {
 	background-color: rgba(0, 0, 0, 0.5);
 	top: 0;
 	left: 0;
-	z-index: 1;
+	z-index: 999;
 }
 
 .review_close {
@@ -644,12 +711,15 @@ hr {
 	font-size: 10px;
 }
 
+
+
 </style>
 </head>
 <body>
 	<c:import url="../common/gnb.jsp" />
 	
 	<div class="outer" align="center">
+	<form id="activityCheck" action="activityCheck.ac" method="post">
 		<!-- 상단 섬네일, 상품 정보 -->
 		<div class="top">
 			<div class="thumbnail" align="center">
@@ -657,9 +727,8 @@ hr {
 			</div>
 
 			<div class="product-info" align="left">
-				<div id="title">[${ category }] ${ activity.actTitle }
-					<input type="hidden" name="acId" value="123">
-				</div>
+				<div id="title">[${ category }] ${ activity.actTitle }</div>
+				<input type="hidden" name="acId" value="${ activity.actNo }">
 				<div class="price">
 					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
 				</div>
@@ -669,20 +738,19 @@ hr {
 				</div>
 				<div class="option">
 					<span id="option1">인원선택&nbsp;</span> 
-					<span><button id="minus" onclick="cntNum(-1);">-</button></span>
+					<span><button type="button" id="minus" onclick="cntNum(-1);">-</button></span>
 					<span id="option2"><input type="text" id="amount" name="amount" value="1" onchange="setNum();" readonly></span> 
-					<span><button id="plus" onclick="cntNum(1);">+</button></span> 
+					<span><button type="button" id="plus" onclick="cntNum(1);">+</button></span> 
 					<span id="option3">잔여 인원 : 7명</span>
 				</div>
 				<div class="all-price">
 					<span id="all-price1">총 활동비</span> 
-					<span id="all-price2"><input type="text" id="all-price2" name="all-price2" value="${ activity.actPrice }" onchange="setNum();" readonly></span>
+					<span id="all-price2"><input type="text" id="all-price-fix" name="all-price2" value="${ activity.actPrice }" onchange="setNum();" readonly></span>
 					<span id="all-price3">원</span>
 				</div>
 				<div class="button">
 					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기"> 
-					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기"
-						onclick="location.href='activityCheck.ac'">
+					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기">
 				</div>
 				<div class="starInfo">
 					<span><img src="resources/images/common/star.png" width="18px" id="star_img" alt="별"></span>
@@ -695,8 +763,8 @@ hr {
 			</div>
 		</div>
 		
+		<!-- 수량 버튼 클릭에 따라 총 활동비와 수량 변경 -->
 		<script>
-			// 수량 버튼 클릭에 따라 총 활동비와 수량 변경
 			var cnt = 1;
 			var amount = document.getElementById("amount");
 			var price = document.getElementById("price").innerHTML;
@@ -721,7 +789,8 @@ hr {
 				amount.value = cnt;
 				var total = String(price * cnt);
 				total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
- 				document.getElementById("all-price2").innerHTML = total;
+ 				document.getElementById("all-price2").innerHTML = '<input type="text" id="all-price-fix" name="all-price2" value="' + total + '"onchange="setNum();" readonly>';
+//  				document.getElementById("all-price2").innerHTML = total;
 			}
 		
 			// 글번호 가져오기 (찜하기에 활용)
@@ -753,6 +822,7 @@ hr {
 				$('#starInfo2').html(starPhone);
 			});
 		</script>
+		</form>
 
 		<hr>
 		<!-- 메뉴바 -->
@@ -773,9 +843,10 @@ hr {
 
 		<!-- 본문영역 -->
 		<div class="detailArea">
-			<c:forEach var="content" items="${ content }">
-				<img src="${ content }" id="titleImg">
-			</c:forEach>
+			<img src="${ content1 }" class="titleImg">
+			<img src="${ content2 }" class="titleImg">
+			<img src="${ content3 }" class="titleImg">
+			<img src="${ content4 }" class="titleImg">
 			<div id="place">Q 어디에서 진행되나요?</div>
 			<div id="map" style="width:800px; height:400px;"></div>
 			<div id="starMessage">스타 한마디</div>
@@ -1003,18 +1074,13 @@ hr {
 
 		<!-- 별미 후기 -->
 		<div class="reviewArea">
-			<div class="review_flex">
-				<div class="reviewImageArea_Main" align="left">
-					<div class="reviewImage_Main"></div>
-				</div>
-				<div class="reviewWriter_Main" align="left">
-					<span id="reviewWriter">스프링</span> <span id="revieDate">2020-11-28</span>
-					<span id="reviewStar">★★★★★</span>
-					<div class="reviewDetail_Main">텃밭이 너무 작아서 별로였어요. 좀 더 컸으면
-						좋았을텐데.. 그리고 밥도 안주고 텃밭만 가꾸게 시켜요 노잼노잼 아무도 이거 하지마세요 왜 별점이 4.8이나 되는지
-						모르겠네요; 별미텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데..</div>
-				</div>
-			</div>
+			<table class="review_flex">
+				<thead>
+					<tr></tr>			
+				</thead>
+				<tbody></tbody>
+			</table>
+			
 			<div class="expand" align="right">
 				<input type="button" id="expandButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+확대하기">
 				<div class="black_bg"></div>
@@ -1043,6 +1109,59 @@ hr {
 				</div>
 			</div>
 		</div>
+		
+		<script>
+			var acId = "<c:out value='${ activity.actNo}'/>";
+			
+			$.ajax({
+				url: 'salesReviewList.ac',
+				data: {acId:acId},
+				success: function(data){
+					console.log(data);
+					
+					$review = $('.review_flex tbody');
+					
+					var $tr;
+					var $tr2;
+					var $div;
+					var $memId;
+					var $revDate;
+					var $revRating;
+					var $revContent;
+					var $revNo;
+					
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<tr class="trReview">');
+							$tr2 = $('<tr class="trReviewContent">');
+							$div = $('<td rowspan="2" class="reviewImageArea_Main">');
+							$memId = $('<td id="reviewWriter">').text(data[i].memId);
+							$revDate = $('<td id="reviewDate">').text(data[i].revDate);
+							$revRating = $('<td id="reviewStar">').text(data[i].revRating);
+							$revContent = $('<td colspan="4" class="reviewDetail_Main">').text(data[i].revContent);
+							$revNo = $('<td id="reviewNo">').text(data[i].revNo);
+							
+							$tr.append($div);
+							$tr.append($memId);
+							$tr.append($revDate);
+							$tr.append($revRating);
+							$tr.append($revNo);
+							$review.append($tr);
+							$tr2.append($revContent);
+							$review.append($tr2);
+						}
+					} else{
+						$tr = $('<tr>');
+						$revContent = $('<td>').text('등록된 후기가 없습니다.');
+						
+						$tr.append($revContent);
+						$review.append($tr);
+					}
+				}
+			});
+		</script>
+		
+		
 		<script>
 			window.onload = function(){
 				function onClick(){
@@ -1075,18 +1194,37 @@ hr {
 			</div>
 		</div>
 
+		<!-- 문의 영역 -->
+		<table class="question">
+			<colgroup>
+			  	<col style="width:15%"/>
+			  	<col style="width:60%"/>
+			  	<col style="width:15%"/>
+			  	<col style="width:10%"/>
+			</colgroup>
+			<thead>
+				<tr>
+				</tr>			
+			</thead>
+			<tbody></tbody>
+		</table>
+		
+		<table class="questionExcept">
+			<colgroup>
+			  	<col style="width:15%"/>
+			  	<col style="width:60%"/>
+			  	<col style="width:15%"/>
+			  	<col style="width:10%"/>
+			</colgroup>
+			<thead>
+				<tr>
+				</tr>			
+			</thead>
+			<tbody></tbody>
+		</table>
+		
+		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
 
-
-		<!-- 후기 영역 -->
-		<div class="question" align="center">
-			<div class="questionArea" align="center">
-				<span class="question" id="question1"></span> 
-				<span class="question" id="question2"></span> 
-				<span class="question" id="question3"></span> 
-				<span class="question" id="question4">+내용보기</span>
-				<div class="question" id="question5"></div>
-			</div>
-		</div>	
 		<script>
 			var acId = "<c:out value='${ activity.actNo}'/>";
 			
@@ -1094,21 +1232,179 @@ hr {
 				url: 'salesQnaList.ac',
 				data: {acId:acId},
 				success: function(data){
-					console.log(data);
+					salQna = data;
 					
-					for(var i in data){
-						$('#question1').text(data[i].memId);
-						$('#question2').text(data[i].salqnaTitle);
-						$('#question3').text(data[i].salqnaDate);
-						$('#question5').text(data[i].salqnaContent);
+					$question = $('.question tbody');
+					
+					var $tr;
+					var $tr2;
+					var $tr3;
+					var $memId;
+					var $salqnaTitle;
+					var $salqnaDate;
+					var $salqnaContent;
+					var $salqnaDetail;
+					var $salqnaNo;
+					var $salqnaReply;
+					
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<tr class="trQuestion">');
+							$tr2 = $('<tr class="trContent">');
+							$tr3 = $('<tr class="salqnaReply">');
+							$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
+							$memId = $('<td id="memId">').text(data[i].memId);
+							$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
+							$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
+							$salqnaDetail = $('<td id="salqnaDetail">').text("+내용보기");
+							$salqnaContent = $('<td colspan="5">').text(data[i].salqnaContent);
+							$salqnaReply = $('<td id="repArea" colspan="5">');
+							
+							$tr.append($salqnaNo);
+							$tr.append($memId);
+							$tr.append($salqnaTitle);
+							$tr.append($salqnaDate);
+							$tr.append($salqnaDetail);
+							$tr.append($salqnaNo);
+							$question.append($tr);
+							$tr2.append($salqnaContent);
+							$question.append($tr2);
+							$tr3.append($salqnaReply);
+							$question.append($tr3);
+						}
+					} else{
+						$tr = $('<tr>');
+						$salqnaTitle = $('<td>').text('등록된 질문이 없습니다.');
+						
+						$tr.append($salqnaTitle);
+						$question.append($tr);
 					}
-					
 				}
 			});
+			
+			// 문의게시판 토글
+	        $(function(){
+	            var article = (".question .show"); 
+	            $(".question .trQuestion  td").on("click", function() { 
+	                var myArticle =$(this).parents().next("tr"); 
+	                if($(myArticle).hasClass('trContent')) { 
+	                    $(article).removeClass('show').addClass('trContent'); 
+	                    $(myArticle).removeClass('trContent').addClass('show'); 
+	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
+	                } 
+	                else { 
+	                    $(myArticle).addClass('trContent').removeClass('show');
+	                } 
+	            }); 
+	        });
+			
+			// 댓글 갖다 붙이기
+			var qnaNo;
+			$(function(){
+				$(".question tbody").on("click", "tr", function(){
+					qnaNo = $(this).find("td:eq(4)").text();
+					
+					$.ajax({
+						url: 'salesQnaReply.ac',
+						data: {qnaNo:qnaNo},
+						success: function(data){
+							console.log(data);
+							
+// 							$(this).nextAll().find("td").text(data.repContent);
+// 							$(".question tbody tr #repArea").text(data.repContent);
+							
+						}
+					});
+				});
+			});
+			
+			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
+			$.ajax({
+				url: 'salesQnaExceptList.ac',
+				data: {acId:acId},
+				success: function(data){
+					console.log(data);
+					
+					$question = $('.questionExcept tbody');
+					
+					var $tr;
+					var $tr2;
+					var $memId;
+					var $salqnaTitle;
+					var $salqnaDate;
+					var $salqnaContent;
+					var $salqnaDetail;
+					var $salqnaNo;
+					
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<tr class="trQuestion">');
+							$tr2 = $('<tr class="trContent">');
+							$salqnaNo = $('<td id="salqnaNoExcept">').text(data[i].salqnaNo);
+							$memId = $('<td id="memIdExcept">').text(data[i].memId);
+							$salqnaTitle = $('<td id="salqnaTitleExcept">').text(data[i].salqnaTitle);
+							$salqnaDate = $('<td id="salqnaDateExcept">').text(data[i].salqnaDate);
+							$salqnaDetail = $('<td id="salqnaDetailExcept">').text("+내용보기");
+							$salqnaContent = $('<td colspan="5">').text(data[i].salqnaContent);
+							
+							$tr.append($salqnaNo);
+							$tr.append($memId);
+							$tr.append($salqnaTitle);
+							$tr.append($salqnaDate);
+							$tr.append($salqnaDetail);
+							$tr.append($salqnaNo);
+							$question.append($tr);
+							$tr2.append($salqnaContent);
+							$question.append($tr2);
+						}
+					} else{
+						$tr = $('<tr>');
+						$salqnaTitle = $('<td>').text('등록된 질문이 없습니다.');
+						
+						$tr.append($salqnaTitle);
+						$question.append($tr);
+					}
+				}
+			});
+			
+	        $(function(){
+	            var article = (".questionExcept .show"); 
+	            $(".questionExcept .trQuestion  td").on("click", function() { 
+	                var myArticle =$(this).parents().next("tr"); 
+	                if($(myArticle).hasClass('trContent')) { 
+	                    $('.question .show td').removeClass('show').addClass('trContent');
+	                    $(article).removeClass('show').addClass('trContent'); 
+	                    $(myArticle).removeClass('trContent').addClass('show'); 
+	                } 
+	                else { 
+	                    $(myArticle).addClass('trContent').removeClass('show');
+	                } 
+	            }); 
+	        });
+	        
+			// 문의 전체보기 토글버튼
+	        function toggleQuestion(){
+	        	var toggleBtn = document.getElementById("all-question").innerHTML;
+	        	
+	        	if(toggleBtn == '+문의 전체보기'){
+ 					$('.questionExcept').css("visibility", "visible");
+ 					$('#all-question').html("-접기");	        		
+	        	} else{
+ 					$('.questionExcept').css("visibility", "collapse");
+ 					$('#all-question').html("+문의 전체보기");	 	        		
+	        	}
+	        }
 		</script>
-
-		<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기">
-
+		
+		<c:if test="${ !empty loginUser }">
+			<c:url var="salesQnaInsertView" value="salesQnaInsertView.sq">
+				<c:param name="acId" value="${ activity.actNo }"></c:param>
+			</c:url>
+			<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기" onclick="location.href='${ salesQnaInsertView }'">
+		</c:if>
+		<c:if test="${ empty loginUser }">
+			<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기" onclick="alert('로그인 후 이용 가능합니다.')">
+		</c:if>
 
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
@@ -1126,6 +1422,7 @@ hr {
 			</div>
 		</div>
 
+		<!-- 취소 환불 규정 영역 -->
 		<div class="refundArea" align="left">
 			<div class="refund" align="left">${ activity.actGuide }</div>
 		</div>
@@ -1134,6 +1431,7 @@ hr {
 			<input type="button" id="declareButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansLight';" value="불편사항 신고하기">
 		</div>
 
+		<!-- 별미 추천 영역 -->
 		<div class="recommendArea" align="center">
 			<div id="recommend">이런 별미는 어때요?</div>
 		</div>
