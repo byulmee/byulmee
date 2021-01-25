@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -22,12 +23,12 @@
 		margin-bottom: 50px;
 		margin-left: auto;
 		margin-right: auto;
-		overflow:hidden;
-		position:relative;
-		width:1000px;
+		overflow: hidden;
+		position: relative;
+		width: 1000px;
 		font-family: "Gmarket Sans TTF";
 	}
-
+	
 /* 사이드 메뉴 */
 	.sideMenu {
 		position: absolute;
@@ -61,7 +62,6 @@
 		position: relative;
 	}
 	.sideMenuUl > li ul.myinfoDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 0px;
@@ -70,7 +70,6 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.purDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 50px;
@@ -79,7 +78,6 @@
 		border: 1px solid #DCDCDC;
 	}
 	.sideMenuUl > li ul.favDropdown {
-		list-style: none;
 		display: none;
 		position: absolute;
 		top: 100px;
@@ -119,11 +117,36 @@
 		cursor: pointer;
 	}
 	
-/* 컨텐츠 */	
+/* 컨텐츠 */
 	.content {
 		min-height: 500px;
 		margin-left: 250px;
+		text-align: center;
 		border-top: 2px solid #FF6833;
+		border-bottom: 2px solid #FF6833;
+	}
+	.button {
+		width: 80px;
+		padding: 5px;
+		padding-bottom: 2px;
+		border: 1px solid #C4C4C4;
+		background: white;
+		font-family: "Gmarket Sans TTF";
+		cursor: pointer;
+		outline: 0;
+	}
+	.button:hover {
+		background: #FF6833;
+		color: white;
+		cursor: pointer;
+	}
+	#wrap {
+		display: table-cell;
+		margin: 0;
+		padding: 0;
+		width: 750px;
+		height: 460px;
+		vertical-align: middle;
 	}
 	ul li {
 		list-style-type: none;
@@ -136,9 +159,9 @@
 	}
 	.tab-box li {
 		float: left;
-		width: 250px;
+		width: 25%;
 		height: 40px;
-		line-height: 40px;
+		line-height: 40px; /* 중앙정렬 */
 		text-align: center;
 		font-size: 18px;
 		background: #FF6833;
@@ -154,57 +177,59 @@
 		color: white;
 		background: #FF6833;
 	}
-	.starArea {
-		min-height: 160px;
-	}
-	.star {
-		padding-top: 40px;
-		vertical-align: middle;
-		display: inline-block;
-		width: 146px;
-		height: 190px;
-	}
-	.star:hover {
-		opacity: 0.6;
-		cursor: pointer;
-	}
-	.starImg {
-		margin-left: 23px;
-		width: 100px;
-		height: 100px;
-		border-radius: 90%;
-		object-fit: cover;
-	}
-	.starName {
-		text-align: center;
-		margin-left: 23px;
-		width: 100px;
-	}
-	#wrap {
-		display: table-cell;
-		margin: 0;
-		padding: 0;
-		width: 750px;
-		height: 460px;
-		vertical-align: middle;
-		text-align: center;
-		border-bottom: 2px solid #FF6833;
+	#title {
+		font-size: 22px;
+		margin: 0px;
+		padding: 10px;
 	}
 	table {
 		margin-left: auto;
 		margin-right: auto;
 		border-collapse: collapse;
 	}
-	.nothing {
-		width: 100%;
-		font-size: 24px;
+	.tdContent {
+		border: 1px solid #C4C4C4;
+		text-align: left;
 	}
-	.line {
-		border: 1px solid #FF6833;
+	.tdCheck {
+		padding: 10px;
+	}
+	.warnTitle {
+		text-align: center;
 		margin: 0px;
+		padding: 25px;
+		font-size: 18px;
+	}
+	.warnContent1 {
+		margin: 0px;
+		padding: 0px 25px 5px 25px;
+		font-size: 14px;
+	}
+	.warnContent2 {
+		margin: 0px;
+		padding: 0px 25px 25px 25px;
+		font-size: 14px;
+	}
+	input[id="leaveCheck"] {
+		display: none;
+	}
+	input[id="leaveCheck"]+label {
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		border: 1px solid #bcbcbc;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	input[id="leaveCheck"]:checked+label {
+		background:
+			url(${ pageContext.servletContext.contextPath }/resources/images/myPage/check.png);
+	}
+	#agree {
+		padding: 5px;
+		font-size: 14px;
 	}
 </style>
-
 </head>
 <body>
 	<c:import url="../common/gnb.jsp"/>
@@ -219,7 +244,7 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn">개인정보 관리</button>
+						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
 								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
@@ -231,7 +256,7 @@
 								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
+								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn" id="selectedBtn">회원 탈퇴</button>
 							</li>
 						</ul>
 					</li>
@@ -247,7 +272,7 @@
 						</ul>
 					</li>
 					<li>
-						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">찜 목록</button>
+						<button class="sideMenuBtn" style="cursor: default;">찜 목록</button>
 						<ul class="favDropdown">
 							<li>
 								<button onclick="location.href='myFavActView.me'" class="sideMenuBtn">찜한 활동</button>
@@ -256,13 +281,13 @@
 								<button onclick="location.href='myFavProView.me'" class="sideMenuBtn">찜한 상품</button>
 							</li>
 							<li>
-								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn" id="selectedBtn">찜한 스타</button>
+								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn">찜한 스타</button>
 							</li>
 						</ul>
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -271,64 +296,63 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content">
-			<div class="starArea">
+		<form action="myInfoPwdCheck.me" method="post" autocomplete="off">
+			<div class="content">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href='myFavActView.me'">찜한 활동</li>
-						<li onclick="location.href='myFavProView.me'">찜한 상품</li>
-						<li onclick="location.href='myFavStarView.me'" class="selected">찜한 스타</li>
+						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
+						<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
+						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='memberDeleteView.me'" class="selected">회원 탈퇴</li>
 					</ul>
 				</div>
-			<!-- 찜한 스타가 없는 경우 -->
-				<!-- <div id="wrap">
+				<div id="wrap">
+					<p id="title">회원 탈퇴</p>
 					<table>
 						<tr>
-							<td class="nothing">
-								찜한 스타가 없습니다.
+							<td class="tdContent">
+								<p class="warnTitle">지금까지 이용해주셔서 감사드립니다. 탈퇴하기 전 아래 유의사항을
+									확인해주세요.</p>
+								<p class="warnContent1">- 탈퇴하신 아이디는 복구가 불가능하며, 추후 동일한 아이디로
+									재가입이 되지 않습니다.</p>
+								<p class="warnContent2">- 회원 탈퇴 시 등록한 게시물은 삭제되지 않으므로, 삭제를
+									원하시면 회원 탈퇴 전에 삭제해 주시기 바랍니다.</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="tdCheck">
+								<!-- <input type="checkbox" id="leaveCheck">유의사항을 모두 확인했으며, 이에 동의합니다. -->
+								<input type="checkbox" id="leaveCheck"> <label
+								for="leaveCheck"></label><span id="agree">유의사항을 모두 확인했으며, 이에 동의합니다.</span>
 							</td>
 						</tr>
 					</table>
-				</div> -->
-			<!-- 찜한 스타가 있는 경우 반복문 시작 -->	
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star1.jpg">
-					<p class="starName">헤르미온느</p>
+					<button type="button" class="button"
+						onclick="location.href='myPageMainView.me'">취소</button>
+					<button type="button" class="button" onclick="checkValidate(this)">탈퇴</button>
 				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star2.jpg">
-					<p class="starName">토니스타크</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star3.jpg">
-					<p class="starName">다스베이더</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star4.jpg">
-					<p class="starName">올라프</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/default.jpg">
-					<p class="starName">최대여섯글자</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/default.jpg">
-					<p class="starName">스타1</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/default.jpg">
-					<p class="starName">스타2</p>
-				</div>
-				<div class="star">
-					<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/default.jpg">
-					<p class="starName">스타3</p>
-				</div>
-			<!-- 반복문 종료 -->
-				<hr class="line">
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		function checkValidate(leaveChk) {
+			console.log(leaveChk);
+			var check = document.getElementById('leaveCheck').checked;
+			
+			if(check) {
+				var bool = confirm('정말 회원 탈퇴를 하시겠습니까?');
+				
+				if(bool) {
+					location.href='mdelete.me';
+				}
+			} else {
+				alert('유의사항을 확인하고 동의해 주세요.');
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>

@@ -33,18 +33,18 @@ public class ImageDAO {
 	}
 
 	public void delImg(SqlSessionTemplate sqlSession, Image deli) {
-		
+    
 		sqlSession.delete("imageMapper.delImg", deli);
 	}	
-		
 
 	public ArrayList<Image> selectImage(SqlSessionTemplate sqlSession, int acId) {
+    
 		return (ArrayList)sqlSession.selectList("imageMapper.selectImage", acId);
 	}
 
 	public ArrayList<Image> selectReviewImage(SqlSessionTemplate sqlSession, int revImgNo) {
+    
 		return (ArrayList)sqlSession.selectList("imageMapper.selectReviewImage", revImgNo);
-
 	}
 	
 }

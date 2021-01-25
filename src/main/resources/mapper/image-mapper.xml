@@ -19,7 +19,6 @@
 				default, #{imgRefcode}, #{imgRefno})
 	</insert>
 	
-
 	<select id="selectList" resultMap="imageResultSet">
 		select *
 		from image

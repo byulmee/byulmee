@@ -18,5 +18,5 @@ public class Favorite {
 	private Date favDate;
 	private String favStatus;
 	private int favRefcode;
-	private String favRefno;
+	private int favRefno;
 }
