@@ -276,8 +276,6 @@
 					<tr>
 						<td>
 							<button class="button" onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</button>
-							<!-- <button class="button" onclick="">사진 변경</button>
-							<button class="button" onclick="">사진 삭제</button> -->
 						</td>
 						<td>
 							<button class="button" onclick="location.href='memberDeleteView.me'">회원 탈퇴</button>

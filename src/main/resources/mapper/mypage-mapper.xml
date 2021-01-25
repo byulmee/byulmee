@@ -95,13 +95,28 @@
 	</select> -->
 	
 	<select id="selectProfileImg" resultMap="imageResultSet">
-		select img_name
+		select img_name, img_status
 		from (select *
 				from image
-				where img_level = 0 and img_status = 'Y' and img_refcode = 0 and img_refno = #{memNo}
+				where img_level = 0 and img_refcode = 0 and img_refno = #{memNo}
 				order by img_no desc)
 		where rownum = 1
 	</select>
+	
+	<update id="deleteProfileImg">
+		update image
+		set img_status='N'
+		where img_status='Y' and img_refcode=0 and img_refno=#{memNo}
+	</update>
+	
+	<!-- <select id="selectProfileImgN" resultMap="imageResultSet">
+		select img_status
+		from (select *
+				from image
+				where img_level = 0 and img_status = 'N' and img_refcode = 0 and img_refno = #{memNo}
+				order by img_no desc)
+		where rownum = 1
+	</select> -->
 	
 	<insert id="insertReview" useGeneratedKeys="true" keyProperty="revNo" keyColumn="REV_NO">
 		insert into review (REV_NO, MEM_ID, REV_RATING, REV_CONTENT, REV_DATE, REV_STATUS, REV_REFCODE, REV_REFNO, ORD_NO)

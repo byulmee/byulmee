@@ -65,4 +65,12 @@ public class MypageDAO {
 	public int updateReviewStatus(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("mypageMapper.updateReviewStatus", r);
 	}
+
+	public int deleteProfileImg(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("mypageMapper.deleteProfileImg", memNo);
+	}
+
+	public ArrayList<Image> selectProfileImgN(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImgN", memNo);
+	}
 }

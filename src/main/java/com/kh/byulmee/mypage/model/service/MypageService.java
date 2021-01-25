@@ -33,4 +33,8 @@ public interface MypageService {
 	int insertReview(Review r);
 
 	int updateReviewStatus(Review r);
+
+	int deleteProfileImg(int memNo);
+
+	ArrayList<Image> selectProfileImgN(int memNo);
 }

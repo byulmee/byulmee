@@ -326,22 +326,10 @@ public class MyPageContoller {
 							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
 							   Model model) {
 		
-		String memId = r.getMemId();
-		
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;
 		int revNo = mpService.insertReview(r);
-		
-		System.out.println("getRevNo : " + r.getRevNo());
-		System.out.println("getMemId : " + r.getMemId());
-		System.out.println("getRevRating : " + r.getRevRating());
-		System.out.println("getRevContent : " + r.getRevContent());
-		System.out.println("getRevDate : " + r.getRevDate());
-		System.out.println("getRevStatus : " + r.getRevStatus());
-		System.out.println("getRevRefcode : " + r.getRevRefcode());
-		System.out.println("getRevRefno : " + r.getRevRefno());
-		System.out.println("getOrdNo : " + r.getOrdNo());
 		
 		Image reviewImg = new Image();
 		Image i = new Image();
@@ -400,9 +388,6 @@ public class MyPageContoller {
 			result3 = iService.insertImage(i);
 		}
 		
-		System.out.println("revNo" + revNo + ", " + "result1" + result1 + ", "
-						   + "result2" + result2 + ", " + "result3" + result3);
-		
 		if(revNo > 0) {
 			mpService.updateReviewStatus(r);
 			model.addAttribute("msg", "리뷰작성이 완료되었습니다.");
@@ -447,5 +432,22 @@ public class MyPageContoller {
 			e.printStackTrace();
 		}
 		return i;
+	}
+	
+	@RequestMapping("profileImgDeleteView.me")
+	public ModelAndView profileImgDeleteView(ModelAndView mv, HttpServletRequest request, Model model) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		
+		mpService.deleteProfileImg(memNo);
+		ArrayList<Image> img = mpService.selectProfileImg(memNo);
+		
+		if(img != null) {
+			mv.addObject("img", img);
+			mv.setViewName("myProfileImage");
+		} else {
+			throw new MemberException("프로필사진 변경 페이지 접속에 실패했습니다.");
+		}
+		
+		return mv;
 	}
 }

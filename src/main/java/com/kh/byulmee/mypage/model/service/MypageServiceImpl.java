@@ -78,4 +78,14 @@ public class MypageServiceImpl implements MypageService {
 	public int updateReviewStatus(Review r) {
 		return mpDAO.updateReviewStatus(sqlSession, r);
 	}
+
+	@Override
+	public int deleteProfileImg(int memNo) {
+		return mpDAO.deleteProfileImg(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Image> selectProfileImgN(int memNo) {
+		return mpDAO.selectProfileImgN(sqlSession, memNo);
+	}
 }

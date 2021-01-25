@@ -208,7 +208,12 @@
 	    	<div class="profile">
 	    		<c:forEach var="i" items="${ img }">
 	    			<div class="profileDiv">
-						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+						<c:if test="${ i.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+	    				</c:if>
+	    				<c:if test="${ i.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
 	    			</div>
 				</c:forEach>
 				<p class="nickname"> <c:out value="${ loginUser.memName } (${ loginUser.memNickname }) 님"/> </p>
@@ -284,7 +289,12 @@
 							<td colspan="3">
 								<c:forEach var="i" items="${ img }">
 									<div class="profileDiv">
-										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+										<c:if test="${ i.imgStatus == 'Y' }">
+											<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+					    				</c:if>
+					    				<c:if test="${ i.imgStatus == 'N' }">
+											<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+					    				</c:if>
 					    			</div>
 								</c:forEach>
 							</td>
@@ -314,7 +324,12 @@
 	
 	<script>
 		$("#imgDeleteBtn").click(function() { // 
-			$(".profileImg").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png");
+			/* $(".profileImg").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png"); */
+			var bool = confirm("정말 프로필 사진을 삭제하시겠습니까?")
+			
+			if(bool) {
+				location.href='profileImgDeleteView.me';
+			}
 		});
 	</script>
 	
