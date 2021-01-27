@@ -165,7 +165,6 @@ a img {
 			<c:if test="${ !empty list }">
 				${ "데이터가 없습니다." }
 				<c:out value="${ act_No }"></c:out>
-				
 			</c:if>
 		</c:forEach>
 		
