@@ -1,6 +1,8 @@
 package com.kh.byulmee.activity.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.member.model.vo.Member;
@@ -10,10 +12,10 @@ public interface ActivityService {
 	
 	int insertActivity(Activity a);
 
-
 	int getListCount();
 
 	ArrayList<Activity> selectList(PageInfo pi);
+
 
 	Activity selectAct(int actNo);
 
@@ -27,5 +29,10 @@ public interface ActivityService {
 
 	Activity selectActivity(int acId);
 
+	List<Activity> selectActivity(PageInfo pageInfo);	
+	
+	Activity selectList(int acId);
+
+	
 
 }

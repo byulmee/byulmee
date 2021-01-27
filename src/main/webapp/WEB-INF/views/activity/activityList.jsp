@@ -1,10 +1,22 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.byulmee.activity.model.dao.ActivityDAO"%>
+<%@page import="com.kh.byulmee.activity.model.vo.Activity"%>
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
+    <%@ page import="java.sql.*" %>
+    <%
+    Activity activity = (Activity)request.getAttribute("activity");
+    %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>활동조회 페이지</title>
+<title>Insert title here</title>
 </head>
 <style>
 @font-face {
@@ -23,24 +35,24 @@
 
 
 body{
-   width: 100%;
-   margin: 0 auto;
-   font-family: 'GmarketSansMedium';
+	width: 1050px;
+	margin: 0 auto;
+	font-family: 'GmarketSansMedium';
 }
-   }
+	}
 nav ul li {
-   display: inline;   
-   border-right: 1px solid pink;
-   padding: 0px 5px;
-   
-   float: right;
+	display: inline;	
+	border-right: 1px solid pink;
+	padding: 0px 5px;
+	
+	float: right;
 }
 nav ul li a:hover {
-   color: black;
+	color: black;
 }
 
 h4{
-   color: orange;
+	color: orange;
 }
 
 #image:hover{transform: perspective(300px) translateZ(100px);}
@@ -75,274 +87,139 @@ a img {
   outline: 0;
 }
 
-.inner {
-  display: table-row;
-  overflow: hidden;
-}
-.image {
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
-  padding-right: 1em;
-}
-.image img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.li-text {
-  display: table-cell;
-  vertical-align: middle;
-  width: 60%;
-}
-.li_name {
-  margin: 0;
-}
-.li_sub {
-  margin: 0;
-  color: black;
-}
-
-@media all and (min-width: 40em) {
-  .list {
-    padding: 0.5em;
-    max-width: 70em;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-  .list li {
-    padding: 0.5em;
-    display: block;
-    width: 50%;
-    float: left;
-    background: none;
-    border: 0;
-  }
-  .inner {
-    display: block;
-  }
-  .li-img, .li-text, .inner {
-    display: block;
-    width: auto;
-    padding: 0;
-  }
-  .li-text {
-    padding: 0.5em 0;
-  }
-}
-
-@media all and (min-width: 60em) {
-  .list li {
-    width: 18.5%;
-    height: 100%;
-  }
-}
-
 </style>
 <body>
-<%-- 
-   <%@ include file="../common/menubar.jsp" %>
---%>
-         
+ 
+	<c:import url="../common/gnb.jsp"/>
+
+<%--			
 <nav>
-   <ul>
-      <li><a href=""><strong>로그인</strong></a></li>
-      <li><a href=""><strong>마이페이지</strong></a></li>
-      <li><a href=""><strong>고객센터</strong></a></li>
-      <li id=""><a href=""><strong>별미마켓</strong></a></li>
-   </ul>
+	<ul>
+		<li><a href=""><strong>로그인</strong></a></li>
+		<li><a href=""><strong>마이페이지</strong></a></li>
+		<li><a href=""><strong>고객센터</strong></a></li>
+		<li id=""><a href=""><strong>별미마켓</strong></a></li>
+	</ul>
 </nav>
-   <h1><strong>Byulmee</strong></h1>
-   <form class="Serach">
-            <input class="form-control mr-sm-2" type="search" placeholder="텃밭 가꾸기"
-               aria-label="Search" id="Serach">
-            <button onClick="search()"
-               class="btn btn-primary" type="button">검색</button>
-   </form>   
-   
-   
-   <div class=" "style="margin-left: 520px; font-size: 27px; font-weight: bold;">
-   <span style="display: inline-block; text-align: center; color:orange;">별</span>난취<span style="color: orange;">미</span> 리스트
-   </div>
-   <br>
-   
-   <table>
-               <tr>
-                  <th style = "background-color:#eeeeee; text-align:center;" width="830px;"></th>
-                  <th style = "background-color:#eeeeee; text-align:center;" width="530px;"></th>
-                  <th style = "background-color: orange; text-align:center;" width="300px;"></th>               
-                  <th style = "background-color:#eeeeee; text-align:center;" width="480px;"></th>
-               </tr>         
-   </table>
-   
-   <div id="searchArea" align="right">
-      <select id="searchCondition" name="searchCondition">
-         <option value="">인기순</option>
-         <option value=""><a href="http://www.naver.com">최신순</a></option>
-         <option value="">가격순</option>
-         <option value="">리뷰순</option>
-      </select>
-   </div>
-   <div id="pattern" class="pattern">
-    <ul class="list img-list">
-         <li>
-            <a href="#" class="inner" onclick="location.href='activityDetail.ac?acId=1'">
-                <div class="image" style="width:140px;">
-                    <img src="./images/1.PNG" id="image"alt="텃밭"  />
-                </div>
-                <div class="li-text" onclick="goThumnail();">
-                    <h5 class="li_name">정찬오</h5><br>
-                   <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-                      <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                  <p><img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가</p>
-                </div>
-            </a>
-        </li>
-     <li>
-            <a href="#" class="inner">
-                <div class="image" style="width:140px;">
-                    <img src="./images/1.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">팀장</h5>
-                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-     <li>
-            <a href="#" class="inner">
-                <div class="image" style="width:140px;">
-                    <img src="./images/1.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">반장</h5>
-                   <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                    <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-         <li>
-            <a href="#" class="inner">
-                <div class="image" style="width:140px;">
-                    <img src="./images/1.PNG"id="image"alt="텃밭"  />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">스프링</h5>
-                    <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                    <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-         <li>
-            <a href="#" class="inner">
-                <div class="image" style="width:140px;">
-                    <img src="./images/1.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">하탁게</h5>
-                    <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                   <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                    
-                </div>
-            </a>
-        </li>
-    
-        
-    </ul>
-    
-     <ul class="list img-list">
-         <li>
-            <a href="#" class="inner">
-                <div class="image">
-                    <img src="./images/텃밭.PNG" id="image"alt="텃밭" />
-                </div>
-                <div class="li-text" onclick="goThumnail();">
-                    <h5 class="li_name">정찬오</h5>
-                   <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-                      <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-     <li>
-            <a href="#" class="inner">
-                <div class="image">
-                    <img src="./images/귤나무.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">팀장</h5>
-                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-     <li>
-            <a href="#" class="inner">
-                <div class="image">
-                    <img src="./images/딸기.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">반장</h5>
-                   <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                    <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-         <li>
-            <a href="#" class="inner">
-                <div class="image">
-                    <img src="./images/포도.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">스프링</h5>
-                    <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                    <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                </div>
-            </a>
-        </li>
-         <li>
-            <a href="#" class="inner">
-                <div class="image">
-                    <img src="./images/텃밭.PNG"id="image"alt="텃밭" />
-                </div>
-                <div class="li-text">
-                    <h5 class="li_name">하탁게</h5>
-                    <p class="li_sub">[힐링] 나만의 텃밭 가꾸기</p>
-                   <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-                    
-                </div>
-            </a>
-        </li>
-    
-        
-    </ul>
-</div>
-
-      <footer id="" class="" align="center">
-         <button class="" id="" onclick=""><</button>
-         <button class="" id="" onclick="">1</button>
-         <button class="" id="" onclick="">2</button>
-         <button class="" id="" onclick="">3</button>
-         <button class="" id="" onclick="">...</button>
-         <button class="" id="" onclick="">38</button>
-         <button class="" id="" onclick="">></button>
-      </footer>
-
-<script>
-   function goThumnail() {
-      location.href='<%= request.getContextPath()%>/Thumnail.me';
-   }
-</script>
+	<h1><strong>Byulmee</strong></h1>
+	<form class="Serach">
+				<input class="form-control mr-sm-2" type="search" placeholder="텃밭 가꾸기"
+					aria-label="Search" id="Serach">
+				<button onClick="search()"
+					class="btn btn-primary" type="button">검색</button>
+	</form>	
+	--%>
+	
+	<div class=" "style="margin-left: 480px; font-size: 20px; font-weight: bold;">
+	<span style="display: inline-block; text-align: center; color:orange;">별</span>난취<span style="color: orange;">미</span> 리스트
+	</div>
+	<br>
+	
+	<table>
+					<tr>
+						<th style = "background-color:#eeeeee; text-align:center;" width="830px;"></th>
+						<th style = "background-color:#eeeeee; text-align:center;" width="530px;"></th>
+						<th style = "background-color: orange; text-align:center;" width="300px;"></th>					
+						<th style = "background-color:#eeeeee; text-align:center;" width="480px;"></th>
+					</tr>			
+	</table>
+	
+	<div id="searchArea" align="right">
+		<select id="searchCondition" name="searchCondition">
+			<option value="">인기순</option>
+			<option value=""><a href="http://www.naver.com">최신순</a></option>
+			<option value="">가격순</option>
+			<option value="">리뷰순</option>
+		</select>
+	</div>
+	<%
+		ActivityDAO activityDAO = new ActivityDAO();
+	
+	%>
+	  <%--
+		<div id="pattern" class="pattern">
+			<c:forEach items="${ list }" var="val" varStatus = "status">
+				<c:if test="${status.index mod 5 eq 0}">
+			    </c:if>			    	
+			        <li style="float: left;">
+			            <a href="#" class="inner">
+			                <div class="image" style="width:180px;">
+			                    <img src="./images/activity/car_purple.jpg"id="image"alt="텃밭" />
+			                </div>
+			               <div class="li-text" onclick="location.href='activityDetail.ac?acId=1;">
+			                    <h5 class="li_name">정찬오</h5>
+			                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
+			                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
+			                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
+			                </div>
+			            </a>
+			        </li>
+			    <c:if test="${(status.index + 1) mod 5 eq 0}">
+			    	</ul>
+			    </c:if>
+		    </c:forEach>
+		</div>
+		--%>
+		
+		<c:forEach items="${ list }" var="val">
+			<c:if test="${ !empty list }">
+				${ "데이터가 없습니다." }
+				<c:out value="${ act_No }"></c:out>
+				
+			</c:if>
+		</c:forEach>
+		
+			<div id="pattern" class="pattern">
+			<c:forEach items="${ list }" var="val" varStatus = "status">
+				<c:if test="${status.index mod 5 eq 0}">
+			    </c:if>			    	
+			        <li style="float: left;">
+			            <a href="#" class="inner">
+			                <div class="image" style="width:180px;">
+			                    <img src="./images/activity/car_purple.jpg"id="image"alt="텃밭" />
+			                </div>
+			               <div class="li-text" onclick="location.href='activityDetail.ac?acId=1;">
+			                    <h5 class="li_name">정찬오</h5>
+			                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
+			                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
+			                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
+			                </div>
+			            </a>
+			        </li>
+			    <c:if test="${(status.index + 1) mod 5 eq 0}">
+			    	</ul>
+			    </c:if>
+		    </c:forEach>
+		</div>
+	
+		
+<%-- 				<c:forEach items="${ list }" var="val"> --%>
+<!-- 			      <br> -->
+<!-- 			      <br> -->
+<!-- 			      <br> -->
+<!-- 			      <br> -->
+<%-- 			   </c:forEach> --%>
+<%-- 			   <c:if test="${ empty list }"> --%>
+<%-- 			      ${ "데이터가 존재하지 않습니다. "} --%>
+<%-- 			   </c:if> --%>
+			   
+<%-- 	<c:choose> --%>
+<%-- 		<c:when test="${ empty list }"> --%>
+<%-- 			${ "데이터가 존재하지 않습니다. "} --%>
+<%-- 		</c:when> --%>
+<%-- 		<c:otherwise> --%>
+<%-- 			<c:forEach items="${ list }" var="list"> --%>
+<%-- 				<c:if test="${ !empty loginUser }"> --%>
+<%-- 				<c:out value="${list.memId }"></c:out><br> --%>
+<%-- 				<c:out value="${list.actTitle }"></c:out><br> --%>
+<%-- 				<c:out value="${list.actPrice }"></c:out><br>								 --%>
+<%-- 				</c:if> --%>
+<%-- 			</c:forEach> --%>
+<%-- 		</c:otherwise> --%>
+<%-- 	</c:choose> --%>
+	
+	<c:import url="../common/footer.jsp"/><br><Br>
+	
 
 </body>
-
 </html>

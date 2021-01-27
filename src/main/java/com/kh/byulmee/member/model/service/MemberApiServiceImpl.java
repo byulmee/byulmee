@@ -3,6 +3,7 @@ package com.kh.byulmee.member.model.service;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -18,7 +19,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,7 +41,7 @@ import com.kh.byulmee.member.model.dto.KakaoToken;
 import com.kh.byulmee.member.model.dto.SmsResponse;
 import com.kh.byulmee.member.model.vo.Member;
 
-/* by다혜: 간편 로그인 및 인증 처리 Sevice */
+/* by�떎�삙: 媛꾪렪 濡쒓렇�씤 諛� �씤利� 泥섎━ Sevice */
 @Service("mApiService")
 public class MemberApiServiceImpl implements MemberApiService {
 	@Autowired
@@ -77,28 +78,28 @@ public class MemberApiServiceImpl implements MemberApiService {
 	@Value("#{keys['fb.version']}")
 	private String fbVersion;
 	
-	/******** by다혜: MSM 발송 메소드 ********/
+	/******** by�떎�삙: MSM 諛쒖넚 硫붿냼�뱶 ********/
 	@Override
 	public String getRandomCode() {
-		//6자리의 난수 생성하는 메소드
-		//random: 현재 시간의 밀리세컨드를 기반으로 난수를 발생시킴
+		//6�옄由ъ쓽 �궃�닔 �깮�꽦�븯�뒗 硫붿냼�뱶
+		//random: �쁽�옱 �떆媛꾩쓽 諛�由ъ꽭而⑤뱶瑜� 湲곕컲�쑝濡� �궃�닔瑜� 諛쒖깮�떆�궡
 		Random random = new Random(System.currentTimeMillis());
-		//난의 자리수 설정
+		//�궃�쓽 �옄由ъ닔 �꽕�젙
 		int length = 6;
 		
 		int range = (int)Math.pow(10, length);
 		int trim = (int)Math.pow(10, length-1);
-		//0부터 range-1까지의 난수를 구한 후 trim을 더해 6자리 숫자가 될 수 있게 함
+		//0遺��꽣 range-1源뚯��쓽 �궃�닔瑜� 援ы븳 �썑 trim�쓣 �뜑�빐 6�옄由� �닽�옄媛� �맆 �닔 �엳寃� �븿
 		int result = random.nextInt(range) + trim;
 		
-		//6자리를 초과하면 trim을 뺴준다.
+		//6�옄由щ�� 珥덇낵�븯硫� trim�쓣 類댁��떎.
 		if(result > range) {
 			result = result - trim;
 		}
 		return String.valueOf(result);
 	}
 
-	//요청에 필요한 key를 Base64로 암호화하는 메소드
+	//�슂泥��뿉 �븘�슂�븳 key瑜� Base64濡� �븫�샇�솕�븯�뒗 硫붿냼�뱶
 	public String makeSignature(String timestamp, String uri) {
 		String space = " ";
 		String newLine = "\n";
@@ -121,16 +122,17 @@ public class MemberApiServiceImpl implements MemberApiService {
 			mac.init(signingKey);
 			
 			byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-			encodeBase64String = Base64.encodeBase64String(rawHmac);
+			//encodeBase64String = Base64.encodeBase64String(rawHmac);
+			encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
 		} catch (NoSuchAlgorithmException | InvalidKeyException | IllegalStateException | UnsupportedEncodingException e) {
-			throw new RuntimeException("signature 암호화 중 오류 발생 ", e);
+			throw new RuntimeException("signature �븫�샇�솕 以� �삤瑜� 諛쒖깮 ", e);
 		}
 	  return encodeBase64String;
 	}
 
 	@Override
 	public String sendMmsRequest(String memPhone) {
-		//헤더 작성
+		//�뿤�뜑 �옉�꽦
 		String timestamp = Long.toString(System.currentTimeMillis());
 		String hostUrl = "https://sens.apigw.ntruss.com";
 		String uri = "/sms/v2/services/" + smsServiceId + "/messages";
@@ -145,10 +147,10 @@ public class MemberApiServiceImpl implements MemberApiService {
 		headers.add("x-ncp-iam-access-key", nAccessKey);
 		headers.add("x-ncp-apigw-signature-v2", signature);
 		
-		//Body 작성
-		//body에 담을 요청 정보는 json 타입으로 작성해줘야한다.
+		//Body �옉�꽦
+		//body�뿉 �떞�쓣 �슂泥� �젙蹂대뒗 json ���엯�쑝濡� �옉�꽦�빐以섏빞�븳�떎.
 		String randomCode = getRandomCode();
-		String message ="[Byulmee]인증을 위한 코드는 [" + randomCode + "]입니다.";
+		String message ="[Byulmee]�씤利앹쓣 �쐞�븳 肄붾뱶�뒗 [" + randomCode + "]�엯�땲�떎.";
 		
 		JSONObject jBody = new JSONObject();
 		JSONObject jObj = new JSONObject();
@@ -165,7 +167,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		
 		String body = jBody.toString();
 		
-		//문자 메세지 요청 전송
+		//臾몄옄 硫붿꽭吏� �슂泥� �쟾�넚
 		final HttpEntity<String> smsRequest = new HttpEntity<>(body, headers);
 		
 		ResponseEntity<String> response = rt.exchange(
@@ -176,7 +178,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		);
 		
 		
-		//response 응답 결과 
+		//response �쓳�떟 寃곌낵 
 		Gson gson = new Gson();
 		SmsResponse smsResp = gson.fromJson(response.getBody(), SmsResponse.class);
 		
@@ -186,7 +188,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 			result.put("status", 200);
 			
 		} else {
-			result.put("code", "인증번호를 발송하지 못했습니다.\n잠시후 다시 시도해주세요.");
+			result.put("code", "�씤利앸쾲�샇瑜� 諛쒖넚�븯吏� 紐삵뻽�뒿�땲�떎.\n�옞�떆�썑 �떎�떆 �떆�룄�빐二쇱꽭�슂.");
 			result.put("status", 405);
 		}
 		
@@ -199,14 +201,14 @@ public class MemberApiServiceImpl implements MemberApiService {
 	
 	
 	
-	/******** by다혜: Email 발송 메소드 ********/
+	/******** by�떎�삙: Email 諛쒖넚 硫붿냼�뱶 ********/
 	@Override
 	public String getEmailCode(Member member) {
 		
 		String memEmail = member.getMemEmail();
 		String code = getRandomCode();
 		
-		//이메일 서버에 접근하기 위한 정보 입력
+		//�씠硫붿씪 �꽌踰꾩뿉 �젒洹쇳븯湲� �쐞�븳 �젙蹂� �엯�젰
 		Properties props = System.getProperties();
 		props.setProperty("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -214,7 +216,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
 		
-		//인증 정보를 담은 세션 생성
+		//�씤利� �젙蹂대�� �떞�� �꽭�뀡 �깮�꽦
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(smtpAccount, smtpPassword);
@@ -225,25 +227,25 @@ public class MemberApiServiceImpl implements MemberApiService {
 		MimeMessage message = new MimeMessage(session);
 		
 		try {
-			//발송 시간
+			//諛쒖넚 �떆媛�
 			message.setSentDate(new Date());
-			message.setFrom(new InternetAddress("noReply@byulmee.com", "별난취미_별미"));
+			message.setFrom(new InternetAddress("noReply@byulmee.com", "蹂꾨궃痍⑤��_蹂꾨��"));
 			InternetAddress to = new InternetAddress(memEmail);
 			message.addRecipient(Message.RecipientType.TO, to);
-			message.setSubject("[별미]비밀번호 재설정을 위한 인증번호를 입력해주세요.");
+			message.setSubject("[蹂꾨��]鍮꾨�踰덊샇 �옱�꽕�젙�쓣 �쐞�븳 �씤利앸쾲�샇瑜� �엯�젰�빐二쇱꽭�슂.");
 			String emailBody = "<div style=\"width: 100%; margin-bottom: 25px; padding: 30px 0; text-align: center;\"><br>" +
-							   "	<span style=\"font-size: 16px; color: #FF6833; font-weight: 900; padding: 5px 0; margin: auto;\">별난취미_별미</span>" +
+							   "	<span style=\"font-size: 16px; color: #FF6833; font-weight: 900; padding: 5px 0; margin: auto;\">蹂꾨궃痍⑤��_蹂꾨��</span>" +
 							   "    <image src=\"https://user-images.githubusercontent.com/59134456/105507509-a12df100-5d0e-11eb-991a-d187e4bafea9.png\" height=\"32px;\" style=\"margin: auto;\"/>" + 
 							   "    <hr style=\"width: 50%; height: 1px; margin-top: 20px; border:0; background-color: #FF6833;\">" + 
 							   "</div>" + 
-							   "<h1 style=\"width: 30%; margin: auto; border-radius: 20px; text-align: center; padding: 30px; background-color: #FDF5E6; font-size: 18px;\">인증 번호<br><span style=\"color: #FF6833; font-size: 32px;\">" + code + "<span></h1>" + 
-							   "<p style=\"text-align: center; font-size: 16px; line-height: 1.5rem; padding: 15px 0;\">비밀번호를 재설정하기 위한 인증 번호입니다.<br>비밀번호 변경을 위해 발송된 인증번호를 정확히 입력해주세요.</p>";
+							   "<h1 style=\"width: 30%; margin: auto; border-radius: 20px; text-align: center; padding: 30px; background-color: #FDF5E6; font-size: 18px;\">�씤利� 踰덊샇<br><span style=\"color: #FF6833; font-size: 32px;\">" + code + "<span></h1>" + 
+							   "<p style=\"text-align: center; font-size: 16px; line-height: 1.5rem; padding: 15px 0;\">鍮꾨�踰덊샇瑜� �옱�꽕�젙�븯湲� �쐞�븳 �씤利� 踰덊샇�엯�땲�떎.<br>鍮꾨�踰덊샇 蹂�寃쎌쓣 �쐞�빐 諛쒖넚�맂 �씤利앸쾲�샇瑜� �젙�솗�엳 �엯�젰�빐二쇱꽭�슂.</p>";
 			message.setContent(emailBody, "text/html; charset=utf-8");
 			
 			Transport.send(message);
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			e.printStackTrace();
-			code = "이메일 전송 실패";
+			code = "�씠硫붿씪 �쟾�넚 �떎�뙣";
 		}
 		
 		return code;
@@ -251,13 +253,13 @@ public class MemberApiServiceImpl implements MemberApiService {
 
 	
 	
-	/******** by다혜: 카카오 인증&인가 메소드 ********/
+	/******** by�떎�삙: 移댁뭅�삤 �씤利�&�씤媛� 硫붿냼�뱶 ********/
 	@Override
 	public KakaoToken getKakaoToken(String code) {
 		RestTemplate rt = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); //吏�湲� �쟾�넚�븷 HTTP �뜲�씠�꽣媛� key-value �뜲�씠�꽣�엫�쓣 �븣由�
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
@@ -286,7 +288,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + kakaoToken.getAccess_token());
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8"); //지금 전송할 HTTP 데이터가 key-value 데이터임을 알림
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8"); //吏�湲� �쟾�넚�븷 HTTP �뜲�씠�꽣媛� key-value �뜲�씠�꽣�엫�쓣 �븣由�
 		
 		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
 		
@@ -303,7 +305,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		return kakaoProfile;
 	}
 	
-	/******** by다혜: facebook 인증 메소드 ********/
+	/******** by�떎�삙: facebook �씤利� 硫붿냼�뱶 ********/
 //	@Override
 //	public String getFacebookToken() {
 //		

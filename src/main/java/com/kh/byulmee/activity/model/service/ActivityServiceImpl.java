@@ -1,6 +1,7 @@
 package com.kh.byulmee.activity.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
-
 import com.kh.byulmee.board.model.vo.PageInfo;
-
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Service("aService")
@@ -41,8 +39,6 @@ public class ActivityServiceImpl implements ActivityService {
 		return ac;
 	}
 
-
-
 	@Override
 	public int getListCount() {
 		return aDAO.getListCount(sqlSession);
@@ -53,6 +49,8 @@ public class ActivityServiceImpl implements ActivityService {
 		
 		return aDAO.selectList(sqlSession, pi);
 	}
+	
+	
 
 	@Override
 	public Activity selectAct(int actNo) {
@@ -83,4 +81,15 @@ public class ActivityServiceImpl implements ActivityService {
 		return aDAO.updateActivity(sqlSession, a);
 	}
 
+	@Override
+	public Activity selectList(int acId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Activity> selectActivity(PageInfo pageInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

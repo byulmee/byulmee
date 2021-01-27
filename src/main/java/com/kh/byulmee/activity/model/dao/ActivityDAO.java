@@ -27,20 +27,6 @@ public class ActivityDAO {
 		return sqlSession.selectOne("activityMapper.selectActivity", acId);	
 	}
 
-
-
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("activityMapper.getListCount");
-	}
-
-	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		
-		return (ArrayList)sqlSession.selectList("activityMapper.selectList", null, rowBounds);
-	}
-
 	public Activity selectAct(SqlSessionTemplate sqlSession, int actNo) {
 		
 		return sqlSession.selectOne("activityMapper.selectAct", actNo);
@@ -65,5 +51,26 @@ public class ActivityDAO {
 		
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
+
+
+	
+	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession,PageInfo pi) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList) sqlSession.selectList("activityMapper.selectActivity",pi,rowBounds);
+		
+	}
+	
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("activityMapper.getListCount");
+		
+	}
+	
+	
+	
+	
+	
 
 }
