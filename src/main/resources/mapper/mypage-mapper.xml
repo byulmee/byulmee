@@ -27,44 +27,41 @@
 		where mem_id=#{memId}
 	</update>
 	
-	<select id="getOrderListCount" resultType="_int">
+	<select id="getActOrderListCount" resultType="_int">
 		select count(*)
 		from orders
-		where ord_status='Y' and mem_id = #{memId}
+		where ord_status='Y' and mem_id = #{memId} and ord_refcode=0
 	</select>
 	
-	<!-- <select id="selectOrderList" resultMap="orderResultSet">
-		select *
+	<select id="getProOrderListCount" resultType="_int">
+		select count(*)
 		from orders
-		where ord_status='Y' and ord_id=#{memId}
-		order by ord_no desc
-	</select> -->
+		where ord_status='Y' and mem_id = #{memId} and ord_refcode=1
+	</select>
 	
-	<select id="selectOrderList" resultMap="orderResultSet">
-		<!-- 1. 일반 쿼리 join 방식 -->
-		<!-- select o.ord_no, o.mem_id as ord_id, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
-		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request, o.ord_payno,
-		        o.ord_pay, o.ord_pay_way, o.ord_review, o.ord_status, o.ord_refcode, o.ord_refno,
-		        a.act_no, a.mem_id as act_id, a.act_phone, a.act_startday, a.act_endday, a.act_place,
-		        a.act_title, a.act_price, a.act_status,
-		        m.mem_no, m.mem_id, m.mem_name, m.mem_nickname, m.mem_email
-		from orders o 
-		    left outer join activity a on o.ord_refno = a.act_no
-		    left outer join member m on a.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.mem_id = #{memId}
-		order by o.ord_no desc -->
-		
+	<select id="selectActOrderList" resultMap="orderResultSet">
 		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
 		        a.act_no, a.act_title,
                 i.img_name
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
             left outer join image i on a.act_no = i.img_refno
-		where o.ord_status = 'Y' and o.mem_id = #{memId} and i.img_level=0
+		where o.ord_status = 'Y' and o.mem_id = #{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
+		order by o.ord_no desc
+	</select>
+	
+	<select id="selectProOrderList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
+		        p.pro_no, p.pro_title,
+                i.img_name
+		from orders o 
+		    left outer join product p on o.ord_refno = p.pro_no
+            left outer join image i on p.pro_no = i.img_refno
+		where o.ord_status = 'Y' and o.mem_id = #{memId} and o.ord_refcode=1 and i.img_level=0 and i.img_refcode=2
 		order by o.ord_no desc
 	</select>
 
-	<select id="selectDetailList" resultMap="orderResultSet">
+	<select id="selectActDetailList" resultMap="orderResultSet">
 		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
 		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
 		        o.ord_pay, o.ord_pay_way, o.ord_status,
@@ -74,9 +71,35 @@
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo}
+		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and o.ord_refcode=0
 		order by o.ord_no desc
 	</select>
+	
+	<select id="selectProDetailList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
+		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
+		        o.ord_pay, o.ord_pay_way, o.ord_status,
+		        p.pro_no, p.mem_id as pro_id, p.pro_charge,
+		        p.pro_title, p.pro_price, p.pro_status,
+		        m.mem_no, m.mem_nickname
+		from orders o 
+		    left outer join product p on o.ord_refno = p.pro_no
+		    left outer join member m on p.mem_id = m.mem_id
+		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and o.ord_refcode=1
+		order by o.ord_no desc
+	</select>
+	
+	<update id="deletePurAct">
+		update orders
+		set ord_status='N'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=0 and ord_refno=#{ordRefno}
+	</update>
+	
+	<update id="deletePurPro">
+		update orders
+		set ord_status='N'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=1 and ord_refno=#{ordRefno}
+	</update>
 	
 	<!-- ajax 이미지 가져오는 쿼리 -->
 	<!-- <select id="selectDetailList" resultMap="orderResultSet">
@@ -108,16 +131,7 @@
 		set img_status='N'
 		where img_status='Y' and img_refcode=0 and img_refno=#{memNo}
 	</update>
-	
-	<!-- <select id="selectProfileImgN" resultMap="imageResultSet">
-		select img_status
-		from (select *
-				from image
-				where img_level = 0 and img_status = 'N' and img_refcode = 0 and img_refno = #{memNo}
-				order by img_no desc)
-		where rownum = 1
-	</select> -->
-	
+
 	<insert id="insertReview" useGeneratedKeys="true" keyProperty="revNo" keyColumn="REV_NO">
 		insert into review (REV_NO, MEM_ID, REV_RATING, REV_CONTENT, REV_DATE, REV_STATUS, REV_REFCODE, REV_REFNO, ORD_NO)
 		VALUES (seq_revid.nextval, #{memId}, #{revRating}, #{revContent}, sysdate, default, #{revRefcode}, #{revRefno}, #{ordNo})
@@ -150,6 +164,7 @@
 		<collection property="activity" resultMap="activityResultSet"/>
 		<collection property="member" resultMap="memberResultSet"/>
 		<collection property="image" resultMap="imageResultSet"/>
+		<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
 	<resultMap type="Activity" id="activityResultSet">
@@ -198,6 +213,23 @@
 	  	<result property="imgStatus" column="IMG_STATUS"/>
 	  	<result property="imgRefcode" column="IMG_REFCODE"/>
 	  	<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+	
+	<resultMap type="Product" id="productResultSet">
+	  	<id property="proNo" column="PRO_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="proCharge" column="PRO_CHARGE"/>
+	  	<result property="proStock" column="PRO_STOCK"/>
+	  	<result property="proMaximum" column="PRO_MAXIMUM"/>
+	  	<result property="proCategory" column="PRO_CATEGORY"/>
+	  	<result property="proTitle" column="PRO_TITLE"/>
+	  	<result property="proPrice" column="PRO_PRICE"/>
+	  	<result property="proUrl" column="PRO_URL"/>
+	  	<result property="proContent" column="PRO_CONTENT"/>
+	  	<result property="proGuide" column="PRO_GUIDE"/>
+	  	<result property="proCount" column="PRO_COUNT"/>
+	  	<result property="proDate" column="PRO_DATE"/>
+	  	<result property="proStatus" column="PRO_STATUS"/>
 	</resultMap>
 	
 </mapper>

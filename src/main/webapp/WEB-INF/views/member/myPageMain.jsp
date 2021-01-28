@@ -39,16 +39,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
-	.profileImg {
-		width: 150px;
-		height: 150px;
+	.profileDiv {
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
-		object-fit: cover;
+		border: 2px solid gray;
+		background: black;
+	}
+	.profileImg {
+		position: absolute;
+	    margin: auto;
+	    width: 146px;
+	    height: auto;
+	    left: -100%;
+	    right: -100%;
+	    top: -100%;
+	    bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -196,8 +212,21 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
-				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+    			</div>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">

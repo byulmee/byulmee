@@ -32,22 +32,44 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.deleteMember", id);
 	}
 
-	public int getOrderListCount(SqlSessionTemplate sqlSession, String id) {
-		return sqlSession.selectOne("mypageMapper.getOrderListCount", id);
+	public int getActOrderListCount(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("mypageMapper.getActOrderListCount", id);
+	}
+	
+	public int getProOrderListCount(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("mypageMapper.getProOrderListCount", id);
 	}
 
-	public ArrayList<Order> selectOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+	public ArrayList<Order> selectActOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectOrderList", id, rowBounds);
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectActOrderList", id, rowBounds);
+	}
+	
+	public ArrayList<Order> selectProOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProOrderList", id, rowBounds);
 	}
 
-	// ajax 부분
-	public ArrayList<Order> selectDetailList(SqlSessionTemplate sqlSession, int ordNo) {
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectDetailList", ordNo);
+	public ArrayList<Order> selectActDetailList(SqlSessionTemplate sqlSession, int ordNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectActDetailList", ordNo);
+	}
+	
+	public ArrayList<Order> selectProDetailList(SqlSessionTemplate sqlSession, int ordNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProDetailList", ordNo);
 	}
 
+	public int deletePurAct(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("mypageMapper.deletePurAct", o);
+	}
+
+	public int deletePurPro(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("mypageMapper.deletePurPro", o);
+	}
+	
 	public int insertProfileImage(SqlSessionTemplate sqlSession, Image i) {
 		return sqlSession.insert("mypageMapper.insertProfileImage", i);
 	}
@@ -70,7 +92,4 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.updateReviewStatus", r);
 	}
 
-//	public ArrayList<Image> selectProfileImgN(SqlSessionTemplate sqlSession, int memNo) {
-//		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImgN", memNo);
-//	}
 }

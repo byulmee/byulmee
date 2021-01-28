@@ -44,18 +44,44 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int getOrderListCount(String id) {
-		return mpDAO.getOrderListCount(sqlSession, id);
+	public int getActOrderListCount(String id) {
+		return mpDAO.getActOrderListCount(sqlSession, id);
+	}
+	
+	@Override
+	public int getProOrderListCount(String id) {
+		return mpDAO.getProOrderListCount(sqlSession, id);
+	}
+
+
+	@Override
+	public ArrayList<Order> selectActOrderList(PageInfo pi, String id) {
+		return mpDAO.selectActOrderList(sqlSession, pi, id);
+	}
+	
+	@Override
+	public ArrayList<Order> selectProOrderList(PageInfo pi, String id) {
+		return mpDAO.selectProOrderList(sqlSession, pi, id);
 	}
 
 	@Override
-	public ArrayList<Order> selectOrderList(PageInfo pi, String id) {
-		return mpDAO.selectOrderList(sqlSession, pi, id);
+	public ArrayList<Order> selectActDetailList(int ordNo) {
+		return mpDAO.selectActDetailList(sqlSession, ordNo);
 	}
-
+	
 	@Override
-	public ArrayList<Order> selectDetailList(int ordNo) {
-		return mpDAO.selectDetailList(sqlSession, ordNo);
+	public ArrayList<Order> selectProDetailList(int ordNo) {
+		return mpDAO.selectProDetailList(sqlSession, ordNo);
+	}
+	
+	@Override
+	public int deletePurAct(Order o) {
+		return mpDAO.deletePurAct(sqlSession, o);
+	}
+	
+	@Override
+	public int deletePurPro(Order o) {
+		return mpDAO.deletePurPro(sqlSession, o);
 	}
 
 	@Override
@@ -84,8 +110,4 @@ public class MypageServiceImpl implements MypageService {
 		return mpDAO.updateReviewStatus(sqlSession, r);
 	}
 
-//	@Override
-//	public ArrayList<Image> selectProfileImgN(int memNo) {
-//		return mpDAO.selectProfileImgN(sqlSession, memNo);
-//	}
 }

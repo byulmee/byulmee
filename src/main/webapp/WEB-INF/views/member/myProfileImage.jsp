@@ -39,23 +39,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
 	.profileDiv {
-		display: inline-block;
-		width: 150px;
-		height: 150px;
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
 		border: 2px solid gray;
+		background: black;
 	}
 	.profileImg {
-		width: 170px;
+		position: absolute;
+		margin: auto;
+		width: 146px;
 		height: auto;
-		margin-left: -10px;
-		object-fit: cover;
+		left: -100%;
+		right: -100%;
+		top: -100%;
+		bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -136,15 +145,13 @@
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
-		height: 40px;
-		width: 100px;
+		width: 80px;
 		padding: 5px;
+		padding-bottom: 2px;
 		border: 1px solid #C4C4C4;
 		background: white;
-		color: #747474;
 		font-family: "Gmarket Sans TTF";
-		font-size: 16px;
-		cursor:pointer;
+		cursor: pointer;
 		outline: 0;
 	}
 	.button:hover {
@@ -218,18 +225,9 @@
 							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 	    				</c:if>
     				</c:if>
-    				<%-- <c:if test="${ img.size() != 0 }">
-	    				<c:forEach var="i" items="${ img }">
-		    					<c:if test="${ i.imgStatus == 'Y' }">
-									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
-			    				</c:if>
-			    				<c:if test="${ i.imgStatus == 'N' }">
-									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-			    				</c:if>
-	    				</c:forEach>
-	    			</c:if> --%>
     			</div>
-				<p class="nickname"> <c:out value="${ loginUser.memName } (${ loginUser.memNickname }) 님"/> </p>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -299,21 +297,8 @@
 				<form action="profileImgInsert.me" method="post" enctype="Multipart/form-data">
 					<table>
 						<tr>
-							<td colspan="3">
+							<td colspan="4">
 								<div class="profileDiv">
-				    				<%-- <c:if test="${ img.size() == 0 }">
-										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-				    				</c:if>
-					    			<c:if test="${ img.size() != 0 }">
-					    				<c:forEach var="i" items="${ img }">
-						    					<c:if test="${ i.imgStatus == 'Y' }">
-													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
-							    				</c:if>
-							    				<c:if test="${ i.imgStatus == 'N' }">
-													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-							    				</c:if>
-					    				</c:forEach>
-					    			</c:if> --%>
 					    			<c:if test="${ empty img }">
 										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 				    				</c:if>
@@ -329,6 +314,9 @@
 							</td>
 						</tr>
 						<tr>
+							<td>
+								<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
+							</td>
 							<td>
 								<button type="button" class="button" id="imgDeleteBtn">사진 삭제</button>
 							</td>
@@ -353,11 +341,10 @@
 	
 	<script>
 		$("#imgDeleteBtn").click(function() { // 
-			/* $(".profileImg").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png"); */
 			var bool = confirm("정말 프로필 사진을 삭제하시겠습니까?")
 			
 			if(bool) {
-				location.href='profileImgDeleteView.me';
+				location.href='profileImgDelete.me';
 			}
 		});
 	</script>

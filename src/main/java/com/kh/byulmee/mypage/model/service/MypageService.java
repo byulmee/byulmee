@@ -20,11 +20,21 @@ public interface MypageService {
 
 	int deleteMember(String id);
 
-	int getOrderListCount(String id);
+	int getActOrderListCount(String id);
+	
+	int getProOrderListCount(String id);
 
-	ArrayList<Order> selectOrderList(PageInfo pi, String id);
+	ArrayList<Order> selectActOrderList(PageInfo pi, String id);
 
-	ArrayList<Order> selectDetailList(int ordNo);
+	ArrayList<Order> selectProOrderList(PageInfo pi, String id);
+
+	ArrayList<Order> selectActDetailList(int ordNo);
+	
+	ArrayList<Order> selectProDetailList(int ordNo);
+	
+	int deletePurAct(Order o);
+	
+	int deletePurPro(Order o);
 
 	int insertProfileImage(Image img);
 
@@ -36,5 +46,4 @@ public interface MypageService {
 
 	int updateReviewStatus(Review r);
 
-//	ArrayList<Image> selectProfileImgN(int memNo);
 }

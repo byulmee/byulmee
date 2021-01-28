@@ -39,16 +39,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
-	.profileImg {
-		width: 150px;
-		height: 150px;
+	.profileDiv {
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
-		object-fit: cover;
+		border: 2px solid gray;
+		background: black;
+	}
+	.profileImg {
+		position: absolute;
+	    margin: auto;
+	    width: 146px;
+	    height: auto;
+	    left: -100%;
+	    right: -100%;
+	    top: -100%;
+	    bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -238,8 +254,21 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
-				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+    			</div>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -253,7 +282,7 @@
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+								<button onclick="location.href='profileImageUpdateView.me'" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn" id="selectedBtn">회원 탈퇴</button>
@@ -302,7 +331,7 @@
 					<ul>
 						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
 						<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
-						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</li>
 						<li onclick="location.href='memberDeleteView.me'" class="selected">회원 탈퇴</li>
 					</ul>
 				</div>
@@ -321,9 +350,9 @@
 						</tr>
 						<tr>
 							<td class="tdCheck">
-								<!-- <input type="checkbox" id="leaveCheck">유의사항을 모두 확인했으며, 이에 동의합니다. -->
-								<input type="checkbox" id="leaveCheck"> <label
-								for="leaveCheck"></label><span id="agree">유의사항을 모두 확인했으며, 이에 동의합니다.</span>
+								<input type="checkbox" id="leaveCheck">
+								<label for="leaveCheck"></label>
+								<span id="agree">유의사항을 모두 확인했으며, 이에 동의합니다.</span>
 							</td>
 						</tr>
 					</table>

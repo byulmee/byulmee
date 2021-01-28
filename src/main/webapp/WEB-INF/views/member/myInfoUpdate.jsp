@@ -40,17 +40,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		text-align: center;
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
-	.profileImg {
-		width: 150px;
-		height: 150px;
+	.profileDiv {
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
-		object-fit: cover;
+		border: 2px solid gray;
+		background: black;
+	}
+	.profileImg {
+		position: absolute;
+	    margin: auto;
+	    width: 146px;
+	    height: auto;
+	    left: -100%;
+	    right: -100%;
+	    top: -100%;
+	    bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -226,7 +241,8 @@
 		border: 1px solid #9F9F9F;
 		height: 23px;
 		width: 60px;
-		background: #F4F4F4;		
+		background: #F4F4F4;
+		margin-top: 10px;
 	}
 	#basicAddr {
 		outline: 0;
@@ -240,6 +256,7 @@
 		border: 1px solid #9F9F9F;
 		height: 23px;
 		width: 400px;
+		margin-bottom: 10px;
 	}
 </style>
 </head>
@@ -250,8 +267,21 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
-				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+    			</div>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -265,7 +295,7 @@
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+								<button onclick="location.href='profileImageUpdateView.me'" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
@@ -313,7 +343,7 @@
 				<ul>
 					<li onclick="location.href='myInfoPwdCheckView.me'" class="selected">개인정보 변경</li>
 					<li onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</li>
-					<li onclick="location.href=''">프로필사진 변경</li>
+					<li onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</li>
 					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
 				</ul>
 			</div>
@@ -364,30 +394,6 @@
 							<button class="button" onclick="">인증</button>
 						</td>
 					</tr>
-					<%-- <tr>
-						<td rowspan="3" class="colNameTd">
-							주소
-						</td>
-						<td class="colContentTd" style="border:0">
-							우편번호&nbsp;&nbsp;&nbsp;<input type="text" name="memPostcode" id="post" class="postcodify_postcode5"  value="<c:out value="${ loginUser.memPostcode }"/>">
-							<button type="button" class="button" id="postcodify_search_button">검색</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="colContentTd" style="border:0">
-							기본주소&nbsp;&nbsp;&nbsp;<input type="text" name="memBasicAddr" id="address1" class="postcodify_address"  value="<c:out value="${ loginUser.memBasicAddr }"/>">
-						</td>
-					<tr>
-						<td class="colContentTd">
-							상세주소&nbsp;&nbsp;&nbsp;<input type="text" name="memDetailAddr" id="address2" class="postcodify_extra_info"  value="<c:out value="${ loginUser.memDetailAddr }"/>">
-						</td>
-					</tr> --%>
-					<!-- <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-					<script>
-						$(function(){
-							$("#postcodify_search_button").postcodifyPopUp();
-						});
-					</script> -->
 					<tr>
 						<td rowspan="3" class="colNameTd">
 							주소
@@ -402,7 +408,7 @@
 							기본주소&nbsp;&nbsp;&nbsp;<input type="text" name="memBasicAddr" id="basicAddr" placeholder="기본주소" value="<c:out value="${ loginUser.memBasicAddr }"/>" readonly>
 						</td>
 					<tr>
-						<td class="colContentTd">
+						<td class="colContentTd" style="border:0">
 							상세주소&nbsp;&nbsp;&nbsp;<input type="text" name="memDetailAddr" id="detailAddr" placeholder="상세주소" value="<c:out value="${ loginUser.memDetailAddr }"/>">
 						</td>
 					</tr>
