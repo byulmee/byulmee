@@ -27,5 +27,7 @@ public interface ActivityService {
 
 	Activity selectActivity(int acId);
 
-
+	int getActSearchListCount(String[] keywords);
+	
+	ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords);
 }

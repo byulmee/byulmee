@@ -66,4 +66,15 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
 
+	public int getActSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("activityMapper.getActSearchListCount", keywords);
+	}
+	
+	public ArrayList<Activity> getActSearchResult(SqlSessionTemplate sqlSession, PageInfo pi, String[] keywords) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("activityMapper.actSearchLsit", keywords, rowBounds);
+	}
+
 }
