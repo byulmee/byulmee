@@ -23,4 +23,15 @@ public class ReviewServiceImpl implements ReviewService{
 		return rvDAO.selectReviewList(sqlSession, acId);
 	}
 
+	@Override
+	public Review selectReviewDetail(int revNo) {
+		return rvDAO.selectReviewDetail(sqlSession, revNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectReviewAll(int acId) {
+		return rvDAO.selectReviewAll(sqlSession, acId);
+	}
+
+
 }

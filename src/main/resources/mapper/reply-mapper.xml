@@ -10,10 +10,5 @@
 		<result property="repRefcode" column="REP_REFCODE"/>
 		<result property="repRefno" column="REP_REFNO"/>
 	</resultMap>
-
-	<select id="selectQnaReply" resultMap="replyResultSet">
-		select *
-		from reply
-		where rep_refcode = 1 and rep_refno = #{qnaNo} and rep_status = 'Y'
-	</select>
+	
 </mapper>

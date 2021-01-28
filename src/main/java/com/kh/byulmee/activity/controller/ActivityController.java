@@ -66,6 +66,14 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -110,11 +118,12 @@ public class ActivityController {
 			  .addObject("content4", content4)
 			  .addObject("writer", writer)
 			  .addObject("contentText", contentText)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
 		}
-		
 		return mv;
 	}
 	
@@ -122,7 +131,6 @@ public class ActivityController {
 	@RequestMapping("salesQnaList.ac")
 	public void getQnaList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaList(acId);
-		System.out.println(sqList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -139,7 +147,7 @@ public class ActivityController {
 	@RequestMapping("salesQnaExceptList.ac")
 	public void getQnaExceptList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaExceptList(acId);
-
+		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -155,18 +163,12 @@ public class ActivityController {
 	@RequestMapping("salesReviewList.ac")
 	public void getReviewList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<Review> reviewList = rvService.selectReviewList(acId);
-//		ArrayList<Image> image = new ArrayList<Image>();
-//		
-//		for(int i = 0; i < reviewList.size(); i++) {
-//			int revImgNo = reviewList.get(i).getRevNo();
-//			image = iService.selectReviewImage(revImgNo);
-//		}
+		System.out.println(reviewList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(reviewList, response.getWriter());
-//			gson.toJson(image, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -174,17 +176,15 @@ public class ActivityController {
 		}
 	}
 	
-	
-	// 문의 답변 불러오기
-	@RequestMapping("salesQnaReply.ac")
-	public void getQnaReply(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
-		Reply r = rService.getQnaReply(qnaNo);
-		System.out.println(r);
+	// 후기 디테일 불러오기
+	@RequestMapping("salesReviewDetail.ac")
+	public void getReviewDetail(@RequestParam("revNo") int revNo, HttpServletResponse response) {
+		Review review = rvService.selectReviewDetail(revNo);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
-			gson.toJson(r, response.getWriter());
+			gson.toJson(review, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -192,6 +192,8 @@ public class ActivityController {
 		}
 	}
 	
+	
+	// 활동 신청 페이지
 	@RequestMapping("activityCheck.ac")
 	public ModelAndView activityCheckView(@RequestParam("acId") int acId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
 		

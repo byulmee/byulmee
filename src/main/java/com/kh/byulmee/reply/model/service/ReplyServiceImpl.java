@@ -18,9 +18,4 @@ public class ReplyServiceImpl implements ReplyService{
 	@Autowired
 	private ReplyDAO rDAO;
 
-	@Override
-	public Reply getQnaReply(int qnaNo) {
-		return rDAO.selectQnaReply(sqlSession,qnaNo);
-	}
-
 }

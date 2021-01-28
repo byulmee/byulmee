@@ -2,6 +2,9 @@ package com.kh.byulmee.board.model.vo;
 
 import java.sql.Date;
 
+import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.reply.model.vo.Reply;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +26,7 @@ public class SalesQna {
 	private String salqnaStatus;
 	private int salqnaRefcode;
 	private int salqnaRefno;
+	
+	private Reply reply;
+	private Member member;
 }

@@ -11,16 +11,47 @@
 		<result property="salqnaStatus" column="SALQNA_STATUS"/>
 		<result property="salqnaRefcode" column="SALQNA_REFCODE"/>
 		<result property="salqnaRefno" column="SALQNA_REFNO"/>
+		<collection property="reply" resultMap="replyResultSet"></collection>
+		<collection property="member" resultMap="memberResultSet"></collection>
 	</resultMap>
 	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="repNo" column="REP_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="repContent" column="REP_CONTENT"/>
+		<result property="repDate" column="REP_DATE"/>
+		<result property="repStatus" column="REP_STATUS"/>
+		<result property="repRefcode" column="REP_REFCODE"/>
+		<result property="repRefno" column="REP_REFNO"/>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="mem_no"/>
+	  	<result property="memId" column="mem_id"/>
+	  	<result property="memPwd" column="mem_pwd"/>
+	  	<result property="memName" column="mem_name"/>
+	  	<result property="memPostcode" column="mem_postcode"/>
+	  	<result property="memBasicAddr" column="mem_basicaddr"/>
+	  	<result property="memDetailAddr" column="mem_detailaddr"/>
+	  	<result property="memPhone" column="mem_phone"/>
+	  	<result property="memNickname" column="mem_nickname"/>
+	  	<result property="memEmail" column="mem_email"/>
+	  	<result property="memLevel" column="mem_level"/>
+	  	<result property="memDate" column="mem_Date"/>
+	  	<result property="memStatus" column="mem_status"/>
+	  	<result property="memLoginType" column="mem_login_type"/>
+	</resultMap>
+		
 	<select id="selectQnaList" resultMap="salesQnaResultSet">
 		select *
-		from (
-		    select *
-		    from sales_qna
-		    where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
-		    order by salqna_no desc
-		    )
+			from (
+				select *
+				from sales_qna sq
+			        left outer join reply r on sq.salqna_no = r.rep_refno
+			        left outer join member m on sq.mem_id = m.mem_id
+				where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = 21 and salqna_status = 'Y'
+				order by salqna_no desc
+				)
 		<![CDATA[where rownum <= 5]]>
 	</select>
 	
@@ -28,18 +59,22 @@
 		select *
 		from (
 		    select *
-		    from sales_qna
+		    from sales_qna sq
+		        left outer join reply r on sq.salqna_no = r.rep_refno
+		        left outer join member m on sq.mem_id = m.mem_id
 		    minus
 		    select *
 		    from (
 		        select *
-		        from sales_qna
+		        from sales_qna sq
+		             left outer join reply r on sq.salqna_no = r.rep_refno
+					 left outer join member m on sq.mem_id = m.mem_id
 		        where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
 		        order by salqna_no desc
 		        )
 		    <![CDATA[where rownum <= 5]]>
 		    )
-		where salqna_refno = #{acId}   
+		where salqna_refno = #{acId}
 		order by salqna_no desc
 	</select>
 	

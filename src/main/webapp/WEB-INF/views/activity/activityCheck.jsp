@@ -351,7 +351,7 @@ td{
 	       		
 	       		
 				<div class="starInfo">
-					<span><img src="resources/images/common/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><img src="resources/images/detail/star.png" width="18px" id="star_img" alt="별"></span>
 					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>

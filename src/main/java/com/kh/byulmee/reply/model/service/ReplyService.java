@@ -6,7 +6,4 @@ import com.kh.byulmee.reply.model.vo.Reply;
 
 public interface ReplyService {
 
-	Reply getQnaReply(int qnaNo);
-
-
 }

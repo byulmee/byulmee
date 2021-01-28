@@ -8,4 +8,9 @@ public interface ReviewService {
 
 	ArrayList<Review> selectReviewList(int acId);
 
+	Review selectReviewDetail(int revNo);
+
+	ArrayList<Review> selectReviewAll(int acId);
+
+
 }
