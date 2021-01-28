@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,13 +70,13 @@ public class MainCotroller {
 		System.out.println(actList);
 		
 		if(starList != null && actList != null) {
-			
+			mv.addObject("test", "테스트합니다.");
 			mv.addObject("keywords", keywords);
 			mv.addObject("starListPi", starListPi);
 			mv.addObject("actListPi", actListPi);
 			mv.addObject("starList", starList);
 			mv.addObject("actList", actList);
-			mv.setViewName("test");
+			mv.setViewName("/activity/activityList");
 			
 			return mv;
 		} else {
@@ -117,7 +118,8 @@ public class MainCotroller {
 			mv.addObject("proListPi", proListPi);
 			mv.addObject("starList", starList);
 			mv.addObject("proList", proList);
-			mv.setViewName("test");
+			mv.setViewName("activityList");
+	
 			
 			return mv;
 		} else {
