@@ -80,11 +80,15 @@ a:hover{
 }
 p {
   margin: 0 0 1em;
+  font-size: 8px;
 }
 
 a img {
   border: 0;
   outline: 0;
+}
+#star{
+	color: orange;
 }
 
 </style>
@@ -136,21 +140,27 @@ a img {
 		ActivityDAO activityDAO = new ActivityDAO();
 	
 	%>
-	  <%--
-		<div id="pattern" class="pattern">
+	 
+		<div id="pattern" class="pattern"  onclick="location.href='activityDetail.ac?acId=1">
+		
 			<c:forEach items="${ list }" var="val" varStatus = "status">
+				<ul>
 				<c:if test="${status.index mod 5 eq 0}">
 			    </c:if>			    	
 			        <li style="float: left;">
 			            <a href="#" class="inner">
 			                <div class="image" style="width:180px;">
-			                    <img src="./images/activity/car_purple.jpg"id="image"alt="텃밭" />
+			                    <img src="${ pageContext.servletContext.contextPath }/resources/images/activity/텃밭.PNG"id="image"alt="텃밭" style="size: 20%;" />
+			                    
 			                </div>
-			               <div class="li-text" onclick="location.href='activityDetail.ac?acId=1;">
-			                    <h5 class="li_name">정찬오</h5>
-			                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-			                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-			                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
+			               <div class="li-text" onclick="location.href='activityDetail.ac?acId=1">
+			                    <p>${val.memId }<br>
+			                    [${val.actCategory}]${val.actTitle }<br>
+			                    ${val.actPlace }<br>
+			                    ${val.actStartday }~<br>${val.actEndday }<br>
+			                     <img src="${ pageContext.servletContext.contextPath }" id="" alt="*"/><strong id="price">${val.actPrice }원</strong><br>
+			                     
+			                    <img src="./images/F_Star.PNG" id="" alt=""/><p id="star">****4.8 1891개의 평가</p>
 			                </div>
 			            </a>
 			        </li>
@@ -158,38 +168,46 @@ a img {
 			    	</ul>
 			    </c:if>
 		    </c:forEach>
-		</div>
-		--%>
 		
+		
+		<!-- 
 		<c:forEach items="${ list }" var="val">
 			<c:if test="${ !empty list }">
-				${ "데이터가 없습니다." }
-				<c:out value="${ act_No }"></c:out>
+				${val.actNo }
+				${val.memId }
+				${val.actPhone }
+			
 			</c:if>
 		</c:forEach>
-		
-			<div id="pattern" class="pattern">
-			<c:forEach items="${ list }" var="val" varStatus = "status">
-				<c:if test="${status.index mod 5 eq 0}">
-			    </c:if>			    	
-			        <li style="float: left;">
-			            <a href="#" class="inner">
-			                <div class="image" style="width:180px;">
-			                    <img src="./images/activity/car_purple.jpg"id="image"alt="텃밭" />
-			                </div>
-			               <div class="li-text" onclick="location.href='activityDetail.ac?acId=1;">
-			                    <h5 class="li_name">정찬오</h5>
-			                    <p class="li_sub" onclick="li_sub();">[힐링] 나만의 텃밭 가꾸기</p>
-			                     <img src="./images/F_Price.PNG" id="" alt="star"/><strong id="price">50000원</strong><br>
-			                    <img src="./images/F_Star.PNG" id="" alt="star"/>4.8 1891개의 평가
-			                </div>
-			            </a>
-			        </li>
-			    <c:if test="${(status.index + 1) mod 5 eq 0}">
-			    	</ul>
-			    </c:if>
-		    </c:forEach>
-		</div>
+	 -->
+          
+ 
+
+
+
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		
 <%-- 				<c:forEach items="${ list }" var="val"> --%>

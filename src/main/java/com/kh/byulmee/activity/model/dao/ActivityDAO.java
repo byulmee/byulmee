@@ -59,7 +59,7 @@ public class ActivityDAO {
 		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList) sqlSession.selectList("activityMapper.selectActivity",pi,rowBounds);
+		return (ArrayList) sqlSession.selectList("activityMapper.selectList",pi,rowBounds);
 		
 	}
 	

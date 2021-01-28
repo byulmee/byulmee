@@ -55,6 +55,7 @@
   <select id="selectList" resultMap="activityResultSet">
   	select *
   	from activity
+  	
   	order by act_no desc
   </select>
   

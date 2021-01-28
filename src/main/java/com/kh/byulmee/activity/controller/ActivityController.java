@@ -257,23 +257,23 @@ public class ActivityController {
 	  
 	  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 	  
-//	  ArrayList<Activity> list = ActivityService.selectList(pi);
-	  ArrayList<Activity> list = new ArrayList<Activity>();
+	  ArrayList<Activity> list = ActivityService.selectList(pi);
+//	  ArrayList<Activity> list = new ArrayList<Activity>();
 	 
 	  
 	  
 	  list.add(new Activity());
 	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
-	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
+//	  list.add(new Activity());
 	 
 	  
 	  
@@ -290,7 +290,41 @@ public class ActivityController {
 	 return "activityList";
 		 		
 	}
+//	@RequestMapping("alist.ac")         
+//	public ModelAndView activityList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+//		// (value="page", required=false) --> page��� ���� ���� ���� �ְ� ���� ���� ����
+//		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+//		int currentPage = 1;
+//		if(page != null) {
+//			currentPage = page;
+//		}
+//		
+//		int listCount = ActivityService.getListCount();
+//		
+//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+//		ArrayList<Activity> list = ActivityService.selectList(pi);
+//		
+//		if(list != null) {
+//			mv.addObject("list",list);
+//			mv.addObject("pi",pi);
+//			mv.setViewName("activityList");
+//		}else {
+//			throw new ActivityException("실패하였습니다.");
+//		}
+//		
+//		return mv;	  
+//		
+//	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("adetail.bo")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, @RequestParam("page") int page, ModelAndView mv) {
 		Activity activity = ActivityService.selectList(acId);
