@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.dao.MypageDAO;
 import com.kh.byulmee.order.model.vo.Order;
@@ -44,15 +45,9 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int getActOrderListCount(String id) {
-		return mpDAO.getActOrderListCount(sqlSession, id);
+	public int getOrderListCount(Order ord) {
+		return mpDAO.getOrderListCount(sqlSession, ord);
 	}
-	
-	@Override
-	public int getProOrderListCount(String id) {
-		return mpDAO.getProOrderListCount(sqlSession, id);
-	}
-
 
 	@Override
 	public ArrayList<Order> selectActOrderList(PageInfo pi, String id) {
@@ -108,6 +103,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int updateReviewStatus(Review r) {
 		return mpDAO.updateReviewStatus(sqlSession, r);
+	}
+
+	@Override
+	public int getFavListCount(Favorite fav) {
+		return mpDAO.getFavListCount(sqlSession, fav);
+	}
+
+	@Override
+	public ArrayList<Favorite> selectFavStarList(PageInfo pi, String id) {
+		return mpDAO.selectFavStarList(sqlSession, pi, id);
 	}
 
 }

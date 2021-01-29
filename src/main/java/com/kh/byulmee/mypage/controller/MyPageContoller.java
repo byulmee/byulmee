@@ -27,10 +27,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.board.model.vo.Pagination;
+import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.exception.MemberException;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.service.MypageService;
 import com.kh.byulmee.order.model.vo.Order;
@@ -52,19 +53,22 @@ public class MyPageContoller {
 	
 	@RequestMapping("myPurActView.me")
 	public ModelAndView myPurActView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
-		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
-		
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Image img = mpService.selectProfileImg(memNo);
+		
+		Order ord = new Order();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		ord.setMemId(id);
+		ord.setOrdRefcode(0);
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int listCount = mpService.getActOrderListCount(id);
+		int listCount = mpService.getOrderListCount(ord);
 		
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		ArrayList<Order> o = mpService.selectActOrderList(pi, id);
 		if(o != null) {
 			mv.addObject("o", o);
@@ -80,19 +84,22 @@ public class MyPageContoller {
 	
 	@RequestMapping("myPurProView.me")
 	public ModelAndView myPurProView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
-		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
-		
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Image img = mpService.selectProfileImg(memNo);
+		
+		Order ord = new Order();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		ord.setMemId(id);
+		ord.setOrdRefcode(1);
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int listCount = mpService.getProOrderListCount(id);
+		int listCount = mpService.getOrderListCount(ord);
 		
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		ArrayList<Order> o = mpService.selectProOrderList(pi, id);
 		if(o != null) {
 			mv.addObject("o", o);
@@ -183,39 +190,6 @@ public class MyPageContoller {
 		} else {
 			throw new MemberException("상품 구매 내역 삭제에 실패했습니다.");
 		}
-	}
-	
-	@RequestMapping("myFavActView.me")
-	public ModelAndView myFavActView(ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myFavAct");
-	
-		return mv;
-	}
-	
-	@RequestMapping("myFavProView.me")
-	public ModelAndView myFavProView(ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myFavPro");
-	
-		return mv;
-	}
-	
-	@RequestMapping("myFavStarView.me")
-	public ModelAndView myFavStarView(ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myFavStar");
-	
-		return mv;
 	}
 	
 	@RequestMapping("myInfoPwdCheckView.me")
@@ -464,13 +438,11 @@ public class MyPageContoller {
 							   @RequestParam("reviewImgFile2") MultipartFile reviewImgFile2,
 							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
 							   Model model) {
-		
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;
 		int revNo = mpService.insertReview(r);
 		int revRefcode = r.getRevRefcode();
-		
 		Image reviewImg = new Image();
 		Image i = new Image();
 		
@@ -580,5 +552,77 @@ public class MyPageContoller {
 			e.printStackTrace();
 		}
 		return i;
+	}
+	
+	@RequestMapping("myFavActView.me")
+	public ModelAndView myFavActView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+//		int listCount = mpService.getOrderListCount(ord);
+//		
+//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+//		ArrayList<Order> o = mpService.selectActOrderList(pi, id);
+//		if(o != null) {
+//			mv.addObject("o", o);
+//			mv.addObject("pi", pi);
+//			mv.addObject("img", img);
+//			mv.setViewName("myFavAct");
+//		} else {
+//			throw new MemberException("찜한 활동 조회에 실패했습니다.");
+//		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("myFavProView.me")
+	public ModelAndView myFavProView(ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myFavPro");
+	
+		return mv;
+	}
+	
+	@RequestMapping("myFavStarView.me")
+	public ModelAndView myFavStarView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Favorite fav = new Favorite();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		fav.setMemId(id);
+		fav.setFavRefcode(0);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getFavListCount(fav);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 8);
+		ArrayList<Favorite> f = mpService.selectFavStarList(pi, id);
+
+		if(f != null) {
+			mv.addObject("f", f);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myFavStar");
+		} else {
+			throw new MemberException("찜한 스타 조회에 실패했습니다.");
+		}
+		
+		return mv;
 	}
 }

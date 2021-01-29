@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
@@ -20,9 +21,7 @@ public interface MypageService {
 
 	int deleteMember(String id);
 
-	int getActOrderListCount(String id);
-	
-	int getProOrderListCount(String id);
+	int getOrderListCount(Order ord);
 
 	ArrayList<Order> selectActOrderList(PageInfo pi, String id);
 
@@ -45,5 +44,9 @@ public interface MypageService {
 	int insertReview(Review r);
 
 	int updateReviewStatus(Review r);
+
+	int getFavListCount(Favorite fav);
+
+	ArrayList<Favorite> selectFavStarList(PageInfo pi, String id);
 
 }

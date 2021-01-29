@@ -179,8 +179,8 @@
 	.star {
 		display: inline-block;
 		width: 184px;
-		height: 200px;
-		padding-top: 20px;
+		height: 194px;
+		padding-top: 13px;
 		text-align: center;
 		vertical-align: middle;
 	}
@@ -261,6 +261,49 @@
 	.line {
 		border: 1px solid #FF6833;
 		margin: 0px;
+	}
+	.pagindDiv {
+		border-top: 1px solid #D4D4D4;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.pagingArea {
+		text-align: center; 
+	}
+	.pageBtn {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+	}
+	.pageBtn:hover {
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnSelected {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnEnd {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+		corsur: default;
 	}
 </style>
 
@@ -353,95 +396,84 @@
 					</ul>
 				</div>
 			<!-- 찜한 스타가 없는 경우 -->
-				<!-- <div id="wrap">
-					<table>
-						<tr>
-							<td class="nothing">
-								찜한 스타가 없습니다.
+				<c:if test="${ f.size() == 0 }">
+					<div id="wrap">
+						<table>
+							<tr>
+								<td class="nothing">
+									찜한 스타가 없습니다.
+								</td>
+							</tr>
+						</table>
+					</div>
+				</c:if>
+			<!-- 찜한 스타가 있는 경우 반복문 시작 -->
+				<c:if test="${ f.size() > 0 }">
+					<c:forEach var="f" items="${ f }">
+						<div class="star">
+							<div class="hoverDiv">
+								<div class="starDiv">
+									<c:if test="${ f.image.imgRefno ne f.favRefno }">
+										<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+									</c:if>
+									<c:if test="${ f.image.imgRefno eq f.favRefno }">
+										<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ f.image.imgName }">
+									</c:if>
+								</div>
+								<div>
+									<p class="starName">${ f.member.memNickname }</p>
+								</div>
+							</div>
+							<div id="starDelDiv" class="starDelDiv">
+								<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+			<!-- 반복문 종료 -->
+				<div class="pagindDiv">
+					<table class="pagingArea">
+						<tr align="center" height="20">
+							<td colspan="6">
+								<!-- [이전] -->
+								<c:if test="${ pi.currentPage <= 1 }">
+									<a class="pageBtnEnd">&lt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage > 1 }">
+									<c:url var="before" value="myPurProView.me">
+										<c:param name="page" value="${ pi.currentPage - 1 }"/>
+									</c:url>
+									<a href="${ before }" class="pageBtn">&lt;</a>
+								</c:if>
+								
+								<!-- 페이지 -->
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pageBtnSelected">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="myPurProView.me">
+											<c:param name="page" value="${ p }"/>
+										</c:url>
+										<a href="${ pagination }" class="pageBtn">${ p }</a>
+									</c:if>
+								</c:forEach>
+								
+								<!-- [다음] -->
+								<c:if test="${ pi.currentPage >= pi.maxPage }">
+									<a class="pageBtnEnd">&gt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage < pi.maxPage }">
+									<c:url var="after" value="myPurProView.me">
+										<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									</c:url> 
+									<a href="${ after }" class="pageBtn">&gt;</a>
+								</c:if>
 							</td>
 						</tr>
 					</table>
-				</div> -->
-			<!-- 찜한 스타가 있는 경우 반복문 시작 -->	
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star1.jpg">
-						</div>
-						<div>
-							<p class="starName">헤르미온느</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
 				</div>
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star2.jpg">
-						</div>
-						<div>
-							<p class="starName">토니스타크</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
-				</div>
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star3.jpg">
-						</div>
-						<div>
-							<p class="starName">다스베이더</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
-				</div>
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-						</div>
-						<div>
-							<p class="starName">기본기본기본기본</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
-				</div>
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/star4.jpg">
-						</div>
-						<div>
-							<p class="starName">올라프</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
-				</div>
-				<div class="star">
-					<div class="hoverDiv">
-						<div class="starDiv">
-							<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-						</div>
-						<div>
-							<p class="starName">최대여덟여덟글자</p>
-						</div>
-					</div>
-					<div id="starDelDiv" class="starDelDiv">
-						<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-					</div>
-				</div>
-			<!-- 반복문 종료 -->
 				<hr class="line">
 			</div>
 		</div>

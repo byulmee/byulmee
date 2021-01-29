@@ -345,9 +345,6 @@
 		background: #fff;
 		z-index: 1000;
 	}
-/* 	.reviewWrite {
-		z-index: 1500;
-	} */
 	.modal-con .con {
 		font-size: 15px;
 		line-height: 1.3;

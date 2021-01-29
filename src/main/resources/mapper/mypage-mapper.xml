@@ -27,16 +27,10 @@
 		where mem_id=#{memId}
 	</update>
 	
-	<select id="getActOrderListCount" resultType="_int">
+	<select id="getOrderListCount" resultType="_int">
 		select count(*)
 		from orders
-		where ord_status='Y' and mem_id = #{memId} and ord_refcode=0
-	</select>
-	
-	<select id="getProOrderListCount" resultType="_int">
-		select count(*)
-		from orders
-		where ord_status='Y' and mem_id = #{memId} and ord_refcode=1
+		where ord_status='Y' and mem_id=#{memId} and ord_refcode=#{ordRefcode}
 	</select>
 	
 	<select id="selectActOrderList" resultMap="orderResultSet">
@@ -46,7 +40,7 @@
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
             left outer join image i on a.act_no = i.img_refno
-		where o.ord_status = 'Y' and o.mem_id = #{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
+		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
 		order by o.ord_no desc
 	</select>
 	
@@ -57,7 +51,7 @@
 		from orders o 
 		    left outer join product p on o.ord_refno = p.pro_no
             left outer join image i on p.pro_no = i.img_refno
-		where o.ord_status = 'Y' and o.mem_id = #{memId} and o.ord_refcode=1 and i.img_level=0 and i.img_refcode=2
+		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=1 and i.img_level=0 and i.img_refcode=2
 		order by o.ord_no desc
 	</select>
 
@@ -71,7 +65,7 @@
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and o.ord_refcode=0
+		where o.ord_status='Y' and o.ord_no=#{ordNo} and o.ord_refcode=0
 		order by o.ord_no desc
 	</select>
 	
@@ -85,7 +79,7 @@
 		from orders o 
 		    left outer join product p on o.ord_refno = p.pro_no
 		    left outer join member m on p.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and o.ord_refcode=1
+		where o.ord_status ='Y'and o.ord_no=#{ordNo} and o.ord_refcode=1
 		order by o.ord_no desc
 	</select>
 	
@@ -113,7 +107,7 @@
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id
 		    left outer join image i on a.act_no = i.img_refno
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and i.img_level=0
+		where o.ord_status='Y' and o.ord_no=#{ordNo} and i.img_level=0
 		order by o.ord_no desc
 	</select> -->
 	
@@ -121,9 +115,9 @@
 		select img_name, img_status
 		from (select *
 				from image
-				where img_level = 0 and img_refcode = 0 and img_refno = #{memNo}
+				where img_level=0 and img_refcode=0 and img_refno=#{memNo}
 				order by img_no desc)
-		where rownum = 1
+		where rownum=1
 	</select>
 	
 	<update id="deleteProfileImg">
@@ -142,6 +136,25 @@
 		set ord_review='Y'
 		where ord_no=#{ordNo} and mem_id=#{memId} and ord_status='Y' and ord_refcode=#{revRefcode} and ord_refno=#{revRefno}
 	</update>
+	
+	<select id="getFavListCount" resultType="_int">
+		select count(*)
+		from favorite
+		where mem_id=#{memId} and fav_status='Y' and fav_refcode=#{favRefcode}
+	</select>
+	
+	<select id="selectFavStarList" resultMap="favoriteResultSet">
+		select fs.fav_no, fs.fav_refno, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
+		from(select * from favorite
+				where fav_refcode = 0
+				and mem_id = #{memId}
+				and fav_status = 'Y'
+				and fav_refcode = 0) fs
+			left outer join member m on m.mem_no = fs.fav_refno
+			left outer join (select * from image 
+								where img_refcode = 0) i on m.mem_no = i.img_refno
+			order by fs.fav_no desc
+	</select>
 	
 	<resultMap type="Order" id="orderResultSet">
 		<id property="ordNo" column="ORD_NO"/>
@@ -165,6 +178,19 @@
 		<collection property="member" resultMap="memberResultSet"/>
 		<collection property="image" resultMap="imageResultSet"/>
 		<collection property="product" resultMap="productResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Favorite" id="favoriteResultSet">
+	  	<id property="favNo" column="FAV_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="favDate" column="FAV_DATE"/>
+	  	<result property="favStatus" column="FAV_STATUS"/>
+	  	<result property="favRefcode" column="FAV_REFCODE"/>
+	  	<result property="favRefno" column="FAV_REFNO"/>
+	  	<collection property="image" resultMap="imageResultSet"/>
+	  	<collection property="member" resultMap="memberResultSet"/>
+	  	<collection property="activity" resultMap="activityResultSet"/>
+	  	<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
 	<resultMap type="Activity" id="activityResultSet">

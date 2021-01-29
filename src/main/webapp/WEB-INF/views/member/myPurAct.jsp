@@ -345,9 +345,6 @@
 		background: #fff;
 		z-index: 1000;
 	}
-/* 	.reviewWrite {
-		z-index: 1500;
-	} */
 	.modal-con .con {
 		font-size: 15px;
 		line-height: 1.3;
@@ -730,6 +727,7 @@
 							</div>
 						</div>
 					</c:forEach>
+				<!-- 반복문 종료 -->
 					<table class="pagingArea">
 						<tr align="center" height="20">
 							<td colspan="6">
@@ -773,7 +771,6 @@
 					</table>
 					<hr class="line">
 				</c:if>
-			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>

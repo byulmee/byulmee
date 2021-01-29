@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
@@ -32,8 +33,8 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.deleteMember", id);
 	}
 
-	public int getActOrderListCount(SqlSessionTemplate sqlSession, String id) {
-		return sqlSession.selectOne("mypageMapper.getActOrderListCount", id);
+	public int getOrderListCount(SqlSessionTemplate sqlSession, Order ord) {
+		return sqlSession.selectOne("mypageMapper.getOrderListCount", ord);
 	}
 	
 	public int getProOrderListCount(SqlSessionTemplate sqlSession, String id) {
@@ -90,6 +91,17 @@ public class MypageDAO {
 
 	public int updateReviewStatus(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("mypageMapper.updateReviewStatus", r);
+	}
+
+	public int getFavListCount(SqlSessionTemplate sqlSession, Favorite fav) {
+		return sqlSession.selectOne("mypageMapper.getFavListCount", fav);
+	}
+
+	public ArrayList<Favorite> selectFavStarList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavStarList", id, rowBounds);
 	}
 
 }
