@@ -45,9 +45,6 @@ public class ActivityController {
 	@Autowired
 	private SalesQnaService sqService;
 	
-	@Autowired
-	private ReplyService rService;
-	
 	@Autowired 
 	private ReviewService rvService;
 
@@ -66,6 +63,7 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
 		// 전체 리뷰 평균 별점 조회
 		ArrayList<Review> review = rvService.selectReviewAll(acId);
 		int reviewNum = review.size();
@@ -74,6 +72,11 @@ public class ActivityController {
 			ratingSum += review.get(i).getRevRating();
 		}
 		double ratingAvg = (double)ratingSum / reviewNum;
+		
+		// 활동 신청 가능한 인원수 조회
+		int actPeople = activity.getActPeople();
+		int orderSum = aService.selectOrderSum(acId);
+		int possibleNum = actPeople - orderSum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -120,6 +123,7 @@ public class ActivityController {
 			  .addObject("contentText", contentText)
 			  .addObject("reviewNum", reviewNum)
 			  .addObject("ratingAvg", ratingAvg)
+			  .addObject("possibleNum", possibleNum)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
@@ -192,7 +196,6 @@ public class ActivityController {
 		}
 	}
 	
-	
 	// 활동 신청 페이지
 	@RequestMapping("activityCheck.ac")
 	public ModelAndView activityCheckView(@RequestParam("acId") int acId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
@@ -203,6 +206,15 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -229,6 +241,8 @@ public class ActivityController {
 			  .addObject("writer", writer)
 			  .addObject("amount", amount)
 			  .addObject("price", price)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityCheck");
 		} else {
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");

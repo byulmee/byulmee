@@ -45,6 +45,12 @@
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
 	
+	<select id="selectOrderSum" resultType="_int">
+		select count(*)
+		from orders
+		where ord_refno = #{acId}
+	</select>
+	
 
   
   <select id="getListCount" resultType="_int">

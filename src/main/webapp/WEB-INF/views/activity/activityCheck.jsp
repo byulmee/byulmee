@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>    
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,10 +323,39 @@ td{
 					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
 				</div>
 	       		<div class="star">
-		       		<span id="star1">★★★★★</span>
-		       		<span id="star2">4.8</span>
-		       		<span id="star3">1,800개의 평가</span>
-	       		</div>
+					<c:if test="${ ratingAvg >= 9 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star10.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 8 && ratingAvg < 9 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star9.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 7 && ratingAvg < 8 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star8.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 6 && ratingAvg < 7 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star7.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 5 && ratingAvg < 6 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star6.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 4 && ratingAvg < 5 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star5.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 3 && ratingAvg < 4 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star4.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 2 && ratingAvg < 3 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star3.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg >= 1 && ratingAvg < 2 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star2.png'></span> 
+					</c:if>
+					<c:if test="${ ratingAvg < 1 }">
+						<span id="star1"><img class='rating' src='resources\\images\\rating\\star1.png'></span> 
+					</c:if>
+					<span id="star2">${ ratingAvg / 2 }</span> 
+					<span id="star3">${ reviewNum }개의 평가</span>
+				</div>
 	       		<div class="option">
 		       		<span id="option1">신청 인원</span>
 		       		<span id="option2">${ amount }명</span>
@@ -356,7 +385,17 @@ td{
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
-					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
+					
+					<c:url var="starFavoriteInsert" value="starFavoriteInsert.fa">
+						<c:param name="starNo" value="${ writer.memNo }"></c:param>
+						<c:param name="acId" value="${ activity.actNo }"></c:param>
+					</c:url>
+					<c:if test="${ !empty loginUser }">
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsert }'">
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="star-button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					</c:if>
 				</div>
 	       </div>
        </div> 
@@ -375,6 +414,14 @@ td{
 			starPhone = starPhone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-");
 			$('#starInfo2').html(starPhone);
 		});
+		
+		// 평균 별점 소수점 절삭
+		var rating = "<c:out value='${ ratingAvg }'/>";
+	    $(document).ready(function(){
+			var rating = $('#star2').text();
+			var ratingAvg = parseFloat(rating).toFixed(1);
+	        $('#star2').text(ratingAvg);
+	    });
        </script>
        
        <hr><hr><hr><hr>

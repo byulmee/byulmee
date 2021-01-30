@@ -3,7 +3,11 @@
 <mapper namespace="favoriteMapper">
 	<insert id="insertActivityFavorite">
 		insert into favorite
-		values(seq_favid.nextval, sysdate, default, 1, #{acId})
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 1, #{ favRefno })
 	</insert>
 
+	<insert id="insertStarFavorite">
+		insert into favorite
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 0, #{ favRefno })
+	</insert>
 </mapper>

@@ -27,5 +27,7 @@ public interface ActivityService {
 
 	Activity selectActivity(int acId);
 
+	int selectOrderSum(int acId);
+
 
 }

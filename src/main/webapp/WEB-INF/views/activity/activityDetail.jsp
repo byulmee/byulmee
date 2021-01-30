@@ -187,7 +187,34 @@ input:focus {
 	cursor: pointer;
 }
 
+#button3 {
+	border: 1px solid #E9E9E9;
+	background: white;
+	border-radius: 18px;
+	color: #9B9B9B;
+	width: 197px;
+	height: 76px;
+	text-align: center;
+	font-size: 18px;
+	outline: 0;
+	cursor: pointer;
+}
+
 #button2 {
+	border: 1px solid #FF6833;
+	background: #FF6833;
+	border-radius: 18px;
+	color: white;
+	width: 197px;
+	height: 76px;
+	text-align: center;
+	font-size: 18px;
+	margin-left: 7px;
+	outline: 0;
+	cursor: pointer;
+}
+
+#button4 {
 	border: 1px solid #FF6833;
 	background: #FF6833;
 	border-radius: 18px;
@@ -250,6 +277,20 @@ input:focus {
 }
 
 #star-button2 {
+	border: 1px solid #888888;
+	background: white;
+	border-radius: 5px;
+	color: #888888;
+	width: 110px;
+	height: 20px;
+	font-size: 12px;
+	outline: 0;
+	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
+}
+
+#star-button3 {
 	border: 1px solid #888888;
 	background: white;
 	border-radius: 5px;
@@ -847,7 +888,7 @@ hr {
 					<span><button type="button" id="minus" onclick="cntNum(-1);">-</button></span>
 					<span id="option2"><input type="text" id="amount" name="amount" value="1" onchange="setNum();" readonly></span> 
 					<span><button type="button" id="plus" onclick="cntNum(1);">+</button></span> 
-					<span id="option3">잔여 인원 : 7명</span>
+					<span id="option3">잔여 인원 : ${ possibleNum }명</span>
 				</div>
 				<div class="all-price">
 					<span id="all-price1">총 활동비</span> 
@@ -855,8 +896,18 @@ hr {
 					<span id="all-price3">원</span>
 				</div>
 				<div class="button">
+					<c:if test="${ !empty loginUser }">
 					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기"> 
+					</c:if>
+					<c:if test="${ !empty loginUser }">
 					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기">
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기" onclick="alert('로그인 후 이용 가능합니다.')"> 
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="button4" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					</c:if>
 				</div>
 				<div class="starInfo">
 					<span><img src="resources/images/detail/star.png" width="18px" id="star_img" alt="별"></span>
@@ -864,7 +915,17 @@ hr {
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
-					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
+					
+					<c:url var="starFavoriteInsert" value="starFavoriteInsert.fa">
+						<c:param name="starNo" value="${ writer.memNo }"></c:param>
+						<c:param name="acId" value="${ activity.actNo }"></c:param>
+					</c:url>
+					<c:if test="${ !empty loginUser }">
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsert }'">
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="star-button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -874,6 +935,7 @@ hr {
 			var cnt = 1;
 			var amount = document.getElementById("amount");
 			var price = document.getElementById("price").innerHTML;
+			var possibleNum = "<c:out value='${ possibleNum }'/>";
 			
 			function cntNum(n){
 				cnt += n;
@@ -888,9 +950,10 @@ hr {
 			function checkNum(){
 				if(cnt < 1){
 					cnt = 1
-				} else if(cnt > 99){
-					cnt = 99;
-					alert("남은  수량이 없습니다.");
+				} else if(cnt > possibleNum){
+					cnt = possibleNum;
+					alert("신청 가능한 최대 인원을 초과하였습니다.");
+					cnt = possibleNum - 1;
 				}
 				amount.value = cnt;
 				var total = String(price * cnt);
@@ -899,6 +962,7 @@ hr {
 //  				document.getElementById("all-price2").innerHTML = total;
 			}
 			
+			// 평균 별점 소수점 절삭
 			var rating = "<c:out value='${ ratingAvg }'/>";
 		    $(document).ready(function(){
 				var rating = $('#star2').text();
@@ -911,6 +975,7 @@ hr {
 			$(function(){
 				$('#button1').click(function(){
 					location.href='activityFavorite.fa?acId=' + acId;
+					alert('찜목록에 추가되었습니다!');
 				});
 			});
 			

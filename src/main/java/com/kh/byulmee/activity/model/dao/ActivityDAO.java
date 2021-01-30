@@ -66,4 +66,8 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
 
+	public int selectOrderSum(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("activityMapper.selectOrderSum", acId);
+	}
+
 }
