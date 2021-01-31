@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Repository("aDAO")
@@ -64,6 +63,17 @@ public class ActivityDAO {
 	public int updateActivity(SqlSessionTemplate sqlSession, Activity a) {
 		
 		return sqlSession.update("activityMapper.updateActivity", a);
+	}
+
+	public int getActSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("activityMapper.getActSearchListCount", keywords);
+	}
+	
+	public ArrayList<Activity> getActSearchResult(SqlSessionTemplate sqlSession, PageInfo pi, String[] keywords) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("activityMapper.actSearchLsit", keywords, rowBounds);
 	}
 
 }

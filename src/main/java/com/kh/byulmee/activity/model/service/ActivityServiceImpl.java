@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
-
 import com.kh.byulmee.board.model.vo.PageInfo;
-
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Service("aService")
@@ -81,6 +78,18 @@ public class ActivityServiceImpl implements ActivityService {
 	public int updateActivity(Activity a) {
 		
 		return aDAO.updateActivity(sqlSession, a);
+	}
+	
+	//활동 검색 결과 게시글 전체 개수
+	@Override
+	public int getActSearchListCount(String[] keywords) {
+		return aDAO.getActSearchListCount(sqlSession, keywords);
+	}
+	
+	//활동 검색 결과 게시글 전체 리스트
+	@Override
+	public ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords) {
+		return aDAO.getActSearchResult(sqlSession, pi, keywords);
 	}
 
 }

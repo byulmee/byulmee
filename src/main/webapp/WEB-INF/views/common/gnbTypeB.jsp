@@ -19,12 +19,12 @@
            <div id="gnb-menu-box">
                <img src="resources/images/common/logo.png" id="home-logo" alt="byulmee logo" onclick="location.href='home.do'">
            </div>
-               <div id="searchBox">
+               <form id="searchBox">
                    <div>
                        <i class="fas fa-search"></i>
                    </div>
-                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기">
-               </div>
+                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기" onsubmit="location.href='search.bo'">
+               </form>
             <ul id="menu-list">
             	<c:if test="${ empty sessionScope.loginUser }">
             		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
@@ -32,15 +32,12 @@
             	<c:if test="${ !empty sessionScope.loginUser }">
                 	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
 					<li class="menu-list-item" onclick="location.href='myPageMainView.me'">마이페이지</li>
-	               		<c:if test="${loginUser.memId.equals('admin')}">
-			           	<li onclick="location.href='adminMain.ad'">관리자</li>
-			           	</c:if>
                 </c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
                 <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
             </ul>
         </div>
-        <div id="gnb-cate">
+        <div id="gnb-cate" class="typeB">
             <ul id="cate">
                 <li class="cate act" onclick="location.href='#">액티비티</li>
                 <li class="cate liv" onclick="location.href='#">리빙</li>
@@ -62,7 +59,7 @@
     		
     		//제출 전 검색어 검증
     		if(e.key === 'Enter' && trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
-    			location.href = 'searchAct.do?keyword=' + keyword;
+    			location.href = 'searchPro.do?keyword=' + keyword;
     		}
     	});
     	

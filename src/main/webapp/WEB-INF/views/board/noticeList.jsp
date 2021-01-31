@@ -112,7 +112,7 @@ td {
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="n" items="${ list }">
+					
 						<tr class="notice">
 							<td>${ n.notNo }
 							<%-- <input type="hidden" name="notNo" value="${ n.notNo }"> --%></td>

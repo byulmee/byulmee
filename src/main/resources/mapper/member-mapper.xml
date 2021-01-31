@@ -92,4 +92,30 @@
 						from activity 
 						where act_no = #{acId})
   	</select>
+  	
+  	<select id="getStarSearchListCount" resultType="_int">
+		select count(*)
+		from member
+		where 
+			<foreach item="arr" collection="array" open="(" separator="or" close=")">
+	  			mem_id like '%' || #{arr} || '%' 
+	  		</foreach>
+	  		or <foreach item="arr" collection="array" open="(" separator="or" close=")">
+	  				mem_nickname like '%' || #{arr} || '%' 
+	  			</foreach>
+	  		and mem_status='Y' and mem_level = 1
+	</select>
+	
+	<select id="getStarSearchList" resultMap="memberResultSet">
+		select *
+		from member
+		where 
+			<foreach item="arr" collection="array" open="(" separator="or" close=")">
+	  			mem_id like '%' || #{arr} || '%' 
+	  		</foreach>
+	  		or <foreach item="arr" collection="array" open="(" separator="or" close=")">
+		  			mem_nickname like '%' || #{arr} || '%' 
+		  		</foreach>
+	  		and mem_status='Y'
+	</select>
 </mapper>

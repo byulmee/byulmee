@@ -244,5 +244,33 @@
 	    </div>
 	    
 	    <c:import url="views/common/footer.jsp"/>
+	    <script>
+    		//제출 전 검색어 검증
+	    	document.querySelector('#searchBar').addEventListener('keypress', e => {
+	    		let keyword =  document.querySelector('#searchBar').value;
+	    		let trimedKeyword = keyword.replace(/^\s+|\s+$/gm,'').replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi, '');
+    			
+	    		if(e.key === 'Enter' && trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
+	    			location.href = 'searchAct.do?keyword=' + keyword;
+	    		}
+	    	});
+	    	
+	    	document.querySelector('.fa-search').addEventListener('click', () => {
+	    		let keyword =  document.querySelector('#searchBar').value;
+	    		let trimedKeyword = keyword.replace(/^\s+|\s+$/gm,'').replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi, '');
+	    		
+	    		if(trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
+	    			location.href = 'searchAct.do?keyword=' + keyword;
+	    		}
+	    	});
+	    	
+	    	//공백만 입력했는지 검증하는 함수
+			function isEmptyKeyword(word) {
+				if(word.trim() === '') {
+					return true;
+				}
+				return false
+			}
+	    </script>
 </body>
 </html>

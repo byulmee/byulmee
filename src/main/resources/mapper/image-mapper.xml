@@ -16,7 +16,7 @@
 	<insert id="insertImage">
 		insert into image
 		values(seq_imgid.nextval, #{imgOrigin}, #{imgName}, #{imgPath}, sysdate, #{imgLevel},
-				default, #{imgRefcode}, #{imgRefno})
+				default, #{imgRefcode}w, #{imgRefno})
 	</insert>
 	
 	<select id="selectList" resultMap="imageResultSet">
