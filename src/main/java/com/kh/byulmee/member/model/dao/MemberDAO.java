@@ -1,9 +1,14 @@
 package com.kh.byulmee.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.member.model.vo.Member;
 
 /* by다혜: 회원 정보 처리 DAO */
@@ -56,5 +61,16 @@ public class MemberDAO {
   
   public Member selectActivityWriter(SqlSessionTemplate sqlSession, int acId) {
 		return sqlSession.selectOne("memberMapper.selectActivityWriter", acId);
+	}
+
+	public int getStarSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("memberMapper.getStarSearchListCount", keywords);
+	}
+
+	public ArrayList<Activity> getStarSearchResult(SqlSessionTemplate sqlSession, PageInfo pi, String[] keywords) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.getStarSearchList", keywords, rowBounds);
 	}	
 }

@@ -11,9 +11,8 @@
 <body>
     <footer id="fot">
         <div class="link">
-            <span>About Us</span>
-            <span>고객센터</span>
-            <span>공지사항</span>
+            <span id="goToAbout">About Us</span>
+            <span id="goToCustomerService">고객문의</span>
             <a href="#">맨위로</a>
         </div>
         <div class="info">
@@ -22,8 +21,17 @@
             </p>
         </div>
         <div class="rights">
-            <a href="#"><img src="resources/images/common/logo.png" alt="별미body"></a> copyright Ⓒ 2020 JavaBom All Right Reserved
+            <a href="home.do"><img src="resources/images/common/logo.png" alt="별미body"></a> copyright Ⓒ 2020 JavaBom All Right Reserved
         </div>
     </footer>
+    <script>
+    	document.getElementById('goToAbout').addEventListener('click', () => {
+    		location.href = "#";
+    	});
+    	
+    	document.getElementById('goToCustomerService').addEventListener('click', () => {
+    		location.href = "ccView.bo";
+    	});
+    </script>
 </body>
 </html>

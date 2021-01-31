@@ -81,6 +81,18 @@ public class ActivityServiceImpl implements ActivityService {
 	public int updateActivity(Activity a) {
 		return aDAO.updateActivity(sqlSession, a);
 	}
+	
+	//활동 검색 결과 게시글 전체 개수
+	@Override
+	public int getActSearchListCount(String[] keywords) {
+		return aDAO.getActSearchListCount(sqlSession, keywords);
+	}
+	
+	//활동 검색 결과 게시글 전체 리스트
+	@Override
+	public ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords) {
+		return aDAO.getActSearchResult(sqlSession, pi, keywords);
+	}
 
 	@Override
 	public int selectOrderSum(int acId) {

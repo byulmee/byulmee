@@ -143,7 +143,7 @@ a img {
 <%-- 
    <%@ include file="../common/menubar.jsp" %>
 --%>
-         
+	
 <nav>
    <ul>
       <li><a href=""><strong>로그인</strong></a></li>
