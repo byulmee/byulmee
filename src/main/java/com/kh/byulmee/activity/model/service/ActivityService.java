@@ -10,10 +10,9 @@ public interface ActivityService {
 	
 	int insertActivity(Activity a);
 
+	int getListCount(String memId);
 
-	int getListCount();
-
-	ArrayList<Activity> selectList(PageInfo pi);
+	ArrayList<Activity> selectList(String memId, PageInfo pi);
 
 	Activity selectAct(int actNo);
 
@@ -26,6 +25,10 @@ public interface ActivityService {
 	int updateActivity(Activity a);
 
 	Activity selectActivity(int acId);
+
+	int getUserListCount(String memId);
+
+	ArrayList<Activity> selectUserList(String memId, PageInfo pi);
 
 
 }

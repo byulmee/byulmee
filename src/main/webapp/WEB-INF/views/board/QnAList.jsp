@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>고객센터</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
 	rel="stylesheet" />
@@ -40,9 +41,10 @@
 	font-weight: bold;
 }
 
-#serch {
-	height: 35px;
-	width: 120px;
+#searchValue {
+	height: 30px;
+	width: 160px;
+	margin-bottom: 10px;
 }
 
 #listArea {
@@ -59,6 +61,10 @@ thead {
 	background-color: #F4F4F4;
 }
 
+tbody {
+	min-height: 250px;
+}
+
 tr {
 	text-align: center;
 }
@@ -72,40 +78,69 @@ tr {
 }
 
 #buttonArea > button {
-	font-size: 10px;
+	font-size: 12px;
 }
 
 th {
-	font-size: 10px;
+	font-size: 11px;
 }
 
 td {
-	font-size: 10px;
+	font-size: 11px;
+}
+.searchbtn{
+	float: right; 
+	background-color: #FF6833; 
+	color: white;
+	font-size: 11px;
+	margin-left: 8px;
 }
 
+.select-script{margin-bottom: 10px; position:relative; width:217px; height:30px; line-height:30px; border:1px solid #606976; border-radius:4px; text-transform:uppercase; background:#fff;}
+.select-script label{position:absolute; width:100%; font-size:.86em; color:#606976; top:0; left:0; padding:0 5%;}
+.select-script label:after{content:'▼'; width:42px; height:30px; position:absolute; top:0; right:0; font-size:.76em; color:#fff; text-align:center; background:#FF6833; border-radius: 3px;}
+.select-script select{width:100%; height:30px; opacity:0; filter:alpha(opacity=0); -ms-filter:alpha(opacity=0)/* IE 8 */;}
 /*
 td {
 	background-color: white;
 } */
 /* background-color: #F4F4F4; */
 </style>
+<script>
+$(document).ready(function(){
+	 
+    var select = $('.select-script select');
+    select.change(function(){
+         var select_name = $(this).children('option:selected').text();
+        $(this).siblings("label").text(select_name);
+        console.log(select_name);
+    });
+ 	
+});
+</script>
 </head>
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div id="mainFrame">
 		<h2 id="mainName" style="font-weight: bold">고객센터</h2>
 		<div id="serchFrame">
-			<span> 검색 <input type="text" id="serch" name="serch"
-				placeholder="별미별미">
-			</span>
+			<div class="select-box select-script">
+  				<label for="selectbox" id="selectlabel">선택해 주세요</label>
+				<select id="selectbox" title="선택 구분">
+     					<option selected="selected">선택해 주세요</option>
+     					<option>제목</option>
+				        <option>카테고리</option>
+				        <option>작성자</option>
+				</select>
+			</div>
+			<input type="text" id="searchValue" name="serch" placeholder="입력해주세요">
+			<button type="button" class="btn searchbtn" onclick="searchCusQna();">검색</button>
 		</div>
 		<br> <br> <br>
 		<div id="noticeFrame">
 			<table class="table table-hover" id="listArea">
 				<thead>
 					<tr>
-						<th scope="col" class="text-center" width="2%"><input
-							type="checkbox" name="noticeNum1" value="noticeNum1"></th>
 						<th scope="col" class="text-center" width="5%">No</th>
 						<th scope="col" class="text-center" width="10%">분류</th>
 						<th scope="col" class="text-center" width="10%">조회수</th>
@@ -115,92 +150,139 @@ td {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>1</td>
-						<td>일반</td>
-						<td>23</td>
-						<td>별미 어떻게 사용합니까?</td>
-						<td>정찬오</td>
-						<td>2020-11-28</td>
-					<tr>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>2</td>
-						<td>마이페이지</td>
-						<td>42</td>
-						<td>별미에서 비밀번호 수정방법</td>
-						<td>백상용</td>
-						<td>2020-12-12</td>
-					<tr>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>3</td>
-						<td>배송</td>
-						<td>25</td>
-						<td>상품 배송 지연 문의</td>
-						<td>김다혜</td>
-						<td>2020-12-19</td>
-					<tr>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>4</td>
-						<td>일반</td>
-						<td>56</td>
-						<td>활동문의</td>
-						<td>손제근</td>
-						<td>2020-12-25</td>
-					<tr>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>5</td>
-						<td>상품</td>
-						<td>32</td>
-						<td>상품정보</td>
-						<td>이형경</td>
-						<td>2020-12-28</td>
-					<tr>
-					<tr>
-						<td><input type="checkbox" name="noticeNum1"
-							value="noticeNum1"></td>
-						<td>6</td>
-						<td>배송</td>
-						<td>28</td>
-						<td>배송문의</td>
-						<td>한봄희</td>
-						<td>2020-12-30</td>
-					<tr>
+					<c:forEach var="q" items="${ list }">
+						<tr class="QnAValue">
+							<td>${ q.cusqnaNo }</td>
+							<td><c:choose>
+								<c:when test="${ q.cusqnaCategory eq '0' }">배송</c:when>
+								<c:when test="${ q.cusqnaCategory eq '1' }">환불/반품</c:when>
+								<c:when test="${ q.cusqnaCategory eq '2' }">주문/결제</c:when>
+								<c:when test="${ q.cusqnaCategory eq '3' }">상품정보</c:when>
+								<c:when test="${ q.cusqnaCategory eq '4' }">마이페이지</c:when>
+								<c:when test="${ q.cusqnaCategory eq '5' }">기타</c:when>
+								<c:when test="${ q.cusqnaCategory eq '6' }">신고</c:when>
+							</c:choose></td>
+							<td>${ q.cusqnaCount }</td>
+							<td>${ q.cusqnaTitle }</td>
+							<td>${ q.nickName }</td>
+							<td>${ q.cusqnaDate }</td>
+						<tr>
+					</c:forEach>
 				</tbody>
 			</table>
-			
 		</div>
-		<div id="buttonArea">
-			<button type="button" class="btn btn-secondary" style="float: left"disabled>삭제</button>		
+		<div id="buttonArea">	
 			<button type="button" class="btn" style="float: right; background-color: #FF6833; color: white" onclick="location.href='QnAInsertView.bo'">질문 작성하기</button>	
 		</div>
-		<div id="pagingArea">
-			<!-- 맨 처음으로 -->
-			<button class="btn btn-light" onclick="#">&lt;&lt;</button>
-			<!-- 이전 페이지로 -->
-			<button class="btn btn-light" onclick="#" id="beforeBtn">&lt;</button>
+			<div id="pagingArea">
+				<c:if test="${ searchValue eq null }">
+					<c:set var="loc" value="QnAList.bo"/>
+				</c:if>
+				<c:if test="${ searchValue ne null }">
+					<c:set var="loc" value="searchCusQna.bo"/>
+				</c:if>
 			
-			<!-- 숫자 목록 버튼 -->
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">1</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">2</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">3</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">...</button>
-			<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">20</button>
-			
-			<!-- 다음 페이지로 -->
-			<button class="btn btn-light" onclick="#" id="afterBtn">&gt;</button>
-			<!-- 맨 끝으로 -->
-			<button class="btn btn-light" onclick="#">&gt;&gt;</button>
-		</div>
+				<!-- 이전 페이지로 -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="${ loc }">
+						<c:if test="${ searchValue ne null }">
+							<c:param name="searchCondition" value="${ searchCondition }"/>
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
+				</c:if>
+				
+				<!-- 숫자 목록 버튼 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="${ loc }">
+							<c:if test="${ searchValue ne null }">
+								<c:param name="searchCondition" value="${ searchCondition }"/>
+								<c:param name="searchValue" value="${ searchValue }"/>
+							</c:if>
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
+					</c:if>
+				</c:forEach>
+				
+				<!-- 다음 페이지로 -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="${ loc }">
+						<c:if test="${ searchValue ne null }">
+							<c:param name="searchCondition" value="${ searchCondition }"/>
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
+				</c:if>
+			</div>
 	</div>
+	<script>
+		$(function() {
+			$('.QnAValue').mouseenter(function(){
+				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': '#585858', 'font-weight':'normal'});
+			}).click(function(){
+				var cusqnaNo=$(this).children('td').eq(0).text();
+				console.log(cusqnaNo);
+				location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage};
+			});
+		});
+
+		function searchCusQna(){
+			var searchValue = $("#searchValue").val();
+			var searchCondition;
+			var seCd = $("#selectlabel").text();
+			if(seCd == "카테고리") {
+				searchCondition = "category";
+			} else if(seCd == "제목") {
+				searchCondition = "title";
+			} else {
+				searchCondition = "writer";
+			}
+
+			
+			console.log(searchCondition);
+			console.log(searchValue);
+ 			if(searchCondition == "category"){
+				if(searchValue == "배송"){
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "환불/반품") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "주문/결제") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "상품정보") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "마이페이지") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "기타") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else if(searchValue == "신고") {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				} else {
+					alert("카테고리 검색어가 정확하지 않습니다.");
+					$("#searchValue").focus();
+					return false;
+				}
+			} else {
+				location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+			}
+		}
+	</script>
 </body>
 </html>

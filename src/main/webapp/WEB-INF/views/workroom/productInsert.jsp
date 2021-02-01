@@ -211,6 +211,11 @@ input.checkbox:checked + label.input-label.radio::before {
 	border-radius: 25px;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 </style>
 </head>
@@ -284,10 +289,10 @@ input.checkbox:checked + label.input-label.radio::before {
 				</div>
 				<div class="inputText">
 					제목&nbsp;&nbsp;<input type="text" name="proTitle" class="inputValue" id="inputTitle"><br> 
-					상품 가격&nbsp;&nbsp;<input type="text" name="proPrice" class="inputValue" id="inputTitle"><br> 
-					배송비&nbsp;&nbsp;<input type="text" name="proCharge" class="inputValue" id="inputTitle"><br>
-					상품 재고&nbsp;&nbsp;<input type="text" name="proStock" class="inputValue" id="inputTitle"><br>
-					최대 구매 가능 수량&nbsp;&nbsp;<input type="text" name="proMaximum" class="inputValue" id="inputTitle"><br> 
+					상품 가격&nbsp;&nbsp;<input type="number" name="proPrice" class="inputValue" id="inputTitle"><br> 
+					배송비&nbsp;&nbsp;<input type="number" name="proCharge" class="inputValue" id="inputTitle"><br>
+					상품 재고&nbsp;&nbsp;<input type="number" name="proStock" class="inputValue" id="inputTitle"><br>
+					최대 구매 가능 수량&nbsp;&nbsp;<input type="number" name="proMaximum" class="inputValue" id="inputTitle"><br> 
 					관련 활동 링크&nbsp;&nbsp;<input type="text" name="proUrl" class="inputValue" id="inputTitle" placeholder="http://">
 				</div>
 			</div>

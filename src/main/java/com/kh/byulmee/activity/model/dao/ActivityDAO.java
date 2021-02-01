@@ -23,22 +23,20 @@ public class ActivityDAO {
 	public int addReadCount(SqlSessionTemplate sqlSession, int acId) {
 		return sqlSession.update("activityMapper.addReadCount", acId);
 	}
-		public Activity selectActivity(SqlSessionTemplate sqlSession, int acId) {
+	public Activity selectActivity(SqlSessionTemplate sqlSession, int acId) {
 		return sqlSession.selectOne("activityMapper.selectActivity", acId);	
 	}
 
-
-
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("activityMapper.getListCount");
+	public int getListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("activityMapper.getListCount", memId);
 	}
 
-	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession, String memId, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		
-		return (ArrayList)sqlSession.selectList("activityMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("activityMapper.selectList", memId, rowBounds);
 	}
 
 	public Activity selectAct(SqlSessionTemplate sqlSession, int actNo) {
@@ -64,6 +62,17 @@ public class ActivityDAO {
 	public int updateActivity(SqlSessionTemplate sqlSession, Activity a) {
 		
 		return sqlSession.update("activityMapper.updateActivity", a);
+	}
+
+	public int getUserListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("activityMapper.getUserListCount", memId);
+	}
+
+	public ArrayList<Activity> selectUserList(SqlSessionTemplate sqlSession, String memId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("activityMapper.selectUserList", memId, rowBounds);
 	}
 
 }

@@ -41,17 +41,15 @@ public class ActivityServiceImpl implements ActivityService {
 		return ac;
 	}
 
-
-
 	@Override
-	public int getListCount() {
-		return aDAO.getListCount(sqlSession);
+	public int getListCount(String memId) {
+		return aDAO.getListCount(sqlSession, memId);
 	}
 
 	@Override
-	public ArrayList<Activity> selectList(PageInfo pi) {
+	public ArrayList<Activity> selectList(String memId, PageInfo pi) {
 		
-		return aDAO.selectList(sqlSession, pi);
+		return aDAO.selectList(sqlSession, memId, pi);
 	}
 
 	@Override
@@ -81,6 +79,16 @@ public class ActivityServiceImpl implements ActivityService {
 	public int updateActivity(Activity a) {
 		
 		return aDAO.updateActivity(sqlSession, a);
+	}
+
+	@Override
+	public int getUserListCount(String memId) {
+		return aDAO.getUserListCount(sqlSession, memId);
+	}
+
+	@Override
+	public ArrayList<Activity> selectUserList(String memId, PageInfo pi) {
+		return aDAO.selectUserList(sqlSession, memId, pi);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.Notice;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.board.model.vo.SearchCondition;
 
 @Repository("bDAO")
 public class BoardDAO {
@@ -53,6 +54,48 @@ public class BoardDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectCusQnAList", null, rowBounds);
+	}
+
+	public int insertCusQna(SqlSessionTemplate sqlSession, CustomerQna c) {
+		return sqlSession.insert("boardMapper.insertCusQna", c);
+	}
+
+	public int updateCusCount(SqlSessionTemplate sqlSession, int cusqnaNo) {
+		return sqlSession.update("boardMapper.updateCusCount", cusqnaNo);
+	}
+
+	public CustomerQna selectCusQnA(SqlSessionTemplate sqlSession, int cusqnaNo) {
+		return sqlSession.selectOne("boardMapper.selectCusQnA", cusqnaNo);
+	}
+
+	public int updateCusQna(SqlSessionTemplate sqlSession, CustomerQna c) {
+		return sqlSession.update("boardMapper.updateCusQna", c);
+	}
+
+	public int cusQnaDelete(SqlSessionTemplate sqlSession, int cusqnaNo) {
+		return sqlSession.update("boardMapper.cusQnaDelete", cusqnaNo);
+	}
+
+	public int getSearchNoticeListCount(SqlSessionTemplate sqlSession, String value) {
+		return sqlSession.selectOne("boardMapper.getSearchNoticeListCount", value);
+	}
+
+	public ArrayList<Notice> selectSearchNoticeList(SqlSessionTemplate sqlSession, String value, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchNoticeList", value, rowBounds);
+	}
+
+	public int getSearchCusListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		return sqlSession.selectOne("boardMapper.getSearchCusListCount", sc);
+	}
+
+	public ArrayList<CustomerQna> selectSearchCusQnAList(SqlSessionTemplate sqlSession, SearchCondition sc,
+			PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchCusQnAList", sc, rowBounds);
 	}
 
 }

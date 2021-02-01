@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +47,24 @@
 </style>
 <script>
 $(document).ready(function(){
-	 
+	//카테고리 초기 세팅
+	var setCategory = $('#cusqnaCategory').val();
+	if(setCategory == "0"){
+		$("label[for='selectbox']").text("배송");
+	} else if(setCategory == "1"){
+		$("label[for='selectbox']").text("환불/반품");
+	} else if(setCategory == "2"){
+		$("label[for='selectbox']").text("주문/결제");
+	} else if(setCategory == "3"){
+		$("label[for='selectbox']").text("상품 정보");
+	} else if(setCategory == "4"){
+		$("label[for='selectbox']").text("마이페이지");
+	} else if(setCategory == "5"){
+		$("label[for='selectbox']").text("기타");
+	} else {
+		$("label[for='selectbox']").text("신고");
+	}
+	//카테고리 변경시 
     var select = $('.select-script select');
     select.change(function(){
          var select_name = $(this).children('option:selected').text();
@@ -76,17 +93,17 @@ $(document).ready(function(){
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div id="mainFrame" style="padding-left: 10%; padding-right: 10%;">
-		<h2 align="center" style="padding-top: 15px; font-weight: bold">QnA
-			등록</h2>
+		<h2 align="center" style="padding-top: 15px; font-weight: bold">QnA 수정</h2>
 		<hr>
-		<form action="cusQnaInsert.bo" method="post">
+		<form action="cusUpdate.bo" method="post">
 			<div class="form-group row">
-				<input type="hidden" name="memId" value="${ loginUser.memId }">
-				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory">
+				<input type="hidden" name="cusqnaNo" value="${ customerqna.cusqnaNo }">
+				<input type="hidden" name="page" value="${ page }">
+				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory" value="${ customerqna.cusqnaCategory }">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
 					<input type="text" name="cusqnaTitle" class="form-control"
-						id="inputTitle">
+						id="inputTitle" value="${ customerqna.cusqnaTitle }">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -111,12 +128,12 @@ $(document).ready(function(){
 				<label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
 				<div class="col-sm-10">
 					<textarea type="text" name="cusqnaContent" class="form-control"
-						id="inputContent" style="height: 400px"></textarea>
+						id="inputContent" style="height: 400px">${ customerqna.cusqnaContent }</textarea>
 				</div>
 			</div>
 			<div id="buttonArea">
-			<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">등록</button>
-			<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="#">취소</button>
+				<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">수정</button>
+				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='cusQnADetail.bo?cusqnaNo=${ customer.cusqnaNo }&page=${ page }'">취소</button>
 			</div>
 		</form>
 	</div>

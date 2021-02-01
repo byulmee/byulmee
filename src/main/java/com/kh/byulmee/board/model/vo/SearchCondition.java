@@ -1,4 +1,4 @@
-package com.kh.byulmee.member.model.vo;
+package com.kh.byulmee.board.model.vo;
 
 import java.sql.Date;
 
@@ -13,11 +13,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Favorite {
-	private int favNo;
-	private String memId;
-	private Date favDate;
-	private String favStatus;
-	private int favRefcode;
-	private int favRefno;
+public class SearchCondition {
+	private String writer;
+	private String title;
+	private int category;
 }

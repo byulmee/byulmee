@@ -17,9 +17,23 @@
 		from product
 	</select>
 	
+	<select id="getUserListCount" resultType="_int">
+		select count(*)
+		from product
+		where mem_id = #{memId}
+	</select>
+	
 	<select id="selectList" resultMap="productResultSet">
 		select *
 		from product
+		where mem_id = #{memId}
+		order by pro_no desc
+	</select>
+	
+	<select id="selectUserList" resultMap="productResultSet">
+		select *
+		from product
+		where mem_id = #{memId} and pro_status = 'Y'
 		order by pro_no desc
 	</select>
 	

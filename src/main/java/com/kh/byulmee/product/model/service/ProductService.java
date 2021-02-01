@@ -11,7 +11,7 @@ public interface ProductService {
 
 	int getListCount();
 
-	ArrayList<Product> selectList(PageInfo pi);
+	ArrayList<Product> selectList(PageInfo pi, String memId);
 
 	Product selectPro(int proNo);
 
@@ -22,5 +22,9 @@ public interface ProductService {
 	int deletePro(int proNo);
 
 	int updateProduct(Product p);
+
+	int getUserListCount(String memId);
+
+	ArrayList<Product> selectUserList(String memId, PageInfo pi);
 
 }

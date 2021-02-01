@@ -45,16 +45,22 @@
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
 	
-
+ <select id="getUserListCount" resultType="_int">
+ 	select count(*)
+  	from activity
+  	where mem_id = #{memId} and act_status = 'Y'
+ </select>
   
   <select id="getListCount" resultType="_int">
   	select count(*)
   	from activity
+  	where mem_id = #{memId} 
   </select>
   
   <select id="selectList" resultMap="activityResultSet">
   	select *
   	from activity
+  	where mem_id = #{memId}
   	order by act_no desc
   </select>
   
@@ -90,4 +96,11 @@
   		act_guide = #{actGuide}
   	where act_no = #{actNo}	
   </update>
+  
+  <select id="selectUserList" resultMap="activityResultSet">
+  	select *
+  	from activity
+  	where mem_id = #{memId} and act_status = 'Y'
+  	order by act_no desc
+  </select>
 </mapper>
