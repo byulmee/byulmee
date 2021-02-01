@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,7 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.order.model.vo.Order;
 
 @Controller
 public class AdminController {
@@ -34,8 +37,8 @@ public class AdminController {
 	private AdminService abService;
 
 	@RequestMapping("adminMain.ad")
-	public String adminMain() {
-//		System.out.println("관리자화면");
+	public String adminMain(@ModelAttribute("Order") Order order) {
+		
 		return "admin_main";
 	}
 
@@ -89,6 +92,7 @@ public class AdminController {
 		if(nlist != null && qlist != null) {		
 			mv.addObject("qlist", qlist);
 			mv.addObject("pi", pi);
+			mv.addObject("pi2", pi2);
 			mv.addObject("nlist", nlist);
 			mv.setViewName("admin_notice");
 		} else {
@@ -128,7 +132,7 @@ public class AdminController {
 	}
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
-			@RequestParam("altBan") String altBan,
+			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl,
 								HttpServletRequest request, HttpSession session, Model model) {
 		
 
@@ -148,6 +152,7 @@ public class AdminController {
 				ba.setBanName(banName);
 				ba.setBanPath(banPath);
 				ba.setBanAlt(altBan);
+				ba.setBanUrl(banUrl);
 			}
 				
 

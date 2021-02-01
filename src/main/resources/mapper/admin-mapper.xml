@@ -48,13 +48,14 @@
   		<result property="banOrigin" column="BAN_NAME"/>
   		<result property="banName" column="BAN_ORIGIN"/>
   		<result property="banPath" column="BAN_PATH"/>
+  		<result property="banUrl" column="BAN_URL"/>
   	</resultMap>
   	
   	<!-- 배너 -->
   	<insert id="insertBanner">
   		insert into banner
   		values(seq_bannid.nextval, #{banAlt}, default, #{banOrigin}, 
-  				#{banName}, #{banPath})
+  				#{banName}, #{banPath}, #{banUrl})
   	</insert>
   	
   	<select id="getBannerListCount" resultType="_int">

@@ -50,9 +50,9 @@
 	                  <td align="center">1</td>
 	                  <td align="center">1</td>
 	                  <td align="center">1</td>
-	                  <td align="center">5,300,000</td>
-	                  <td align="center">2,200,000</td>
-	                  <td align="center">7,500,000</td>
+	                  <td align="center">${Order.ordPhone}</td>
+	                  <td align="center">${Order.ordName}</td>
+	                  <td align="center">${Order.ordRequest}</td>
 	               </tr>
 	       		</table>
 	       	</div>

@@ -112,7 +112,7 @@ td {
 					</tr>
 				</thead>
 				<tbody>
-					
+					<c:forEach var="n" items="${ list }">
 						<tr class="notice">
 							<td>${ n.notNo }
 							<%-- <input type="hidden" name="notNo" value="${ n.notNo }"> --%></td>
@@ -141,7 +141,7 @@ td {
 					<c:url var="before" value="noticeListView.bo">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
@@ -154,7 +154,7 @@ td {
 						<c:url var="pagination" value="noticeListView.bo">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -166,7 +166,7 @@ td {
 					<c:url var="after" value="noticeListView.bo">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
 				</c:if>
 			</div>
 	</div>

@@ -175,7 +175,7 @@ BODY {
 			<h2 align="center">회원 전체 목록</h2>
 			<table id="idTable">
 				<tr>
-					<th align="left"><input type="checkbox"/> 회원 번호 </th>
+					<th align="center">회원 번호 </th>
      				<th align="left">아이디 </th>
           			<th align="left">이름</th>
            			<th align="left">닉네임</th>
@@ -189,7 +189,7 @@ BODY {
        				<c:if test="list == null">
        				</c:if>
        			<tr>
-                  <td align="left"><input type="checkbox"/> ${m.memNo }</td>
+                  <td align="center">${m.memNo }</td>
                   <td align="left">${m.memId }</td>
                   <td align="left">${m.memName }</td>
                   <td align="left">${m.memNickname }</td>
@@ -215,7 +215,7 @@ BODY {
 					<c:url var="before" value="adminMember.ad">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
@@ -228,7 +228,7 @@ BODY {
 						<c:url var="pagination" value="adminMember.ad">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -240,7 +240,7 @@ BODY {
 					<c:url var="after" value="adminMember.ad">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
 				</c:if>
 			</div>	
 <!-- 		 <div id="" class="" align="center""> -->

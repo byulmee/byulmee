@@ -20,4 +20,5 @@ public class Banner {
 	private String banOrigin;
 	private String banName;
 	private String banPath;
+	private String banUrl;
 }

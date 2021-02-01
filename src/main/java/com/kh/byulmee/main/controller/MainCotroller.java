@@ -15,7 +15,7 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.member.model.service.MemberService;
-import com.kh.byulmee.product.model.vo.service.ProductService;
+import com.kh.byulmee.product.model.service.ProductService;
 
 @Controller
 public class MainCotroller {
@@ -74,7 +74,7 @@ public class MainCotroller {
 			mv.addObject("starListPi", starListPi);
 			mv.addObject("actListPi", actListPi);
 			mv.addObject("starList", starList);
-			mv.addObject("actList", actList);
+			mv.addObject("actList", actList);m
 			mv.setViewName("/activity/activityList");
 			
 			return mv;

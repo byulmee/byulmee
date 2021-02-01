@@ -24,6 +24,7 @@
 		});
 	});
 </script>
+
 <body>
  	<header class="navbar">
 		<span class="navbar_logo">
@@ -47,10 +48,12 @@
   		<form action="BannerInsert.ad" method="post" enctype="Multipart/form-data">
 		<table id="baTable">
 			<tr>
-				<th align="left">베너 이미지 업로드 : <input type="file" name="updateBan" class="banner"> </th>
+				<th align="left">베너 이미지 업로드 : <input type="file" name="updateBan" class="banner" > </th>
   			</tr>
   			<tr>
-  				<td class="batd1"> alt : <input type="text" name="altBan" required align="left" style="width:230px;"> </td>
+  				<td class="batd1"> alt : <input type="text" name="altBan" required align="left" style="width:230px;"> 
+  				  &nbsp; url : <input type="url" name="banUrl" style="width:350px;"/>
+  				</td>
   			</tr>
   			<tr>
   				<td class="batd2" align="right">
@@ -64,7 +67,6 @@
   		<div class="delete">
   			<button>선택 삭제</button>
   		</div>
-  
   		<div class="idlist">
 			<table id="idTable">
 				<tr>
@@ -75,7 +77,7 @@
            		</tr>
 	           	<c:forEach var="b" items="${ list }">
 	           		<tr>
-	                  <td align="left">${ b.banNo }</td>
+	                  <td align="left"><input type="checkbox"/>${ b.banNo }</td>
 	                  <td align="left">${ b.banAlt }</td>
 	                  <td align="left"><a href="#" class="banner1">${ b.banName }</a></td>
 	                  <td align="center">
@@ -91,10 +93,10 @@
 					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="noticeListView.bo">
+					<c:url var="before" value="adminBanner.ad">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
@@ -104,10 +106,10 @@
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagination" value="noticeListView.bo">
+						<c:url var="pagination" value="adminBanner.ad">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -116,10 +118,10 @@
 					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="after" value="noticeListView.bo">
+					<c:url var="after" value="adminBanner.ad">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
 				</c:if>
 			</div>
          </div>

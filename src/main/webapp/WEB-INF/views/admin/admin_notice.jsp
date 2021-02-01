@@ -34,7 +34,6 @@
   		<h1 align="center">공지사항</h1>
   		
   		<div class="pick">
-		<button id="pick2">등록하기</button>
 		</div>
 		
 <!-- 		<div class="idlist"> -->
@@ -64,7 +63,7 @@
 					<c:url var="before" value="adminNotice.ad">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
@@ -77,7 +76,7 @@
 						<c:url var="pagination" value="adminNotice.ad">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -89,7 +88,7 @@
 					<c:url var="after" value="adminNotice.ad">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
 				</c:if>
 			</div>	
            	
@@ -145,7 +144,7 @@
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
-				<c:forEach var="b" begin="${ pi2.startPage }" end="${ pi.endPage }">
+				<c:forEach var="b" begin="${ pi2.startPage }" end="${ pi2.endPage }">
 					<c:if test="${ b eq pi2.currentPage }">
 						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ b }</button>
 					</c:if>
