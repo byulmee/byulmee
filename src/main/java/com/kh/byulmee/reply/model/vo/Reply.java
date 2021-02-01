@@ -17,6 +17,7 @@ public class Reply {
 	private int repNo;
 	private String memId;
 	private String repContent;
+	private String nickName;
 	private Date repDate;
 	private String repStatus;
 	private int repRefcode;

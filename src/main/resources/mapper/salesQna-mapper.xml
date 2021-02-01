@@ -11,9 +11,38 @@
 		<result property="salqnaStatus" column="SALQNA_STATUS"/>
 		<result property="salqnaRefcode" column="SALQNA_REFCODE"/>
 		<result property="salqnaRefno" column="SALQNA_REFNO"/>
+    <result property="salqnaStarcode" column="SALQNA_STARCODE"/>
+		<result property="salqnaRestatus" column="SALQNA_RESTATUS"/>
 		<collection property="reply" resultMap="replyResultSet"></collection>
 		<collection property="member" resultMap="memberResultSet"></collection>
 	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="repNo" column="REP_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="repContent" column="REP_CONTENT"/>
+		<result property="repDate" column="REP_DATE"/>
+		<result property="repStatus" column="REP_STATUS"/>
+		<result property="repRefcode" column="REP_REFCODE"/>
+		<result property="repRefno" column="REP_REFNO"/>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="mem_no"/>
+	  	<result property="memId" column="mem_id"/>
+	  	<result property="memPwd" column="mem_pwd"/>
+	  	<result property="memName" column="mem_name"/>
+	  	<result property="memPostcode" column="mem_postcode"/>
+	  	<result property="memBasicAddr" column="mem_basicaddr"/>
+	  	<result property="memDetailAddr" column="mem_detailaddr"/>
+	  	<result property="memPhone" column="mem_phone"/>
+	  	<result property="memNickname" column="mem_nickname"/>
+	  	<result property="memEmail" column="mem_email"/>
+	  	<result property="memLevel" column="mem_level"/>
+	  	<result property="memDate" column="mem_Date"/>
+	  	<result property="memStatus" column="mem_status"/>
+	  	<result property="memLoginType" column="mem_login_type"/>
+  </resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
 		<id property="repNo" column="REP_NO"/>
@@ -123,4 +152,49 @@
 		insert into sales_qna
 		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'P', sysdate, #{salqnaContent}, default, 1, #{salqnaRefno}, #{salqnaStarcode}, default)
 	</insert>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from sales_qna
+		where salqna_status = 'Y' and salqna_starcode = #{memId}
+	</select>
+	
+	<select id="selectSalQnaList" resultMap="salesQnaListResultSet">
+		select *
+		from sales_qna
+			 join member using(mem_id)
+		where salqna_status = 'Y' and salqna_starcode = #{memId}
+		order by salqna_no desc
+	</select>
+	
+	<select id="selectSalQna" resultMap="salesQnaListResultSet">
+		select *
+		from sales_qna
+			 join member using(mem_id)
+		where salqna_status = 'Y' and salqna_no = #{salqnaNo}
+	</select>
+	
+	<update id="updateSalstatus">
+		update sales_qna
+		set salqna_restatus = 'Y'
+		where salqna_no = #{repRefno}
+	</update>
+	
+	<update id="unUpdateSalstatus">
+		update sales_qna
+		set salqna_restatus = 'N'
+		where salqna_no = #{repRefno}	
+	</update>
+	
+	<update id="salQnaDelete">
+		update sales_qna
+		set salqna_status = 'N'
+		where salqna_no = #{salqnaNo}
+	</update>
+	
+	<update id="salQnaUpdate">
+		update sales_qna
+		set salqna_title = #{salqnaTitle}, salqna_content = #{salqnaContent}, salqna_date = sysdate
+		where salqna_no = #{salqnaNo}
+	</update>
 </mapper>

@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public ArrayList<Product> selectList(PageInfo pi) {
-		return pDAO.selectList(sqlSession, pi);
+	public ArrayList<Product> selectList(PageInfo pi, String memId) {
+		return pDAO.selectList(sqlSession, pi, memId);
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int updateProduct(Product p) {
 		return pDAO.updateProduct(sqlSession, p);
+	}
+
+	@Override
+	public int getUserListCount(String memId) {
+		return pDAO.getUserListCount(sqlSession, memId);
+	}
+
+	@Override
+	public ArrayList<Product> selectUserList(String memId, PageInfo pi) {
+		return pDAO.selectUserList(sqlSession, pi, memId);
 	}
 
 	//상품 검색 결과 게시글 전체 갯수
@@ -91,6 +101,11 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int selectOrderSum(int pdId) {
 		return pDAO.selectOrderSum(sqlSession, pdId);
+  }
+  
+	@Override
+	public ArrayList<Product> getPopularProList() {
+		return pDAO.getPopularProList(sqlSession);
 	}
 	
 }

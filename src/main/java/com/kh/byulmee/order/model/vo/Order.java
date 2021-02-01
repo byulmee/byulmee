@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.product.model.vo.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,7 +36,11 @@ public class Order {
 	private String ordStatus;
 	private int ordRefcode;
 	private int ordRefno;
+	private String ordStarcode;
+	private String ordParcelcode;
+	private int ordRePay;
 	
+	private Product product;
 	private Activity activity;
 	private Member member;
 	private Image image;

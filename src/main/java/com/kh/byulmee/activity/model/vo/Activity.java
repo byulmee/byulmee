@@ -17,6 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity {
+	
 	private int actNo;
 	private String memId;
 	private String actPhone;
@@ -34,6 +35,8 @@ public class Activity {
 	private int actCount;
 	private Date actDate;
 	private String actStatus;
+	private double actRating;
+	private int actReviewCnt;
 	private Member member;
 	private Image image;
 }

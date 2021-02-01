@@ -2,7 +2,6 @@ package com.kh.byulmee.activity.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -250,5 +249,4 @@ public class ActivityController {
 		}
 		return mv;
 	}
-
 }

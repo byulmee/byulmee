@@ -15,4 +15,21 @@
 		insert into favorite
 		values(seq_favid.nextval, #{ memId }, sysdate, default, 0, #{ favRefno })
 	</insert>
+	
+	<select id="selectStarFavorite" resultType="_int">
+		select count(*)
+		from favorite
+		where  fav_status = 'Y' and mem_id = #{memId} and fav_refcode = #{favRefcode} and fav_refno = #{favRefno}
+	</select>
+	
+	<insert id="starFavInsert">
+		insert into favorite
+		values(seq_favid.nextval, #{memId}, sysdate, default, #{favRefcode}, #{favRefno})
+	</insert>
+	
+	<update id="starFavDelete">
+		update favorite
+		set fav_status = 'N'
+		where mem_id = #{memId} and fav_refcode = #{favRefcode} and fav_refno = #{favRefno} 
+	</update>
 </mapper>
