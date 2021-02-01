@@ -122,7 +122,7 @@ BODY {
 			let memberId = $(this).data("id");
 			let button = $(this);
 
-			$.post("/byulmee/api/admin/level/update", "memberId=" + memberId + "&level=" + level, function(res) {
+			$.post("/api/admin/level/update", "memberId=" + memberId + "&level=" + level, function(res) {
 				button.text(level).data("level", level);
 			});
 		});
@@ -132,7 +132,7 @@ BODY {
 			let memberId = $(this).data("id");
 			let button = $(this);
 
-			$.post("/byulmee/api/admin/status/update", "memberId=" + memberId + "&status=" + status, function(res) {
+			$.post("/api/admin/status/update", "memberId=" + memberId + "&status=" + status, function(res) {
 				button.text(status).data("status", status);
 			});
 		});

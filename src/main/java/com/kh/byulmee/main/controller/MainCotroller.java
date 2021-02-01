@@ -82,7 +82,7 @@ public class MainCotroller {
 			mv.addObject("starListPi", starListPi);
 			mv.addObject("actListPi", actListPi);
 			mv.addObject("starList", starList);
-			mv.addObject("actList", actList);m
+			mv.addObject("actList", actList);
 			mv.setViewName("/activity/activityList");
 			
 			return mv;

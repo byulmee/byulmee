@@ -18,7 +18,7 @@
 			let bannerNo = $(this).data("id");
 			let button = $(this);
 
-			$.post("/byulmee/api/admin/open/update", "bannerNo=" + bannerNo + "&open=" + open, function(res) {
+			$.post("/api/admin/open/update", "bannerNo=" + bannerNo + "&open=" + open, function(res) {
 				button.text(open).data("open", open);
 			});
 		});

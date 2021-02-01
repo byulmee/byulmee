@@ -46,7 +46,7 @@ public class AdminController {
 	public ModelAndView memberList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
 		String id = ((Member) request.getSession().getAttribute("loginUser")).getMemId();
-
+		System.out.println(id);
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
