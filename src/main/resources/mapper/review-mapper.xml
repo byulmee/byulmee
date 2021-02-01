@@ -57,17 +57,44 @@
 		<![CDATA[where rownum <= 6]]>
 	</select>
 	
+	<select id="selectProductReviewList" resultMap="reviewResultSet">
+		select *
+		from (
+		    select *
+		    from review r
+		    	left outer join member m on r.mem_id = m.mem_id
+		    	left outer join image i on i.img_refno = r.rev_no
+		    where rev_refcode = 1 and rev_refno = #{pdId} and rev_status = 'Y'
+		    order by rev_no desc
+		    )
+		<![CDATA[where rownum <= 6]]>
+	</select>
+	
 	<select id="selectReviewDetail" resultMap="reviewResultSet">
 		select *
 		from review r
 		    left outer join member m on r.mem_id = m.mem_id
 			left outer join image i on i.img_refno = r.rev_no
-		where rev_no = #{revNo}
+		where rev_no = #{revNo} and r.rev_refcode = 0
+	</select>
+	
+	<select id="salesProductReviewDetail" resultMap="reviewResultSet">
+		select *
+		from review r
+		    left outer join member m on r.mem_id = m.mem_id
+			left outer join image i on i.img_refno = r.rev_no
+		where rev_no = #{revNo} and r.rev_refcode = 1
 	</select>
 	
 	<select id="selectReviewAll" resultMap="reviewResultSet">
 		select *
 		from review
 		where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y'
+	</select>
+	
+	<select id="selectProductReviewAll" resultMap="reviewResultSet">
+		select *
+		from review
+		where rev_refcode = 1 and rev_refno = #{pdId} and rev_status = 'Y'
 	</select>
 </mapper>

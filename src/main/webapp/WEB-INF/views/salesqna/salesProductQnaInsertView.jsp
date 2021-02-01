@@ -54,23 +54,23 @@
 <body>
 	<c:import url="../common/gnb.jsp"/>
 	<div id="mainFrame" style="padding-left: 10%; padding-right: 10%;">
-		<h2 align="center" style="padding-top: 15px; font-weight: bold">활동 문의 등록</h2>
+		<h2 align="center" style="padding-top: 15px; font-weight: bold">상품 문의 등록</h2>
 		<hr>
-		<form action="salesQnaInsert.sq" method="post">
+		<form action="salesProductQnaInsert.sq" method="post">
 			<div class="form-group row">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<input type="hidden" name="memId" value="${ loginUser.memId }">
-				<input type="hidden" name="starId" value="${ ac.memId }">
+				<input type="hidden" name="starId" value="${ pd.memId }">
 				<div class="col-sm-10">
 					<input type="text" name="salqnaTitle" class="form-control"
 						id="inputTitle">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>활동</strong></label>
+				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>상품</strong></label>
 				<div class="col-sm-10" id="activityTitle">
-					<span>[${ ac.actTitle }]</span>
-					<input type="hidden" name="acId" value="${ ac.actNo }">
+					<span>[${ pd.proTitle }]</span>
+					<input type="hidden" name="acId" value="${ pd.proNo }">
 				</div>
 			</div>
 			<div class="form-group row">

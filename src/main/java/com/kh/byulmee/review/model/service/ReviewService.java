@@ -12,5 +12,11 @@ public interface ReviewService {
 
 	ArrayList<Review> selectReviewAll(int acId);
 
+	ArrayList<Review> selectProductReviewAll(int pdId);
+
+	ArrayList<Review> selectProductReviewList(int pdId);
+
+	Review salesProductReviewDetail(int revNo);
+
 
 }

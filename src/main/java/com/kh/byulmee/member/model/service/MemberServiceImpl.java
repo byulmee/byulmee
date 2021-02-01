@@ -133,6 +133,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectActivityWriter(sqlSession, acId);
 	}
 	
+	@Override
+	public Member selectProductWriter(int pdId) {
+		return mDAO.selectProductWriter(sqlSession, pdId);
+	}
+	
 	//검색 키워드와 일치하는 전체 스타 수
 	@Override
 	public int getStarSearchListCount(String[] keywords) {
@@ -143,4 +148,5 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Activity> getStarSearchResult(PageInfo pi, String[] keywords) {
 		return mDAO.getStarSearchResult(sqlSession, pi, keywords);
 	}
+
 }

@@ -5,6 +5,11 @@
 		insert into favorite
 		values(seq_favid.nextval, #{ memId }, sysdate, default, 1, #{ favRefno })
 	</insert>
+	
+	<insert id="insertProductFavorite">
+		insert into favorite
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 2, #{ favRefno })
+	</insert>
 
 	<insert id="insertStarFavorite">
 		insert into favorite

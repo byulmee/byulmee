@@ -73,5 +73,24 @@ public class ProductServiceImpl implements ProductService{
 	public ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords) {
 		return pDAO.getProSearchResult(sqlSession, proListPi, keywords);
 	}
+
+	// 상품 게시판 디테일 내용 조회
+	@Override
+	public Product selectProduct(int pdId) {
+		
+		int result = pDAO.addReadCount(sqlSession, pdId);
+		
+		Product pc = null;
+		if(result > 0) {
+			pc = pDAO.selectProduct(sqlSession, pdId);
+		}
+		
+		return pc;
+	}
+
+	@Override
+	public int selectOrderSum(int pdId) {
+		return pDAO.selectOrderSum(sqlSession, pdId);
+	}
 	
 }

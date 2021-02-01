@@ -24,9 +24,12 @@ public interface ProductService {
 
 	int updateProduct(Product p);
 
-
 	int getProSearchListCount(String[] keywords);
 
 	ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords);
+
+	Product selectProduct(int pdId);
+
+	int selectOrderSum(int pdId);
 
 }

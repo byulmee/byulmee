@@ -26,4 +26,9 @@ public class FavoriteServiceImpl implements FavoriteService{
 		return fDAO.insertStarFavorite(sqlSession, fv);
 	}
 
+	@Override
+	public int insertProductFavorite(Favorite fv) {
+		return fDAO.insertProductFavorite(sqlSession, fv);
+	}
+
 }

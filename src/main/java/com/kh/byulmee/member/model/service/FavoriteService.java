@@ -8,4 +8,6 @@ public interface FavoriteService {
 
 	int insertStarFavorite(Favorite fv);
 
+	int insertProductFavorite(Favorite fv);
+
 }

@@ -93,6 +93,14 @@
 						where act_no = #{acId})
   	</select>
   	
+  	<select id="selectProductWriter" resultMap="memberResultSet">
+  		select *
+  		from member
+  		where mem_id = (select mem_id 
+						from product 
+						where pro_no = #{pdId})
+  	</select>
+  	
   	<select id="getStarSearchListCount" resultType="_int">
 		select count(*)
 		from member

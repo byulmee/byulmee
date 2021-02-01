@@ -49,7 +49,20 @@
 				from sales_qna sq
 			        left outer join reply r on sq.salqna_no = r.rep_refno
 			        left outer join member m on sq.mem_id = m.mem_id
-				where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = 21 and salqna_status = 'Y'
+				where salqna_type = 'A' and salqna_refcode = 0 and salqna_refno = #{acId} and salqna_status = 'Y'
+				order by salqna_no desc
+				)
+		<![CDATA[where rownum <= 5]]>
+	</select>
+	
+	<select id="selectProductQnaList" resultMap="salesQnaResultSet">
+		select *
+			from (
+				select *
+				from sales_qna sq
+			        left outer join reply r on sq.salqna_no = r.rep_refno
+			        left outer join member m on sq.mem_id = m.mem_id
+				where salqna_type = 'P' and salqna_refcode = 1 and salqna_refno = #{pdId} and salqna_status = 'Y'
 				order by salqna_no desc
 				)
 		<![CDATA[where rownum <= 5]]>
@@ -74,12 +87,40 @@
 		        )
 		    <![CDATA[where rownum <= 5]]>
 		    )
-		where salqna_refno = #{acId}
+		where salqna_refno = #{acId} and salqna_type = 'A'
+		order by salqna_no desc
+	</select>
+	
+	<select id="selectProductQnaExceptList" resultMap="salesQnaResultSet">
+		select *
+		from (
+		    select *
+		    from sales_qna sq
+		        left outer join reply r on sq.salqna_no = r.rep_refno
+		        left outer join member m on sq.mem_id = m.mem_id
+		    minus
+		    select *
+		    from (
+		        select *
+		        from sales_qna sq
+		             left outer join reply r on sq.salqna_no = r.rep_refno
+					 left outer join member m on sq.mem_id = m.mem_id
+		        where salqna_type = 'P' and salqna_refcode = 1 and salqna_refno = #{pdId} and salqna_status = 'Y'
+		        order by salqna_no desc
+		        )
+		    <![CDATA[where rownum <= 5]]>
+		    )
+		where salqna_refno = #{pdId} and salqna_type = 'P'
 		order by salqna_no desc
 	</select>
 	
 	<insert id="insertQna">
 		insert into sales_qna
-		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'A', sysdate, #{salqnaContent}, default, 0, #{salqnaRefno})
+		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'A', sysdate, #{salqnaContent}, default, 0, #{salqnaRefno}, #{salqnaStarcode}, default)
+	</insert>
+	
+	<insert id="insertProductQna">
+		insert into sales_qna
+		values(seq_salqnaid.nextval, #{memId}, #{salqnaTitle}, 'P', sysdate, #{salqnaContent}, default, 1, #{salqnaRefno}, #{salqnaStarcode}, default)
 	</insert>
 </mapper>

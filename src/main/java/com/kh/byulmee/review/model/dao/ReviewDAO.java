@@ -22,5 +22,17 @@ public class ReviewDAO {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectReviewAll", acId);
 	}
 
+	public ArrayList<Review> selectProductReviewAll(SqlSessionTemplate sqlSession, int pdId) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectProductReviewAll", pdId);
+	}
+
+	public ArrayList<Review> selectProductReviewList(SqlSessionTemplate sqlSession, int pdId) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectProductReviewList", pdId);
+	}
+
+	public Review salesProductReviewDetail(SqlSessionTemplate sqlSession, int revNo) {
+		return sqlSession.selectOne("reviewMapper.salesProductReviewDetail", revNo);
+	}
+
 
 }

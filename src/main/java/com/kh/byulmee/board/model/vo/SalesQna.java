@@ -26,7 +26,9 @@ public class SalesQna {
 	private String salqnaStatus;
 	private int salqnaRefcode;
 	private int salqnaRefno;
-	
+	private String salqnaStarcode;
+	private String salqnaRestatus;
+	   
 	private Reply reply;
 	private Member member;
 }

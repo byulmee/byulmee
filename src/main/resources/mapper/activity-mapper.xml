@@ -98,7 +98,7 @@
 	<select id="selectOrderSum" resultType="_int">
 		select count(*)
 		from orders
-		where ord_refno = #{acId}
+		where ord_refno = #{acId} and ord_refcode = 0
 	</select>
 	
 

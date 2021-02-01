@@ -6,8 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=juwreae5tk"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=juwreae5tk&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
@@ -201,8 +199,8 @@ input:focus {
 }
 
 #button2 {
-	border: 1px solid #FF6833;
-	background: #FF6833;
+	border: 1px solid black;
+	background: black;
 	border-radius: 18px;
 	color: white;
 	width: 197px;
@@ -215,8 +213,8 @@ input:focus {
 }
 
 #button4 {
-	border: 1px solid #FF6833;
-	background: #FF6833;
+	border: 1px solid black;
+	background: black;
 	border-radius: 18px;
 	color: white;
 	width: 197px;
@@ -330,13 +328,13 @@ hr {
 }
 
 .menu:hover {
-	border-top: 3px solid #FF6833;
+	border-top: 3px solid black;
 	font-weight: bold;
 	cursor: pointer;
 }
 
 #menu1, #menu2, #menu3, #menu4 {
-	border-top: 3px solid #FF6833;
+	border-top: 3px solid black;
 	font-weight: bold;
 }
 
@@ -620,8 +618,8 @@ hr {
 
 #questionButton {
 	margin-top: 15px;
-	border: 1px solid #FF6833;
-	background: #FF6833;
+	border: 1px solid black;
+	background: black;
 	border-radius: 5px;
 	color: white;
 	width: 80px;
@@ -833,10 +831,10 @@ hr {
 </style>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp" />
+	<c:import url="../common/gnbTypeB.jsp" />
 	
 	<div class="outer" align="center">
-	<form id="activityCheck" action="activityCheck.ac" method="post">
+	<form id="productCheck" action="productCheck.pd" method="post">
 		<!-- 상단 섬네일, 상품 정보 -->
 		<div class="top">
 			<div class="thumbnail" align="center">
@@ -844,10 +842,10 @@ hr {
 			</div>
 
 			<div class="product-info" align="left">
-				<div id="title">[${ category }] ${ activity.actTitle }</div>
-				<input type="hidden" name="acId" value="${ activity.actNo }">
+				<div id="title">[${ category }] ${ product.proTitle }</div>
+				<input type="hidden" name="pdId" value="${ product.proNo }">
 				<div class="price">
-					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
+					<span id="price">${ product.proPrice }</span> <span id="one">원</span>
 				</div>
 				
 				<c:if test="${ reviewNum != 0 }">
@@ -893,44 +891,44 @@ hr {
 				</c:if>
 				
 				<div class="option">
-					<span id="option1">인원선택&nbsp;</span> 
+					<span id="option1">수량 선택&nbsp;</span> 
 					<span><button type="button" id="minus" onclick="cntNum(-1);">-</button></span>
 					<span id="option2"><input type="text" id="amount" name="amount" value="1" onchange="setNum();" readonly></span> 
 					<span><button type="button" id="plus" onclick="cntNum(1);">+</button></span> 
-					<span id="option3">잔여 인원 : ${ possibleNum }명</span>
+					<span id="option3">잔여 수량 : ${ possibleStock }개</span>
 				</div>
 				<div class="all-price">
-					<span id="all-price1">총 활동비</span> 
-					<span id="all-price2"><input type="text" id="all-price-fix" name="all-price2" value="${ activity.actPrice }원" onchange="setNum();" readonly></span>
+					<span id="all-price1">합계 금액</span> 
+					<span id="all-price2"><input type="text" id="all-price-fix" name="all-price2" value="${ product.proPrice }원" onchange="setNum();" readonly></span>
 				</div>
 				
 				<div class="button">
 					<c:if test="${ !empty loginUser }">
-					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기"> 
+					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="상품 찜하기"> 
 					</c:if>
 					<c:if test="${ !empty loginUser }">
 					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기">
 					</c:if>
 					<c:if test="${ empty loginUser }">
-					<input type="button" id="button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기" onclick="alert('로그인 후 이용 가능합니다.')"> 
+					<input type="button" id="button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="상품 찜하기" onclick="alert('로그인 후 이용 가능합니다.')"> 
 					</c:if>
 					<c:if test="${ empty loginUser }">
 					<input type="button" id="button4" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기" onclick="alert('로그인 후 이용 가능합니다.')">
 					</c:if>
 				</div>
 				<div class="starInfo">
-					<span><img src="resources/images/detail/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><img src="resources/images/detail/starBlack.png" width="18px" id="star_img" alt="별"></span>
 					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
 					
-					<c:url var="starFavoriteInsert" value="starFavoriteInsert.fa">
+					<c:url var="starFavoriteInsertProduct" value="starFavoriteInsertProduct.fa">
 						<c:param name="starNo" value="${ writer.memNo }"></c:param>
-						<c:param name="acId" value="${ activity.actNo }"></c:param>
+						<c:param name="pdId" value="${ product.proNo }"></c:param>
 					</c:url>
 					<c:if test="${ !empty loginUser }">
-					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsert }'">
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsertProduct }'">
 					</c:if>
 					<c:if test="${ empty loginUser }">
 					<input type="button" id="star-button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="alert('로그인 후 이용 가능합니다.')">
@@ -944,7 +942,7 @@ hr {
 			var cnt = 1;
 			var amount = document.getElementById("amount");
 			var price = document.getElementById("price").innerHTML;
-			var possibleNum = "<c:out value='${ possibleNum }'/>";
+			var possibleNum = "<c:out value='${ product.proMaximum }'/>";
 			
 			function cntNum(n){
 				cnt += n;
@@ -961,7 +959,7 @@ hr {
 					cnt = 1
 				} else if(cnt > possibleNum){
 					cnt = possibleNum;
-					alert("신청 가능한 최대 인원을 초과하였습니다.");
+					alert("구매 가능한 최대 갯수를 초과하였습니다.");
 					cnt = possibleNum - 1;
 				}
 				amount.value = cnt;
@@ -979,11 +977,11 @@ hr {
 		        $('#star2').text(ratingAvg);
 		    });
 		
-			// 별미 찜하기
-			var acId = "<c:out value='${ activity.actNo}'/>";
+			// 상품 찜하기
+			var pdId = "<c:out value='${ product.proNo}'/>";
 			$(function(){
 				$('#button1').click(function(){
-					location.href='activityFavorite.fa?acId=' + acId;
+					location.href='productFavorite.fa?pdId=' + pdId;
 					alert('찜목록에 추가되었습니다!');
 				});
 			});
@@ -1015,13 +1013,13 @@ hr {
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
 			<div class="menu" id="menu1">
-				<a href="#menu1">별미 정보</a>
+				<a href="#menu1">상품 정보</a>
 			</div>
 			<div class="menu">
-				<a href="#menu2">별미 후기</a>
+				<a href="#menu2">상품 후기</a>
 			</div>
 			<div class="menu">
-				<a href="#menu3">별미 문의</a>
+				<a href="#menu3">상품 문의</a>
 			</div>
 			<div class="menu">
 				<a href="#menu4">취소/환불 규정</a>
@@ -1034,225 +1032,20 @@ hr {
 			<img src="${ content2 }" class="titleImg">
 			<img src="${ content3 }" class="titleImg">
 			<img src="${ content4 }" class="titleImg">
-			<div id="place">Q 어디에서 진행되나요?</div>
-			<div id="map" style="width:800px; height:400px;"></div>
 			<div id="starMessage">스타 한마디</div>
 			<div id="starMessage2">${ contentText }</div>
 		</div>
 
-		<!-- 네이버 지도 api -->
-		<script>
-		var mapOptions = {
-		    center: new naver.maps.LatLng(37.3595704, 127.105399),
-		    zoom: 10
-		};
-		
-		var map = new naver.maps.Map("map", {
-		    center: new naver.maps.LatLng(37.3595316, 127.1052133),
-		    zoom: 15,
-		    mapTypeControl: true
-		});
-
-		var infoWindow = new naver.maps.InfoWindow({
-		    anchorSkew: true
-		});
-
-		map.setCursor('pointer');
-
-		function searchCoordinateToAddress(latlng) {
-
-		    infoWindow.close();
-
-		    naver.maps.Service.reverseGeocode({
-		        coords: latlng,
-		        orders: [
-		            naver.maps.Service.OrderType.ADDR,
-		            naver.maps.Service.OrderType.ROAD_ADDR
-		        ].join(',')
-		    }, function(status, response) {
-// 		        if (status === naver.maps.Service.Status.ERROR) {
-// 		            return alert('Something Wrong!');
-// 		        }
-
-		        var items = response.v2.results,
-		            address = '',
-		            htmlAddresses = [];
-
-		        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
-		            item = items[i];
-		            address = makeAddress(item) || '';
-		            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-
-		            htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
-		        }
-
-		        infoWindow.setContent([
-		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-		            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
-		            htmlAddresses.join('<br />'),
-		            '</div>'
-		        ].join('\n'));
-
-		        infoWindow.open(map, latlng);
-		    });
-		}
-
-		function searchAddressToCoordinate(address) {
-		    naver.maps.Service.geocode({
-		        query: address
-		    }, function(status, response) {
-		        if (status === naver.maps.Service.Status.ERROR) {
-		            return alert('Something Wrong!');
-		        }
-
-		        if (response.v2.meta.totalCount === 0) {
-		            return alert('totalCount' + response.v2.meta.totalCount);
-		        }
-
-		        var htmlAddresses = [],
-		            item = response.v2.addresses[0],
-		            point = new naver.maps.Point(item.x, item.y);
-
-		        if (item.roadAddress) {
-		            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-		        }
-
-		        if (item.jibunAddress) {
-		            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-		        }
-
-		        if (item.englishAddress) {
-		            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-		        }
-
-		        infoWindow.setContent([
-		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-		            '<h4 style="margin-top:5px;">별미 장소 : '+ address +'</h4><br />',
-		            htmlAddresses.join('<br />'),
-		            '</div>'
-		        ].join('\n'));
-
-		        map.setCenter(point);
-		        infoWindow.open(map, point);
-		    });
-		}
-
-		function initGeocoder() {
-		    if (!map.isStyleMapReady) {
-		        return;
-		    }
-
-		    map.addListener('click', function(e) {
-		        searchCoordinateToAddress(e.coord);
-		    });
-
-		    $('#address').on('keydown', function(e) {
-		        var keyCode = e.which;
-
-		        if (keyCode === 13) { // Enter Key
-		            searchAddressToCoordinate($('#address').val());
-		        }
-		    });
-
-		    $('#submit').on('click', function(e) {
-		        e.preventDefault();
-
-		        searchAddressToCoordinate($('#address').val());
-		    });
-
-		    var place = "<c:out value='${ activity.actPlace}'/>";
-		    searchAddressToCoordinate(place);
-		}
-
-		function makeAddress(item) {
-		    if (!item) {
-		        return;
-		    }
-
-		    var name = item.name,
-		        region = item.region,
-		        land = item.land,
-		        isRoadAddress = name === 'roadaddr';
-
-		    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
-
-		    if (hasArea(region.area1)) {
-		        sido = region.area1.name;
-		    }
-
-		    if (hasArea(region.area2)) {
-		        sigugun = region.area2.name;
-		    }
-
-		    if (hasArea(region.area3)) {
-		        dongmyun = region.area3.name;
-		    }
-
-		    if (hasArea(region.area4)) {
-		        ri = region.area4.name;
-		    }
-
-		    if (land) {
-		        if (hasData(land.number1)) {
-		            if (hasData(land.type) && land.type === '2') {
-		                rest += '산';
-		            }
-
-		            rest += land.number1;
-
-		            if (hasData(land.number2)) {
-		                rest += ('-' + land.number2);
-		            }
-		        }
-
-		        if (isRoadAddress === true) {
-		            if (checkLastString(dongmyun, '면')) {
-		                ri = land.name;
-		            } else {
-		                dongmyun = land.name;
-		                ri = '';
-		            }
-
-		            if (hasAddition(land.addition0)) {
-		                rest += ' ' + land.addition0.value;
-		            }
-		        }
-		    }
-
-		    return [sido, sigugun, dongmyun, ri, rest].join(' ');
-		}
-
-		function hasArea(area) {
-		    return !!(area && area.name && area.name !== '');
-		}
-
-		function hasData(data) {
-		    return !!(data && data !== '');
-		}
-
-		function checkLastString (word, lastString) {
-		    return new RegExp(lastString + '$').test(word);
-		}
-
-		function hasAddition (addition) {
-		    return !!(addition && addition.value);
-		}
-
-		naver.maps.onJSContentLoaded = initGeocoder;
-		naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
-		</script>
-
-
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
 			<div class="menu">
-				<a href="#menu1">별미 정보</a>
+				<a href="#menu1">상품 정보</a>
 			</div>
 			<div class="menu" id="menu2">
-				<a href="#menu2">별미 후기</a>
+				<a href="#menu2">상품 후기</a>
 			</div>
 			<div class="menu">
-				<a href="#menu3">별미 문의</a>
+				<a href="#menu3">상품 문의</a>
 			</div>
 			<div class="menu">
 				<a href="#menu4">취소/환불 규정</a>
@@ -1289,11 +1082,11 @@ hr {
 		</div>
 		
 		<script>
-			var acId = "<c:out value='${ activity.actNo}'/>";
+			var pdId = "<c:out value='${ product.proNo}'/>";
 			
 			$.ajax({
-				url: 'salesReviewList.ac',
-				data: {acId:acId},
+				url: 'salesProductReviewList.pd',
+				data: {pdId:pdId},
 				success: function(data){
 					console.log(data);
 					
@@ -1377,7 +1170,7 @@ hr {
 			console.log(revNo);
 			
 			$.ajax({
-				url: 'salesReviewDetail.ac',
+				url: 'salesProductReviewDetail.pd',
 				data: {revNo:revNo},
 				success: function(data){
 					console.log(data);
@@ -1474,13 +1267,13 @@ hr {
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
 			<div class="menu">
-				<a href="#menu1">별미 정보</a>
+				<a href="#menu1">상품 정보</a>
 			</div>
 			<div class="menu">
-				<a href="#menu2">별미 후기</a>
+				<a href="#menu2">상품 후기</a>
 			</div>
 			<div class="menu" id="menu3">
-				<a href="#menu3">별미 문의</a>
+				<a href="#menu3">상품 문의</a>
 			</div>
 			<div class="menu">
 				<a href="#menu4">취소/환불 규정</a>
@@ -1519,11 +1312,11 @@ hr {
 		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
 
 		<script>
-			var acId = "<c:out value='${ activity.actNo}'/>";
+			var pdId = "<c:out value='${ product.proNo}'/>";
 			
 			$.ajax({
-				url: 'salesQnaList.ac',
-				data: {acId:acId},
+				url: 'salesQnaProductList.pd',
+				data: {pdId:pdId},
 				success: function(data){
 					console.log(data);
 					
@@ -1605,8 +1398,8 @@ hr {
 			
 			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
 			$.ajax({
-				url: 'salesQnaExceptList.ac',
-				data: {acId:acId},
+				url: 'salesQnaExceptProductList.pd',
+				data: {pdId:pdId},
 				success: function(data){
 					console.log(data);
 					
@@ -1700,10 +1493,10 @@ hr {
 		</script>
 		
 		<c:if test="${ !empty loginUser }">
-			<c:url var="salesQnaInsertView" value="salesQnaInsertView.sq">
-				<c:param name="acId" value="${ activity.actNo }"></c:param>
+			<c:url var="salesProductQnaInsertView" value="salesProductQnaInsertView.sq">
+				<c:param name="pdId" value="${ product.proNo }"></c:param>
 			</c:url>
-			<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기" onclick="location.href='${ salesQnaInsertView }'">
+			<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기" onclick="location.href='${ salesProductQnaInsertView }'">
 		</c:if>
 		<c:if test="${ empty loginUser }">
 			<input type="button" id="questionButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="문의하기" onclick="alert('로그인 후 이용 가능합니다.')">
@@ -1712,13 +1505,13 @@ hr {
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
 			<div class="menu">
-				<a href="#menu1">별미 정보</a>
+				<a href="#menu1">상품 정보</a>
 			</div>
 			<div class="menu">
-				<a href="#menu2">별미 후기</a>
+				<a href="#menu2">상품 후기</a>
 			</div>
 			<div class="menu">
-				<a href="#menu3">별미 문의</a>
+				<a href="#menu3">상품 문의</a>
 			</div>
 			<div class="menu" id="menu4">
 				<a href="#menu4">취소/환불 규정</a>
@@ -1727,7 +1520,7 @@ hr {
 
 		<!-- 취소 환불 규정 영역 -->
 		<div class="refundArea" align="left">
-			<div class="refund" align="left">${ activity.actGuide }</div>
+			<div class="refund" align="left">${ product.proGuide }</div>
 		</div>
 		
 		<!-- 불편사항 신고하기 -->
@@ -1748,7 +1541,7 @@ hr {
 
 		<!-- 별미 추천 영역 -->
 		<div class="recommendArea" align="center">
-			<div id="recommend">이런 별미는 어때요?</div>
+			<div id="recommend">이런 상품은 어때요?</div>
 		</div>
 		<div class="rec-list" align="left">
 			<!-- Swiper -->

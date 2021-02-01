@@ -15,6 +15,10 @@ public class FavoriteDAO {
 	public int insertStarFavorite(SqlSessionTemplate sqlSession, Favorite fv) {
 		return sqlSession.insert("favoriteMapper.insertStarFavorite", fv);
 	}
+
+	public int insertProductFavorite(SqlSessionTemplate sqlSession, Favorite fv) {
+		return sqlSession.insert("favoriteMapper.insertProductFavorite", fv);
+	}
 	
 
 }

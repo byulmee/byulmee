@@ -12,5 +12,11 @@ public interface SalesQnaService {
 
 	int insertQna(SalesQna sq);
 
+	ArrayList<SalesQna> selectProductQnaList(int pdId);
+
+	ArrayList<SalesQna> selectProductQnaExceptList(int pdId);
+
+	int insertProductQna(SalesQna sq);
+
 
 }

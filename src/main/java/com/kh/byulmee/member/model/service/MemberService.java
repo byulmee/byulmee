@@ -35,4 +35,6 @@ public interface MemberService {
 	int getStarSearchListCount(String[] keywords);
 
 	ArrayList<Activity> getStarSearchResult(PageInfo starListPi, String[] keywords);
+
+	Member selectProductWriter(int pdId);
 }

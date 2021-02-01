@@ -6,8 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=juwreae5tk"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=juwreae5tk&submodules=geocoder"></script>
 <script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
 <style>
 @font-face {
@@ -79,7 +77,7 @@ body {
 	font-size: 30px;
 }
 .star{
-    margin-top: 20px;
+    margin-top: 30px;
 }
 #star1{
 	font-size: 15px;
@@ -94,7 +92,7 @@ body {
 	color: #9E9E9E;
 }
 .option{
-    margin-top: 17px;
+    margin-top: 30px;
 }
 #option1{
 	font-size: 15px;
@@ -105,7 +103,7 @@ body {
 	color: black;
 }
 .all-price{
-    margin-top: 18px;
+    margin-top: 30px;
 }
 #all-price1{
 	font-size: 15px;
@@ -115,43 +113,8 @@ body {
 	font-size: 15px;
 	color: black;
 }
-.address-info{
-	margin-top: 17px;
-}
-#address-info1{
-	font-size: 15px;
-	color: #9E9E9E;
-}
-#address-info2{
-	font-size: 15px;
-	color: black;
-}
-#address-button{
-	padding: 8px;
-	border: none; 
-	background: lightgray; 
-	border-radius: 5px; 
-	color: black; 
-	text-align: center; 
-	font-size: 13px;
-	margin-left: 7px;
-	outline: 0;
-	cursor: pointer; 
-	font-weight: bold;
-}
-.period{
-	margin-top: 17px;
-}
-#period1{
-	font-size: 15px;
-	color: #9E9E9E;
-}
-#period2{
-	font-size: 15px;
-	color: black;
-}
 .material{
-	margin-top: 17px;
+	margin-top: 30px;
 }
 #material1{
 	font-size: 15px;
@@ -163,7 +126,7 @@ body {
 .starInfo {
 	padding-top: 12px;
 	line-height: 30px;
-	margin-top: 19px;
+	margin-top: 55px;
 	width: 407px;
 	height: 109px;
 	border-top: 1px solid #E9E9E9;
@@ -228,6 +191,11 @@ hr {width: 1280px; visibility: hidden;}
 	width:957px;
 	font-size:15px;
 }
+.address-info{
+	margin-top: 40px;
+	width:957px;
+	font-size:15px;
+}
 .address{
 	margin-top: 30px;
 	margin-bottom: 10px;
@@ -240,14 +208,6 @@ hr {width: 1280px; visibility: hidden;}
 .product-check{
 	width:957px;
 	font-size:25px;
-}
-
-.cancle-table{
-	margin-top: 10px;
-	width: 957px;
-	border: 1px solid #E9E9E9;
-	border-collapse: collapse;
-	
 }
 th, tr, td{
 	border: 1px solid #E9E9E9;
@@ -272,6 +232,15 @@ td{
 	font-size: 13px;
 	color: #8A8A8A;
 }
+#cancle-info2{
+	padding: 15px;
+	margin-top: 10px;
+	width: 928px;
+	border: 1px solid #E9E9E9;
+	text-align: left;
+	font-size: 13px;
+	color: #8A8A8A;
+}
 .personal-info-check{
 	margin-top: 10px;
 	font-size: 13px;
@@ -287,8 +256,8 @@ td{
 }
 #orderButton{
 	margin-top: 15px;
-	border: 1px solid #FF6833; 
-	background: #FF6833; 
+	border: 1px solid black; 
+	background: black; 
 	border-radius: 5px; 
 	color: white; 
 	width: 60px; 
@@ -319,9 +288,9 @@ td{
 </style>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp"/>
+	<c:import url="../common/gnbTypeB.jsp" />
    <div class="outer" align="center">
-          <div class="product-check" align="left">활동 신청 확인</div>
+          <div class="product-check" align="left">상품 구매 확인</div>
        <!-- 상단 섬네일, 상품 정보 -->
       <div class="top">
 	       <div class="thumbnail" align="center">
@@ -329,9 +298,9 @@ td{
 	       </div>
 	       
 	       <div class="product-info" align="left">
-				<div id="title">[${ category }] ${ activity.actTitle }</div>
+				<div id="title">[${ category }] ${ product.proTitle }</div>
 				<div class="price">
-					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
+					<span id="price">${ product.proPrice }</span> <span id="one">원</span>
 				</div>
 				
 				<c:if test="${ reviewNum != 0 }">
@@ -375,33 +344,22 @@ td{
 						<span id="star3">등록된 별점이 없습니다.</span>
 					</div>
 				</c:if>
-				
+
 	       		<div class="option">
-		       		<span id="option1">신청 인원</span>
-		       		<span id="option2">${ amount }명</span>
+		       		<span id="option1">구매 수량</span>
+		       		<span id="option2">${ amount }개</span>
 	       		</div>
 	       		<div class="all-price">
-	       			<span id="all-price1">총 활동비</span>
+	       			<span id="all-price1">합계 금액</span>
 	       			<span id="all-price2"><b>${ price }</b></span>
 	       		</div>
-	       		<div class="address-info">
-	       			<span id="address-info1">활동 장소</span>
-	       			<span id="address-info2">${ activity.actPlace }</span>
-	       		</div>
-	       		
-	       		
-	       		<div class="period">
-	       			<span id="period1">활동 기간</span>
-	       			<span id="period2">${ activity.actStartday } ~ ${ activity.actEndday }</span>
-	       		</div>
 	       		<div class="material">
-	       			<span id="material1">준비물 링크</span>
-	       			<span id="material2"><a href="${ activity.actUrl }">${ activity.actUrl }</a></span>
+	       			<span id="material1">활동 링크</span>
+	       			<span id="material2"><a href="${ product.proUrl }">${ product.proUrl }</a></span>
 	       		</div>
-	       		
 	       		
 				<div class="starInfo">
-					<span><img src="resources/images/detail/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><img src="resources/images/detail/starBlack.png" width="18px" id="star_img" alt="별"></span>
 					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
@@ -447,33 +405,24 @@ td{
        </script>
        
        
-       
        <hr><hr><hr><hr>
+	       
+       <div class="address-info" align="left">&nbsp;배송지 정보</div>
        
-       <div class="address">별미 장소</div>
-	   <div id="map" style="width:957px; height:400px;"></div>
        
-       <hr><hr>
        
-       <div class="cancle-info" align="left">&nbsp;취소 및 환불 정책</div>
        
-       <table class="cancle-table">
-	       <tr>
-		       <th></th>
-		       <th>클래스 이용 전</th>
-		       <th>클래스 이용 후</th>
-	       </tr>	
-	       <tr>
-	       		<td>클래스 신청 후, 7일 이내</td>
-	       		<td>전액 환불</td>
-	       		<td>기이용분 차감 후, 환불 진행<br>(기이용분 = 정상가 * (이용한 강의 수 / 전체 강의 수))</td>
-	       </tr>
-	       <tr>
-	       		<td>클래스 신청 후, 7일 초과</td>
-	       		<td>이용권 판매금액에서 10% 수수료 차감 후, 환불진행<br>(수강기간 종료 시, 환불 불가)</td>
-	       		<td>환불 불가</td>
-	       </tr>
-       </table>
+       <div class="cancle-info" align="left">&nbsp;교환 및 환불 정책</div>
+       <div id="cancle-info2">
+	       <b>교환/환불 유의 사항</b><br>
+			- 단순변심에 의한 교환은 스타에게 문의 주세요.<br>
+			- 사전 접수되지 않은 교환/환불건은 처리되지 않을 수 있습니다.<br>
+			- 상품훼손, 상품세탁, 사용흔적이 있을경우 교환/환불은 불가합니다.<br>
+			- 교환/환불 기간은 상품 수령일로부터 7일 이내 입니다.<br><br>
+			<b>배송비 부담</b><br>
+			- 고객님 부담 : 단순변심, 착오 등 고객님에게 사유가 있는 경우<br>
+			- 스타 부담 : 작품 하자 등 스타에게 사유가 있는 경우
+       </div>
        
        <div class="personal-info-agreement" align="left">&nbsp;개인 정보 제공 동의</div>
        <div id="personal-info">
@@ -490,208 +439,6 @@ td{
        	<input type="button" id="orderButton" value="결제">
        	<input type="button" id="cancleButton" value="취소">
 	</div>
-	
-		<!-- 네이버 지도 api -->
-		<script>
-		var mapOptions = {
-		    center: new naver.maps.LatLng(37.3595704, 127.105399),
-		    zoom: 10
-		};
-		
-		var map = new naver.maps.Map("map", {
-		    center: new naver.maps.LatLng(37.3595316, 127.1052133),
-		    zoom: 15,
-		    mapTypeControl: true
-		});
-
-		var infoWindow = new naver.maps.InfoWindow({
-		    anchorSkew: true
-		});
-
-		map.setCursor('pointer');
-
-		function searchCoordinateToAddress(latlng) {
-
-		    infoWindow.close();
-
-		    naver.maps.Service.reverseGeocode({
-		        coords: latlng,
-		        orders: [
-		            naver.maps.Service.OrderType.ADDR,
-		            naver.maps.Service.OrderType.ROAD_ADDR
-		        ].join(',')
-		    }, function(status, response) {
-// 		        if (status === naver.maps.Service.Status.ERROR) {
-// 		            return alert('Something Wrong!');
-// 		        }
-
-		        var items = response.v2.results,
-		            address = '',
-		            htmlAddresses = [];
-
-		        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
-		            item = items[i];
-		            address = makeAddress(item) || '';
-		            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-
-		            htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
-		        }
-
-		        infoWindow.setContent([
-		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-		            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
-		            htmlAddresses.join('<br />'),
-		            '</div>'
-		        ].join('\n'));
-
-		        infoWindow.open(map, latlng);
-		    });
-		}
-
-		function searchAddressToCoordinate(address) {
-		    naver.maps.Service.geocode({
-		        query: address
-		    }, function(status, response) {
-		        if (status === naver.maps.Service.Status.ERROR) {
-		            return alert('Something Wrong!');
-		        }
-
-		        if (response.v2.meta.totalCount === 0) {
-		            return alert('totalCount' + response.v2.meta.totalCount);
-		        }
-
-		        var htmlAddresses = [],
-		            item = response.v2.addresses[0],
-		            point = new naver.maps.Point(item.x, item.y);
-
-		        if (item.roadAddress) {
-		            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-		        }
-
-		        if (item.jibunAddress) {
-		            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-		        }
-
-		        if (item.englishAddress) {
-		            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-		        }
-
-		        infoWindow.setContent([
-		            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-		            '<h4 style="margin-top:5px;">'+ address +'</h4><br />',
-		            htmlAddresses.join('<br />'),
-		            '</div>'
-		        ].join('\n'));
-
-		        map.setCenter(point);
-		        infoWindow.open(map, point);
-		    });
-		}
-
-		function initGeocoder() {
-		    if (!map.isStyleMapReady) {
-		        return;
-		    }
-
-		    map.addListener('click', function(e) {
-		        searchCoordinateToAddress(e.coord);
-		    });
-
-		    $('#address').on('keydown', function(e) {
-		        var keyCode = e.which;
-
-		        if (keyCode === 13) { // Enter Key
-		            searchAddressToCoordinate($('#address').val());
-		        }
-		    });
-
-		    $('#submit').on('click', function(e) {
-		        e.preventDefault();
-
-		        searchAddressToCoordinate($('#address').val());
-		    });
-
-		    var place = "<c:out value='${ activity.actPlace}'/>";
-		    searchAddressToCoordinate(place);
-		}
-
-		function makeAddress(item) {
-		    if (!item) {
-		        return;
-		    }
-
-		    var name = item.name,
-		        region = item.region,
-		        land = item.land,
-		        isRoadAddress = name === 'roadaddr';
-
-		    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
-
-		    if (hasArea(region.area1)) {
-		        sido = region.area1.name;
-		    }
-
-		    if (hasArea(region.area2)) {
-		        sigugun = region.area2.name;
-		    }
-
-		    if (hasArea(region.area3)) {
-		        dongmyun = region.area3.name;
-		    }
-
-		    if (hasArea(region.area4)) {
-		        ri = region.area4.name;
-		    }
-
-		    if (land) {
-		        if (hasData(land.number1)) {
-		            if (hasData(land.type) && land.type === '2') {
-		                rest += '산';
-		            }
-
-		            rest += land.number1;
-
-		            if (hasData(land.number2)) {
-		                rest += ('-' + land.number2);
-		            }
-		        }
-
-		        if (isRoadAddress === true) {
-		            if (checkLastString(dongmyun, '면')) {
-		                ri = land.name;
-		            } else {
-		                dongmyun = land.name;
-		                ri = '';
-		            }
-
-		            if (hasAddition(land.addition0)) {
-		                rest += ' ' + land.addition0.value;
-		            }
-		        }
-		    }
-
-		    return [sido, sigugun, dongmyun, ri, rest].join(' ');
-		}
-
-		function hasArea(area) {
-		    return !!(area && area.name && area.name !== '');
-		}
-
-		function hasData(data) {
-		    return !!(data && data !== '');
-		}
-
-		function checkLastString (word, lastString) {
-		    return new RegExp(lastString + '$').test(word);
-		}
-
-		function hasAddition (addition) {
-		    return !!(addition && addition.value);
-		}
-
-		naver.maps.onJSContentLoaded = initGeocoder;
-		naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
-		</script>
 	
 	<c:import url="../common/footer.jsp"/>
 
