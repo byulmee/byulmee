@@ -103,14 +103,38 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -137,7 +161,7 @@
 	
 /* 컨텐츠 */	
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
@@ -237,7 +261,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 	}
 </style>
@@ -306,6 +330,31 @@
 							</li>
 							<li>
 								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn">찜한 스타</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
 							</li>
 						</ul>
 					</li>

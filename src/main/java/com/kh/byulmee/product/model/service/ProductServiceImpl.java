@@ -60,5 +60,10 @@ public class ProductServiceImpl implements ProductService{
 	public int updateProduct(Product p) {
 		return pDAO.updateProduct(sqlSession, p);
 	}
+
+	@Override
+	public int updateProRatingCnt(Product p) {
+		return pDAO.updateProRatingCnt(sqlSession, p);
+	}
 	
 }

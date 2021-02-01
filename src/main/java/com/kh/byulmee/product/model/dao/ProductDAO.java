@@ -49,4 +49,8 @@ public class ProductDAO {
 		return sqlSession.update("productMapper.updateProduct", p);
 	}
 
+	public int updateProRatingCnt(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("productMapper.updateProRatingCnt", p);
+	}
+
 }

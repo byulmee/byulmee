@@ -83,4 +83,9 @@ public class ActivityServiceImpl implements ActivityService {
 		return aDAO.updateActivity(sqlSession, a);
 	}
 
+	@Override
+	public int updateActRatingCnt(Activity a) {
+		return aDAO.updateActRatingCnt(sqlSession, a);
+	}
+
 }

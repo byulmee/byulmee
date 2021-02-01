@@ -6,14 +6,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
+		overflow:scroll
 	}
 	
 	.outer {
@@ -105,14 +108,38 @@
 		border: 1px solid #DCDCDC;
 		z-index: 1;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -139,7 +166,7 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		border-top: 2px solid #FF6833;
 	}
@@ -172,25 +199,53 @@
 		color: white;
 		background: #FF6833;
 	}
+	.listArea {
+		min-height: 480px;
+	}
+	.list {
+		display: inline-block;
+		width: 100%;
+		height: 160px;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	.hoverDiv {
+		display: inline-block;
+		width: 620px;
+		height: 160px;
+		vertical-align: middle;
+	}
+	.hoverDiv:hover {
+		opacity: 0.6;
+		cursor: pointer;
+		vertical-align: middle;
+	}
 	.imgDiv {
 		display: inline-block;
-		width: 140px;
-		height: 140px;
-		vertical-align: middle;
+		position: relative;
+		width: 136px;
+		height: 136px;
+		margin-top: 10px;
+		overflow: hidden;
+		border: 2px solid gray;
+		background: black;
+		left: 10px;
 	}
 	.img {
-		display: table-cell;
-		width: 100px;
-		height: 100px;
-		padding: 20px;
-		object-fit: cover;
-		vertical-align: middle;
+		position: absolute;
+		width: 136px;
+		height: auto;
+		margin: auto;
+		left: -100%;
+		right: -100%;
+		top: -100%;
+		bottom: -100%;
 	}
 	.textDiv {
-		width: 500px;
-		margin: 0;
+		position: absolute;
+		width: 350px;
+		height: 130px;
 		display: inline-block;
-		vertical-align: middle;
+		padding: 15px 0px 0px 20px;
 	}
 	.btnDiv {
 		width: 90px;
@@ -198,34 +253,35 @@
 		vertical-align: middle;
 		text-align: right;
 	}
-	.xImg {
-		padding: 10px;
-		width: 15px;
-		height: 15px;
-		object-fit: cover;
+	.button {
+		margin: 5px;
+		padding: 5px;
+		padding-bottom: 2px;
+		border: 1px solid #9F9F9F;
+		background: white;
+		font-size: 15px;
+		font-family: "Gmarket Sans TTF";
+		cursor: pointer;
+		outline: 0;
+		vertical-align: middle;
+	}
+	.button:hover {
+		background: #FF6833;
+		color: white;
 		cursor: pointer;
 	}
-	.xImg:hover {
-		opacity: 0.4;
-		cursor: pointer;
-	}
-	.listArea {
-		min-height: 480px;
-	}
-	.list {
+	.delBtnDiv {
+		width: 30px;
 		display: inline-block;
-		height: 140px;
-	}
-	.list:hover {
-		opacity: 0.6;
-		cursor: pointer;
+		vertical-align: middle;
+		text-align: right;
 	}
 	#wrap {
 		display: table-cell;
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 		text-align: center;
 		border-bottom: 2px solid #FF6833;
@@ -243,6 +299,59 @@
 		border: 1px solid #FF6833;
 		margin: 0px;
 	}
+	.pagingArea {
+		text-align: center; 
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.pageBtn {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+	}
+	.pageBtn:hover {
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnSelected {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnEnd {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+		corsur: default;
+	}
+	.xImg {
+		padding: 10px 10px 0px 0px;
+		width: 15px;
+		height: 15px;
+		object-fit: cover;
+		cursor: pointer;
+		opacity: 0.2;
+	}
+	.xImg:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+
 </style>
 </head>
 <body>
@@ -313,6 +422,31 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -332,102 +466,104 @@
 						<li onclick="location.href='myFavStarView.me'">찜한 스타</li>
 					</ul>
 				</div>
-			<!-- 찜한 상품이 없는 경우 -->
-				<!-- <div id="wrap">
-					<table>
-						<tr>
-							<td class="nothing">
-								찜한 상품이 없습니다.
+			<!-- 찜한 성퓸이 없는 경우 -->
+				<c:if test="${ f.size() == 0 }">
+					<div id="wrap">
+						<table>
+							<tr>
+								<td class="nothing">
+									찜한 상품이 없습니다.
+								</td>
+							</tr>
+						</table>
+					</div>
+				</c:if>
+			<!-- 찜한 상품이 있는 경우 반복문 시작 -->	
+				<c:if test="${ f.size() > 0 }">
+					<c:forEach var="f" items="${ f }">
+						<div class="list">
+							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ f.product.proNo }'">
+								<div class="imgDiv">
+									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ f.image.imgName }">
+								</div>
+								<div class="textDiv">
+									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
+									<input type="hidden" class="proNo" value="${ f.product.proNo }" name="proNo">
+									<p class="text">${ f.product.proTitle }</p>
+									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
+									<p class="text">${ f.favDate } 찜</p>
+								</div>
+							</div>
+							<div class="btnDiv">
+								<!-- 구매하기 버튼 -->
+							</div>
+							<div class="delBtnDiv">
+								<div class="delBtn">
+									<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+					<table class="pagingArea">
+						<tr align="center" height="20">
+							<td colspan="6">
+								<!-- [이전] -->
+								<c:if test="${ pi.currentPage <= 1 }">
+									<a class="pageBtnEnd">&lt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage > 1 }">
+									<c:url var="before" value="myFavProView.me">
+										<c:param name="page" value="${ pi.currentPage - 1 }"/>
+									</c:url>
+									<a href="${ before }" class="pageBtn">&lt;</a>
+								</c:if>
+								
+								<!-- 페이지 -->
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<a class="pageBtnSelected">${ p }</a>
+									</c:if>
+									
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="myFavProView.me">
+											<c:param name="page" value="${ p }"/>
+										</c:url>
+										<a href="${ pagination }" class="pageBtn">${ p }</a>
+									</c:if>
+								</c:forEach>
+								
+								<!-- [다음] -->
+								<c:if test="${ pi.currentPage >= pi.maxPage }">
+									<a class="pageBtnEnd">&gt;</a>
+								</c:if>
+								<c:if test="${ pi.currentPage < pi.maxPage }">
+									<c:url var="after" value="myFavProView.me">
+										<c:param name="page" value="${ pi.currentPage + 1 }"/>
+									</c:url> 
+									<a href="${ after }" class="pageBtn">&gt;</a>
+								</c:if>
 							</td>
 						</tr>
 					</table>
-				</div> -->
-			<!-- 찜한 상품이 있는 경우 반복문 시작 -->	
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/cookie.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							크리스마스 쿠키 디저트<br><br>
-							2020.12.15<br><br>
-							14,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/muffler.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							부들부들 뜨개질 목도리<br><br>
-							2020.12.04<br><br>
-							25,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/wallet.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							이니셜 각인 심플 반지갑<br><br>
-							2020.09.07<br><br>
-							39,200 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/pen.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							이니셜 각인 우드 볼펜<br><br>
-							2020.08.02<br><br>
-							16,900 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-				</div>
-				<hr class="line">
-				<div class="list">
-					<div class="imgDiv">
-						<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/diffuser.jpg">
-					</div>
-					<div class="textDiv">
-						<p class="text">
-							조향사가만든 다비디퓨저,디퓨져리필액<br><br>
-							2020.05.19<br><br>
-							8,000 원
-						</p>
-					</div>
-				</div>
-				<div class="btnDiv">
-					<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-				</div>
-				<hr class="line">
+					<hr class="line">
+				</c:if>
 			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+	
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var favNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favNo").val();
+			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proNo").val();
+			
+			if(bool) {
+				location.href='deleteFavPro.me?favNo=' + favNo + '&favRefno=' + favRefno;
+			}			
+		});
+	</script>
 </body>
 </html>

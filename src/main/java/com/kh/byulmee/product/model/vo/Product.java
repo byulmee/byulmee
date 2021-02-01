@@ -28,4 +28,7 @@ public class Product {
 	private int proCount;
 	private Date proDate;
 	private String proStatus;
+	private double proTotalScore;
+	private int proReviewCnt;
+	private double proRating;
 }

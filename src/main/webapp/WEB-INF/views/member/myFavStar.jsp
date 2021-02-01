@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -106,14 +107,38 @@
 		border: 1px solid #DCDCDC;
 		z-index: 1;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -140,7 +165,7 @@
 	
 /* 컨텐츠 */	
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		border-top: 2px solid #FF6833;
 	}
@@ -244,7 +269,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 		text-align: center;
 		border-bottom: 2px solid #FF6833;
@@ -376,6 +401,39 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<c:if test="${ loginUser.memLevel == 0 }">
+		            		<button class="sideMenuBtn">스타 신청</button>
+		            	</c:if>
+		            	<c:if test="${ loginUser.memLevel == 1 }">
+		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
+		            	</c:if>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -413,6 +471,8 @@
 						<div class="star">
 							<div class="hoverDiv">
 								<div class="starDiv">
+									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
+									<input type="hidden" class="memNo" value="${ f.member.memNo }" name="memNo">
 									<c:if test="${ f.image.imgRefno ne f.favRefno }">
 										<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 									</c:if>
@@ -425,60 +485,74 @@
 								</div>
 							</div>
 							<div id="starDelDiv" class="starDelDiv">
-								<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
+								<div class="delBtn">
+									<img id="starDelImg" class="starDelImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
+								</div>
 							</div>
 						</div>
 					</c:forEach>
-				</c:if>
-			<!-- 반복문 종료 -->
-				<div class="pagindDiv">
-					<table class="pagingArea">
-						<tr align="center" height="20">
-							<td colspan="6">
-								<!-- [이전] -->
-								<c:if test="${ pi.currentPage <= 1 }">
-									<a class="pageBtnEnd">&lt;</a>
-								</c:if>
-								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="before" value="myPurProView.me">
-										<c:param name="page" value="${ pi.currentPage - 1 }"/>
-									</c:url>
-									<a href="${ before }" class="pageBtn">&lt;</a>
-								</c:if>
-								
-								<!-- 페이지 -->
-								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-									<c:if test="${ p eq pi.currentPage }">
-										<a class="pageBtnSelected">${ p }</a>
+					<div class="pagindDiv">
+						<table class="pagingArea">
+							<tr align="center" height="20">
+								<td colspan="6">
+									<!-- [이전] -->
+									<c:if test="${ pi.currentPage <= 1 }">
+										<a class="pageBtnEnd">&lt;</a>
+									</c:if>
+									<c:if test="${ pi.currentPage > 1 }">
+										<c:url var="before" value="myFavStarView.me">
+											<c:param name="page" value="${ pi.currentPage - 1 }"/>
+										</c:url>
+										<a href="${ before }" class="pageBtn">&lt;</a>
 									</c:if>
 									
-									<c:if test="${ p ne pi.currentPage }">
-										<c:url var="pagination" value="myPurProView.me">
-											<c:param name="page" value="${ p }"/>
-										</c:url>
-										<a href="${ pagination }" class="pageBtn">${ p }</a>
+									<!-- 페이지 -->
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<a class="pageBtnSelected">${ p }</a>
+										</c:if>
+										
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="myFavStarView.me">
+												<c:param name="page" value="${ p }"/>
+											</c:url>
+											<a href="${ pagination }" class="pageBtn">${ p }</a>
+										</c:if>
+									</c:forEach>
+									
+									<!-- [다음] -->
+									<c:if test="${ pi.currentPage >= pi.maxPage }">
+										<a class="pageBtnEnd">&gt;</a>
 									</c:if>
-								</c:forEach>
-								
-								<!-- [다음] -->
-								<c:if test="${ pi.currentPage >= pi.maxPage }">
-									<a class="pageBtnEnd">&gt;</a>
-								</c:if>
-								<c:if test="${ pi.currentPage < pi.maxPage }">
-									<c:url var="after" value="myPurProView.me">
-										<c:param name="page" value="${ pi.currentPage + 1 }"/>
-									</c:url> 
-									<a href="${ after }" class="pageBtn">&gt;</a>
-								</c:if>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<hr class="line">
+									<c:if test="${ pi.currentPage < pi.maxPage }">
+										<c:url var="after" value="myFavStarView.me">
+											<c:param name="page" value="${ pi.currentPage + 1 }"/>
+										</c:url> 
+										<a href="${ after }" class="pageBtn">&gt;</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<hr class="line">
+				</c:if>
+			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+	
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var favNo = $(this).parent().parent().children(".hoverDiv").children(".starDiv").children(".favNo").val();
+			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".starDiv").children(".memNo").val();
+			
+			if(bool) {
+				location.href='deleteFavStar.me?favNo=' + favNo + '&favRefno=' + favRefno;
+			}			
+		});
+	</script>
 </body>
 </html>

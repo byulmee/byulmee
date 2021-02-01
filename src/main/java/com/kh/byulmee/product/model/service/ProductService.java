@@ -23,4 +23,6 @@ public interface ProductService {
 
 	int updateProduct(Product p);
 
+	int updateProRatingCnt(Product p);
+
 }

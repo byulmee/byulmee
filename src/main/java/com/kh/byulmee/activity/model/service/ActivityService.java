@@ -28,4 +28,7 @@ public interface ActivityService {
 	Activity selectActivity(int acId);
 
 
+	int updateActRatingCnt(Activity a);
+
+
 }

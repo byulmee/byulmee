@@ -66,4 +66,8 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
 
+	public int updateActRatingCnt(SqlSessionTemplate sqlSession, Activity a) {
+		return sqlSession.update("activityMapper.updateActRatingCnt", a);
+	}
+
 }

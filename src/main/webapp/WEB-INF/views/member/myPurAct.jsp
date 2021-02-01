@@ -14,7 +14,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 <style>
 	body {
 		margin: 0;
@@ -110,14 +109,38 @@
 		border: 1px solid #DCDCDC;
 		z-index: 1;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -144,7 +167,7 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		border-top: 2px solid #FF6833;
 	}
@@ -264,7 +287,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 		text-align: center;
 		border-bottom: 2px solid #FF6833;
@@ -664,6 +687,31 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -694,7 +742,7 @@
 						</table>
 					</div>
 				</c:if>
-			<!-- 신청한 활동이이 있는 경우 반복문 시작 -->
+			<!-- 신청한 활동이 있는 경우 반복문 시작 -->
 				<c:if test="${ o.size() > 0 }">
 					<c:forEach var="o" items="${ o }">
 						<div class="list">
@@ -705,6 +753,8 @@
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
 									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
+									<input type="hidden" class="actTitle" value="${ o.activity.actTitle }" name="actTitle">
+									
 									<p class="text">${ o.activity.actTitle }</p>
 									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
 									<p class="text">${ o.ordDate } 신청</p>
@@ -727,7 +777,6 @@
 							</div>
 						</div>
 					</c:forEach>
-				<!-- 반복문 종료 -->
 					<table class="pagingArea">
 						<tr align="center" height="20">
 							<td colspan="6">
@@ -771,6 +820,7 @@
 					</table>
 					<hr class="line">
 				</c:if>
+			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>
@@ -889,6 +939,18 @@
 			</form>
 		</div>
 	</div>
+	
+<!-- 	<script>
+		$("#finishBtn").click(function(){
+			var chk1 = $('reviewImgFile1').val();
+			var chk2 = $('reviewImgFile2').val();
+			var chk3 = $('reviewImgFile3').val();
+			if(chk1 == null || chk2 == null || chk3 == null) {
+				alert("사진");
+				return false;
+			}
+		});
+	</script> -->
 	
 	<script>
 		function openModal(modalname) {

@@ -97,11 +97,61 @@ public class MypageDAO {
 		return sqlSession.selectOne("mypageMapper.getFavListCount", fav);
 	}
 
+	public ArrayList<Favorite> selectFavActList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavActList", id, rowBounds);
+	}
+
+	public ArrayList<Favorite> selectFavProList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavProList", id, rowBounds);
+	}
+	
 	public ArrayList<Favorite> selectFavStarList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavStarList", id, rowBounds);
 	}
+
+	public int deleteFavAct(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavAct", f);
+	}
+
+	public int deleteFavPro(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavPro", f);
+	}
+
+	public int deleteFavStar(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavStar", f);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession, Review rev) {
+		return sqlSession.selectOne("mypageMapper.getReviewListCount", rev);
+	}
+
+	public ArrayList<Review> selectRevActList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevActList", id, rowBounds);
+	}
+
+	public ArrayList<Image> selectRevDetailImg(SqlSessionTemplate sqlSession, int revNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevDetailImg", revNo);
+	}
+
+	public Review selectRevActDetail(SqlSessionTemplate sqlSession, int revNo) {
+		return sqlSession.selectOne("mypageMapper.selectRevActDetail", revNo);
+	}
+
+	public int updateRevAct(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("mypageMapper.updateRevAct", r);
+	}
+
 
 }

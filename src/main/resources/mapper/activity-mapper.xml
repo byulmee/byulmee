@@ -20,6 +20,9 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
+  		<result property="actTotalScore" column="ACT_TOTAL_SCORE"/>
+  		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
+  		<result property="actRating" column="ACT_RATING"/>
   </resultMap>
 
 	<!-- 게시물 조회수 증가 -->
@@ -40,9 +43,9 @@
   		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
   								ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
   								ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
-  								ACT_COUNT, ACT_DATE, ACT_STATUS)
+  								ACT_COUNT, ACT_DATE, ACT_STATUS, ACT_TOTAL_SCORE, ACT_REVIEW_CNT, ACT_RATING)
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
-  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
+  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default, default, default, default)
 	</insert>
 	
 
@@ -89,5 +92,11 @@
   		act_title = #{actTitle}, act_price = #{actPrice}, act_url = #{actUrl}, act_content = #{actContent},
   		act_guide = #{actGuide}
   	where act_no = #{actNo}	
+  </update>
+  
+  <update id="updateActRatingCnt">
+  	update activity
+  	set act_total_score = #{actTotalScore}, act_review_cnt = #{actReviewCnt}, act_rating = #{actRating}
+  	where act_no = #{actNo}
   </update>
 </mapper>

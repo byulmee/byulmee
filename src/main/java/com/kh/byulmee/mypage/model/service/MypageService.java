@@ -47,6 +47,28 @@ public interface MypageService {
 
 	int getFavListCount(Favorite fav);
 
+	ArrayList<Favorite> selectFavActList(PageInfo pi, String id);
+	
+	ArrayList<Favorite> selectFavProList(PageInfo pi, String id);
+	
 	ArrayList<Favorite> selectFavStarList(PageInfo pi, String id);
+
+	int deleteFavAct(Favorite f);
+
+	int deleteFavPro(Favorite f);
+
+	int deleteFavStar(Favorite f);
+
+	int getReviewListCount(Review rev);
+
+	ArrayList<Review> selectRevActList(PageInfo pi, String id);
+
+	Review selectRevActDetail(int revNo);
+
+	int updateRevAct(Review r);
+	
+	ArrayList<Image> selectRevDetailImg(int revNo);
+
+
 
 }

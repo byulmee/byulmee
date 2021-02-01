@@ -111,8 +111,59 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
+	public ArrayList<Favorite> selectFavActList(PageInfo pi, String id) {
+		return mpDAO.selectFavActList(sqlSession, pi, id);
+	}
+
+	@Override
+	public ArrayList<Favorite> selectFavProList(PageInfo pi, String id) {
+		return mpDAO.selectFavProList(sqlSession, pi, id);
+	}
+	
+	@Override
 	public ArrayList<Favorite> selectFavStarList(PageInfo pi, String id) {
 		return mpDAO.selectFavStarList(sqlSession, pi, id);
 	}
+
+	@Override
+	public int deleteFavAct(Favorite f) {
+		return mpDAO.deleteFavAct(sqlSession, f);
+	}
+
+	@Override
+	public int deleteFavPro(Favorite f) {
+		return mpDAO.deleteFavPro(sqlSession, f);
+	}
+
+	@Override
+	public int deleteFavStar(Favorite f) {
+		return mpDAO.deleteFavStar(sqlSession, f);
+	}
+
+	@Override
+	public int getReviewListCount(Review rev) {
+		return mpDAO.getReviewListCount(sqlSession, rev);
+	}
+
+	@Override
+	public ArrayList<Review> selectRevActList(PageInfo pi, String id) {
+		return mpDAO.selectRevActList(sqlSession, pi, id);
+	}
+
+	@Override
+	public ArrayList<Image> selectRevDetailImg(int revNo) {
+		return mpDAO.selectRevDetailImg(sqlSession, revNo);
+	}
+
+	@Override
+	public Review selectRevActDetail(int revNo) {
+		return mpDAO.selectRevActDetail(sqlSession, revNo);
+	}
+
+	@Override
+	public int updateRevAct(Review r) {
+		return mpDAO.updateRevAct(sqlSession, r);
+	}
+
 
 }

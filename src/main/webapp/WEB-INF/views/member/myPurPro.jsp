@@ -110,14 +110,38 @@
 		border: 1px solid #DCDCDC;
 		z-index: 1;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -144,7 +168,7 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		border-top: 2px solid #FF6833;
 	}
@@ -264,7 +288,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 		text-align: center;
 		border-bottom: 2px solid #FF6833;
@@ -669,6 +693,31 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -693,7 +742,7 @@
 						<table>
 							<tr>
 								<td class="nothing">
-									신청한 활동이 없습니다.
+									구매한 상품이 없습니다.
 								</td>
 							</tr>
 						</table>
@@ -710,6 +759,8 @@
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
 									<input type="hidden" class="proNo" value="${ o.product.proNo }" name="proNo">
+									<input type="hidden" class="proTitle" value="${ o.product.proTitle }" name="proTitle">
+									
 									<p class="text">${ o.product.proTitle }</p>
 									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
 									<p class="text">${ o.ordDate } 구매</p>
@@ -811,6 +862,7 @@
 							<input type="hidden" class="revRefcode" value="1" name="revRefcode">
 							<input type="hidden" class="revRefno" value="" name="revRefno">
 							<input type="hidden" class="ordNo" value="" name="ordNo">
+							<input type="hidden" class="revTitle" value="" name="revTitle">
 							상품은 만족하셨나요?
 						</td>
 					</tr>
@@ -895,6 +947,18 @@
 		</div>
 	</div>
 	
+<!-- 	<script>
+		$("#finishBtn").click(function(){
+			var chk1 = $('reviewImgFile1').val();
+			var chk2 = $('reviewImgFile2').val();
+			var chk3 = $('reviewImgFile3').val();
+			if(chk1 == null || chk2 == null || chk3 == null) {
+				alert("사진");
+				return false;
+			}
+		});
+	</script> -->
+	
 	<script>
 		function openModal(modalname) {
 			document.get
@@ -917,8 +981,10 @@
 		$(".reviewProBtn").click(function(){
 			var revRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proNo").val();
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
+			var revTitle = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proTitle").val();
 			$('.revRefno').val(revRefno);
 			$('.ordNo').val(ordNo);
+			$('.revTitle').val(revTitle);
 		});
 		
 		$(".delBtn").click(function() {
