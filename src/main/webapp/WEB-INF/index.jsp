@@ -46,7 +46,7 @@
                 <li class="cate act" onclick="location.href='alist.ac'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
-                <li class="cate liv">
+                <li class="cate liv" onclick="location.href='plist.pd'">
                     <i class="fas fa-chair"></i><br><span class="cate-name">리빙</span>
                 </li>
                 <li class="cate bea">

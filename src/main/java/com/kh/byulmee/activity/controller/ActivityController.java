@@ -205,7 +205,7 @@ public class ActivityController {
 	
 	@RequestMapping("activityCheck.ac")
 	public ModelAndView activityCheckView(@RequestParam("acId") int acId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
-		
+				
 		// �솢�룞 寃뚯떆�뙋 �뵒�뀒�씪 �궡�슜 議고쉶
 		Activity activity = aService.selectActivity(acId);
 		// �솢�룞 寃뚯떆�뙋 �씠誘몄�由ъ뒪�듃 議고쉶
@@ -255,25 +255,20 @@ public class ActivityController {
 	  
 	  int listCount = ActivityService.getListCount();
 	  
+	  
 	  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 	  
 	  ArrayList<Activity> list = ActivityService.selectList(pi);
-//	  ArrayList<Activity> list = new ArrayList<Activity>();
+
 	 
 	  
 	  
 	  list.add(new Activity());
 	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
-//	  list.add(new Activity());
+	  list.add(new Activity());
+	  list.add(new Activity());
+	  list.add(new Activity());
+
 	 
 	  
 	  

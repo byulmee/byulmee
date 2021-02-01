@@ -92,4 +92,10 @@
 						from activity 
 						where act_no = #{acId})
   	</select>
+  	
+  	<select id="selectMemberWithNo" resultMap="memberResultSet">
+		select *
+		from member
+		where mem_no = #{memNo} and mem_status = 'Y'
+	</select>
 </mapper>

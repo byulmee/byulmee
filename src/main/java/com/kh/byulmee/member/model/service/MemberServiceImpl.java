@@ -128,4 +128,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectActivityWriter(int acId) {
 		return mDAO.selectActivityWriter(sqlSession, acId);
 	}
+
+	@Override
+	public Member selectMemberWithNo(int memNo) {
+		return mDAO.selectMemberWithNo(sqlSession, memNo);
+	}
 }

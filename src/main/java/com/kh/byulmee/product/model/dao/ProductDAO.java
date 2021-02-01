@@ -26,7 +26,7 @@ public class ProductDAO {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("productMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("productMapper.selectList", pi, rowBounds);
 	}
 
 	public Product selectPro(SqlSessionTemplate sqlSession, int proNo) {

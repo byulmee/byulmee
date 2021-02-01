@@ -64,8 +64,7 @@ public class ActivityDAO {
 	}
 	
 	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("activityMapper.getListCount");
-		
+		return sqlSession.selectOne("activityMapper.getListCount");		
 	}
 	
 	

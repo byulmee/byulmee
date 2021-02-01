@@ -27,4 +27,6 @@ public interface MemberService {
 	String resetPwd(Member member);
   
   Member selectActivityWriter(int acId);
+
+Member selectMemberWithNo(int memNo);
 }

@@ -408,15 +408,31 @@ td{
 			※ 자바봄은 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 자바봄은 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.
        </div>
        <div class="personal-info-check">
+           <input type="hidden" value="${ activity.actNo }" class="acId">
+           <input type="hidden" value="${ writer.memNo }" class="memNo">
 	       <span>구매 동의 : 활동 신청 정보, 취소 및 환불 정책, 개인 정보 제공 동의 등을 최종 확인하고 구매에 동의합니다.(필수)</span>
 	       <span><input type="checkbox" id="check"></span>
        </div>
-       	<input type="button" id="orderButton" value="결제">
+       	<input type="button" value="결제" id="orderButton">
        	<input type="button" id="cancleButton" value="취소">
-       
-
 	</div>
 	
+	<script>
+	
+	// 결제 페이지 이동
+	/* $(document).ready(function(){
+		var acId = $(this).val();
+		console.log(acId);
+		$('#orderButton').click(function(){
+			location.href = "payment.py";
+		});
+	}); */
+	$('#orderButton').click(function(){
+		var acId = $(this).parent().children('.personal-info-check').children('.acId').val();
+		var memNo = $(this).parent().children('.personal-info-check').children('.memNo').val();
+		location.href = "payment.py?acId=" + acId + "&memNo=" + memNo;
+	});
+	</script>
 	<c:import url="../common/footer.jsp"/>
 
 </body>

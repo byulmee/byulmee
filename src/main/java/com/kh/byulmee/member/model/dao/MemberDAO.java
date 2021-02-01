@@ -56,5 +56,9 @@ public class MemberDAO {
   
   public Member selectActivityWriter(SqlSessionTemplate sqlSession, int acId) {
 		return sqlSession.selectOne("memberMapper.selectActivityWriter", acId);
-	}	
+	}
+
+public Member selectMemberWithNo(SqlSessionTemplate sqlSession, int memNo) {
+	return sqlSession.selectOne("memberMapper.selectMemberWithNo", memNo);
+}	
 }
