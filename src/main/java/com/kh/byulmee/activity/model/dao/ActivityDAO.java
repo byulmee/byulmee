@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Repository("aDAO")

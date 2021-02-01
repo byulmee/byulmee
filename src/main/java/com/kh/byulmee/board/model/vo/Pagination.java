@@ -22,7 +22,7 @@ public class Pagination {
 		
 		return pi;
 	}
-	
+
 	public static PageInfo getPageInfoWithPageLimit(int pageLimit, int currentPage, int listCount) {
 		int maxPage;
 		int startPage;
