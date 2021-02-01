@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Repository("aDAO")
@@ -75,4 +74,22 @@ public class ActivityDAO {
 		return (ArrayList)sqlSession.selectList("activityMapper.selectUserList", memId, rowBounds);
 	}
 
+	public int getActSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("activityMapper.getActSearchListCount", keywords);
+	}
+	
+	public ArrayList<Activity> getActSearchResult(SqlSessionTemplate sqlSession, PageInfo pi, String[] keywords) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("activityMapper.actSearchLsit", keywords, rowBounds);
+	}
+
+	public ArrayList<Activity> getPopularActList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("activityMapper.getPopularActList");
+	}
+
+	public ArrayList<Activity> getNearEndDateActList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("activityMapper.getNearEndDateActList");
+	}
 }

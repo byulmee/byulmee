@@ -2,6 +2,9 @@ package com.kh.byulmee.product.model.vo;
 
 import java.sql.Date;
 
+import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +31,8 @@ public class Product {
 	private int proCount;
 	private Date proDate;
 	private String proStatus;
+	private double proRating;
+	private int proReviewCnt;
+	private Member member;
+	private Image image;
 }

@@ -52,6 +52,57 @@
 		<result property="proCount" column="PRO_COUNT"/>
 		<result property="proDate" column="PRO_DATE"/>
 		<result property="proStatus" column="PRO_STATUS"/>
+		<result property="proRating" column="PRO_RATING"/>
+  		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
+	</resultMap>
+	
+	<resultMap type="Product" id="productAllResultSet">
+		<id property="proNo" column="PRO_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="proCharge" column="PRO_CHARGE"/>
+		<result property="proStock" column="PRO_STOCK"/>
+		<result property="proMaximum" column="PRO_MAXIMUM"/>
+		<result property="proCategory" column="PRO_CATEGORY"/>
+		<result property="proTitle" column="PRO_TITLE"/>
+		<result property="proPrice" column="PRO_PRICE"/>
+		<result property="proUrl" column="PRO_URL"/>
+		<result property="proContent" column="PRO_CONTENT"/>
+		<result property="proGuide" column="PRO_GUIDE"/>
+		<result property="proCount" column="PRO_COUNT"/>
+		<result property="proDate" column="PRO_DATE"/>
+		<result property="proStatus" column="PRO_STATUS"/>
+		<result property="proRating" column="PRO_RATING"/>
+  		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
+		<collection property="member" resultMap="memberResultSet"/>
+		<collection property="image" resultMap="imageResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="MEM_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="memPwd" column="MEM_PWD"/>
+	  	<result property="memName" column="MEM_NAME"/>
+	  	<result property="memPostcode" column="MEM_POSTCODE"/>
+	  	<result property="memBasicAddr" column="MEM_BASICADDR"/>
+	  	<result property="memDetailAddr" column="MEM_DETAILADDR"/>
+	  	<result property="memPhone" column="MEM_PHONE"/>
+	  	<result property="memNickname" column="MEM_NICKNAME"/>
+	  	<result property="memEmail" column="MEM_EMAIL"/>
+	  	<result property="memLevel" column="MEM_LEVEL"/>
+	  	<result property="memDate" column="MEM_DATE"/>
+	  	<result property="memStatus" column="MEM_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Image" id="imageResultSet">
+	  	<id property="imgNo" column="IMG_NO"/>
+	  	<result property="imgOrigin" column="IMG_ORIGIN"/>
+	  	<result property="imgName" column="IMG_NAME"/>
+	  	<result property="imgPath" column="IMG_PATH"/>
+	  	<result property="imgDate" column="IMG_DATE"/>
+	  	<result property="imgLevel" column="IMG_LEVEL"/>
+	  	<result property="imgStatus" column="IMG_STATUS"/>
+	  	<result property="imgRefcode" column="IMG_REFCODE"/>
+	  	<result property="imgRefno" column="IMG_REFNO"/>
 	</resultMap>
 	
 	<select id="selectPro" resultMap="productResultSet">
@@ -85,4 +136,48 @@
 	 		pro_url = #{proUrl}, pro_content = #{proContent}, pro_guide = #{proGuide}
 	 	where pro_no = #{proNo}
 	 </update>
+	 
+	 <!-- by.다혜 메인 검색 -->
+  	 <!-- 스페이스 기준으로 나눈 토큰을 Like or 조건으로 제목과 스타 검색한다. 
+  	   아래 쿼리는 keywords에 해당하는 제목의 게시글을 찾는다.
+  	   단, 전체 검색이기 때문에 카테고리는 구분하지 않는다. -->
+	 	<select id="getProSearchListCount" resultType="_int">
+			select count(*)
+			from product
+			where
+				<foreach item="arr" collection="array" open="(" separator="or" close=")">
+		  			pro_title like '%' || #{arr} || '%' 
+		  		</foreach>
+		  			and pro_status='Y'
+		</select>
+		
+	  	<select id="proSearchLsit" resultMap="productAllResultSet">
+		  	select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+			from product p
+			    inner join image i on p.pro_no = i.img_refno
+			    inner join member m on p.mem_id = m.mem_id
+		  	where
+		  		<foreach item="arr" collection="array" open="(" separator="or" close=")">
+		  			pro_title like '%' || #{arr} || '%' 
+		  		</foreach>
+		  		and pro_status = 'Y' and i.img_refcode = 2 and i.img_level = 0
+		  	order by pro_no desc
+	  	</select>
+
+	<!-- by.다혜 메인 추천 상품 리스트 -->
+  	<!-- 인기 상품: 추천순으로 상위 50개 상품을 뽑아 랜덤으로 5건을 노출한다.
+  			단,추출된 상품이 50건 미만일 경우 상위 5건을 노출 -->
+	  	<select id="getPopularProList" resultMap="productAllResultSet">
+			<![CDATA[
+			  	select orderedlist.*
+				from
+				    (select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+				     from product p
+				     inner join image i on p.pro_no = i.img_refno
+				     inner join member m on p.mem_id = m.mem_id
+				     where pro_status = 'Y' and i.img_refcode = 2 and i.img_level = 0
+				     order by p.pro_rating desc, p.pro_review_cnt desc, pro_date desc)orderedlist
+				where rownum <= 50
+			]]>
+	  	</select>
 </mapper>

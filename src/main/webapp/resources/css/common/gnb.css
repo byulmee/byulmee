@@ -130,6 +130,10 @@ ul, li {
     align-items: center;
 }
 
+#gnb-cate.typeB {
+	background-color: #000000;
+}
+
 #cate{
     width: 100vw;
     text-align: center;

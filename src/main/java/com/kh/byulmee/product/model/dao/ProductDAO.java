@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.product.model.vo.Product;
 
@@ -58,6 +59,21 @@ public class ProductDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("productMapper.selectUserList", memId, rowBounds);
+  }
+  
+	public int geProSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("productMapper.getProSearchListCount", keywords);
+	}
+
+	public ArrayList<Activity> getProSearchResult(SqlSessionTemplate sqlSession, PageInfo proListPi, String[] keywords) {
+		int offset = (proListPi.getCurrentPage() - 1) * proListPi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, proListPi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("productMapper.proSearchLsit", keywords, rowBounds);
+	}
+
+	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
 	}
 
 }

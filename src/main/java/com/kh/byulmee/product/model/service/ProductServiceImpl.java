@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.product.model.dao.ProductDAO;
 import com.kh.byulmee.product.model.vo.Product;
@@ -69,6 +70,22 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ArrayList<Product> selectUserList(String memId, PageInfo pi) {
 		return pDAO.selectUserList(sqlSession, pi, memId);
+
+	//상품 검색 결과 게시글 전체 갯수
+	@Override
+	public int getProSearchListCount(String[] keywords) {
+		return pDAO.geProSearchListCount(sqlSession, keywords);
+	}
+	
+	//활동 검색 결과 게시글 전체 리스트
+	@Override
+	public ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords) {
+		return pDAO.getProSearchResult(sqlSession, proListPi, keywords);
+	}
+
+	@Override
+	public ArrayList<Product> getPopularProList() {
+		return pDAO.getPopularProList(sqlSession);
 	}
 	
 }

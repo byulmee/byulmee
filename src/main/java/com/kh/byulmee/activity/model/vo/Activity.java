@@ -2,6 +2,9 @@ package com.kh.byulmee.activity.model.vo;
 
 import java.sql.Date;
 
+import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity {
+	
 	private int actNo;
 	private String memId;
 	private String actPhone;
@@ -31,4 +35,8 @@ public class Activity {
 	private int actCount;
 	private Date actDate;
 	private String actStatus;
+	private double actRating;
+	private int actReviewCnt;
+	private Member member;
+	private Image image;
 }

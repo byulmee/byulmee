@@ -20,7 +20,61 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
+  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
   </resultMap>
+  
+  <resultMap type="Activity" id="activityListResultSet">
+	  	<id property="actNo" column="ACT_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="actPhone" column="ACT_PHONE"/>
+	  	<result property="actStartday" column="ACT_STARTDAY"/>
+	  	<result property="actEndday" column="ACT_ENDDAY"/>
+	  	<result property="actPlace" column="ACT_PLACE"/>
+	  	<result property="actPeople" column="ACT_PEOPLE"/>
+	  	<result property="actRequestend" column="ACT_REQUESTEND"/>
+	  	<result property="actCategory" column="ACT_CATEGORY"/>
+	  	<result property="actTitle" column="ACT_TITLE"/>
+	  	<result property="actPrice" column="ACT_PRICE"/>
+	  	<result property="actUrl" column="ACT_URL"/>
+	  	<result property="actContent" column="ACT_CONTENT"/>
+	  	<result property="actGuide" column="ACT_GUIDE"/>
+	  	<result property="actCount" column="ACT_COUNT"/>
+	  	<result property="actDate" column="ACT_DATE"/>
+  		<result property="actStatus" column="ACT_STATUS"/>
+  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
+  		<collection property="member" resultMap="memberResultSet"/>
+  		<collection property="image" resultMap="imageResultSet"/>
+  </resultMap>
+  
+ 	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="MEM_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="memPwd" column="MEM_PWD"/>
+	  	<result property="memName" column="MEM_NAME"/>
+	  	<result property="memPostcode" column="MEM_POSTCODE"/>
+	  	<result property="memBasicAddr" column="MEM_BASICADDR"/>
+	  	<result property="memDetailAddr" column="MEM_DETAILADDR"/>
+	  	<result property="memPhone" column="MEM_PHONE"/>
+	  	<result property="memNickname" column="MEM_NICKNAME"/>
+	  	<result property="memEmail" column="MEM_EMAIL"/>
+	  	<result property="memLevel" column="MEM_LEVEL"/>
+	  	<result property="memDate" column="MEM_DATE"/>
+	  	<result property="memStatus" column="MEM_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Image" id="imageResultSet">
+	  	<id property="imgNo" column="IMG_NO"/>
+	  	<result property="imgOrigin" column="IMG_ORIGIN"/>
+	  	<result property="imgName" column="IMG_NAME"/>
+	  	<result property="imgPath" column="IMG_PATH"/>
+	  	<result property="imgDate" column="IMG_DATE"/>
+	  	<result property="imgLevel" column="IMG_LEVEL"/>
+	  	<result property="imgStatus" column="IMG_STATUS"/>
+	  	<result property="imgRefcode" column="IMG_REFCODE"/>
+	  	<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
 
 	<!-- 게시물 조회수 증가 -->
 	<update id="addReadCount">
@@ -38,9 +92,9 @@
 	<!-- 활동 게시물 등록 -->
 	<insert id="insertActivity" useGeneratedKeys="true" keyProperty="actNo" keyColumn="ACT_NO">
   		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
-  								ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
-  								ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
-  								ACT_COUNT, ACT_DATE, ACT_STATUS)
+  							  ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
+  							  ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
+  							  ACT_COUNT, ACT_DATE, ACT_STATUS)
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
@@ -103,4 +157,59 @@
   	where mem_id = #{memId} and act_status = 'Y'
   	order by act_no desc
   </select>
+
+  <!-- by.다혜 메인 검색 -->
+  <!-- 스페이스 기준으로 나눈 토큰을 Like or 조건으로 제목과 스타 검색한다. 
+  	   아래 쿼리는 keywords에 해당하는 제목의 게시글을 찾는다.
+  	   단, 전체 검색이기 때문에 카테고리는 구분하지 않는다. -->
+ 	<select id="getActSearchListCount" resultType="_int">
+		select count(*)
+		from activity
+		where
+			<foreach item="arr" collection="array" open="(" separator="or" close=")">
+	  			act_title like <![CDATA['%' || #{arr} || '%']]> 
+	  		</foreach>
+	  			and act_status='Y'
+	</select>
+	
+  <select id="actSearchLsit" resultMap="activityListResultSet">
+	  	select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		from activity a 
+		    inner join image i on i.img_refno = a.act_no
+		    inner join member m on a.mem_id = m.mem_id
+	  	where
+	  		<foreach item="arr" collection="array" open="(" separator="or" close=")">
+	  			act_title like '%' || #{arr} || '%' 
+	  		</foreach>
+	  		and act_status = 'Y' and i.img_refcode = 1 and i.img_level = 0
+	  	order by act_no desc
+  	</select>
+  	
+  	<!-- by.다혜 메인 추천 상품 리스트 -->
+  	<!-- 인기 상품: 추천순으로 상위 50개 상품을 뽑아 랜덤으로 5건을 노출한다.
+  			단,추출된 상품이 50건 미만일 경우 상위 5건을 노출 -->
+  	<select id="getPopularActList" resultMap="activityListResultSet">
+		select orderedlist.*
+		from 
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		        from activity a
+		            inner join image i on i.img_refno = a.act_no
+		            inner join member m on a.mem_id = m.mem_id
+		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+		        order by a.act_rating desc, a.act_review_cnt desc, act_date asc) orderedlist
+		where rownum <![CDATA[<]]>= 50
+  	</select>
+  	
+  	<!-- 마감일 임박: 마감일이 시스템 날짜 보다 미래의 날짜인 활동을 오름차순으로 정렬한 후 5개 게시글 추출 -->
+  	<select id="getNearEndDateActList" resultMap="activityListResultSet">
+		select orderedlist.*
+		from 
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		        from activity a
+		            inner join image i on i.img_refno = a.act_no
+		            inner join member m on a.mem_id = m.mem_id
+		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+		        order by a.act_endday asc) orderedlist
+		where rownum <![CDATA[<]]> = 5	
+  	</select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.kh.byulmee.member.model.service;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -7,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.member.model.dao.MemberDAO;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
@@ -127,5 +131,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member selectActivityWriter(int acId) {
 		return mDAO.selectActivityWriter(sqlSession, acId);
+	}
+	
+	//검색 키워드와 일치하는 전체 스타 수
+	@Override
+	public int getStarSearchListCount(String[] keywords) {
+		return mDAO.getStarSearchListCount(sqlSession, keywords);
+	}
+
+	@Override
+	public ArrayList<Activity> getStarSearchResult(PageInfo pi, String[] keywords) {
+		return mDAO.getStarSearchResult(sqlSession, pi, keywords);
 	}
 }

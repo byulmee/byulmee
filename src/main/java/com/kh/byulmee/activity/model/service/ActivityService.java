@@ -1,9 +1,9 @@
 package com.kh.byulmee.activity.model.service;
 
 import java.util.ArrayList;
+
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.member.model.vo.Member;
 
 
 public interface ActivityService {
@@ -30,5 +30,11 @@ public interface ActivityService {
 
 	ArrayList<Activity> selectUserList(String memId, PageInfo pi);
 
+	int getActSearchListCount(String[] keywords);
+	
+	ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords);
 
+	ArrayList<Activity> getPopularActList();
+
+	ArrayList<Activity> getNearEndDateActList();
 }
