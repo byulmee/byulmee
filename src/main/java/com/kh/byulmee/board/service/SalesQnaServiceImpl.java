@@ -36,6 +36,20 @@ public class SalesQnaServiceImpl implements SalesQnaService{
 	}
 
 	@Override
+	public ArrayList<SalesQna> selectProductQnaList(int pdId) {
+		return sqDAO.selectProductQnaList(sqlSession, pdId);
+	}
+
+	@Override
+	public ArrayList<SalesQna> selectProductQnaExceptList(int pdId) {
+		return sqDAO.selectProductQnaExceptList(sqlSession, pdId);
+	}
+
+	@Override
+	public int insertProductQna(SalesQna sq) {
+		return sqDAO.insertProductQna(sqlSession, sq);
+  }
+  
 	public int getListCount(String memId) {
 		return sqDAO.getListCount(sqlSession, memId);
 	}

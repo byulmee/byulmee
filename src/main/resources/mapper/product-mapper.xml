@@ -137,6 +137,25 @@
 	 	where pro_no = #{proNo}
 	 </update>
 	 
+	 <!-- 게시물 조회수 증가 -->
+	 <update id="addReadCount">
+		 update product
+		 set pro_count = pro_count + 1
+		 where pro_no = #{pdId}
+  	 </update>
+	 
+	 <select id="selectProduct" resultMap="productResultSet">
+	 	select *
+		from product
+		where pro_no=#{pdId} and pro_status='Y'
+	 </select>
+	 
+	 <select id="selectOrderSum" resultType="_int">
+		select count(*)
+		from orders
+		where ord_refno = #{pcId} and ord_refcode = 1
+	</select>
+	 
 	 <!-- by.다혜 메인 검색 -->
   	 <!-- 스페이스 기준으로 나눈 토큰을 Like or 조건으로 제목과 스타 검색한다. 
   	   아래 쿼리는 keywords에 해당하는 제목의 게시글을 찾는다.

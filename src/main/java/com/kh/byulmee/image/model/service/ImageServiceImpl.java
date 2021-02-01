@@ -58,4 +58,9 @@ public class ImageServiceImpl implements ImageService {
 		return iDAO.selectReviewImage(sqlSession, revImgNo);
 	}
 
+	@Override
+	public ArrayList<Image> selectProductImage(int pdId) {
+		return iDAO.selectProductImage(sqlSession, pdId);
+	}
+
 }

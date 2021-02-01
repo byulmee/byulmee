@@ -44,9 +44,6 @@ public class ActivityController {
 	@Autowired
 	private SalesQnaService sqService;
 	
-	@Autowired
-	private ReplyService rService;
-	
 	@Autowired 
 	private ReviewService rvService;
 
@@ -65,6 +62,20 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
+		
+		// 활동 신청 가능한 인원수 조회
+		int actPeople = activity.getActPeople();
+		int orderSum = aService.selectOrderSum(acId);
+		int possibleNum = actPeople - orderSum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -98,12 +109,6 @@ public class ActivityController {
 				content4 = "resources\\auploadFiles\\" + image.get(i).getImgName();
 			}
 		}
-		System.out.println(image);
-		System.out.println("thumb " + thumb);
-		System.out.println("content1 " + content1);
-		System.out.println("content2 " + content2);
-		System.out.println("content3 " + content3);
-		System.out.println("content4 " + content4);
 		
 		if(activity != null && image != null) {
 			mv.addObject("activity", activity)
@@ -115,11 +120,13 @@ public class ActivityController {
 			  .addObject("content4", content4)
 			  .addObject("writer", writer)
 			  .addObject("contentText", contentText)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
+			  .addObject("possibleNum", possibleNum)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
 		}
-		
 		return mv;
 	}
 	
@@ -127,7 +134,8 @@ public class ActivityController {
 	@RequestMapping("salesQnaList.ac")
 	public void getQnaList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaList(acId);
-		System.out.println(sqList);
+		
+		System.out.println(acId);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -160,18 +168,11 @@ public class ActivityController {
 	@RequestMapping("salesReviewList.ac")
 	public void getReviewList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<Review> reviewList = rvService.selectReviewList(acId);
-//		ArrayList<Image> image = new ArrayList<Image>();
-//		
-//		for(int i = 0; i < reviewList.size(); i++) {
-//			int revImgNo = reviewList.get(i).getRevNo();
-//			image = iService.selectReviewImage(revImgNo);
-//		}
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(reviewList, response.getWriter());
-//			gson.toJson(image, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -179,17 +180,15 @@ public class ActivityController {
 		}
 	}
 	
-	
-	// 문의 답변 불러오기
-	@RequestMapping("salesQnaReply.ac")
-	public void getQnaReply(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
-		Reply r = rService.getQnaReply(qnaNo);
-		System.out.println(r);
+	// 후기 디테일 불러오기
+	@RequestMapping("salesReviewDetail.ac")
+	public void getReviewDetail(@RequestParam("revNo") int revNo, HttpServletResponse response) {
+		Review review = rvService.selectReviewDetail(revNo);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
-			gson.toJson(r, response.getWriter());
+			gson.toJson(review, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -197,6 +196,7 @@ public class ActivityController {
 		}
 	}
 	
+	// 활동 신청 페이지
 	@RequestMapping("activityCheck.ac")
 	public ModelAndView activityCheckView(@RequestParam("acId") int acId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
 		
@@ -206,6 +206,15 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -232,6 +241,8 @@ public class ActivityController {
 			  .addObject("writer", writer)
 			  .addObject("amount", amount)
 			  .addObject("price", price)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityCheck");
 		} else {
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");

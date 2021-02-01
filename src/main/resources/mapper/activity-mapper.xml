@@ -99,6 +99,12 @@
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
 	
+	<select id="selectOrderSum" resultType="_int">
+		select count(*)
+		from orders
+		where ord_refno = #{acId} and ord_refcode = 0
+	</select>
+	
  <select id="getUserListCount" resultType="_int">
  	select count(*)
   	from activity

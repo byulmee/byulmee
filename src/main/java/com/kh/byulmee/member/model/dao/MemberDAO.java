@@ -72,5 +72,9 @@ public class MemberDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.getStarSearchList", keywords, rowBounds);
+	}
+
+	public Member selectProductWriter(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.selectOne("memberMapper.selectProductWriter", pdId);
 	}	
 }

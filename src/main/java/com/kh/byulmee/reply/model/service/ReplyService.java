@@ -21,6 +21,4 @@ public interface ReplyService {
 	int updateSalReply(Reply r);
 
 	int deleteSalReply(int repNo);
-
-
 }

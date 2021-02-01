@@ -63,6 +63,10 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
 
+	public int selectOrderSum(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("activityMapper.selectOrderSum", acId);
+	}
+	
 	public int getUserListCount(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("activityMapper.getUserListCount", memId);
 	}

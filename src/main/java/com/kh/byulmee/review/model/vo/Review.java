@@ -1,6 +1,10 @@
 package com.kh.byulmee.review.model.vo;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +27,7 @@ public class Review {
 	private int revRefcode;
 	private int revRefno;
 	private int ordNo;
+	
+	private Member member;
+	private List<Image> image;
 }

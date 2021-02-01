@@ -11,17 +11,90 @@
 		<result property="revStatus" column="REV_STATUS"/>
 		<result property="revRefcode" column="REV_REFCODE"/>
 		<result property="revRefno" column="REV_REFNO"/>
+		<collection property="member" resultMap="memberResultSet"></collection>
+		<collection property="image" resultMap="imageResultSet"></collection>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+	  	<id property="memNo" column="mem_no"/>
+	  	<result property="memId" column="mem_id"/>
+	  	<result property="memPwd" column="mem_pwd"/>
+	  	<result property="memName" column="mem_name"/>
+	  	<result property="memPostcode" column="mem_postcode"/>
+	  	<result property="memBasicAddr" column="mem_basicaddr"/>
+	  	<result property="memDetailAddr" column="mem_detailaddr"/>
+	  	<result property="memPhone" column="mem_phone"/>
+	  	<result property="memNickname" column="mem_nickname"/>
+	  	<result property="memEmail" column="mem_email"/>
+	  	<result property="memLevel" column="mem_level"/>
+	  	<result property="memDate" column="mem_Date"/>
+	  	<result property="memStatus" column="mem_status"/>
+	  	<result property="memLoginType" column="mem_login_type"/>
+	</resultMap>
+	
+	<resultMap type="Image" id="imageResultSet">
+		<id property="imgNo" column="IMG_NO"/>
+		<result property="imgOrigin" column="IMG_ORIGIN"/>
+		<result property="imgName" column="IMG_NAME"/>
+		<result property="imgPath" column="IMG_PATH"/>
+		<result property="imgDate" column="IMG_DATE"/>
+		<result property="imgLevel" column="IMG_LEVEL"/>
+		<result property="imgStatus" column="IMG_STATUS"/>
+		<result property="imgRefcode" column="IMG_REFCODE"/>
+		<result property="imgRefno" column="IMG_REFNO"/>
 	</resultMap>
 
 	<select id="selectReviewList" resultMap="reviewResultSet">
 		select *
 		from (
 		    select *
-		    from review
-		    	join member using(mem_id)
+		    from review r
+		    	left outer join member m on r.mem_id = m.mem_id
+		    	left outer join image i on i.img_refno = r.rev_no
 		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y'
 		    order by rev_no desc
 		    )
-		<![CDATA[where rownum <= 5]]>
+		<![CDATA[where rownum <= 6]]>
+	</select>
+	
+	<select id="selectProductReviewList" resultMap="reviewResultSet">
+		select *
+		from (
+		    select *
+		    from review r
+		    	left outer join member m on r.mem_id = m.mem_id
+		    	left outer join image i on i.img_refno = r.rev_no
+		    where rev_refcode = 1 and rev_refno = #{pdId} and rev_status = 'Y'
+		    order by rev_no desc
+		    )
+		<![CDATA[where rownum <= 6]]>
+	</select>
+	
+	<select id="selectReviewDetail" resultMap="reviewResultSet">
+		select *
+		from review r
+		    left outer join member m on r.mem_id = m.mem_id
+			left outer join image i on i.img_refno = r.rev_no
+		where rev_no = #{revNo} and r.rev_refcode = 0
+	</select>
+	
+	<select id="salesProductReviewDetail" resultMap="reviewResultSet">
+		select *
+		from review r
+		    left outer join member m on r.mem_id = m.mem_id
+			left outer join image i on i.img_refno = r.rev_no
+		where rev_no = #{revNo} and r.rev_refcode = 1
+	</select>
+	
+	<select id="selectReviewAll" resultMap="reviewResultSet">
+		select *
+		from review
+		where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y'
+	</select>
+	
+	<select id="selectProductReviewAll" resultMap="reviewResultSet">
+		select *
+		from review
+		where rev_refcode = 1 and rev_refno = #{pdId} and rev_status = 'Y'
 	</select>
 </mapper>

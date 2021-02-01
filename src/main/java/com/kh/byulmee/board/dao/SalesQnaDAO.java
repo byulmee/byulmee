@@ -24,6 +24,18 @@ public class SalesQnaDAO {
 		return sqlSession.insert("salesQnaMapper.insertQna", sq);
 	}
 
+	public ArrayList<SalesQna> selectProductQnaList(SqlSessionTemplate sqlSession, int pdId) {
+		return (ArrayList)sqlSession.selectList("salesQnaMapper.selectProductQnaList", pdId);
+	}
+
+	public ArrayList<SalesQna> selectProductQnaExceptList(SqlSessionTemplate sqlSession, int pdId) {
+		return (ArrayList)sqlSession.selectList("salesQnaMapper.selectProductQnaExceptList", pdId);
+	}
+
+	public int insertProductQna(SqlSessionTemplate sqlSession, SalesQna sq) {
+		return sqlSession.insert("salesQnaMapper.insertProductQna", sq);
+  }
+  
 	public int getListCount(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("salesQnaMapper.getListCount", memId);
 	}
@@ -54,5 +66,4 @@ public class SalesQnaDAO {
 	public int salQnaUpdate(SqlSessionTemplate sqlSession, SalesQna s) {
 		return sqlSession.update("salesQnaMapper.salQnaUpdate", s);
 	}
-
 }

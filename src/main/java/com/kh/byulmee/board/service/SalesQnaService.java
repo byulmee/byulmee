@@ -13,6 +13,12 @@ public interface SalesQnaService {
 
 	int insertQna(SalesQna sq);
 
+	ArrayList<SalesQna> selectProductQnaList(int pdId);
+
+	ArrayList<SalesQna> selectProductQnaExceptList(int pdId);
+
+	int insertProductQna(SalesQna sq);
+
 	int getListCount(String memId);
 
 	ArrayList<SalesQna> selectSalQnaList(PageInfo pi, String memId);
@@ -26,10 +32,4 @@ public interface SalesQnaService {
 	int salQnaDelete(int salqnaNo);
 
 	int salQnaUpdate(SalesQna s);
-
-
-
-
-
-
 }

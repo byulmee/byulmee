@@ -199,7 +199,7 @@ a img {
             </a>
         </li>
      <li>
-            <a href="#" class="inner">
+            <a href="#" class="inner" onclick="location.href='productDetail.pd?pdId=1'">
                 <div class="image" style="width:140px;">
                     <img src="./images/1.PNG"id="image"alt="텃밭" />
                 </div>

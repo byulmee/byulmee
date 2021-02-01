@@ -32,5 +32,9 @@ public interface ProductService {
 
 	ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords);
 
+	Product selectProduct(int pdId);
+
+	int selectOrderSum(int pdId);
+
 	ArrayList<Product> getPopularProList();
 }
