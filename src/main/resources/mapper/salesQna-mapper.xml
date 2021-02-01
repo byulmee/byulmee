@@ -11,47 +11,23 @@
 		<result property="salqnaStatus" column="SALQNA_STATUS"/>
 		<result property="salqnaRefcode" column="SALQNA_REFCODE"/>
 		<result property="salqnaRefno" column="SALQNA_REFNO"/>
-    <result property="salqnaStarcode" column="SALQNA_STARCODE"/>
+		<collection property="reply" resultMap="replyResultSet"/>
+		<collection property="member" resultMap="memberResultSet"/>
+	</resultMap>
+	
+	<resultMap type="SalesQna" id="salesQnaListResultSet">
+		<id property="salqnaNo" column="SALQNA_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="salqnaTitle" column="SALQNA_TITLE"/>
+		<result property="salqnaType" column="SALQNA_TYPE"/>
+		<result property="salqnaDate" column="SALQNA_DATE"/>
+		<result property="salqnaContent" column="SALQNA_CONTENT"/>
+		<result property="salqnaStatus" column="SALQNA_STATUS"/>
+		<result property="salqnaRefcode" column="SALQNA_REFCODE"/>
+		<result property="salqnaRefno" column="SALQNA_REFNO"/>
+		<result property="salqnaStarcode" column="SALQNA_STARCODE"/>
 		<result property="salqnaRestatus" column="SALQNA_RESTATUS"/>
-		<collection property="reply" resultMap="replyResultSet"></collection>
-		<collection property="member" resultMap="memberResultSet"></collection>
-	</resultMap>
-	
-	<resultMap type="Reply" id="replyResultSet">
-		<id property="repNo" column="REP_NO"/>
-		<result property="memId" column="MEM_ID"/>
-		<result property="repContent" column="REP_CONTENT"/>
-		<result property="repDate" column="REP_DATE"/>
-		<result property="repStatus" column="REP_STATUS"/>
-		<result property="repRefcode" column="REP_REFCODE"/>
-		<result property="repRefno" column="REP_REFNO"/>
-	</resultMap>
-	
-	<resultMap type="Member" id="memberResultSet">
-	  	<id property="memNo" column="mem_no"/>
-	  	<result property="memId" column="mem_id"/>
-	  	<result property="memPwd" column="mem_pwd"/>
-	  	<result property="memName" column="mem_name"/>
-	  	<result property="memPostcode" column="mem_postcode"/>
-	  	<result property="memBasicAddr" column="mem_basicaddr"/>
-	  	<result property="memDetailAddr" column="mem_detailaddr"/>
-	  	<result property="memPhone" column="mem_phone"/>
-	  	<result property="memNickname" column="mem_nickname"/>
-	  	<result property="memEmail" column="mem_email"/>
-	  	<result property="memLevel" column="mem_level"/>
-	  	<result property="memDate" column="mem_Date"/>
-	  	<result property="memStatus" column="mem_status"/>
-	  	<result property="memLoginType" column="mem_login_type"/>
-  </resultMap>
-	
-	<resultMap type="Reply" id="replyResultSet">
-		<id property="repNo" column="REP_NO"/>
-		<result property="memId" column="MEM_ID"/>
-		<result property="repContent" column="REP_CONTENT"/>
-		<result property="repDate" column="REP_DATE"/>
-		<result property="repStatus" column="REP_STATUS"/>
-		<result property="repRefcode" column="REP_REFCODE"/>
-		<result property="repRefno" column="REP_REFNO"/>
+		<collection property="member" resultMap="memberResultSet"/>
 	</resultMap>
 	
 	<resultMap type="Member" id="memberResultSet">
@@ -70,7 +46,17 @@
 	  	<result property="memStatus" column="mem_status"/>
 	  	<result property="memLoginType" column="mem_login_type"/>
 	</resultMap>
-		
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="repNo" column="REP_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="repContent" column="REP_CONTENT"/>
+		<result property="repDate" column="REP_DATE"/>
+		<result property="repStatus" column="REP_STATUS"/>
+		<result property="repRefcode" column="REP_REFCODE"/>
+		<result property="repRefno" column="REP_REFNO"/>
+	</resultMap>
+	
 	<select id="selectQnaList" resultMap="salesQnaResultSet">
 		select *
 			from (
@@ -140,6 +126,7 @@
 		    <![CDATA[where rownum <= 5]]>
 		    )
 		where salqna_refno = #{pdId} and salqna_type = 'P'
+		where salqna_refno = #{acId}
 		order by salqna_no desc
 	</select>
 	

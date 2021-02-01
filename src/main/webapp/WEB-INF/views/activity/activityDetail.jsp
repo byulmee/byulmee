@@ -1180,6 +1180,7 @@ hr {
 				url: 'salesReviewList.ac',
 				data: {acId:acId},
 				success: function(data){
+					
 					console.log(data);
 					
 					$review = $('.review_flex tbody');
@@ -1206,7 +1207,7 @@ hr {
 							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
 							
 							if(data[i].image != "" ){
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image.imgName + "'>");
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image[0].imgName + "'>");
 // 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
 							} else{
 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
