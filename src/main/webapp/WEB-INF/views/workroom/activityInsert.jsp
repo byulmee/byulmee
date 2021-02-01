@@ -210,7 +210,11 @@ input.checkbox:checked + label.input-label.radio::before {
 	border-radius: 25px;
 }
 
-
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 </head>
 <body>
@@ -284,13 +288,13 @@ input.checkbox:checked + label.input-label.radio::before {
 				</div>
 				<div class="inputText">
 					제목&nbsp;&nbsp;<input type="text" name="actTitle" class="inputValue" id="inputTitle"><br> 
-					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle"><br>
-					활동비&nbsp;&nbsp;<input type="text" name="actPrice" class="inputValue"	id="inputTitle"><br> 
+					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle" placeholder="000-0000-0000"><br>
+					활동비&nbsp;&nbsp;<input type="number" name="actPrice" class="inputValue"	id="inputTitle"><br> 
 					활동기간&nbsp;&nbsp;<input	type="text" name="actStartday" class="inputTime" id="inputTitle" placeholder="2020-11-30"> -&nbsp;&nbsp;
 					<input type="text" name="actEndday" class="inputTime" id="inputTitle" placeholder="2020-11-30"><br> 
 					활동 장소&nbsp;&nbsp;<input type="text" name="actPlace" class="inputValue" id="inputTitle"><br>
-					참여 가능 인원&nbsp;&nbsp;<input type="text" name="actPeople" class="inputValue" id="inputTitle"><br> 
-					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle"><br> 
+					참여 가능 인원&nbsp;&nbsp;<input type="number" name="actPeople" class="inputValue" id="inputTitle"><br> 
+					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle" placeholder="2020-11-30"><br> 
 					관련 상품 링크&nbsp;&nbsp;<input type="text" name="actUrl" class="inputValue" id="inputTitle" placeholder="http://">
 				</div>
 			</div>
@@ -393,5 +397,25 @@ input.checkbox:checked + label.input-label.radio::before {
 		</div>
 		</form>
 	</div>
+	<script>
+/* 	 	$("#insertBtn").click(function check(){
+			var filechk1 =	$("#thumbnailImg5").val();
+			var filechk2 =	$("#thumbnailImg1").val();
+			var filechk3 =	$("#thumbnailImg2").val();
+			var filechk4 =	$("#thumbnailImg3").val();
+			var filechk5 =	$("#thumbnailImg4").val();
+			console.log(filechk1);
+			console.log(filechk2);
+			console.log(filechk3);
+			console.log(filechk4);
+			console.log(filechk5);
+			
+			if(filechk1 == null || filechk2  == null || filechk3  == null || filechk4  == null || filechk5  == null){
+				alert("사진을 업로드해주세요");
+				return false;
+			}
+		});  */
+	</script>
+
 </body>
 </html>

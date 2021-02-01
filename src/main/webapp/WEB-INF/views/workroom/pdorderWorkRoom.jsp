@@ -96,6 +96,7 @@
 	.content {
 		margin-left: 250px;
 		min-height: 800px;
+		
 	}
 	.MainLogoText {
 		margin-left: 250px;
@@ -144,8 +145,42 @@
 		cursor: pointer;
 	}
 	
+	/* 검색창  */
+	.orderbox {
+		border: 2px solid #ECECEC;
+		padding-bottom: 15px;
+	}
+	
+	.searchbox{
+		margin-top: 10px;
+		margin-left: 10px;	
+	}
+	
+	.timeinput {
+		width: 110px;
+	}
+
+	.searchId {
+		margin-left: 15px;
+	}
+	
+	.searchBtn {
+		margin-left: 8px;
+		font-family: "G마켓 산스 TTF Medium";
+		font-size: 13px;
+		margin-top: 10px;
+		width: 70px;
+		height: 30px;
+		outline: 0;
+		border: 0;
+		cursor: pointer;
+		background: #FF6833;
+		color: white;
+		border-radius: 10px;
+	}
+	
 	/* 검색내용테이블 부분  */
-	.QnaValueArea{
+	.searchValueArea{
 		margin-top: 20px;
 	}
 	
@@ -153,7 +188,7 @@
 		color: #585858;
 	}
 	
-	.price {
+	.totalprice {
 		color: #FF6833;
 	}
 	
@@ -170,18 +205,10 @@
 		text-align: center;
 	}
 	
-	.submitBtnArea {
-		float: right;
-	}
-	.submitBtn {
-		border: none;
-		background-color: white;
-		color: #585858;
-		font-size: 15px;
-	}
-	
-	.img {
-		padding-top: 0px;
+	.ordTitle {
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 	}
 </style>
 </head>
@@ -205,7 +232,6 @@
 				</c:if>
 				<p class="nickname"> ${ loginUser.memNickname } </p>
 				
-				
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -216,56 +242,116 @@
 						<button onclick="location.href='productView.wr'" class="sideMenuBtn">상품 목록 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="location.href='orderView.wr'" class="sideMenuBtn">주문 내역 관리</button>
+						<button class="sideMenuBtn" id="selectedBtn">주문 내역 관리</button>
 					</li>
 					<li class="sideMenuLi">
-						<button class="sideMenuBtn" id="selectedBtn">고객 문의 관리</button>
+						<button onclick="location.href='customerView.wr'" class="sideMenuBtn">고객 문의 관리</button>
 					</li>
 				</ul>
 			</div>
 		</div>		
 		<div class="MainLogoText">
 			<p class="MainText">
-				고객 문의 관리
+				주문 내역 관리
 			</p>
 		</div>
 		<div class="content">
-			<div class="QnaValueArea">
-				<div class="qnaValue">
+			<div class="orderbox">
+				<div class="buttonGroup">
+					<button class="insertBtn" id="activityBtn">활동</button>
+					<button class="insertBtn" id="orderSelectedBtn">상품</button>
+				</div>
+				<div class="searchbox">
+					기간 &nbsp;&nbsp;<input type="text" class="timeinput" id="startday" placeholder="2021-01-21">
+					&nbsp;-&nbsp;<input type="text" class="timeinput" id="endday" placeholder="2021-01-21">
+					<span class="searchId">아이디</span>
+					&nbsp;&nbsp;<input type="text" class="idInput" placeholder="고객 아이디를 입력하세요.">
+					<button class="searchBtn" onclick="searchPdOrder();">조회</button>
+				</div>
+			</div>
+			<div class="searchValueArea">
+				<p class="valueText">
+					<c:set var="total" value="0"/>
+					<c:forEach var="od" items="${ odlist }">
+						<c:set var="total" value="${ total + od.ordPay }"/>
+					</c:forEach>
+					주문 결과 총 매출&nbsp;&nbsp; <span class="totalprice">&#8361;<c:out value="${total}"/></span>
+				</p>
+				<div class="serachValue">
 					<table class="table table-hover" id="listArea">
 						<thead>
 							<tr>
-								<th scope="col" class="text-center" width="20%">번호</th>
-								<th scope="col" class="text-center" width="50%">제목</th>
-								<th scope="col" class="text-center" width="15%">작성자</th>
-								<th scope="col" class="text-center" width="15%">답변</th>
+								<th scope="col" class="text-center" width="10%">주문번호</th>
+								<th scope="col" class="text-center" width="10%">상품명</th>
+								<th scope="col" class="text-center" width="2%">수</th>
+								<th scope="col" class="text-center" width="10%">구매자</th>
+								<th scope="col" class="text-center" width="10%">주문일</th>
+								<th scope="col" class="text-center" width="10%">구매액</th>
+								<th scope="col" class="text-center" width="10%">배송 번호</th>
+								<th scope="col" class="text-center" width="10%">결제 수단</th>
+								<th scope="col" class="text-center" width="10%">환불액</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="sq" items="${ sqlist }">
-								<tr class="salqna">
-									<td>${ sq.salqnaNo }<input type="hidden" id="salqnaType" name="salqnaType" value="${ sq.salqnaType }"></td>
-									<td>${ sq.salqnaTitle }</td>
-									<td>${ sq.member.memNickname }</td>
-									<c:if test="${ sq.salqnaRestatus eq 'N' }">
-									<td><img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
-									</c:if>
-									<c:if test="${ sq.salqnaRestatus eq 'Y' }">
-									<td>&emsp;</td>
-									</c:if>
-								</tr>
-							</c:forEach>
+						<c:forEach var="od" items="${ odlist }">
+							<tr>
+								<td>${ od.ordPayno }</td>
+								<td class="ordTitle">${ od.product.proTitle }</td>
+								<td>${ od.ordCount }</td>
+								<td>${ od.memId }</td>
+								<td>${ od.ordDate }</td>
+								<td><span class="price">${ od.ordPay }</span></td>
+								<c:choose>
+									<c:when test="${ od.ordParcelcode eq null }">
+										<td>&nbsp;&nbsp;</td>
+									</c:when>
+									<c:when test="${ od.ordParcelcode ne null }">
+										<td>${ od.ordParcelcode }</td>
+									</c:when>
+								</c:choose>
+								<c:choose>
+									 <c:when test="${ od.ordPayWay eq 0 }">
+									 	<td>카드</td>
+									 </c:when>
+									 <c:when test="${ od.ordPayWay eq 1 }">
+									 	<td>페이</td>
+									 </c:when>
+								</c:choose>
+								<c:choose>
+									<c:when test="${ od.ordRePay eq 0 }">
+										<td>&nbsp;&nbsp;</td>
+									</c:when>
+									<c:when test="${ od.ordRePay ne 0 }">
+										<td><span class="price">${ od.ordRePay }</span>원</td>
+									</c:when>
+								</c:choose>
+							</tr>
+							
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div id="pagingArea">
+			
+				<c:if test="${ searchId eq null and startday eq null and endday eq null }">
+					<c:set var="loc" value="orderView.wr"/>
+				</c:if>
+				<c:if test="${ searchId ne null and startday ne null and endday ne null }">
+					<c:set var="loc" value="searchPdOrder.wr"/>
+				</c:if>			
+			
 				<!-- 이전 페이지로 -->
 				<c:if test="${ pi.currentPage <= 1 }">
 					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="customerView.wr">
+					<c:url var="before" value="${ loc }">
+						<c:if test="${ searchId ne null and startday ne null and endday ne null }">
+							<c:param name="searchId" value="${ searchId }"/>
+							<c:param name="startday" value="${ startday }"/>
+							<c:param name="endday" value="${ endday }"/>
+						</c:if>
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
@@ -278,7 +364,12 @@
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagination" value="customerView.wr">
+						<c:url var="before" value="${ loc }">
+							<c:if test="${ searchId ne null and startday ne null and endday ne null }">
+								<c:param name="searchId" value="${ searchId }"/>
+								<c:param name="startday" value="${ startday }"/>
+								<c:param name="endday" value="${ endday }"/>
+							</c:if>
 							<c:param name="page" value="${ p }"/>
 						</c:url>
 						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
@@ -290,7 +381,12 @@
 					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="after" value="customerView.wr">
+					<c:url var="before" value="${ loc }">
+						<c:if test="${ searchId ne null and startday ne null and endday ne null }">
+							<c:param name="searchId" value="${ searchId }"/>
+							<c:param name="startday" value="${ startday }"/>
+							<c:param name="endday" value="${ endday }"/>
+						</c:if>
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
@@ -303,19 +399,26 @@
 			location.reload();
 		});
 
-		$(function() {
-			$('.salqna').mouseenter(function(){
-				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
-			}).mouseout(function(){
-				$(this).css({'color': '#585858', 'font-weight':'normal'});
-			}).click(function(){
-				var salqnaNo=$(this).children('td').eq(0).text();
-				var salqnaType = $(this).children('td').eq(0).children('input').val();
-				//console.log(salqnaNo);
-				//console.log(salqnaType);
-				location.href='salqnaDetail.wr?salqnaNo=' + salqnaNo + '&page=' + ${pi.currentPage} + '&salqnaType=' + salqnaType;
-			});
+		$(document).ready(function(){
+			var price = $('.price').text();
+			var totalprice = $('.totalprice').text();
+	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        totalprice = totalprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        $('.price').html(price);
+	        $('.totalprice').html(totalprice);
 		});
+
+		$('#activityBtn').on('click', function(){
+			location.href='orderView.wr';
+		});
+
+		function searchPdOrder(){
+			var searchId = $(".idInput").val();
+			var startday = $("#startday").val();
+			var endday = $("#endday").val();
+
+			location.href="searchPdOrder.wr?searchId=" + searchId + "&startday=" + startday + "&endday=" + endday;
+		}
 	</script>
 </body>
 </html>

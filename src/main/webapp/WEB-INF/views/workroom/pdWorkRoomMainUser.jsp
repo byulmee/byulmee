@@ -92,6 +92,49 @@
 		cursor: pointer;
 	}
 	
+	/* 스타 찜하기 버튼  */
+	.starBut {
+		text-align: center;
+		list-style: none;
+		padding-left: 0px;
+		margin-bottom: 20px;
+	}
+	
+	.starMenuBtn {
+		font-family: "G마켓 산스 TTF Medium";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 45px;
+		outline: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+		background: #27314C;
+		color: white;
+		border-radius: 25px;
+	}
+	
+	.starMenuBtn:hover {
+		background: #6179BB;
+		color: white;
+	}
+	
+	.ablestarMenuBtn {
+		font-family: "G마켓 산스 TTF Medium";
+		font-size: 18px;
+		padding-top: 5px;
+		width: 200px;
+		height: 45px;
+		outline: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+		background: #D1D1D1;
+		color: #585858;
+		border-radius: 25px;
+	}
+	
 	/* 컨텐츠 */
 	.content {
 		margin-left: 250px;
@@ -101,45 +144,23 @@
 	.MainLogoText {
 		margin-left: 250px;
 	}
-	.insertArea {
-		float: right;
-		list-style: none;
-		padding-right: 5px;
-		margin-bottom: 20px;
-	}
-	
-	.insertBtn {
-		font-family: "G마켓 산스 TTF Medium";
-		font-size: 13px;
-		padding-top: 5px;
-		width: 150px;
-		height: 35px;
-		outline: 0;
-		border: 0;
-		background: none;
-		cursor: pointer;
-		background: #FF6833;
-		color: white;
-		border-radius: 25px;
-	}
-	
-	.insertBtn:hover {
-		background: #FFA98B;
-		color: white;
-	}
 /* 여기까지 유지해서 페이지 만드시면 콘텐츠 길이만큼 사이드메뉴 회색배경 길이도 늘어납니다 */
+	.MainText {
+		color: #585858;
+		font-size: 20px;
+	}
 	.MainText {
 		color: #585858;
 		font-size: 20px;
 		margin-bottom: 20px;
 	}
-	.activityArea {
+	.productArea {
 		border-collapse: collapse;
 		width: 750px;
 		min-height: 620px;
 		/* text-align: center; */
 	}
-	.activity {
+	.product {
 		margin-top: 20px;
 		margin-left: 45px;
 		vertical-align: middle;
@@ -147,11 +168,11 @@
 		width: 149px;
 		height: 290px;
 	}
-
+	
 	.img {
 		width: 200px;
 		height: 200px;
-		padding: 10px; 
+		padding: 10px;
 		vertical-align: middle;
 		object-fit: cover;
 	}
@@ -180,6 +201,7 @@
 	
 	.priceText {
 		text-align: left;
+		margin-top: 0px;
 		margin-bottom: 0px;
 		margin-left: 10px;
 	}
@@ -210,12 +232,11 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp"/>
+	<c:import url="../common/gnb.jsp" />
 	<div class="outer">
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<%--  <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> --%>
 				<c:if test="${ empty img }">
 				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 				</c:if>
@@ -227,81 +248,64 @@
 						<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 					</c:if>
 				</c:if>
-				<p class="nickname"> ${ loginUser.memNickname } </p>
+				<p class="nickname"> ${ writer.memNickname } </p>
+				<input type="hidden" id="memId" value=${ memId }>
+				<input type="hidden" id="memNo" value=${ memNo }>
+			</div>
+			<div>
+				<li class="starBut">
+					<c:if test="${ favCount eq 0 }">
+						<button class="starMenuBtn" id="starBtn">+ 스타 찜하기</button>
+					</c:if>
+					<c:if test="${ favCount ne 0 }">
+						<button class="ablestarMenuBtn" id="unstarBtn">- 스타 찜하기</button>
+					</c:if>
+				</li>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
+					
 					<li class="sideMenuLi">
-						<button class="sideMenuBtn" id="selectedBtn">활동 목록 관리</button>
+						<button onclick="activityView()" class="sideMenuBtn">스타 활동 목록</button>
 					</li>
 					<li class="sideMenuLi">
-						<button onclick="location.href='productView.wr'" class="sideMenuBtn">상품 목록 관리</button>
-					</li>
-					<li class="sideMenuLi">
-						<button onclick="location.href='orderView.wr'" class="sideMenuBtn">주문 내역 관리</button>
-					</li>
-					<li class="sideMenuLi">
-						<button onclick="location.href='customerView.wr'" class="sideMenuBtn">고객 문의 관리</button>
+						<button onclick="" class="sideMenuBtn" id="selectedBtn">스타 상품 목록</button>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<div class="MainLogoText">
 			<p class="MainText">
-				스타 활동 전체보기
-				<span class="insertArea"><button class="insertBtn" onclick="location.href='activityInsertForm.wr'">활동등록</button></span>
+				스타 상품 전체보기
 			</p>
 		</div>
 		<div class="content">
-			<div class="activityArea">
-				<c:forEach var="a" items="${ alist }">
+				<div class="productArea">
+				<c:forEach var="p" items="${ plist }">
 				<%-- <div class="activity">
 					<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/tennis1.jpg">
 					<p class="text">[운동] 같이하는 테니스 일일레슨</p>
 					<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">50,000원</p>
 					<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>	
-					</div>				
-				--%>
-					<c:if test="${ a.actStatus eq 'Y' }">
-					<div class="activity">
-						<input type="hidden" name="actNo" value="${ a.actNo }">
-						<c:forEach var="i" items="${ ilist }">
-							<c:if test="${ a.actNo eq i.imgRefno and i.imgLevel eq '0'}">
-								<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
-							</c:if>
-						</c:forEach>
-						<p class="text">[<c:choose>
-							<c:when test="${ a.actCategory eq '0' }">액티비티</c:when>	
-							<c:when test="${ a.actCategory eq '1' }">리빙</c:when>
-							<c:when test="${ a.actCategory eq '2' }">건강/미용</c:when>
-							<c:when test="${ a.actCategory eq '3' }">힐링</c:when>
-							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
-							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
-						</c:choose>] ${ a.actTitle }</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ a.actPrice }</span>원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</div>
-					</c:if>
-					<c:if test="${ a.actStatus eq 'N' }">
-					<div class="activity" style="opacity: 0.5">
-						<input type="hidden" name="actNo" value="${ a.actNo }">
-						<c:forEach var="i" items="${ ilist }">
-							<c:if test="${ a.actNo eq i.imgRefno and i.imgLevel eq '0'}">
-								<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
-							</c:if>
-						</c:forEach>
-						<p class="text">[<c:choose>
-							<c:when test="${ a.actCategory eq '0' }">액티비티</c:when>	
-							<c:when test="${ a.actCategory eq '1' }">리빙</c:when>
-							<c:when test="${ a.actCategory eq '2' }">건강/미용</c:when>
-							<c:when test="${ a.actCategory eq '3' }">힐링</c:when>
-							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
-							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
-						</c:choose>] ${ a.actTitle }</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ a.actPrice }</span>원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
-					</div>
-					</c:if>
+				</div> --%> 
+				<div class="product">
+					<input type="hidden" name="proNo" value="${ p.proNo }">
+					<c:forEach var="i" items="${ ilist }">
+						<c:if test="${ p.proNo eq i.imgRefno and i.imgLevel eq '0'}">
+							<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }">
+						</c:if>
+					</c:forEach>
+					<p class="text">[<c:choose>
+							<c:when test="${ p.proCategory eq '0' }">액티비티</c:when>	
+							<c:when test="${ p.proCategory eq '1' }">리빙</c:when>
+							<c:when test="${ p.proCategory eq '2' }">건강/미용</c:when>
+							<c:when test="${ p.proCategory eq '3' }">힐링</c:when>
+							<c:when test="${ p.proCategory eq '4' }">푸드</c:when>
+							<c:when test="${ p.proCategory eq '5' }">커리어</c:when>					
+						</c:choose>] ${ p.proTitle }</p>
+					<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ p.proPrice }</span>원</p>
+					<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
+				</div>
 				</c:forEach>
 			</div>
 			<div id="pagingArea">
@@ -310,7 +314,9 @@
 					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="wookroomView.wr">
+					<c:url var="before" value="pdWorkRoomUser.wr">
+						<c:param name="memNo" value="${ memNo }"/>
+						<c:param name="memId" value="${ memId }"/>
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
@@ -323,7 +329,9 @@
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagination" value="wookroomView.wr">
+						<c:url var="pagination" value="pdWorkRoomUser.wr">
+							<c:param name="memNo" value="${ memNo }"/>
+							<c:param name="memId" value="${ memId }"/>
 							<c:param name="page" value="${ p }"/>
 						</c:url>
 						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
@@ -335,7 +343,9 @@
 					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="after" value="wookroomView.wr">
+					<c:url var="after" value="pdWorkRoomUser.wr">
+						<c:param name="memNo" value="${ memNo }"/>
+						<c:param name="memId" value="${ memId }"/>
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
@@ -345,14 +355,14 @@
 	</div>
 	<script>
 		$(function() {
-			$('.activity').mouseenter(function(){
+			$('.product').mouseenter(function(){
 				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
 			}).mouseout(function(){
 				$(this).css({'color': '#585858', 'font-weight':'normal'});
 			}).click(function(){
-				var actNo=$(this).children('input').val();
-				console.log(actNo);
-				location.href='actupdateform.wr?actNo=' + actNo + '&page=' + ${pi.currentPage};
+				var pdId=$(this).children('input').val();
+				console.log(pdId);
+				location.href='productDetail.pd?pdId=' + pdId;
 			});
 		});
 
@@ -366,6 +376,42 @@
 	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        $('#price').html(price);
 	    });
+
+	    function activityView() {
+			var memId = $('#memId').val();
+			var memNo = $('#memNo').val();
+			location.href='acWorkRoomMain.wr?memId=' + memId + '&memNo=' + memNo; 
+		}
+
+	    $('#starBtn').on('click', function(){
+			var memId = $('#userMemId').val();
+			var favRefno = $('#memNo').val();
+
+			$.ajax({
+				url: 'starFavInsert.wr',
+				data: {memId:memId, favRefno:favRefno},
+				success: function(data){
+					if(data == 'success'){
+						window.location.reload();
+					}
+				}
+			});
+		});
+
+		$('#unstarBtn').on('click', function(){
+			var memId = $('#userMemId').val();
+			var favRefno = $('#memNo').val();
+
+			$.ajax({
+				url: 'starFavDelete.wr',
+				data: {memId:memId, favRefno:favRefno},
+				success: function(data){
+					if(data == 'success'){
+						window.location.reload();
+					}
+				}
+			});
+		});
 	</script>
 	
 	<c:import url="../common/footer.jsp" />

@@ -757,6 +757,8 @@ hr {
 					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
+					<input type="hidden" name="memId" id="starMemId" value="${ writer.memId }">
+					<input type="hidden" name="memId" id="starMemNo" value="${ writer.memNo }">
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
 					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
 				</div>
@@ -822,8 +824,16 @@ hr {
 				$('#starInfo2').html(starPhone);
 			});
 		</script>
-		</form>
 
+		</form>
+		<script>
+			$('#star-button1').on('click', function(){
+				var memId = $('#starMemId').val();
+				var memNo = $('#starMemNo').val();
+				location.href='acWorkRoomMain.wr?memId=' + memId + '&memNo=' + memNo;
+			});
+			
+		</script>
 		<hr>
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
@@ -1513,6 +1523,6 @@ hr {
 	<br>
 
 	<c:import url="../common/footer.jsp" />
-
+	
 </body>
 </html>

@@ -34,7 +34,8 @@
 		<mapper resource="mapper/salesQna-mapper.xml"/>
 		<mapper resource="mapper/reply-mapper.xml"/>
 		<mapper resource="mapper/review-mapper.xml"/>
+		<mapper resource="mapper/mypage-mapper.xml"/>
+		<mapper resource="mapper/order-mapper.xml"/>
 		<mapper resource="mapper/admin-mapper.xml"/> 
-
 	</mappers>
 </configuration>

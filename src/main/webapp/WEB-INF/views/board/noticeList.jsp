@@ -37,11 +37,11 @@
 
 #serchFrame {
 	float: right;
-	font-size: 17px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
-#serch {
+#searchValue {
 	height: 35px;
 	width: 160px;
 }
@@ -80,7 +80,19 @@ tr {
 }
 
 th {
+	font-size: 11px;
+}
+
+td {
 	font-size: 12px;
+}
+
+.searchbtn{
+	float: right; 
+	background-color: #FF6833; 
+	color: white;
+	font-size: 13px;
+	margin-left: 10px;
 }
 
 /*
@@ -95,8 +107,9 @@ td {
 	<div id="mainFrame">
 		<h2 id="mainName" style="font-weight: bold">공지사항</h2>
 		<div id="serchFrame">
-			<span> 검색 <input type="text" id="serch" name="serch"
-				placeholder="별미별미">
+			<span><input type="text" id="searchValue" name="serch"
+				placeholder="제목 입력">
+				<button type="button" class="btn searchbtn" onclick="searchNotice();">검색</button>
 			</span>
 		</div>
 		<br> <br> <br>
@@ -133,12 +146,24 @@ td {
 			</div>
 		</c:if>
 			<div id="pagingArea">
+			
+				<c:if test="${ searchValue eq null }">
+					<c:set var="loc" value="noticeListView.bo"/>
+				</c:if>
+				<c:if test="${ searchValue ne null }">
+					<c:set var="loc" value="searchNotice.bo"/>
+				</c:if>
+				
+				
 				<!-- 이전 페이지로 -->
 				<c:if test="${ pi.currentPage <= 1 }">
 					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="noticeListView.bo">
+					<c:url var="before" value="${ loc }">
+						<c:if test="${ searchValue ne null }">
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>	
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
@@ -151,7 +176,10 @@ td {
 					</c:if>
 					
 					<c:if test="${ p ne pi.currentPage }">
-						<c:url var="pagination" value="noticeListView.bo">
+						<c:url var="pagination" value="${ loc }">
+							<c:if test="${ searchValue ne null }">
+								<c:param name="searchValue" value="${ searchValue }"/>
+							</c:if>	
 							<c:param name="page" value="${ p }"/>
 						</c:url>
 						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
@@ -163,7 +191,10 @@ td {
 					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
 				</c:if>
 				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="after" value="noticeListView.bo">
+					<c:url var="after" value="${ loc }">
+						<c:if test="${ searchValue ne null }">
+							<c:param name="searchValue" value="${ searchValue }"/>
+						</c:if>	
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
 					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
@@ -182,6 +213,12 @@ td {
 				location.href='notDetail.bo?notNo=' + notNo + '&page=' + ${pi.currentPage};
 			});
 		});
+
+		function searchNotice(){
+			var searchValue = $("#searchValue").val();
+
+			location.href="searchNotice.bo?searchValue="+searchValue;
+		}
 	</script>
 </body>
 </html>
