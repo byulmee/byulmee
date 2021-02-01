@@ -73,5 +73,10 @@ public class ProductServiceImpl implements ProductService{
 	public ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords) {
 		return pDAO.getProSearchResult(sqlSession, proListPi, keywords);
 	}
+
+	@Override
+	public ArrayList<Product> getPopularProList() {
+		return pDAO.getPopularProList(sqlSession);
+	}
 	
 }

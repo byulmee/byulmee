@@ -20,9 +20,11 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
+  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
   </resultMap>
   
-  <resultMap type="Activity" id="activityAllResultSet">
+  <resultMap type="Activity" id="activityListResultSet">
 	  	<id property="actNo" column="ACT_NO"/>
 	  	<result property="memId" column="MEM_ID"/>
 	  	<result property="actPhone" column="ACT_PHONE"/>
@@ -40,11 +42,13 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
+  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
   		<collection property="member" resultMap="memberResultSet"/>
   		<collection property="image" resultMap="imageResultSet"/>
   </resultMap>
   
-  <resultMap type="Member" id="memberResultSet">
+ 	<resultMap type="Member" id="memberResultSet">
 	  	<id property="memNo" column="MEM_NO"/>
 	  	<result property="memId" column="MEM_ID"/>
 	  	<result property="memPwd" column="MEM_PWD"/>
@@ -88,9 +92,9 @@
 	<!-- 활동 게시물 등록 -->
 	<insert id="insertActivity" useGeneratedKeys="true" keyProperty="actNo" keyColumn="ACT_NO">
   		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
-  								ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
-  								ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
-  								ACT_COUNT, ACT_DATE, ACT_STATUS)
+  							  ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
+  							  ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
+  							  ACT_COUNT, ACT_DATE, ACT_STATUS)
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
   				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
 	</insert>
@@ -150,13 +154,13 @@
 		from activity
 		where
 			<foreach item="arr" collection="array" open="(" separator="or" close=")">
-	  			act_title like '%' || #{arr} || '%' 
+	  			act_title like <![CDATA['%' || #{arr} || '%']]> 
 	  		</foreach>
 	  			and act_status='Y'
 	</select>
 	
-  	<select id="actSearchLsit" resultMap="activityAllResultSet">
-	  	select a.act_no, a.mem_id, a.act_startday, a.act_endday, a.act_place, a.act_people, a.act_requestend, a.act_category, a.act_title, a.act_price, m.mem_no, m.mem_nickname, i.img_no, i.img_path, i.img_level, i.img_status, i.img_refcode, i.img_refno
+  	<select id="actSearchLsit" resultMap="activityListResultSet">
+	  	select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
 		from activity a 
 		    inner join image i on i.img_refno = a.act_no
 		    inner join member m on a.mem_id = m.mem_id
@@ -164,8 +168,35 @@
 	  		<foreach item="arr" collection="array" open="(" separator="or" close=")">
 	  			act_title like '%' || #{arr} || '%' 
 	  		</foreach>
-	  		and act_status = 'Y'
+	  		and act_status = 'Y' and i.img_refcode = 1 and i.img_level = 0
 	  	order by act_no desc
   	</select>
-  
+  	
+  	<!-- by.다혜 메인 추천 상품 리스트 -->
+  	<!-- 인기 상품: 추천순으로 상위 50개 상품을 뽑아 랜덤으로 5건을 노출한다.
+  			단,추출된 상품이 50건 미만일 경우 상위 5건을 노출 -->
+  	<select id="getPopularActList" resultMap="activityListResultSet">
+		select orderedlist.*
+		from 
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		        from activity a
+		            inner join image i on i.img_refno = a.act_no
+		            inner join member m on a.mem_id = m.mem_id
+		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+		        order by a.act_rating desc, a.act_review_cnt desc, act_date asc) orderedlist
+		where rownum <![CDATA[<]]>= 50
+  	</select>
+  	
+  	<!-- 마감일 임박: 마감일이 시스템 날짜 보다 미래의 날짜인 활동을 오름차순으로 정렬한 후 5개 게시글 추출 -->
+  	<select id="getNearEndDateActList" resultMap="activityListResultSet">
+		select orderedlist.*
+		from 
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		        from activity a
+		            inner join image i on i.img_refno = a.act_no
+		            inner join member m on a.mem_id = m.mem_id
+		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+		        order by a.act_endday asc) orderedlist
+		where rownum <![CDATA[<]]> = 5	
+  	</select>
 </mapper>

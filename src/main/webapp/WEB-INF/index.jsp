@@ -13,6 +13,7 @@
 <title>별난취미_별미</title>
 <link rel="stylesheet" href="resources/css/common/cssReset.css">
 <link rel="stylesheet" href="resources/css/common/main.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -74,53 +75,7 @@
    	 	</div>
 	
 	    <div class="rec-list">
-	        <ul class="list">
-	            <li class="list-item item1">
-	            	<div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="zz">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목너무길어무길어</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item2">
-	               <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">예쁜텃밭가꿔요첫텃밭
-	                </div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item3">
-	               	<div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item4">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목제목제목멪곰제곰제</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item5">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
+	        <ul class="list popAct" id="popularActList">
 	        </ul>
 	    </div>
 	
@@ -132,53 +87,8 @@
 	        </div>
 	    </div>
 	
-	    <div class="rec-list">
-	        <ul class="list">
-	            <li class="list-item item1">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item2">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item3">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item4">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item5">
-	            	<div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
+	    <div class="rec-list" id="nearEndDateActList">
+	        <ul class="list nedAct">
 	        </ul>
 	    </div>
 	
@@ -191,83 +101,11 @@
 	    </div>
 	
 	    <div class="rec-list last">
-	        <ul class="list">
-	            <li class="list-item item1">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item2">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item3">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item4">
-					<div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                 <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
-	            <li class="list-item item5">
-	                <div class="img-frame">
-	                	<img class="list-thumb"src="resources/images/common/test.png" alt="">
-	                </div>
-	                <span>nickName</span>
-	                <div class="list-cate">[카테고리]제목제목</div>
-	                <span class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-	                <span class="list-social">⭐️4.9 9999개의 평가</span>
-	            </li>
+	        <ul class="list popPro" id="popularProduct">
 	        </ul>
 	    </div>
 	    
 	    <c:import url="views/common/footer.jsp"/>
-	    <script>
-    		//제출 전 검색어 검증
-	    	document.querySelector('#searchBar').addEventListener('keypress', e => {
-	    		let keyword =  document.querySelector('#searchBar').value;
-	    		let trimedKeyword = keyword.replace(/^\s+|\s+$/gm,'').replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi, '');
-    			
-	    		if(e.key === 'Enter' && trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
-	    			location.href = 'searchAct.do?keyword=' + keyword;
-	    		}
-	    	});
-	    	
-	    	document.querySelector('.fa-search').addEventListener('click', () => {
-	    		let keyword =  document.querySelector('#searchBar').value;
-	    		let trimedKeyword = keyword.replace(/^\s+|\s+$/gm,'').replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi, '');
-	    		
-	    		if(trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
-	    			location.href = 'searchAct.do?keyword=' + keyword;
-	    		}
-	    	});
-	    	
-	    	//공백만 입력했는지 검증하는 함수
-			function isEmptyKeyword(word) {
-				if(word.trim() === '') {
-					return true;
-				}
-				return false
-			}
-	    </script>
+	    <script type="text/javascript" src="../resources/js/common/main.js"> </script>
 </body>
 </html>

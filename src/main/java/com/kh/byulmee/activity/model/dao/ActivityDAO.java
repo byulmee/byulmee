@@ -77,4 +77,14 @@ public class ActivityDAO {
 		return (ArrayList)sqlSession.selectList("activityMapper.actSearchLsit", keywords, rowBounds);
 	}
 
+	public ArrayList<Activity> getPopularActList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("activityMapper.getPopularActList");
+	}
+
+	public ArrayList<Activity> getNearEndDateActList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("activityMapper.getNearEndDateActList");
+	}
+
+	
+
 }

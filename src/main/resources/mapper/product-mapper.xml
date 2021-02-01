@@ -38,6 +38,8 @@
 		<result property="proCount" column="PRO_COUNT"/>
 		<result property="proDate" column="PRO_DATE"/>
 		<result property="proStatus" column="PRO_STATUS"/>
+		<result property="proRating" column="PRO_RATING"/>
+  		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
 	</resultMap>
 	
 	<resultMap type="Product" id="productAllResultSet">
@@ -55,6 +57,8 @@
 		<result property="proCount" column="PRO_COUNT"/>
 		<result property="proDate" column="PRO_DATE"/>
 		<result property="proStatus" column="PRO_STATUS"/>
+		<result property="proRating" column="PRO_RATING"/>
+  		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
 		<collection property="member" resultMap="memberResultSet"/>
 		<collection property="image" resultMap="imageResultSet"/>
 	</resultMap>
@@ -134,7 +138,7 @@
 		</select>
 		
 	  	<select id="proSearchLsit" resultMap="productAllResultSet">
-		  	select p.pro_no, p.mem_id, p.pro_charge, p.pro_stock, p.pro_maximum, p.pro_category, p.pro_title, p.pro_price, p.pro_count, p.pro_date, m.mem_no, m.mem_nickname, i.img_no, i.img_path, i.img_level, i.img_status, i.img_refcode, i.img_refno
+		  	select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
 			from product p
 			    inner join image i on p.pro_no = i.img_refno
 			    inner join member m on p.mem_id = m.mem_id
@@ -142,7 +146,24 @@
 		  		<foreach item="arr" collection="array" open="(" separator="or" close=")">
 		  			pro_title like '%' || #{arr} || '%' 
 		  		</foreach>
-		  		and pro_status = 'Y'
+		  		and pro_status = 'Y' and i.img_refcode = 2 and i.img_level = 0
 		  	order by pro_no desc
+	  	</select>
+
+	<!-- by.다혜 메인 추천 상품 리스트 -->
+  	<!-- 인기 상품: 추천순으로 상위 50개 상품을 뽑아 랜덤으로 5건을 노출한다.
+  			단,추출된 상품이 50건 미만일 경우 상위 5건을 노출 -->
+	  	<select id="getPopularProList" resultMap="productAllResultSet">
+			<![CDATA[
+			  	select orderedlist.*
+				from
+				    (select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+				     from product p
+				     inner join image i on p.pro_no = i.img_refno
+				     inner join member m on p.mem_id = m.mem_id
+				     where pro_status = 'Y' and i.img_refcode = 2 and i.img_level = 0
+				     order by p.pro_rating desc, p.pro_review_cnt desc, pro_date desc)orderedlist
+				where rownum <= 50
+			]]>
 	  	</select>
 </mapper>

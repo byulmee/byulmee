@@ -61,4 +61,8 @@ public class ProductDAO {
 		return (ArrayList)sqlSession.selectList("productMapper.proSearchLsit", keywords, rowBounds);
 	}
 
+	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
+	}
+
 }

@@ -95,4 +95,14 @@ public class ActivityServiceImpl implements ActivityService {
 		return aDAO.getActSearchResult(sqlSession, pi, keywords);
 	}
 
+	@Override
+	public ArrayList<Activity> getPopularActList() {
+		return aDAO.getPopularActList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Activity> getNearEndDateActList() {
+		return aDAO.getNearEndDateActList(sqlSession);
+	}
+
 }

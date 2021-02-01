@@ -24,9 +24,10 @@ public interface ProductService {
 
 	int updateProduct(Product p);
 
-
 	int getProSearchListCount(String[] keywords);
 
 	ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords);
+
+	ArrayList<Product> getPopularProList();
 
 }

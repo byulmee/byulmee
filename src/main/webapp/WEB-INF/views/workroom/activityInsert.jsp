@@ -321,6 +321,10 @@ input.checkbox:checked + label.input-label.radio::before {
 				</div>
 				
 				<script>
+					document.querySelector('#insertBtn').addEventListener('click', e) => {
+						alert('test');
+						e.preventDefault;
+					})
 						// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 						$(function(){
 							$("#fileArea").hide();

@@ -30,4 +30,8 @@ public interface ActivityService {
 	int getActSearchListCount(String[] keywords);
 	
 	ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords);
+
+	ArrayList<Activity> getPopularActList();
+
+	ArrayList<Activity> getNearEndDateActList();
 }
