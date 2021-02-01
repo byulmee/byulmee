@@ -264,7 +264,7 @@
 		<result property="ordRefno" column="ORD_REFNO"/>
 		<collection property="activity" resultMap="activityResultSet"/>
 		<collection property="member" resultMap="memberResultSet"/>
-		<collection property="image" resultMap="imageResultSet"/>
+		<collection property="img" resultMap="imageResultSet"/>
 		<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
@@ -275,7 +275,7 @@
 	  	<result property="favStatus" column="FAV_STATUS"/>
 	  	<result property="favRefcode" column="FAV_REFCODE"/>
 	  	<result property="favRefno" column="FAV_REFNO"/>
-	  	<collection property="image" resultMap="imageResultSet"/>
+	  	<collection property="img" resultMap="imageResultSet"/>
 	  	<collection property="member" resultMap="memberResultSet"/>
 	  	<collection property="activity" resultMap="activityResultSet"/>
 	  	<collection property="product" resultMap="productResultSet"/>
@@ -293,7 +293,7 @@
 	  	<result property="revRefcode" column="REV_REFCODE"/>
 	  	<result property="revRefno" column="REV_REFNO"/>
 	  	<result property="ordNo" column="ORD_NO"/>
-	  	<collection property="image" resultMap="imageResultSet"/>
+	  	<collection property="img" resultMap="imageResultSet"/>
 	  	<collection property="activity" resultMap="activityResultSet"/>
 	  	<collection property="product" resultMap="productResultSet"/>
 	</resultMap>

@@ -44,5 +44,4 @@ public class Order {
 	private Activity activity;
 	private Member member;
 	private Image image;
-	private Product product;
 }

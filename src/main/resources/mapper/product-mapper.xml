@@ -52,13 +52,31 @@
 		<result property="proCount" column="PRO_COUNT"/>
 		<result property="proDate" column="PRO_DATE"/>
 		<result property="proStatus" column="PRO_STATUS"/>
-		<result property="proTotalScore" column="PRO_TOTAL_SCORE"/>
+		<result property="proRating" column="PRO_RATING"/>
   		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
-  		<result property="proRating" column="PRO_RATING"/>
-  		<collection property="member" resultMap="memberResultSet"/>
-		<collection property="image" resultMap="imageResultSet"/>
 	</resultMap>
 	
+	<resultMap type="Product" id="productAllResultSet">
+		<id property="proNo" column="PRO_NO"/>
+		<result property="memId" column="MEM_ID"/>
+		<result property="proCharge" column="PRO_CHARGE"/>
+		<result property="proStock" column="PRO_STOCK"/>
+		<result property="proMaximum" column="PRO_MAXIMUM"/>
+		<result property="proCategory" column="PRO_CATEGORY"/>
+		<result property="proTitle" column="PRO_TITLE"/>
+		<result property="proPrice" column="PRO_PRICE"/>
+		<result property="proUrl" column="PRO_URL"/>
+		<result property="proContent" column="PRO_CONTENT"/>
+		<result property="proGuide" column="PRO_GUIDE"/>
+		<result property="proCount" column="PRO_COUNT"/>
+		<result property="proDate" column="PRO_DATE"/>
+		<result property="proStatus" column="PRO_STATUS"/>
+  		<result property="proTotalScore" column="PRO_TOTAL_SCORE"/>
+  		<result property="proReviewCnt" column="PRO_REVIEW_CNT"/>
+		<result property="proRating" column="PRO_RATING"/>
+		<collection property="member" resultMap="memberResultSet"/>
+		<collection property="image" resultMap="imageResultSet"/>
+	</resultMap>
 	
 	<resultMap type="Member" id="memberResultSet">
 	  	<id property="memNo" column="MEM_NO"/>

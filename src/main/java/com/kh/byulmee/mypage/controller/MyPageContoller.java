@@ -774,7 +774,7 @@ public class MyPageContoller {
 		int listCount = mpService.getReviewListCount(rev);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		ArrayList<Review> r = mpService.selectRevActList(pi, id);
-		
+
 		if(r != null) {
 			mv.addObject("r", r);
 			mv.addObject("pi", pi);
