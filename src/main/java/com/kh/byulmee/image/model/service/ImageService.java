@@ -8,7 +8,6 @@ public interface ImageService {
 
 	int insertImage(Image i);
 
-
 	ArrayList<Image> selectList(int code);
 
 	ArrayList<Image> selectImgList(Image i);
@@ -20,6 +19,8 @@ public interface ImageService {
 	ArrayList<Image> selectImage(int acId);
 
 	ArrayList<Image> selectReviewImage(int revImgNo);
+
+	ArrayList<Image> selectProductImage(int pdId);
 
 
 }

@@ -51,6 +51,7 @@
 	    window.onpopstate = function () {
 	        history.go(1);
 		};
+		
 		$('button.kakao').click(function(){
 			<c:set var="kClientId">
 		    	<spring:eval expression="@keys['k.clientId']"/>
@@ -62,7 +63,7 @@
 			const id = '<c:out value="${kClientId}"/>';
 			const redirectUri = '<c:out value="${kRedirectUri}"/>';
 			const requestUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + id + '&redirect_uri='+ redirectUri + '&response_type=code';
-			
+			console.log(requestUrl);
 			location.href=requestUrl;
 		});
     </script>

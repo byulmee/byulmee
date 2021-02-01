@@ -10,6 +10,7 @@ import com.kh.byulmee.board.model.dao.BoardDAO;
 import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.Notice;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.board.model.vo.SearchCondition;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService{
@@ -63,5 +64,50 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public ArrayList<CustomerQna> selectCusQnAList(PageInfo pi) {
 		return bDAO.selectCusQnAList(sqlSession, pi);
+	}
+
+	@Override
+	public int insertCusQna(CustomerQna c) {
+		return bDAO.insertCusQna(sqlSession, c);
+	}
+
+	@Override
+	public int updateCusCount(int cusqnaNo) {
+		return bDAO.updateCusCount(sqlSession, cusqnaNo);
+	}
+
+	@Override
+	public CustomerQna selectCusQnA(int cusqnaNo) {
+		return bDAO.selectCusQnA(sqlSession, cusqnaNo);
+	}
+
+	@Override
+	public int updateCusQna(CustomerQna c) {
+		return bDAO.updateCusQna(sqlSession, c);
+	}
+
+	@Override
+	public int cusQnaDelete(int cusqnaNo) {
+		return bDAO.cusQnaDelete(sqlSession, cusqnaNo);
+	}
+
+	@Override
+	public int getSearchNoticeListCount(String value) {
+		return bDAO.getSearchNoticeListCount(sqlSession, value);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchNoticeList(String value, PageInfo pi) {
+		return bDAO.selectSearchNoticeList(sqlSession, value, pi);
+	}
+
+	@Override
+	public int getSearchCusListCount(SearchCondition sc) {
+		return bDAO.getSearchCusListCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<CustomerQna> selectSearchCusQnAList(SearchCondition sc, PageInfo pi) {
+		return bDAO.selectSearchCusQnAList(sqlSession, sc, pi);
 	}
 }

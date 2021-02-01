@@ -95,7 +95,7 @@
 	/* 컨텐츠 */
 	.content {
 		margin-left: 250px;
-		
+		min-height: 800px;
 	}
 	.MainLogoText {
 		margin-left: 250px;
@@ -192,8 +192,19 @@
 		<div class="sideMenu">
 	    	<div class="profile">
 				<!-- <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> -->
-				<img class="profileImg" src="../../../images/a.PNG">
-				<p class="nickname"> 앤 해서웨이 </p>
+				<c:if test="${ empty img }">
+				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+				</c:if>
+				<c:if test="${ !empty img }">
+					<c:if test="${ img.imgStatus == 'Y' }">
+						<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+					</c:if>
+					<c:if test="${ img.imgStatus == 'N' }">
+						<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+					</c:if>
+				</c:if>
+				<p class="nickname"> ${ loginUser.memNickname } </p>
+				
 				
 			</div>
 			<div class="sideMenuList">
@@ -231,113 +242,79 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="img" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>10</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>11</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>12</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>13</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
-							<tr>
-								<td>14</td>
-								<td>이번에 토마토키우기 활동에 신청했는데 궁금해서 문의드립니다.</td>
-								<td>간건강</td>
-								<td><img class="btnimg" src="../../../images/new.PNG"></td>
-							</tr>
+							<c:forEach var="sq" items="${ sqlist }">
+								<tr class="salqna">
+									<td>${ sq.salqnaNo }<input type="hidden" id="salqnaType" name="salqnaType" value="${ sq.salqnaType }"></td>
+									<td>${ sq.salqnaTitle }</td>
+									<td>${ sq.member.memNickname }</td>
+									<c:if test="${ sq.salqnaRestatus eq 'N' }">
+									<td><img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/board/new.PNG"></td>
+									</c:if>
+									<c:if test="${ sq.salqnaRestatus eq 'Y' }">
+									<td>&emsp;</td>
+									</c:if>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div id="pagingArea">
 				<!-- 이전 페이지로 -->
-				<button class="btn btn-light" onclick="#" id="beforeBtn">&lt;</button>
+				<c:if test="${ pi.currentPage <= 1 }">
+					<button class="btn btn-light" onclick="#" id="beforeBtn" disabled="disabled">&lt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="customerView.wr">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
+				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">1</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">2</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">3</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">...</button>
-				<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#">20</button>
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ p }</button>
+					</c:if>
+					
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="customerView.wr">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
+					</c:if>
+				</c:forEach>
 				
 				<!-- 다음 페이지로 -->
-				<button class="btn btn-light" onclick="#" id="afterBtn">&gt;</button>
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					<button class="btn btn-light" onclick="#" id="afterBtn" disabled="disabled">&gt;</button>
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="customerView.wr">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
 	<script>
 		$('#selectedBtn').on('click', function(){
 			location.reload();
+		});
+
+		$(function() {
+			$('.salqna').mouseenter(function(){
+				$(this).css({'color': '#FF6833',  'font-weight':'bold', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': '#585858', 'font-weight':'normal'});
+			}).click(function(){
+				var salqnaNo=$(this).children('td').eq(0).text();
+				var salqnaType = $(this).children('td').eq(0).children('input').val();
+				//console.log(salqnaNo);
+				//console.log(salqnaType);
+				location.href='salqnaDetail.wr?salqnaNo=' + salqnaNo + '&page=' + ${pi.currentPage} + '&salqnaType=' + salqnaType;
+			});
 		});
 	</script>
 </body>

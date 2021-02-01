@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+  <select id="getListCount" resultType="_int">
+  	select count(*)
+  	from orders
+  	where ord_refcode = 0
+  </select>
+  
+  <select id="selectOdList" resultMap="orderAcResultSet">
+  	select *
+  	from orders o
+  		 left outer join activity a on o.ord_refno = a.act_no
+  	where ord_starcode = #{memId} and ord_refcode = 0 and ord_status = 'Y'
+  </select>
+  
+   <select id="getpdListCount" resultType="_int">
+   	 select count(*)
+  	 from orders
+  	 where ord_refcode = 1
+   </select>
+   
+   <select id="selectOdPdList" resultMap="orderPdResultSet">
+     select *
+  	 from orders o
+  		 left outer join product p on o.ord_refno = p.pro_no
+  	 where ord_starcode = #{memId} and ord_refcode = 1 and ord_status = 'Y'
+   </select>
+   
+   <select id="getSearchAcListCount" resultType="_int">
+     select count(*)
+     from orders o
+  		 left outer join activity a on o.ord_refno = a.act_no
+  	 where o.ord_starcode = #{starcode} and o.ord_refcode = #{refcode} and o.mem_id like '%' || #{searchId} || '%' and o.ord_date between #{startday} and #{endday}
+   </select>
+   
+   <select id="selectAcOrder" resultMap="orderAcResultSet">
+   	 select *
+     from orders o
+  		 left outer join activity a on o.ord_refno = a.act_no
+  	 where o.ord_starcode = #{starcode} and o.ord_refcode = #{refcode} and o.mem_id like '%' || #{searchId} || '%' and o.ord_date between #{startday} and #{endday}	
+   </select>
+   
+   <select id="getSearchPdListCount" resultType="_int">
+   	 select count(*)
+   	 from orders o
+  		 left outer join product p on o.ord_refno = p.pro_no
+  	 where o.ord_starcode = #{starcode} and o.ord_refcode = #{refcode} and o.mem_id like '%' || #{searchId} || '%' and o.ord_date between #{startday} and #{endday}
+   </select>
+   
+   <select id="selectPdOrder" resultMap="orderPdResultSet">
+     select *
+     from orders o
+     	left outer join product p on o.ord_refno = p.pro_no
+  	 where o.ord_starcode = #{starcode} and o.ord_refcode = #{refcode} and o.mem_id like '%' || #{searchId} || '%' and o.ord_date between #{startday} and #{endday}
+   </select>
+   
+   <update id="updateOrder">
+   	 update orders
+   	 set ord_parcelcode = #{ordParcelcode}, ord_repay = #{ordRePay}
+   	 where ord_no = #{ordNo}	  
+   </update>
+  
+  <resultMap type="Order" id="orderAcResultSet">
+  	<id property="ordNo" column="ORD_NO"/>
+  	<result property="memId" column="MEM_ID"/>
+  	<result property="ordCount" column="ORD_COUNT"/>
+  	<result property="ordDate" column="ORD_DATE"/>
+  	<result property="ordName" column="ORD_NAME"/>
+  	<result property="ordPhone" column="ORD_PHONE"/>
+  	<result property="ordPostcode" column="ORD_POSTCODE"/>
+  	<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+  	<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+  	<result property="ordRequest" column="ORD_REQUEST"/>
+  	<result property="ordPayno" column="ORD_PAYNO"/>
+  	<result property="ordPay" column="ORD_PAY"/>
+  	<result property="ordPayWay" column="ORD_PAY_WAY"/>
+  	<result property="ordReview" column="ORD_REVIEW"/>
+  	<result property="ordStatus" column="ORD_STATUS"/>
+  	<result property="ordRefcode" column="ORD_REFCODE"/>
+  	<result property="ordRefno" column="ORD_REFNO"/>
+  	<result property="ordStarcode" column="ORD_STARCODE"/>
+  	<result property="ordParcelcode" column="ORD_PARCELCODE"/>
+  	<result property="ordRePay" column="ORD_REPAY"/>
+  	<collection property="activity" resultMap="activityResultSet"/>
+  </resultMap>
+  
+   <resultMap type="Order" id="orderPdResultSet">
+  	<id property="ordNo" column="ORD_NO"/>
+  	<result property="memId" column="MEM_ID"/>
+  	<result property="ordCount" column="ORD_COUNT"/>
+  	<result property="ordDate" column="ORD_DATE"/>
+  	<result property="ordName" column="ORD_NAME"/>
+  	<result property="ordPhone" column="ORD_PHONE"/>
+  	<result property="ordPostcode" column="ORD_POSTCODE"/>
+  	<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+  	<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+  	<result property="ordRequest" column="ORD_REQUEST"/>
+  	<result property="ordPayno" column="ORD_PAYNO"/>
+  	<result property="ordPay" column="ORD_PAY"/>
+  	<result property="ordPayWay" column="ORD_PAY_WAY"/>
+  	<result property="ordReview" column="ORD_REVIEW"/>
+  	<result property="ordStatus" column="ORD_STATUS"/>
+  	<result property="ordRefcode" column="ORD_REFCODE"/>
+  	<result property="ordRefno" column="ORD_REFNO"/>
+  	<result property="ordStarcode" column="ORD_STARCODE"/>
+  	<result property="ordParcelcode" column="ORD_PARCELCODE"/>
+  	<result property="ordRePay" column="ORD_REPAY"/>
+  	<collection property="product" resultMap="productResultSet"/>
+  </resultMap>
+  
+  	<resultMap type="Activity" id="activityResultSet">
+		<id property="actNo" column="ACT_NO"/>
+		<result property="memId" column="ACT_ID"/>
+		<result property="actPhone" column="ACT_PHONE"/>
+		<result property="actStartday" column="ACT_STARTDAY"/>
+		<result property="actEndday" column="ACT_ENDDAY"/>
+		<result property="actPlace" column="ACT_PLACE"/>
+		<result property="actPeople" column="ACT_PEOPLE"/>
+		<result property="actRequestend" column="ACT_REQUESTEND"/>
+		<result property="actCategory" column="ACT_CATEGORY"/>
+		<result property="actTitle" column="ACT_TITLE"/>
+		<result property="actPrice" column="ACT_PRICE"/>
+		<result property="actUrl" column="ACT_URL"/>
+		<result property="actContent" column="ACT_CONTENT"/>
+		<result property="actGuide" column="ACT_GUIDE"/>
+		<result property="actCount" column="ACT_COUNT"/>
+		<result property="actDate" column="ACT_DATE"/>
+		<result property="actStatus" column="ACT_STATUS"/>
+	</resultMap>
+  
+  	<resultMap type="Product" id="productResultSet">
+  		<id property="proNo" column="PRO_NO"/>
+  		<result property="memId" column="MEM_ID"/>
+  		<result property="proCharge" column="PRO_CHARGE"/>
+  		<result property="proStock" column="PRO_STOCK"/>
+  		<result property="proMaximum" column="PRO_MAXIMUM"/>
+  		<result property="proCategory" column="PRO_CATEGORY"/>
+  		<result property="proTitle" column="PRO_TITLE"/>
+  		<result property="proPrice" column="PRO_PRICE"/>
+  		<result property="proUrl" column="PRO_URL"/>
+  		<result property="proContent" column="PRO_CONTENT"/>
+  		<result property="proGuide" column="PRO_GUIDE"/>
+  		<result property="proCount" column="PRO_COUNT"/>
+  		<result property="proDate" column="PRO_DATE"/>
+  		<result property="proStatus" column="PRO_STATUS"/>
+  	</resultMap>
+</mapper>

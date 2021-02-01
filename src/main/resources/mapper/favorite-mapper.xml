@@ -3,7 +3,33 @@
 <mapper namespace="favoriteMapper">
 	<insert id="insertActivityFavorite">
 		insert into favorite
-		values(seq_favid.nextval, sysdate, default, 1, #{acId})
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 1, #{ favRefno })
+	</insert>
+	
+	<insert id="insertProductFavorite">
+		insert into favorite
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 2, #{ favRefno })
 	</insert>
 
+	<insert id="insertStarFavorite">
+		insert into favorite
+		values(seq_favid.nextval, #{ memId }, sysdate, default, 0, #{ favRefno })
+	</insert>
+	
+	<select id="selectStarFavorite" resultType="_int">
+		select count(*)
+		from favorite
+		where  fav_status = 'Y' and mem_id = #{memId} and fav_refcode = #{favRefcode} and fav_refno = #{favRefno}
+	</select>
+	
+	<insert id="starFavInsert">
+		insert into favorite
+		values(seq_favid.nextval, #{memId}, sysdate, default, #{favRefcode}, #{favRefno})
+	</insert>
+	
+	<update id="starFavDelete">
+		update favorite
+		set fav_status = 'N'
+		where mem_id = #{memId} and fav_refcode = #{favRefcode} and fav_refno = #{favRefno} 
+	</update>
 </mapper>

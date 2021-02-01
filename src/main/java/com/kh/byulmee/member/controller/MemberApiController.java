@@ -29,7 +29,7 @@ import com.kh.byulmee.member.model.service.MemberApiService;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
 
-@SessionAttributes({"loginUser", "oauthInfo", "phoneValidator"})
+@SessionAttributes("loginUser")
 
 /* by다혜: 회원 등록, 인증 처리 컨트롤러 */
 @Controller

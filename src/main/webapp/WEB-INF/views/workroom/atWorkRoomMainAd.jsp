@@ -159,6 +159,7 @@
 		font-size: 14px;
 		font-family: "G마켓 산스 TTF Medium";
 		padding-left: 10px;
+		margin-bottom: 0px;
 	}
 	.text:hover {
 		color: #FF6833;
@@ -215,9 +216,18 @@
 		<div class="sideMenu">
 	    	<div class="profile">
 				<%--  <img src="<%=request.getContextPath()%>/Image/LogoImage.png" onclick="goHome();"> --%>
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/board/a.PNG">
-				<p class="nickname"> 앤 해서웨이 </p>
-				
+				<c:if test="${ empty img }">
+				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+				</c:if>
+				<c:if test="${ !empty img }">
+					<c:if test="${ img.imgStatus == 'Y' }">
+						<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+					</c:if>
+					<c:if test="${ img.imgStatus == 'N' }">
+						<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+					</c:if>
+				</c:if>
+				<p class="nickname"> ${ loginUser.memNickname } </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -268,7 +278,7 @@
 							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
 							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
 						</c:choose>] ${ a.actTitle }</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">${ a.actPrice }원</p>
+						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ a.actPrice }</span>원</p>
 						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
 					</div>
 					</c:if>
@@ -288,7 +298,7 @@
 							<c:when test="${ a.actCategory eq '4' }">푸드</c:when>
 							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
 						</c:choose>] ${ a.actTitle }</p>
-						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle">${ a.actPrice }원</p>
+						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ a.actPrice }</span>원</p>
 						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
 					</div>
 					</c:if>
@@ -303,7 +313,7 @@
 					<c:url var="before" value="wookroomView.wr">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ before }" id="beforeBtn">&lt;</button>
+					<button class="btn btn-light" onclick="location.href='${ before }'" id="beforeBtn">&lt;</button>
 				</c:if>
 				
 				<!-- 숫자 목록 버튼 -->
@@ -316,7 +326,7 @@
 						<c:url var="pagination" value="wookroomView.wr">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="${ pagination }">${ p }</button>
+						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="location.href='${ pagination }'">${ p }</button>
 					</c:if>
 				</c:forEach>
 				
@@ -328,7 +338,7 @@
 					<c:url var="after" value="wookroomView.wr">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
 					</c:url>
-					<button class="btn btn-light" onclick="${ after }" id="afterBtn">&gt;</button>
+					<button class="btn btn-light" onclick="location.href='${ after }'" id="afterBtn">&gt;</button>
 				</c:if>
 			</div>
 		</div>
@@ -349,6 +359,15 @@
 		$('#selectedBtn').on('click', function(){
 			location.reload();
 		});
+
+		// 가격에 천단위 ,(콤마)추가
+	    $(document).ready(function(){
+			var price = $('#price').text();
+	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        $('#price').html(price);
+	    });
 	</script>
+	
+	<c:import url="../common/footer.jsp" />
 </body>
 </html>

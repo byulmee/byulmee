@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.product.model.vo.Product;
 
@@ -22,11 +23,11 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.getListCount");
 	}
 
-	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("productMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("productMapper.selectList", memId, rowBounds);
 	}
 
 	public Product selectPro(SqlSessionTemplate sqlSession, int proNo) {
@@ -49,8 +50,45 @@ public class ProductDAO {
 		return sqlSession.update("productMapper.updateProduct", p);
 	}
 
+	public int getUserListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("productMapper.getUserListCount", memId);
+	}
+
+	public ArrayList<Product> selectUserList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("productMapper.selectUserList", memId, rowBounds);
+  }
+  
+	public int geProSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
+		return sqlSession.selectOne("productMapper.getProSearchListCount", keywords);
+	}
+
+	public ArrayList<Activity> getProSearchResult(SqlSessionTemplate sqlSession, PageInfo proListPi, String[] keywords) {
+		int offset = (proListPi.getCurrentPage() - 1) * proListPi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, proListPi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("productMapper.proSearchLsit", keywords, rowBounds);
+	}
+
+	public Product selectProduct(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.selectOne("productMapper.selectProduct", pdId);
+	}
+
+	public int addReadCount(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.update("productMapper.addReadCount", pdId);
+	}
+
+	public int selectOrderSum(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.selectOne("productMapper.selectOrderSum", pdId);
+  }
+  
+	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
+	}
+
 	public int updateProRatingCnt(SqlSessionTemplate sqlSession, Product p) {
 		return sqlSession.update("productMapper.updateProRatingCnt", p);
 	}
-
 }

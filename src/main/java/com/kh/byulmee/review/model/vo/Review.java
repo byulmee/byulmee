@@ -1,9 +1,11 @@
 package com.kh.byulmee.review.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.product.model.vo.Product;
 
 import lombok.AllArgsConstructor;
@@ -28,8 +30,9 @@ public class Review {
 	private int revRefcode;
 	private int revRefno;
 	private int ordNo;
-	
-	private Image image;
+	private Image img;
 	private Activity activity;
 	private Product product;
+	private Member member;
+	private List<Image> image;
 }

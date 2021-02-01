@@ -1,5 +1,9 @@
 package com.kh.byulmee.member.model.service;
 
+import java.util.ArrayList;
+
+import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.member.model.vo.Member;
 
 public interface MemberService {
@@ -26,5 +30,11 @@ public interface MemberService {
 	
 	String resetPwd(Member member);
   
-  Member selectActivityWriter(int acId);
+	Member selectActivityWriter(int acId);
+
+	int getStarSearchListCount(String[] keywords);
+
+	ArrayList<Activity> getStarSearchResult(PageInfo starListPi, String[] keywords);
+
+	Member selectProductWriter(int pdId);
 }

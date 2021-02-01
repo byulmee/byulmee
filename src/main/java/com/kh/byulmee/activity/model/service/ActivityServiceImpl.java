@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
-
 import com.kh.byulmee.board.model.vo.PageInfo;
-
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Service("aService")
@@ -41,17 +38,15 @@ public class ActivityServiceImpl implements ActivityService {
 		return ac;
 	}
 
-
-
 	@Override
-	public int getListCount() {
-		return aDAO.getListCount(sqlSession);
+	public int getListCount(String memId) {
+		return aDAO.getListCount(sqlSession, memId);
 	}
 
 	@Override
-	public ArrayList<Activity> selectList(PageInfo pi) {
+	public ArrayList<Activity> selectList(String memId, PageInfo pi) {
 		
-		return aDAO.selectList(sqlSession, pi);
+		return aDAO.selectList(sqlSession, memId, pi);
 	}
 
 	@Override
@@ -79,8 +74,43 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public int updateActivity(Activity a) {
-		
 		return aDAO.updateActivity(sqlSession, a);
+	}
+	
+	//활동 검색 결과 게시글 전체 개수
+	@Override
+	public int getActSearchListCount(String[] keywords) {
+		return aDAO.getActSearchListCount(sqlSession, keywords);
+	}
+	
+	//활동 검색 결과 게시글 전체 리스트
+	@Override
+	public ArrayList<Activity> getActSearchResult(PageInfo pi, String[] keywords) {
+		return aDAO.getActSearchResult(sqlSession, pi, keywords);
+	}
+
+	@Override
+	public int selectOrderSum(int acId) {
+		return aDAO.selectOrderSum(sqlSession, acId);
+  }
+  
+	public ArrayList<Activity> getPopularActList() {
+		return aDAO.getPopularActList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Activity> getNearEndDateActList() {
+		return aDAO.getNearEndDateActList(sqlSession);
+	}
+
+	@Override
+	public int getUserListCount(String memId) {
+		return aDAO.getUserListCount(sqlSession, memId);
+	}
+
+	@Override
+	public ArrayList<Activity> selectUserList(String memId, PageInfo pi) {
+		return aDAO.selectUserList(sqlSession, memId, pi);
 	}
 
 	@Override

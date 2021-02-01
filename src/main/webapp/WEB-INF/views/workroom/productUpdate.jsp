@@ -185,7 +185,7 @@ input.checkbox:checked + label.input-label.radio::before {
 		width: 180px; height:190px; border:2px solid darkgray;
 		text-align:center; display:table-cell; vertical-align:middle; display: inline-block;
 }
-img {
+#contentImg1, #contentImg2, #contentImg3, #contentImg4 {
 	width: 175px; height: 180px;
 }
 
@@ -253,6 +253,11 @@ img {
 	border-radius: 25px;	
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 </head>
 <body>
@@ -332,10 +337,10 @@ img {
 				</div>
 				<div class="inputText">
 					제목&nbsp;&nbsp;<input type="text" name="proTitle" class="inputValue" id="inputTitle" value="${ product.proTitle }"><br> 
-					상품 가격&nbsp;&nbsp;<input type="text" name="proPrice" class="inputValue" id="inputTitle" value="${ product.proPrice }"><br> 
-					배송비&nbsp;&nbsp;<input type="text" name="proCharge" class="inputValue" id="inputTitle" value="${ product.proCharge }"><br>
-					상품 재고&nbsp;&nbsp;<input type="text" name="proStock" class="inputValue" id="inputTitle" value="${ product.proStock }"><br>
-					최대 구매 가능 수량&nbsp;&nbsp;<input type="text" name="proMaximum" class="inputValue" id="inputTitle" value="${ product.proMaximum }"><br> 
+					상품 가격&nbsp;&nbsp;<input type="number" name="proPrice" class="inputValue" id="inputTitle" value="${ product.proPrice }"><br> 
+					배송비&nbsp;&nbsp;<input type="number" name="proCharge" class="inputValue" id="inputTitle" value="${ product.proCharge }"><br>
+					상품 재고&nbsp;&nbsp;<input type="number" name="proStock" class="inputValue" id="inputTitle" value="${ product.proStock }"><br>
+					최대 구매 가능 수량&nbsp;&nbsp;<input type="number" name="proMaximum" class="inputValue" id="inputTitle" value="${ product.proMaximum }"><br> 
 					관련 활동 링크&nbsp;&nbsp;<input type="text" name="proUrl" class="inputValue" id="inputTitle" placeholder="http://" value="${ product.proUrl }">
 				</div>
 			</div>

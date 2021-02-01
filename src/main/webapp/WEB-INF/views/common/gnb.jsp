@@ -19,12 +19,12 @@
            <div id="gnb-menu-box">
                <img src="resources/images/common/logo.png" id="home-logo" alt="byulmee logo" onclick="location.href='home.do'">
            </div>
-               <form id="searchBox">
+               <div id="searchBox">
                    <div>
                        <i class="fas fa-search"></i>
                    </div>
-                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기" onsubmit="location.href='search.bo'">
-               </form>
+                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기">
+               </div>
             <ul id="menu-list">
             	<c:if test="${ empty sessionScope.loginUser }">
             		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
@@ -32,6 +32,9 @@
             	<c:if test="${ !empty sessionScope.loginUser }">
                 	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
 					<li class="menu-list-item" onclick="location.href='myPageMainView.me'">마이페이지</li>
+	               		<c:if test="${loginUser.memId.equals('admin')}">
+			           	<li onclick="location.href='adminMain.ad'">관리자</li>
+			           	</c:if>
                 </c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
                 <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
@@ -48,5 +51,28 @@
             </ul>
         </div>
     </nav>
+    
+    <script>
+    	document.querySelector('#searchBar').addEventListener('keypress', e => {
+    		
+    		const keyword =  document.querySelector('#searchBar').value;
+    		
+    		//앞뒤 공백과 특수문자 제거
+    		const trimedKeyword = keyword.replace(/^\s+|\s+$/gm,'').replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi, '');
+    		
+    		//제출 전 검색어 검증
+    		if(e.key === 'Enter' && trimedKeyword != '' && trimedKeyword != null && isEmptyKeyword(trimedKeyword) == false) {
+    			location.href = 'searchAct.do?keyword=' + keyword;
+    		}
+    	});
+    	
+    	//공백만 입력했는지 검증
+		function isEmptyKeyword(word) {
+			if(word.trim() === '') {
+				return true;
+			}
+			return false
+		}
+    </script>
 </body>
 </html>

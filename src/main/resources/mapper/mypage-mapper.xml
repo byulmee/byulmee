@@ -57,11 +57,11 @@
 
 	<select id="selectActDetailList" resultMap="orderResultSet">
 		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
-		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
-		        o.ord_pay, o.ord_pay_way, o.ord_status,
-		        a.act_no, a.mem_id as act_id, a.act_startday, a.act_endday, a.act_place,
-		        a.act_title, a.act_price, a.act_status,
-		        m.mem_no, m.mem_nickname
+		       o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
+		       o.ord_pay, o.ord_pay_way, o.ord_status,
+		       a.act_no, a.mem_id as act_id, a.act_startday, a.act_endday, a.act_place,
+		       a.act_title, a.act_price, a.act_status,
+		       m.mem_no, m.mem_nickname
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id

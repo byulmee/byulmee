@@ -10,23 +10,38 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.exception.SalesQnaException;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.board.model.vo.SalesQna;
+import com.kh.byulmee.board.service.SalesQnaService;
 import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.exception.MemberException;
+import com.kh.byulmee.member.model.service.FavoriteService;
+import com.kh.byulmee.member.model.service.MemberService;
+import com.kh.byulmee.member.model.vo.Favorite;
+import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.mypage.model.service.MypageService;
+import com.kh.byulmee.order.model.exception.OrderException;
+import com.kh.byulmee.order.model.service.OrderService;
+import com.kh.byulmee.order.model.vo.Order;
+import com.kh.byulmee.order.model.vo.OrderSearch;
 import com.kh.byulmee.product.model.exception.ProductException;
 import com.kh.byulmee.product.model.service.ProductService;
 import com.kh.byulmee.product.model.vo.Product;
+import com.kh.byulmee.reply.model.service.ReplyService;
+import com.kh.byulmee.reply.model.vo.Reply;
 
 @Controller
 public class WorkRoomController {
@@ -40,34 +55,493 @@ public class WorkRoomController {
 	@Autowired
 	private ProductService pService;
 	
-	@RequestMapping("orderView.wr")
-	public String OrderViewForm() {
-		return "orderWorkRoom";
+	@Autowired
+	private MypageService mpService;
+	
+	@Autowired
+	private SalesQnaService sqService;
+	
+	@Autowired
+	private ReplyService rService;
+	
+	@Autowired
+	private OrderService odService;
+	
+	@Autowired
+	private MemberService mService;
+	
+	@Autowired 
+	private FavoriteService fService;
+	
+	@RequestMapping("pdWorkRoomUser.wr")
+	public ModelAndView pdWorkRoomUserMain(@RequestParam(value="page", required=false) Integer page, @RequestParam("memNo") int memNo, @RequestParam("memId") String memId, 
+											ModelAndView mv, HttpServletRequest request) {
+		
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		Image img = mpService.selectProfileImg(memNo);
+		Member writer = mService.selectMember(memId);
+		
+		Favorite f = new Favorite(); 
+		int refcode = 0; 
+		f.setMemId(userId);
+		f.setFavRefcode(refcode); 
+		f.setFavRefno(memNo);
+		
+		int favCount = fService.selectStarFavorite(f);
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int code = 2;
+		int listCount = pService.getUserListCount(memId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+		
+		ArrayList<Product> plist = pService.selectUserList(memId, pi);
+		ArrayList<Image> ilist = iService.selectList(code);
+		
+		if(plist != null && ilist != null) {
+			mv.addObject("plist", plist);
+			mv.addObject("pi", pi);
+			mv.addObject("ilist", ilist);
+			mv.addObject("img", img);
+			mv.addObject("writer", writer);
+			mv.addObject("memNo", memNo);
+			mv.addObject("memId", memId);
+			mv.addObject("favCount", favCount);
+			//mv.addObject("favorite", favorite);
+			mv.setViewName("pdWorkRoomMainUser");
+		} else {
+			throw new ProductException("상품 조회에 실패했습니다.");
+		}
+		
+		return mv;
 	}
 	
-	@RequestMapping("customerView.wr")
-	public String customerViewForm() {
-		return "customerWorkRoom";
-	}
-	
-	@RequestMapping("wookroomView.wr")
-	public ModelAndView ActivityViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+	@RequestMapping("acWorkRoomMain.wr")
+	public ModelAndView acWorkRoomMain(@RequestParam(value="page", required=false) Integer page, @RequestParam("memNo") int memNo, @RequestParam("memId") String memId, 
+										ModelAndView mv, HttpServletRequest request) {
+
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		Image img = mpService.selectProfileImg(memNo);
+		Member writer = mService.selectMember(memId);
+
+		Favorite f = new Favorite(); 
+		int refcode = 0; 
+		f.setMemId(userId);
+		f.setFavRefcode(refcode); 
+		f.setFavRefno(memNo);
+		
+		int favCount = fService.selectStarFavorite(f);
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		int code = 1;
-		int listCount = aService.getListCount();
+		int listCount = aService.getUserListCount(memId);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		
-		ArrayList<Activity> alist = aService.selectList(pi);
+		ArrayList<Activity> alist = aService.selectUserList(memId, pi);
 		ArrayList<Image> ilist = iService.selectList(code);
 		
 		if(alist != null && ilist != null) {
 			mv.addObject("alist", alist);
 			mv.addObject("pi", pi);
 			mv.addObject("ilist", ilist);
+			mv.addObject("img", img);
+			mv.addObject("writer", writer);
+			mv.addObject("memNo", memNo);
+			mv.addObject("memId", memId);
+			mv.addObject("favCount", favCount);
+			//mv.addObject("favorite", favorite);
+			mv.setViewName("atWorkRoomMainUser");
+		} else {
+			throw new ActivityException("활동상품 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("starFavInsert.wr")
+	@ResponseBody
+	public String starFavInsert(@RequestParam("memId") String memId, @RequestParam("favRefno") int favRefno) {
+		
+		Favorite f = new Favorite();
+		f.setMemId(memId);
+		f.setFavRefno(favRefno);
+		f.setFavRefcode(0);
+
+		
+		int result = fService.starFavInsert(f);
+		
+		if(result > 0) {
+			return "success";
+		}  else {
+			throw new MemberException("스타 찜하기에 실패했습니다.");		
+		}
+	}
+	
+	@RequestMapping("starFavDelete.wr")
+	@ResponseBody
+	public String starFavDelete(@RequestParam("memId") String memId, @RequestParam("favRefno") int favRefno) {
+		
+		Favorite f = new Favorite();
+		f.setMemId(memId);
+		f.setFavRefno(favRefno);
+		f.setFavRefcode(0);
+
+		
+		int result = fService.starFavDelete(f);
+		
+		if(result > 0) {
+			return "success";
+		}  else {
+			throw new MemberException("스타 찜하기 취소에 실패했습니다.");		
+		}
+	}
+	
+	@RequestMapping("orderView.wr")
+	public ModelAndView OrderViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = odService.getListCount(memId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 13);
+		
+		ArrayList<Order> odlist = odService.selectOdList(pi, memId);
+		
+		if(odlist != null) {
+			mv.addObject("odlist", odlist);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("orderWorkRoom");
+		} else {
+			throw new OrderException("고객주문 조회에 실패했습니다.");
+		}
+		 
+		return mv;
+	}
+	
+	@RequestMapping("updateOrder.wr")
+	@ResponseBody
+	public String updateOrder(@ModelAttribute Order o) {
+		
+		int result = odService.updateOrder(o);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new OrderException("고객주문 업데이트에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("pdorderView.wr")
+	public ModelAndView pdorderView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = odService.getpdListCount(memId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 13);
+		
+		ArrayList<Order> odlist = odService.selectOdPdList(pi, memId);
+		
+		if(odlist != null) {
+			mv.addObject("odlist", odlist);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("pdorderWorkRoom");
+		} else {
+			throw new OrderException("고객주문 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchAcOrder.wr")
+	public ModelAndView searchAcOrder(@RequestParam("searchId") String searchId, @RequestParam("startday") Date startday, @RequestParam("endday") Date endday, 
+										@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		int refcode = 0;
+		
+		OrderSearch os = new OrderSearch();
+		os.setSearchId(searchId);
+		os.setStartday(startday);
+		os.setEndday(endday);
+		os.setRefcode(refcode);
+		os.setStarcode(memId);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = odService.getSearchAcListCount(os);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 13);
+		
+		ArrayList<Order> odlist = odService.selectAcOrder(os, pi);
+		
+		if(odlist != null) {
+			mv.addObject("odlist", odlist);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.addObject("searchId", searchId);
+			mv.addObject("startday", startday);
+			mv.addObject("endday", endday);
+			mv.setViewName("orderWorkRoom");
+		} else {
+			throw new OrderException("고객주문 검색에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchPdOrder.wr")
+	public ModelAndView searchPdOrder(@RequestParam("searchId") String searchId, @RequestParam("startday") Date startday, @RequestParam("endday") Date endday, 
+										@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request){
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		int refcode = 1;
+		
+		OrderSearch os = new OrderSearch();
+		os.setSearchId(searchId);
+		os.setStartday(startday);
+		os.setEndday(endday);
+		os.setRefcode(refcode);
+		os.setStarcode(memId);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = odService.getSearchPdListCount(os);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 13);
+		
+		ArrayList<Order> odlist = odService.selectPdOrder(os, pi);
+		
+		if(odlist != null) {
+			mv.addObject("odlist", odlist);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.addObject("searchId", searchId);
+			mv.addObject("startday", startday);
+			mv.addObject("endday", endday);
+			mv.setViewName("pdorderWorkRoom");
+		} else {
+			throw new OrderException("고객주문 검색에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("customerView.wr")
+	public ModelAndView customerViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = sqService.getListCount(memId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 16);
+		ArrayList<SalesQna> sqlist = sqService.selectSalQnaList(pi, memId);
+		
+		if(sqlist != null) {
+			mv.addObject("sqlist", sqlist);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("customerWorkRoom");
+		} else {
+			throw new SalesQnaException("고객문의 조회에 실패했습니다.");
+		}
+		
+		//"customerWorkRoom"
+		return mv;
+	}
+	
+	@RequestMapping("salqnaDetail.wr")
+	public ModelAndView salqnaDetailForm(@RequestParam("salqnaNo") int salqnaNo, @RequestParam("page") int page, @RequestParam("salqnaType") String salqnaType, 
+											ModelAndView mv) {
+		int refcode = 0;
+		if(salqnaType.equals("A")) {
+			refcode = 1;
+		} else {
+			refcode = 2;
+		}
+		Reply reply = new Reply();
+		reply.setRepRefcode(refcode);
+		reply.setRepRefno(salqnaNo);
+		
+		SalesQna salesqna = sqService.selectSalQna(salqnaNo);
+		reply = rService.selectSalQna(reply);
+		
+		if(salesqna != null) {
+			mv.addObject("salesqna", salesqna);
+			mv.addObject("reply", reply);
+			mv.addObject("refcode", refcode);
+			mv.addObject("page", page);
+			mv.setViewName("salQnaDetail");
+		}  else {
+			throw new SalesQnaException("고객문의 조회에 실패했습니다.");
+		}
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping("salrepInsert.wr")
+	@ResponseBody
+	public String salrepInsert(@RequestParam("memId") String memId, @RequestParam("repContent") String repContent, @RequestParam("repRefno") int repRefno, @RequestParam("repRefcode") String repRefcode) {
+		int setCode = 0;
+		if(repRefcode.equals("A")) {
+			setCode = 1;
+		} else {
+			setCode = 2;
+		}
+		
+		Reply r = new Reply();
+		r.setMemId(memId);
+		r.setRepContent(repContent);
+		r.setRepRefcode(setCode);
+		r.setRepRefno(repRefno);
+		
+		int result = rService.cusReplyInsert(r);
+		
+		if(result > 0) {
+			int result1 = sqService.updateSalstatus(repRefno);
+			if(result1 > 0) {
+				return "success";
+			}  else {
+				throw new SalesQnaException("답변 등록에 실패했습니다.");
+			}
+		}  else {
+			throw new SalesQnaException("답변 등록에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("updateSalReply.wr")
+	@ResponseBody
+	public String updateSalReply(@ModelAttribute Reply r) {
+		
+		int result = rService.updateSalReply(r);
+		
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new SalesQnaException("답변 수정에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("deleteSalQna.wr")
+	public ModelAndView SalQnaDelete(@RequestParam("salqnaNo") int salqnaNo, @RequestParam("page") int page, ModelAndView mv) {
+		
+		int result = sqService.salQnaDelete(salqnaNo);
+		
+		if(result > 0) {
+			mv.addObject("page", page);
+			mv.setViewName("redirect:customerView.wr");
+		} else {
+			throw new SalesQnaException("답변 삭제에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("salQnaUpdateForm.wr")
+	public ModelAndView salUpdateForm(@RequestParam("salqnaNo") int salqnaNo, @RequestParam("page") int page, ModelAndView mv) {
+		
+		SalesQna salesqna = sqService.selectSalQna(salqnaNo);
+		
+		if(salesqna != null) {
+			mv.addObject("salesqna", salesqna);
+			mv.addObject("page", page);
+			mv.setViewName("salQnAUpdate");
+		} else {
+			throw new SalesQnaException("고객 QnA 업데이트에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("salQnaUpdate.wr")
+	public ModelAndView salQnaUpdate(@ModelAttribute SalesQna s, @RequestParam("page") int page, ModelAndView mv) {
+
+		int result = sqService.salQnaUpdate(s);
+		
+		if(result > 0) {
+			mv.addObject("salqnaNo", s.getSalqnaNo());
+			mv.addObject("salqnaType", s.getSalqnaType());
+			mv.addObject("page", page);
+			mv.setViewName("redirect:salqnaDetail.wr");
+		} else {
+			throw new SalesQnaException("고객 QnA 업데이트에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("delSalReply.wr")
+	@ResponseBody
+	public String deleteSalReply(@RequestParam("repNo") int repNo, @RequestParam("repRefno") int repRefno) {
+		
+		int result = rService.deleteSalReply(repNo);
+		
+		if(result > 0) {
+			int result1 = sqService.unUpdateSalstatus(repRefno);
+			if(result1 > 0) {
+				return "success";
+			} else {
+				throw new SalesQnaException("답변 삭제에 실패했습니다.");		
+			}
+		}  else {
+			throw new SalesQnaException("답변 삭제에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("wookroomView.wr")
+	public ModelAndView ActivityViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int code = 1;
+		int listCount = aService.getListCount(memId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+		
+		ArrayList<Activity> alist = aService.selectList(memId, pi);
+		ArrayList<Image> ilist = iService.selectList(code);
+		
+		if(alist != null && ilist != null) {
+			mv.addObject("alist", alist);
+			mv.addObject("pi", pi);
+			mv.addObject("ilist", ilist);
+			mv.addObject("img", img);
 			mv.setViewName("atWorkRoomMainAd");
 		} else {
 			throw new ActivityException("활동상품 조회에 실패했습니다.");
@@ -82,8 +556,10 @@ public class WorkRoomController {
 	}
 	
 	@RequestMapping("productView.wr")
-	public ModelAndView ProductViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
-		
+	public ModelAndView ProductViewForm(@RequestParam(value="page", required=false) Integer page, ModelAndView mv,  HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -93,13 +569,14 @@ public class WorkRoomController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		
-		ArrayList<Product> plist = pService.selectList(pi);
+		ArrayList<Product> plist = pService.selectList(pi, memId);
 		ArrayList<Image> ilist = iService.selectList(code);
 		
 		if(plist != null && ilist != null) {
 			mv.addObject("plist", plist);
 			mv.addObject("pi", pi);
 			mv.addObject("ilist", ilist);
+			mv.addObject("img", img);
 			mv.setViewName("pdWorkRoomMainAd");
 		} else {
 			throw new ProductException("상품 조회에 실패했습니다.");

@@ -36,7 +36,11 @@ public class Order {
 	private String ordStatus;
 	private int ordRefcode;
 	private int ordRefno;
+	private String ordStarcode;
+	private String ordParcelcode;
+	private int ordRePay;
 	
+	private Product product;
 	private Activity activity;
 	private Member member;
 	private Image image;
