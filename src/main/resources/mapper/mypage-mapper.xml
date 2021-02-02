@@ -168,7 +168,7 @@
 	</select>
 	
 	<select id="selectFavStarList" resultMap="favoriteResultSet">
-		select fs.fav_no, fs.fav_refno, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
+		select fs.fav_no, fs.fav_refno, m.mem_no, m.mem_id, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
 		from(select * from favorite
 				where fav_refcode = 0
 				and mem_id = #{memId}
@@ -264,7 +264,7 @@
 		<result property="ordRefno" column="ORD_REFNO"/>
 		<collection property="activity" resultMap="activityResultSet"/>
 		<collection property="member" resultMap="memberResultSet"/>
-		<collection property="img" resultMap="imageResultSet"/>
+		<collection property="image" resultMap="imageResultSet"/>
 		<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
@@ -275,7 +275,7 @@
 	  	<result property="favStatus" column="FAV_STATUS"/>
 	  	<result property="favRefcode" column="FAV_REFCODE"/>
 	  	<result property="favRefno" column="FAV_REFNO"/>
-	  	<collection property="img" resultMap="imageResultSet"/>
+	  	<collection property="image" resultMap="imageResultSet"/>
 	  	<collection property="member" resultMap="memberResultSet"/>
 	  	<collection property="activity" resultMap="activityResultSet"/>
 	  	<collection property="product" resultMap="productResultSet"/>

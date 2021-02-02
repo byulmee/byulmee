@@ -38,6 +38,7 @@
 	font-style: normal;
 }
 body {
+	margin: 0;
 	font-family: 'GmarketSansMedium';
 }
 .outer {
