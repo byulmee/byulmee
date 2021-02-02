@@ -31,8 +31,9 @@ public class Product {
 	private int proCount;
 	private Date proDate;
 	private String proStatus;
-	private double proRating;
+	private double proTotalScore;
 	private int proReviewCnt;
+	private double proRating;
 	private Member member;
 	private Image image;
 }

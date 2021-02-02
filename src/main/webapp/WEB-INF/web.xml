@@ -170,6 +170,10 @@
 	</servlet-mapping>
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 	<!-- product 관련 URL 요청 처리 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>
@@ -183,9 +187,13 @@
 		<servlet-name>productServlet</servlet-name>
 		<url-pattern>*.pd</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
 	
 	
 =======
+=======
+
+>>>>>>> master
 	<!--  	admin 관련 URL 요청 처리  -->
 	<servlet>
 		<servlet-name>adminServlet</servlet-name>
@@ -199,6 +207,9 @@
 		<servlet-name>adminServlet</servlet-name>
 		<url-pattern>*.ad</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
 
+>>>>>>> master
+=======
 >>>>>>> master
 </web-app>

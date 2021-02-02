@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,14 +19,14 @@ import com.google.gson.JsonIOException;
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.SalesQna;
 import com.kh.byulmee.board.service.SalesQnaService;
+import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
-import com.kh.byulmee.reply.model.service.ReplyService;
-import com.kh.byulmee.reply.model.vo.Reply;
 import com.kh.byulmee.review.model.service.ReviewService;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -248,5 +249,40 @@ public class ActivityController {
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");
 		}
 		return mv;
+	}
+	
+
+	@RequestMapping("alist.ac")         
+    public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
+                     // (value="page", required=false) --> page��� ���� ���� ���� �ְ� ���� ���� ����
+		int currentPage = 1;
+		  if(page != null) {
+		     currentPage = page;
+		  }
+		  
+		  int listCount = aService.getListCount();
+		  
+		  
+		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		  
+		  ArrayList<Activity> list = aService.selectList(pi);
+
+		  list.add(new Activity());
+		  list.add(new Activity());
+		  list.add(new Activity());
+		  list.add(new Activity());
+		  list.add(new Activity());
+		  
+		  System.out.println("list == > " + list);
+		  System.out.println("list.size 1== > " + list.size());
+		  
+		  if(list == null) {
+			  throw new ActivityException("조회에 실패하였습니다.");
+		  }
+	  
+		 model.addAttribute("list", list);
+		 model.addAttribute("pi", pi);
+		 System.out.println("list.size 2== > " + list.size());
+		 return "activityList";
 	}
 }

@@ -28,7 +28,10 @@ public class SalesQna {
 	private int salqnaRefno;
 	private String salqnaStarcode;
 	private String salqnaRestatus;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> master
 	private Reply reply;
 	private Member member;
 }

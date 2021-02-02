@@ -48,9 +48,14 @@ public class SalesQnaServiceImpl implements SalesQnaService{
 	@Override
 	public int insertProductQna(SalesQna sq) {
 		return sqDAO.insertProductQna(sqlSession, sq);
+<<<<<<< HEAD
 	}
 	
 	@Override
+=======
+  }
+  
+>>>>>>> master
 	public int getListCount(String memId) {
 		return sqDAO.getListCount(sqlSession, memId);
 	}

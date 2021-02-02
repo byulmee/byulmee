@@ -11,7 +11,11 @@
 		<result property="repRefcode" column="REP_REFCODE"/>
 		<result property="repRefno" column="REP_REFNO"/>
 	</resultMap>
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> master
 	<select id="selectQnaReply" resultMap="replyResultSet">
 		select *
 		from reply

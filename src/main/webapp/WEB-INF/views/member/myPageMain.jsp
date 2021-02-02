@@ -39,16 +39,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
-	.profileImg {
-		width: 150px;
-		height: 150px;
+	.profileDiv {
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
-		object-fit: cover;
+		border: 2px solid gray;
+		background: black;
+	}
+	.profileImg {
+		position: absolute;
+	    margin: auto;
+	    width: 146px;
+	    height: auto;
+	    left: -100%;
+	    right: -100%;
+	    top: -100%;
+	    bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -88,14 +104,38 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -122,7 +162,7 @@
 	
 /* 컨텐츠 */	
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
@@ -184,7 +224,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 	}
 </style>
@@ -196,8 +236,21 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
-				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+    			</div>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -240,6 +293,31 @@
 							</li>
 							<li>
 								<button onclick="location.href='myFavStarView.me'" class="sideMenuBtn">찜한 스타</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
 							</li>
 						</ul>
 					</li>

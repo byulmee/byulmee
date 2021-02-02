@@ -26,14 +26,19 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.byulmee.activity.model.service.ActivityService;
+import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
-import com.kh.byulmee.board.model.vo.Pagination;
+import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.exception.MemberException;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.service.MypageService;
 import com.kh.byulmee.order.model.vo.Order;
+import com.kh.byulmee.product.model.service.ProductService;
+import com.kh.byulmee.product.model.vo.Product;
 import com.kh.byulmee.review.model.vo.Review;
 
 @SessionAttributes("loginUser")
@@ -45,6 +50,12 @@ public class MyPageContoller {
 	private MypageService mpService;
 	
 	@Autowired
+	private ActivityService aService;
+	
+	@Autowired
+	private ProductService pService;
+	
+	@Autowired
 	private ImageService iService;
 	
 	@Autowired
@@ -52,21 +63,23 @@ public class MyPageContoller {
 	
 	@RequestMapping("myPurActView.me")
 	public ModelAndView myPurActView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
-		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
-		
-		
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Image img = mpService.selectProfileImg(memNo);
+		
+		Order ord = new Order();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		ord.setMemId(id);
+		ord.setOrdRefcode(0);
 		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int listCount = mpService.getOrderListCount(id);
+		int listCount = mpService.getOrderListCount(ord);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		ArrayList<Order> o = mpService.selectActOrderList(pi, id);
 
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		ArrayList<Order> o = mpService.selectOrderList(pi, id);
 		if(o != null) {
 			mv.addObject("o", o);
 			mv.addObject("pi", pi);
@@ -79,10 +92,44 @@ public class MyPageContoller {
 		return mv;
 	}
 	
-	// 상세내역 ajax
+	@RequestMapping("myPurProView.me")
+	public ModelAndView myPurProView(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Order ord = new Order();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		ord.setMemId(id);
+		ord.setOrdRefcode(1);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getOrderListCount(ord);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		ArrayList<Order> o = mpService.selectProOrderList(pi, id);
+
+		if(o != null) {
+			mv.addObject("o", o);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myPurPro");
+		} else {
+			throw new MemberException("상품 구매 내역 조회에 실패했습니다.");
+		}
+		
+		mv.addObject("img", img);
+		mv.setViewName("myPurPro");
+	
+		return mv;
+	}
+	
+	// 활동 신청 상세내역 ajax
 	@RequestMapping("detailAct.me")
-	public void detailActModal(@RequestParam("ordNo") int ordNo, HttpServletResponse response) {
-		ArrayList<Order> oDetail = mpService.selectDetailList(ordNo);
+	public void detailAct(@RequestParam("ordNo") int ordNo, HttpServletResponse response) {
+		ArrayList<Order> oDetail = mpService.selectActDetailList(ordNo);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		
@@ -97,36 +144,85 @@ public class MyPageContoller {
 		}
 	}
 	
-	@RequestMapping("myPurProView.me")
-	public String myPurProView() {
-		return "myPurPro";
+	// 상품 구매 상세내역 ajax
+	@RequestMapping("detailPro.me")
+	public void detailPro(@RequestParam("ordNo") int ordNo, HttpServletResponse response) {
+		ArrayList<Order> oDetail = mpService.selectProDetailList(ordNo);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		
+		try {
+			gson.toJson(oDetail, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	@RequestMapping("myFavActView.me")
-	public String myFavActView() {
-		return "myFavAct";
+	@RequestMapping("deletePurAct.me")
+	public String deletePurAct(HttpServletRequest request, Model model,
+							   @RequestParam("ordNo") int ordNo, @RequestParam("ordRefno") int ordRefno) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Order o = new Order();
+		
+		o.setOrdNo(ordNo);
+		o.setMemId(memId);
+		o.setOrdRefno(ordRefno);
+		
+		int result = mpService.deletePurAct(o);
+		
+		if(result > 0) {
+			return "redirect:myPurActView.me";
+		} else {
+			throw new MemberException("활동 신청 내역 삭제에 실패했습니다.");
+		}
 	}
 	
-	@RequestMapping("myFavProView.me")
-	public String myFavProView() {
-		return "myFavPro";
-	}
-	
-	@RequestMapping("myFavStarView.me")
-	public String myFavStarView() {
-		return "myFavStar";
+	@RequestMapping("deletePurPro.me")
+	public String deletePurPro(HttpServletRequest request, Model model,
+							   @RequestParam("ordNo") int ordNo, @RequestParam("ordRefno") int ordRefno) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Order o = new Order();
+		
+		o.setOrdNo(ordNo);
+		o.setMemId(memId);
+		o.setOrdRefno(ordRefno);
+		
+		int result = mpService.deletePurPro(o);
+		
+		if(result > 0) {
+			return "redirect:myPurProView.me";
+		} else {
+			throw new MemberException("상품 구매 내역 삭제에 실패했습니다.");
+		}
 	}
 	
 	@RequestMapping("myInfoPwdCheckView.me")
-	public String myInfoPwdCheckView() {
-		return "myInfoPwdCheck";
+	public ModelAndView myInfoPwdCheckView(ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myInfoPwdCheck");
+	
+		return mv;
 	}
 	
 	@RequestMapping("myInfoPwdCheck.me")
 	public String myInfoPwdCheck(@RequestParam("memPwd")String memPwd, Model model, HttpServletRequest request) {
 
 		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
 		if(bcrypt.matches(memPwd, member.getMemPwd())) {
+			model.addAttribute("img", img);
 			model.addAttribute("loginUser", member);
 			return "myInfoUpdate";
 		} else {
@@ -137,8 +233,14 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("myPageMainView.me")
-	public String myPageMainView() {
-		return "myPageMain";
+	public ModelAndView myPageMainView(ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myPageMain");
+		
+		return mv;
 	}
 	
 	@RequestMapping("myInfoUpdate.me")
@@ -162,8 +264,14 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("myPwdUpdateView.me")
-	public String myPwdUpdateView() {
-		return "myPwdUpdate";
+	public ModelAndView myPwdUpdateView(ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myPwdUpdate");
+	
+		return mv;
 	}
 	
 	@RequestMapping("myPwdUpdate.me")
@@ -208,26 +316,24 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("profileImageUpdateView.me")
-	public ModelAndView profileImageUpdateView(ModelAndView mv, HttpServletRequest request, Model model) {
+	public ModelAndView profileImageUpdateView(ModelAndView mv, HttpServletRequest request) {
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Image img = mpService.selectProfileImg(memNo);
 	
 		mv.addObject("img", img);
-		System.out.println("selImg : " + img);
 		mv.setViewName("myProfileImage");
 	
 		return mv;
 	}
 	
-	@RequestMapping("profileImgDeleteView.me")
-	public ModelAndView profileImgDeleteView(ModelAndView mv, HttpServletRequest request, Model model) {
+	@RequestMapping("profileImgDelete.me")
+	public ModelAndView profileImgDelete(ModelAndView mv, HttpServletRequest request, Model model) {
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		
 		mpService.deleteProfileImg(memNo);
 		Image img = mpService.selectProfileImg(memNo);
 		
 		mv.addObject("img", img);
-		System.out.println("delImg : " + img);
 		mv.setViewName("myProfileImage");
 
 		return mv;
@@ -262,7 +368,7 @@ public class MyPageContoller {
 			result = iService.insertImage(i);
 		}
 		
-		if(memNo > 0 && result > 0) {
+		if(memNo > 0) {
 			model.addAttribute("msg", "프로필사진이 변경되었습니다.");
 			model.addAttribute("url", "profileImageUpdateView.me");
 			return "../common/alert";
@@ -308,8 +414,14 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("memberDeleteView.me")
-	public String memberDeleteView() {
-		return "memberDelete";
+	public ModelAndView memberDeleteView(ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("memberDelete");
+	
+		return mv;
 	}
 	
 	@RequestMapping("mdelete.me")
@@ -331,16 +443,19 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("reviewInsert.me")
-	public String insertReview(@ModelAttribute Review r, HttpServletRequest request, HttpSession session,
+	public String insertReview(@ModelAttribute Review r,
+							   HttpServletRequest request, HttpSession session,
 							   @RequestParam("reviewImgFile1") MultipartFile reviewImgFile1,
 							   @RequestParam("reviewImgFile2") MultipartFile reviewImgFile2,
 							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
 							   Model model) {
-		
+
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;
 		int revNo = mpService.insertReview(r);
+		int revRefcode = r.getRevRefcode();
+		int revRefno = r.getRevRefno();
 		
 		Image reviewImg = new Image();
 		Image i = new Image();
@@ -398,15 +513,53 @@ public class MyPageContoller {
 			
 			result3 = iService.insertImage(i);
 		}
-		
+			
 		if(revNo > 0) {
-			mpService.updateReviewStatus(r);
-			model.addAttribute("msg", "리뷰작성이 완료되었습니다.");
-			model.addAttribute("url", "myPurActView.me");
+			if(revRefcode == 0) {
+				int acId = revRefno;
+				
+				Activity a = aService.selectActivity(acId);
+
+				double actTotalScore = a.getActTotalScore() + r.getRevRating();
+				int actReviewCnt = a.getActReviewCnt() + 1;
+				double actRating = actTotalScore / actReviewCnt;
+				
+				a.setActTotalScore(actTotalScore);
+				a.setActReviewCnt(actReviewCnt);
+				a.setActRating(actRating);
+				
+				aService.updateActRatingCnt(a);
+				
+				mpService.updateReviewStatus(r);
+				model.addAttribute("msg", "리뷰작성이 완료되었습니다.");
+				model.addAttribute("url", "myPurActView.me");
+			} else if(revRefcode == 1) {
+				int proNo = revRefno;
+				
+				Product p = pService.selectPro(proNo);
+
+				double proTotalScore = p.getProTotalScore() + r.getRevRating();
+				int proReviewCnt = p.getProReviewCnt() + 1;
+				double proRating = proTotalScore / proReviewCnt;
+				
+				p.setProTotalScore(proTotalScore);
+				p.setProReviewCnt(proReviewCnt);
+				p.setProRating(proRating);
+				
+				pService.updateProRatingCnt(p);
+				
+				mpService.updateReviewStatus(r);
+				model.addAttribute("msg", "리뷰작성이 완료되었습니다.");
+				model.addAttribute("url", "myPurProView.me");
+			}
 			return "../common/alert";
 		} else {
 			model.addAttribute("msg", "리뷰작성에 실패했습니다.");
-			model.addAttribute("url", "myPurActView.me");
+			if(revRefcode == 0) {
+				model.addAttribute("url", "myPurActView.me");
+			} else if(revRefcode == 1) {
+				model.addAttribute("url", "myPurProView.me");
+			}
 			return "../common/alert";
 		}
 	}
@@ -443,5 +596,353 @@ public class MyPageContoller {
 			e.printStackTrace();
 		}
 		return i;
+	}
+	
+	@RequestMapping("myFavActView.me")
+	public ModelAndView myFavActView(@RequestParam(value="page", required=false) Integer page,
+									 ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Favorite fav = new Favorite();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		fav.setMemId(id);
+		fav.setFavRefcode(1);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getFavListCount(fav);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		ArrayList<Favorite> f = mpService.selectFavActList(pi, id);
+
+		if(f != null) {
+			mv.addObject("f", f);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myFavAct");
+		} else {
+			throw new MemberException("찜한 활동 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("myFavProView.me")
+	public ModelAndView myFavProView(@RequestParam(value="page", required=false) Integer page,
+									 ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Favorite fav = new Favorite();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		fav.setMemId(id);
+		fav.setFavRefcode(2);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getFavListCount(fav);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		ArrayList<Favorite> f = mpService.selectFavProList(pi, id);
+
+		if(f != null) {
+			mv.addObject("f", f);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myFavPro");
+		} else {
+			throw new MemberException("찜한 활동 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("myFavStarView.me")
+	public ModelAndView myFavStarView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Favorite fav = new Favorite();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		fav.setMemId(id);
+		fav.setFavRefcode(0);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getFavListCount(fav);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 8);
+		ArrayList<Favorite> f = mpService.selectFavStarList(pi, id);
+
+		if(f != null) {
+			mv.addObject("f", f);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myFavStar");
+		} else {
+			throw new MemberException("찜한 스타 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("deleteFavAct.me")
+	public String deleteFavAct(HttpServletRequest request, Model model,
+							   @RequestParam("favNo") int favNo, @RequestParam("favRefno") int favRefno) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Favorite f = new Favorite();
+		System.out.println("favNo : " + favNo);
+		System.out.println("favRefno : " + favRefno);
+		f.setFavNo(favNo);
+		f.setMemId(memId);
+		f.setFavRefno(favRefno);
+		
+		int result = mpService.deleteFavAct(f);
+		
+		if(result > 0) {
+			return "redirect:myFavActView.me";
+		} else {
+			throw new MemberException("찜한 활동 삭제에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("deleteFavPro.me")
+	public String deleteFavPro(HttpServletRequest request, Model model,
+							   @RequestParam("favNo") int favNo, @RequestParam("favRefno") int favRefno) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Favorite f = new Favorite();
+		
+		f.setFavNo(favNo);
+		f.setMemId(memId);
+		f.setFavRefno(favRefno);
+		
+		int result = mpService.deleteFavPro(f);
+		
+		if(result > 0) {
+			return "redirect:myFavProView.me";
+		} else {
+			throw new MemberException("찜한 상품 내역 삭제에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("deleteFavStar.me")
+	public String deleteFavStar(HttpServletRequest request, Model model,
+								@RequestParam("favNo") int favNo, @RequestParam("favRefno") int favRefno) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Favorite f = new Favorite();
+		
+		f.setFavNo(favNo);
+		f.setMemId(memId);
+		f.setFavRefno(favRefno);
+		
+		int result = mpService.deleteFavStar(f);
+		
+		if(result > 0) {
+			return "redirect:myFavStarView.me";
+		} else {
+			throw new MemberException("찜한 상품 내역 삭제에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("myRevActListView.me")
+	public ModelAndView myRevActListView(@RequestParam(value="page", required=false) Integer page,
+										 ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		Review rev = new Review();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		rev.setMemId(id);
+		rev.setRevRefcode(0);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getReviewListCount(rev);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		ArrayList<Review> r = mpService.selectRevActList(pi, id);
+
+		if(r != null) {
+			mv.addObject("r", r);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myRevActList");
+		} else {
+			throw new MemberException("내가 작성한 후기 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("myRevActUpdateView.me")
+	public ModelAndView myRevActUpdateView(@ModelAttribute Review review,
+										   ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		ArrayList<Image> ri = mpService.selectRevDetailImg(review.getRevNo());
+		
+		int revNo = review.getRevNo();
+		Review r = mpService.selectRevActDetail(revNo);
+		
+		mv.addObject("r", r);
+		mv.addObject("ri", ri);
+		mv.addObject("img", img);
+		mv.setViewName("myRevActUpdate");
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping("reviewUpdate.me")
+	public String updateReview(@ModelAttribute Review r,
+							   HttpServletRequest request, HttpSession session,
+							   @RequestParam("reviewImgFile1") MultipartFile reviewImgFile1,
+							   @RequestParam("reviewImgFile2") MultipartFile reviewImgFile2,
+							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
+							   Model model) {
+		int result1 = 0;
+		int result2 = 0;
+		int result3 = 0;
+		int revNo = r.getRevNo();
+		int revRefcode = r.getRevRefcode();
+		int revRefno = r.getRevRefno();
+		double revLastRating = r.getRevLastRating();
+		
+		System.out.println("reviewImgFile1 : " + reviewImgFile1);
+		System.out.println("reviewImgFile2 : " + reviewImgFile2);
+		System.out.println("reviewImgFile3 : " + reviewImgFile3);
+		
+		int result = mpService.updateRevAct(r);
+		
+		Image reviewImg = new Image();
+		Image i = new Image();
+		
+		if(reviewImgFile1 != null && !reviewImgFile1.isEmpty()) {
+			reviewImg = saveReviewImg(reviewImgFile1, request);
+			
+			String imgName = reviewImg.getImgName();
+			String imgPath = reviewImg.getImgPath();
+			
+			if(imgName != null) {
+				i.setImgOrigin(reviewImgFile1.getOriginalFilename());
+				i.setImgName(imgName);
+				i.setImgPath(imgPath);
+				i.setImgLevel(0);
+				i.setImgRefcode(3);
+				i.setImgRefno(revNo);
+			}
+			
+			result1 = iService.insertImage(i);
+		}
+		
+		if(reviewImgFile2 != null && !reviewImgFile2.isEmpty()) {
+			reviewImg = saveReviewImg(reviewImgFile2, request);
+			
+			String imgName = reviewImg.getImgName();
+			String imgPath = reviewImg.getImgPath();
+			
+			if(imgName != null) {
+				i.setImgOrigin(reviewImgFile2.getOriginalFilename());
+				i.setImgName(imgName);
+				i.setImgPath(imgPath);
+				i.setImgLevel(1);
+				i.setImgRefcode(3);
+				i.setImgRefno(revNo);
+			}
+			
+			result2 = iService.insertImage(i);
+		}
+		
+		if(reviewImgFile3 != null && !reviewImgFile3.isEmpty()) {
+			reviewImg = saveReviewImg(reviewImgFile3, request);
+			
+			String imgName = reviewImg.getImgName();
+			String imgPath = reviewImg.getImgPath();
+			
+			if(imgName != null) {
+				i.setImgOrigin(reviewImgFile3.getOriginalFilename());
+				i.setImgName(imgName);
+				i.setImgPath(imgPath);
+				i.setImgLevel(2);
+				i.setImgRefcode(3);
+				i.setImgRefno(revNo);
+			}
+			
+			result3 = iService.insertImage(i);
+		}
+			
+		if(revNo > 0) {
+			if(revRefcode == 0) {
+				int acId = revRefno;
+				
+				Activity a = aService.selectActivity(acId);
+
+				double actTotalScore = a.getActTotalScore() - revLastRating + r.getRevRating();
+				int actReviewCnt = a.getActReviewCnt();
+				double actRating = actTotalScore / actReviewCnt;
+				
+				a.setActTotalScore(actTotalScore);
+				a.setActReviewCnt(actReviewCnt);
+				a.setActRating(actRating);
+				
+				aService.updateActRatingCnt(a);
+				
+				mpService.updateReviewStatus(r);
+				model.addAttribute("msg", "리뷰수정이 완료되었습니다.");
+				model.addAttribute("url", "myRevActListView.me");
+			} else if(revRefcode == 1) {
+				int proNo = revRefno;
+				
+				Product p = pService.selectPro(proNo);
+
+				double proTotalScore = p.getProTotalScore() + r.getRevRating();
+				int proReviewCnt = p.getProReviewCnt() + 1;
+				double proRating = proTotalScore / proReviewCnt;
+				
+				p.setProTotalScore(proTotalScore);
+				p.setProReviewCnt(proReviewCnt);
+				p.setProRating(proRating);
+				
+				pService.updateProRatingCnt(p);
+				
+				mpService.updateReviewStatus(r);
+				model.addAttribute("msg", "리뷰수정이 완료되었습니다.");
+				model.addAttribute("url", "myRevProListView.me");
+			}
+			return "../common/alert";
+		} else {
+			model.addAttribute("msg", "리뷰작성에 실패했습니다.");
+			if(revRefcode == 0) {
+				model.addAttribute("url", "myRevActListView.me");
+			} else if(revRefcode == 1) {
+				model.addAttribute("url", "myRevProListView.me");
+			}
+			return "../common/alert";
+		}
+	}
+	
+	@RequestMapping("myQnaListView.me")
+	public ModelAndView myQnaListView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myQnaList");
+		
+		return mv;
 	}
 }

@@ -96,4 +96,21 @@ public class ActivityDAO {
 	public ArrayList<Activity> getNearEndDateActList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("activityMapper.getNearEndDateActList");
 	}
+	
+	public int updateActRatingCnt(SqlSessionTemplate sqlSession, Activity a) {
+		return sqlSession.update("activityMapper.updateActRatingCnt", a);
+	}
+	
+	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession,PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList) sqlSession.selectList("activityMapper.selectList",pi,rowBounds);
+		
+	}
+	
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("activityMapper.getListCount");		
+	}
+	
 }

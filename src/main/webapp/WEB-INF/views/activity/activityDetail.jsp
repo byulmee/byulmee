@@ -160,7 +160,11 @@ input:focus {
 	cursor: pointer;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> master
 #button3 {
 	border: 1px solid #E9E9E9;
 	background: white;
@@ -174,6 +178,9 @@ input:focus {
 	cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 #button2 {
@@ -190,6 +197,9 @@ input:focus {
 	cursor: pointer;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 #button4 {
 	border: 1px solid #FF6833;
@@ -205,6 +215,9 @@ input:focus {
 	cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 .starInfo {
@@ -263,6 +276,9 @@ input:focus {
 	margin-top: 4px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 #star-button3 {
 	border: 1px solid #888888;
@@ -278,6 +294,9 @@ input:focus {
 	margin-top: 4px;
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 hr {
@@ -439,6 +458,9 @@ hr {
 	min-height: auto;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 .trReviewExpand {
 	text-align: center; 
@@ -447,8 +469,11 @@ hr {
 }
 
 .expandButton {
+<<<<<<< HEAD
 =======
 #expandButton {
+>>>>>>> master
+=======
 >>>>>>> master
 	cursor: pointer;
 	font-family: 'GmarketSansMedium';
@@ -457,17 +482,23 @@ hr {
 	margin-right: 2px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 .expandButton:hover {
 	color: black;
 }
 
 .expandButton {
+<<<<<<< HEAD
 =======
 #expandButton:hover {
 	color: black;
 }
 #expandButton {
+>>>>>>> master
+=======
 >>>>>>> master
 	border: 0;
 	background-color: white;
@@ -487,38 +518,53 @@ hr {
  	table-layout: fixed;
 } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .question td:not(.noqna){
 =======
 .question td{
 >>>>>>> master
+=======
+
+.question td:not(.noqna){
+>>>>>>> master
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
-} 
+}
+  
 #memId, #salqnaTitle, #salqnaDate, #salqnaDetail{
  	text-overflow: ellipsis;
  	overflow: hidden;
  	white-space: nowrap;
 } 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 .noqna {
 	text-align: center;
 }
 
 .question tr:not(.noqna):hover{
+<<<<<<< HEAD
 =======
 .question tr:hover{
 >>>>>>> master
+=======
+>>>>>>> master
  	background-color: #f9f9f9;
 } 
+  
 .questionExcept td{
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
 } 
+  
 .questionExcept tr:hover{
  	background-color: #f9f9f9;
 } 
+  
 #salqnaTitle, #salqnaTitleExcept {
  	font-size: 15px;
  	margin-right: 400px;
@@ -552,6 +598,7 @@ hr {
 	background-color: #f9f9f9;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .show2 {
 =======
 .salqnaReply{
@@ -562,6 +609,10 @@ hr {
 }
 #repArea{
 >>>>>>> master
+=======
+
+.show2 {
+>>>>>>> master
 	display:table-row; 
 	height: auto;
 	font-size:12px;
@@ -571,6 +622,9 @@ hr {
 	cursor:pointer;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 #qnaReply, #qnaContent {
 	padding-left: 30px;
@@ -578,6 +632,9 @@ hr {
 	font-size: 13px;
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 #all-question {
@@ -588,9 +645,11 @@ hr {
 	color: #9E9E9E;
 	margin-right: 15px;
 }
+  
 #all-question:hover{
 	color: black;
 }
+  
 #questionButton {
 	margin-top: 15px;
 	border: 1px solid #FF6833;
@@ -606,10 +665,12 @@ hr {
 	cursor: pointer;
 	font-weight: bold;
 }
+  
 .refundArea {
 	width: 957px;
 	border-bottom: 1px solid #E9E9E9;
 }
+  
 .refund {
 	width: 800px;
 	height: 200px;
@@ -617,10 +678,12 @@ hr {
 	position: relative; 
 	margin: 0 auto; 
 }
+  
 .declare {
 	width: 957px;
 	height: 130px;
 }
+  
 #declareButton {
 	margin-top: 15px;
 	border: 0;
@@ -636,13 +699,16 @@ hr {
 	cursor: pointer;
 	font-weight: bold;
 }
+  
 .recommendArea {
 	margin-bottom: 10px;
 }
+  
 #recommend {
 	font-size: 22px;
 	font-weight: bold;
 }
+  
 /* 후기 모달창 */
 .review_wrap {
 	display: none;
@@ -657,6 +723,9 @@ hr {
 	z-index: 1000;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 .review_modal{
 	width: 650px;
@@ -668,8 +737,12 @@ hr {
 	padding: 20px;
 	background: white;
 }
+<<<<<<< HEAD
 
 =======
+>>>>>>> master
+=======
+  
 >>>>>>> master
 .black_bg {
 	display: none;
@@ -1210,6 +1283,7 @@ hr {
 				url: 'salesReviewList.ac',
 				data: {acId:acId},
 				success: function(data){
+					
 					console.log(data);
 					
 					$review = $('.review_flex tbody');
@@ -1236,7 +1310,7 @@ hr {
 							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
 							
 							if(data[i].image != "" ){
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image.imgName + "'>");
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image[0].imgName + "'>");
 // 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
 							} else{
 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
