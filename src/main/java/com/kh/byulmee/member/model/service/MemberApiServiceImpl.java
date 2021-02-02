@@ -197,8 +197,6 @@ public class MemberApiServiceImpl implements MemberApiService {
 		return resultToJson;
 	}
 	
-	
-	
 	/******** by다혜: Email 발송 메소드 ********/
 	@Override
 	public String getEmailCode(Member member) {
@@ -302,6 +300,7 @@ public class MemberApiServiceImpl implements MemberApiService {
 		
 		return kakaoProfile;
 	}
+	
 	
 	/******** by다혜: facebook 인증 메소드 ********/
 //	@Override
