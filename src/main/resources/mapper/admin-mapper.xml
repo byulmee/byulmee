@@ -125,4 +125,17 @@
 		where mem_id = #{memberId}
 	</update>
 	
+	<select id="getSearchIdListCount" resultType="_int">
+		select count(*)
+		from member
+		where mem_id like '%' || #{searchId} || '%'
+	</select>
+	
+	<select id="selectSerachMemberList" resultMap="memberResultSet">
+		select *
+  		from member
+  		where mem_id like '%' || #{searchId} || '%'
+		order by mem_id desc
+	</select>
+	
 </mapper>

@@ -83,4 +83,14 @@ public class AdminServiceImpl implements AdminService {
 	public void updateAdminBannerOpenById(Map param) {
 		 abDAO.updateBannerOpen(param);
 	}
+
+	@Override
+	public int getSearchIdListCount(String searchId) {
+		return abDAO.getSearchIdListCount(sqlSession, searchId);
+	}
+
+	@Override
+	public ArrayList<Member> selectSerachMemberList(PageInfo pi, String searchId) {
+		return abDAO.selectSerachMemberList(sqlSession, pi, searchId);
+	}
 }
