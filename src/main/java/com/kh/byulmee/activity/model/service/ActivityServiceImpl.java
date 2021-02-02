@@ -103,14 +103,8 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public int selectOrderSum(int acId) {
 		return aDAO.selectOrderSum(sqlSession, acId);
-<<<<<<< HEAD
 	}
-	
-	@Override
-=======
-  }
   
->>>>>>> master
 	public ArrayList<Activity> getPopularActList() {
 		return aDAO.getPopularActList(sqlSession);
 	}

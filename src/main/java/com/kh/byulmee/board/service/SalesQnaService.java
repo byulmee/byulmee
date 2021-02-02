@@ -18,11 +18,7 @@ public interface SalesQnaService {
 	ArrayList<SalesQna> selectProductQnaExceptList(int pdId);
 
 	int insertProductQna(SalesQna sq);
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> master
 	int getListCount(String memId);
 
 	ArrayList<SalesQna> selectSalQnaList(PageInfo pi, String memId);

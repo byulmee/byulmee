@@ -106,10 +106,7 @@
 		where ord_refno = #{acId} and ord_refcode = 0
 	</select>
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> master
  <select id="getUserListCount" resultType="_int">
  	select count(*)
   	from activity

@@ -27,11 +27,7 @@ public interface ActivityService {
 	Activity selectActivity(int acId);
 
 	int selectOrderSum(int acId);
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> master
 	int getUserListCount(String memId);
 
 	ArrayList<Activity> selectUserList(String memId, PageInfo pi);
