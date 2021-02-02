@@ -126,4 +126,10 @@
 		  		</foreach>
 	  		and mem_status='Y'
 	</select>
+	
+	<select id="selectMemberWithNo" resultMap="memberResultSet">
+		select *
+		from member
+		where mem_no = #{memNo} and mem_status = 'Y' 
+	</select>
 </mapper>
