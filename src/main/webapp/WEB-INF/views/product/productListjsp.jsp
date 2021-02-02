@@ -1,69 +1,100 @@
+<%@page import="com.kh.byulmee.product.model.vo.Product"%>
+<%@page import="com.kh.byulmee.product.model.dao.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.kh.byulmee.activity.model.dao.ActivityDAO"%>
-<%@page import="com.kh.byulmee.activity.model.vo.Activity"%>
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<%@ page import="java.sql.*"%>
-<%
-    Activity activity = (Activity)request.getAttribute("activity");
+    <%@ page import="java.sql.*" %>
+    <%
+    
+    Product product = (Product)request.getAttribute("product");
     %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
 <style>
 @font-face {
-   font-family: 'GmarketSansMedium';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
-      format('woff');
-   font-weight: normal;
-   font-style: normal;
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-   font-family: 'GmarketSansBold';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff')
-      format('woff');
-   font-weight: normal;
-   font-style: normal;
+    font-family: 'GmarketSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-body {
-   margin: 0 auto;
-   font-family: 'GmarketSansMedium';
+
+body{
+	width: 1050px;
+	margin: 0 auto;
+	font-family: 'GmarketSansMedium';
+}
+	}
+
+nav ul li {
+	display: inline;	
+	border-right: 1px solid pink;
+	
+	
+	float: right;
+}
+nav ul li a:hover {
+	color: black;
 }
 
-.outer {
-   width: 1280px;
-   min-height: auto;
-   text-align:center; 
-   position:relative; 
-   margin:0 auto;
+h4{
+	color: orange;
 }
 
-.listMain{
-   margin-top: 50px;
+#price{color: black;}
+
+ul { 
+  list-style: none;
+  margin: 0;
+  padding: 0;
+} 
+
+header, footer, nav, section, article, hgroup, figure {
+  display: block; 
 }
- .list-cate {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.8rem;
-        padding: 0.2rem 0;
-    }
+legend {
+  display: none;
+}
+a {
+  color: #808080;
+  text-decoration: none;
+}
+a:hover{
+  color: #e51837;
+}
+p {
+  margin: 0 0 1em;
+  font-size: 8px;
+}
+
+a img {
+  border: 0;
+  outline: 0;
+}
+   #tb tr td{padding: 5px;}
+   #buttonTab{border-left: hidden; border-right: hidden;}
+   
+   
 </style>
 <body>
-
+ 
+	
    <c:import url="../common/gnb.jsp" />
 
    <div class="outer">
@@ -91,7 +122,7 @@ body {
       </div>
       <br>
       <%
-      ActivityDAO activityDAO = new ActivityDAO();   
+      ProductDAO productDAO = new ProductDAO();   
    %>
  	
          <c:forEach items="${ list }" varStatus="status" var="val">
@@ -99,13 +130,13 @@ body {
             <ul class="list" style="list-style: none;">
             	<c:if test="${status.index mod 5 eq 0}">
 			    </c:if>
-               <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
+               <li class="list-item item1" onclick="location.href='productDetail.ac?pdId=${val.proNo }'">
                   <div class="img-frame">
                      <img class="list-thumb" src="resources/images/common/test.png"
                         alt="zz" width="210px;">
                   </div> <span>${val.memId }</span>
-                  <div class="list-cate">[${val.actCategory }]&nbsp;${val.actTitle }</div>
-                  <span class="list-price"><i class="fas fa-receipt"></i>${val.actPrice }원</span><br>
+                  <div class="list-cate">[${val.proCategory }]&nbsp;${val.proTitle }</div>
+                  <span class="list-price"><i class="fas fa-receipt"></i>${val.proPrice }원</span><br>
                   <span class="list-social">⭐️4.9 9999개의 평가</span>
                </li>
                <c:if test="${(status.index + 1) mod 5 eq 0}">
@@ -126,7 +157,7 @@ body {
                   <!-- [이전] --> <c:if test="${ pi.currentPage <= 1 }">
                [이전] &nbsp;
             </c:if> <c:if test="${ pi.currentPage > 1 }">
-                     <c:url var="before" value="alist.ac">
+                     <c:url var="before" value="plist.ac">
                         <c:param name="page" value="${ pi.currentPage - 1 }" />
                      </c:url>
                      <a href="${ before }">[이전]</a> &nbsp;
@@ -137,7 +168,7 @@ body {
                      </c:if>
 
                      <c:if test="${ p ne pi.currentPage }">
-                        <c:url var="pagination" value="alist.ac">
+                        <c:url var="pagination" value="plist.ac">
                            <c:param name="page" value="${ p }" />
                         </c:url>
                         <a href="${ pagination }">${ p }</a> &nbsp;
@@ -145,7 +176,7 @@ body {
                   </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage >= pi.maxPage }">
                [다음]
             </c:if> <c:if test="${ pi.currentPage < pi.maxPage }">
-                     <c:url var="after" value="alist.ac">
+                     <c:url var="after" value="plist.ac">
                         <c:param name="page" value="${ pi.currentPage + 1 }" />
                      </c:url>
                      <a href="${ after }">[다음]</a>
@@ -162,6 +193,7 @@ body {
    <br>
    <br>
 
+	
 
 </body>
 </html>
