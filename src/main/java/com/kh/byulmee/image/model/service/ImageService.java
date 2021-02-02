@@ -22,5 +22,4 @@ public interface ImageService {
 
 	ArrayList<Image> selectProductImage(int pdId);
 
-
 }

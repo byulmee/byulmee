@@ -5,11 +5,17 @@
 'use strict!';
 (() => {
 	/***** by.다혜: 메인 추천 게시글 추가 스크립트 *****/
+	
+	getBoardData();
+	
 	async function getBoardData() {
 		let response = await fetch('loadMainPopAct.do');
 		let data = await response.json();
-		
+		console.log('start');
+		console.log(data);
+		console.log('ready');
 		await loadList(data);
+		console.log('end');
 	}
 
 	function loadList(data) {
@@ -21,11 +27,12 @@
 		let popActList = '';
 		let neActList = '';
 		let popProList = '';
-		
+		console.log('setter');
 		//인기 활동
 		ranNo = getRandomNumber();
 		randomList = getRandomList(ranNo, popAct);
-		
+		console.log('add li');
+		console.log(randomList);
 		for(let i in randomList) {
 			let list = '<li class="list-item item1">'
 						+ 	'<input type="hidden" name="actNo" value="' + randomList[i].actNo + '"/>'
@@ -77,8 +84,8 @@
 			popProList += list;
 		}
 		$('.popPro').html(popProList);
+		console.log('add li done');
 	}
-	getBoardData();
 	
 	//게시글 클릭 이벤트 정의
 	const paUl = document.querySelector('#popularActList');
@@ -127,11 +134,19 @@
 	
 	//getRandomNum()으로 받아온 5개 인덱스를 사용하여 50개 중 5게 게시글 추
 	function getRandomList(noArr, dataList) {
+			console.log('getRandomList start');
+			console.log(noArr);
+			console.log(dataList);
 			
 			let randomList = [];
-			for(let i in noArr) {
-				randomList[i] = dataList[noArr[i]];
-			}
+				for(let i in noArr) {
+					randomList[i] = dataList[noArr[i]];
+					console.log(randomList[i]);
+				}
+			
+			console.log(randomList);
+			console.log('end');
+			
 		return randomList;
 	}
 	

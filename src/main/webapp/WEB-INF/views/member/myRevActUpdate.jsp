@@ -452,8 +452,6 @@
 		cursor: pointer;
 	}	
 </style>
-</head>
-<body>
 	<script>
 		$(function() {
 			if ('${ ri.size()}' == 0) {
@@ -480,6 +478,9 @@
 			$(".score").val(${ r.revRating });
 		});
 	</script>
+</head>
+<body>
+	
 	<c:import url="../common/gnb.jsp"/>
 	
 	<div class="outer">
@@ -652,6 +653,7 @@
 												<div id="reviewImgDelDiv1" class="reviewImgDelDiv">
 													<img id="reviewImgDel1" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName1" id="imgName1" value="0">
 												<img id="reviewImg1" name="reviewImg1" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -660,6 +662,7 @@
 												<div id="reviewImgDelDiv2" class="reviewImgDelDiv">
 													<img id="reviewImgDel2" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName2" id="imgName2" value="0">
 												<img id="reviewImg2" name="reviewImg2" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -668,6 +671,7 @@
 												<div id="reviewImgDelDiv3" class="reviewImgDelDiv">
 													<img id="reviewImgDel3" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName3" id="imgName3" value="0">
 												<img id="reviewImg3" name="reviewImg3" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -679,6 +683,7 @@
 												<div id="reviewImgDelDiv1" class="reviewImgDelDiv">
 													<img id="reviewImgDel1" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName1" id="imgName1" value="${ ri.get(0).imgName }">
 												<img id="reviewImg1" name="reviewImg1" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(0).imgName }">
 											</div>
 										</td>
@@ -687,6 +692,7 @@
 												<div id="reviewImgDelDiv2" class="reviewImgDelDiv">
 													<img id="reviewImgDel2" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName2" id="imgName2" value="0">
 												<img id="reviewImg2" name="reviewImg2" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -695,6 +701,7 @@
 												<div id="reviewImgDelDiv3" class="reviewImgDelDiv">
 													<img id="reviewImgDel3" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName3" id="imgName3" value="0">
 												<img id="reviewImg3" name="reviewImg3" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -706,6 +713,7 @@
 												<div id="reviewImgDelDiv1" class="reviewImgDelDiv">
 													<img id="reviewImgDel1" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName1" id="imgName1" value="${ ri.get(0).imgName }">
 												<img id="reviewImg1" name="reviewImg1" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(0).imgName }">
 											</div>
 										</td>
@@ -714,6 +722,7 @@
 												<div id="reviewImgDelDiv2" class="reviewImgDelDiv">
 													<img id="reviewImgDel2" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName2" id="imgName2" value="${ ri.get(1).imgName }">
 												<img id="reviewImg2" name="reviewImg2" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(1).imgName }">
 											</div>
 										</td>
@@ -722,6 +731,7 @@
 												<div id="reviewImgDelDiv3" class="reviewImgDelDiv">
 													<img id="reviewImgDel3" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName3" id="imgName3" value="0">
 												<img id="reviewImg3" name="reviewImg3" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png">
 											</div>
 										</td>
@@ -733,6 +743,7 @@
 												<div id="reviewImgDelDiv1" class="reviewImgDelDiv">
 													<img id="reviewImgDel1" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName1" id="imgName1" value="${ ri.get(0).imgName }">
 												<img id="reviewImg1" name="reviewImg1" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(0).imgName }">
 											</div>
 										</td>
@@ -741,6 +752,7 @@
 												<div id="reviewImgDelDiv2" class="reviewImgDelDiv">
 													<img id="reviewImgDel2" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName2" id="imgName2" value="${ ri.get(1).imgName }">
 												<img id="reviewImg2" name="reviewImg2" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(1).imgName }">
 											</div>
 										</td>
@@ -749,6 +761,7 @@
 												<div id="reviewImgDelDiv3" class="reviewImgDelDiv">
 													<img id="reviewImgDel3" class="reviewImgDel" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x_white.png">
 												</div>
+												<input type="hidden" name="imgName3" id="imgName3" value="${ ri.get(2).imgName }">
 												<img id="reviewImg3" name="reviewImg3" class="reviewImg" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ ri.get(2).imgName }">
 											</div>
 										</td>
@@ -767,6 +780,9 @@
 							<input type="file" id="reviewImgFile2" multiple="multiple" name="reviewImgFile2" onchange="LoadImg(this, 2)">
 							<input type="file" id="reviewImgFile3" multiple="multiple" name="reviewImgFile3" onchange="LoadImg(this, 3)">
 						</div>
+						<input type="hidden" name="sendImgName1" id="sendImgName1" value="">
+						<input type="hidden" name="sendImgName2" id="sendImgName2" value="">
+						<input type="hidden" name="sendImgName3" id="sendImgName3" value="">
 					</form>
 				</div>
 			</div>
@@ -850,26 +866,35 @@
 		
 	<script>
 		$("#reviewImgDel1").click(function() {
-			$("#reviewImg1").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png");
-			$("#reviewImgDelDiv1").css("display", "none");
-			$("#reviewImg1").val("");
+			if($("#reviewImgDelDiv2").css("display") == ("none") && $("#reviewImgDelDiv3").css("display") == ("none")) {
+				$("#reviewImg1").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png");
+				$("#reviewImgDelDiv1").css("display", "none");
+				$("#reviewImg1").val("");
+				var imgName1 = $(this).parent().parent().children("#imgName1").val();
+				$('#sendImgName1').val(imgName1);
+				console.log(imgName1);
+			}
 		});
 		
 		$("#reviewImgDel2").click(function() {
-			$("#reviewImg2").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png");
-			$("#reviewImgDelDiv2").css("display", "none");
-			$("#reviewImg2").val("");
+			if($("#reviewImg1").val() != null && $("#reviewImgDelDiv3").css("display") == ("none")) {
+				$("#reviewImg2").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png");
+				$("#reviewImgDelDiv2").css("display", "none");
+				$("#reviewImg2").val("");
+				var imgName2 = $(this).parent().parent().children("#imgName2").val();
+				$('#sendImgName2').val(imgName2);
+				console.log(imgName2);
+			}
 		});
 		
 		$("#reviewImgDel3").click(function() {
 			$("#reviewImg3").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/plus.png");
 			$("#reviewImgDelDiv3").css("display", "none");
 			$("#reviewImg3").val("");
+			var imgName3 = $(this).parent().parent().children("#imgName3").val();
+			$('#sendImgName3').val(imgName3);
+			console.log(imgName3);
 		});
-	</script>
-	
-	<script>
-		
 	</script>
 </body>
 </html>

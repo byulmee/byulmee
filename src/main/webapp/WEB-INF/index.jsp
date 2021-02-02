@@ -47,7 +47,7 @@
                 <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기"><i class="fas fa-search"></i>
             </div>
             <ul id="cate">
-                <li class="cate act" onclick="location.href='activityList.ac'">
+                <li class="cate act" onclick="location.href='alist.ac'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
                 <li class="cate liv">
@@ -97,7 +97,7 @@
 	
 	
 	    <div class="rec-top">
-	        <div class="rec-title">플리마켓 인기상품</div>
+	        <div class="rec-title">별미마켓 인기상품</div>
 	        <div class="rec-top-divider1">
 	            <hr class="rec-top-divider2"></hr>
 	        </div>
