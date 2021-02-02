@@ -113,4 +113,9 @@ public class ActivityServiceImpl implements ActivityService {
 		return aDAO.selectUserList(sqlSession, memId, pi);
 	}
 
+	@Override
+	public int updateActRatingCnt(Activity a) {
+		return aDAO.updateActRatingCnt(sqlSession, a);
+	}
+
 }

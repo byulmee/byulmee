@@ -88,4 +88,7 @@ public class ProductDAO {
 		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
 	}
 
+	public int updateProRatingCnt(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("productMapper.updateProRatingCnt", p);
+	}
 }

@@ -30,41 +30,32 @@
 	<select id="getOrderListCount" resultType="_int">
 		select count(*)
 		from orders
-		where ord_status='Y' and mem_id = #{memId}
+		where ord_status='Y' and mem_id=#{memId} and ord_refcode=#{ordRefcode}
 	</select>
 	
-	<!-- <select id="selectOrderList" resultMap="orderResultSet">
-		select *
-		from orders
-		where ord_status='Y' and ord_id=#{memId}
-		order by ord_no desc
-	</select> -->
-	
-	<select id="selectOrderList" resultMap="orderResultSet">
-		<!-- 1. 일반 쿼리 join 방식 -->
-		<!-- select o.ord_no, o.mem_id as ord_id, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
-		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request, o.ord_payno,
-		        o.ord_pay, o.ord_pay_way, o.ord_review, o.ord_status, o.ord_refcode, o.ord_refno,
-		        a.act_no, a.mem_id as act_id, a.act_phone, a.act_startday, a.act_endday, a.act_place,
-		        a.act_title, a.act_price, a.act_status,
-		        m.mem_no, m.mem_id, m.mem_name, m.mem_nickname, m.mem_email
-		from orders o 
-		    left outer join activity a on o.ord_refno = a.act_no
-		    left outer join member m on a.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.mem_id = #{memId}
-		order by o.ord_no desc -->
-		
+	<select id="selectActOrderList" resultMap="orderResultSet">
 		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
 		        a.act_no, a.act_title,
                 i.img_name
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
             left outer join image i on a.act_no = i.img_refno
-		where o.ord_status = 'Y' and o.mem_id = #{memId} and i.img_level=0
+		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
+		order by o.ord_no desc
+	</select>
+	
+	<select id="selectProOrderList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
+		        p.pro_no, p.pro_title,
+                i.img_name
+		from orders o 
+		    left outer join product p on o.ord_refno = p.pro_no
+            left outer join image i on p.pro_no = i.img_refno
+		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=1 and i.img_level=0 and i.img_refcode=2
 		order by o.ord_no desc
 	</select>
 
-	<select id="selectDetailList" resultMap="orderResultSet">
+	<select id="selectActDetailList" resultMap="orderResultSet">
 		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
 		       o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
 		       o.ord_pay, o.ord_pay_way, o.ord_status,
@@ -74,9 +65,35 @@
 		from orders o 
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo}
+		where o.ord_status='Y' and o.ord_no=#{ordNo} and o.ord_refcode=0
 		order by o.ord_no desc
 	</select>
+	
+	<select id="selectProDetailList" resultMap="orderResultSet">
+		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
+		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
+		        o.ord_pay, o.ord_pay_way, o.ord_status,
+		        p.pro_no, p.mem_id as pro_id, p.pro_charge,
+		        p.pro_title, p.pro_price, p.pro_status,
+		        m.mem_no, m.mem_nickname
+		from orders o 
+		    left outer join product p on o.ord_refno = p.pro_no
+		    left outer join member m on p.mem_id = m.mem_id
+		where o.ord_status ='Y'and o.ord_no=#{ordNo} and o.ord_refcode=1
+		order by o.ord_no desc
+	</select>
+	
+	<update id="deletePurAct">
+		update orders
+		set ord_status='N'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=0 and ord_refno=#{ordRefno}
+	</update>
+	
+	<update id="deletePurPro">
+		update orders
+		set ord_status='N'
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=1 and ord_refno=#{ordRefno}
+	</update>
 	
 	<!-- ajax 이미지 가져오는 쿼리 -->
 	<!-- <select id="selectDetailList" resultMap="orderResultSet">
@@ -90,7 +107,7 @@
 		    left outer join activity a on o.ord_refno = a.act_no
 		    left outer join member m on a.mem_id = m.mem_id
 		    left outer join image i on a.act_no = i.img_refno
-		where o.ord_status = 'Y' and o.ord_no = #{ordNo} and i.img_level=0
+		where o.ord_status='Y' and o.ord_no=#{ordNo} and i.img_level=0
 		order by o.ord_no desc
 	</select> -->
 	
@@ -98,9 +115,9 @@
 		select img_name, img_status
 		from (select *
 				from image
-				where img_level = 0 and img_refcode = 0 and img_refno = #{memNo}
+				where img_level=0 and img_refcode=0 and img_refno=#{memNo}
 				order by img_no desc)
-		where rownum = 1
+		where rownum=1
 	</select>
 	
 	<update id="deleteProfileImg">
@@ -108,25 +125,123 @@
 		set img_status='N'
 		where img_status='Y' and img_refcode=0 and img_refno=#{memNo}
 	</update>
-	
-	<!-- <select id="selectProfileImgN" resultMap="imageResultSet">
-		select img_status
-		from (select *
-				from image
-				where img_level = 0 and img_status = 'N' and img_refcode = 0 and img_refno = #{memNo}
-				order by img_no desc)
-		where rownum = 1
-	</select> -->
-	
+
 	<insert id="insertReview" useGeneratedKeys="true" keyProperty="revNo" keyColumn="REV_NO">
-		insert into review (REV_NO, MEM_ID, REV_RATING, REV_CONTENT, REV_DATE, REV_STATUS, REV_REFCODE, REV_REFNO, ORD_NO)
-		VALUES (seq_revid.nextval, #{memId}, #{revRating}, #{revContent}, sysdate, default, #{revRefcode}, #{revRefno}, #{ordNo})
+		insert into review (REV_NO, MEM_ID, REV_RATING, REV_LAST_RATING, REV_CONTENT, REV_DATE, REV_STATUS, REV_REFCODE, REV_REFNO, ORD_NO)
+		VALUES (seq_revid.nextval, #{memId}, #{revRating}, #{revRating}, #{revContent}, sysdate, default, #{revRefcode}, #{revRefno}, #{ordNo})
 	</insert>
 	
 	<update id="updateReviewStatus">
 		update orders
 		set ord_review='Y'
 		where ord_no=#{ordNo} and mem_id=#{memId} and ord_status='Y' and ord_refcode=#{revRefcode} and ord_refno=#{revRefno}
+	</update>
+	
+	<select id="getFavListCount" resultType="_int">
+		select count(*)
+		from favorite
+		where mem_id=#{memId} and fav_status='Y' and fav_refcode=#{favRefcode}
+	</select>
+	
+	<select id="selectFavActList" resultMap="favoriteResultSet">
+		select f.fav_no, f.mem_id, f.fav_date,
+		        a.act_no, a.act_title,
+                i.img_name, o.ord_pay
+		from favorite f
+		    left outer join activity a on f.fav_refno = a.act_no
+            left outer join image i on a.act_no = i.img_refno
+            left outer join orders o on i.img_refno = o.ord_refno
+		where f.fav_status='Y' and f.mem_id=#{memId} and f.fav_refcode=1 and i.img_level=0 and i.img_refcode=1 and o.ord_refcode=0 and o.mem_id=#{memId}
+		order by f.fav_no desc
+	</select>
+	
+	<select id="selectFavProList" resultMap="favoriteResultSet">
+		select f.fav_no, f.mem_id, f.fav_date,
+		        p.pro_no, p.pro_title,
+                i.img_name, o.ord_pay
+		from favorite f
+		    left outer join product p on f.fav_refno = p.pro_no
+            left outer join image i on p.pro_no = i.img_refno
+            left outer join orders o on i.img_refno = o.ord_refno
+		where f.fav_status='Y' and f.mem_id=#{memId} and f.fav_refcode=2 and i.img_level=0 and i.img_refcode=2 and o.ord_refcode=1 and o.mem_id=#{memId}
+		order by f.fav_no desc
+	</select>
+	
+	<select id="selectFavStarList" resultMap="favoriteResultSet">
+		select fs.fav_no, fs.fav_refno, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
+		from(select * from favorite
+				where fav_refcode = 0
+				and mem_id = #{memId}
+				and fav_status = 'Y'
+				and fav_refcode = 0) fs
+			left outer join member m on m.mem_no = fs.fav_refno
+			left outer join (select * from image 
+								where img_refcode = 0) i on m.mem_no = i.img_refno
+			order by fs.fav_no desc
+	</select>
+	
+	<update id="deleteFavAct">
+		update favorite
+		set fav_status='N'
+		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=1 and fav_refno=#{favRefno}
+	</update>
+	
+	<update id="deleteFavPro">
+		update favorite
+		set fav_status='N'
+		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=2 and fav_refno=#{favRefno}
+	</update>
+	
+	<update id="deleteFavStar">
+		update favorite
+		set fav_status='N'
+		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=0 and fav_refno=#{favRefno}
+	</update>
+	
+	<select id="getReviewListCount" resultType="_int">
+		select count(*)
+		from review
+		where rev_status='Y' and mem_id=#{memId} and rev_refcode=#{revRefcode}
+	</select>
+	
+	<select id="selectRevActList" resultMap="reviewResultSet">
+		<!-- select r.rev_no, r.mem_id, r.rev_rating, r.rev_content, r.rev_date,
+		        a.act_no, a.act_title,
+                i.img_name
+		from review r
+		    left outer join activity a on r.rev_refno = a.act_no
+            left outer join image i on r.rev_no = i.img_refno
+		where r.rev_status='Y' and r.mem_id=#{memId} and r.rev_refcode=0 and i.img_level=0 and i.img_refcode=3
+		order by r.rev_no desc -->
+		select ra.rev_no, ra.mem_id, ra.rev_rating, ra.rev_content, ra.rev_date,
+		        a.act_no, a.act_title,
+                i.img_name
+		from(select * from review where rev_status='Y' and mem_id=#{memId} and rev_refcode=0) ra
+			left outer join activity a on ra.rev_refno = a.act_no
+			left outer join (select * from image 
+							where img_refcode = 3 and img_level=0) i on ra.rev_no = i.img_refno
+			order by ra.rev_no desc
+	</select>
+	
+	<select id="selectRevActDetail" resultMap="reviewResultSet">
+		select r.rev_no, r.mem_id, r.rev_rating, r.rev_content, r.rev_date, r.rev_refcode, r.rev_refno, r.ord_no, r.rev_last_rating,
+		        a.act_no, a.act_title
+		from review r
+			left outer join activity a on r.rev_refno = a.act_no
+		where r.rev_no=#{revNo}
+	</select>
+	
+	<select id="selectRevDetailImg" resultMap="imageResultSet">
+		select img_name
+		from image
+		where img_refcode=3 and img_refno=#{revNo}
+		order by img_level asc
+	</select>
+	
+	<update id="updateRevAct">
+		update review
+		set rev_rating=#{revRating}, rev_last_rating=#{revRating}, rev_content=#{revContent}, rev_date=sysdate
+		where rev_no=#{revNo}
 	</update>
 	
 	<resultMap type="Order" id="orderResultSet">
@@ -149,7 +264,38 @@
 		<result property="ordRefno" column="ORD_REFNO"/>
 		<collection property="activity" resultMap="activityResultSet"/>
 		<collection property="member" resultMap="memberResultSet"/>
-		<collection property="image" resultMap="imageResultSet"/>
+		<collection property="img" resultMap="imageResultSet"/>
+		<collection property="product" resultMap="productResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Favorite" id="favoriteResultSet">
+	  	<id property="favNo" column="FAV_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="favDate" column="FAV_DATE"/>
+	  	<result property="favStatus" column="FAV_STATUS"/>
+	  	<result property="favRefcode" column="FAV_REFCODE"/>
+	  	<result property="favRefno" column="FAV_REFNO"/>
+	  	<collection property="img" resultMap="imageResultSet"/>
+	  	<collection property="member" resultMap="memberResultSet"/>
+	  	<collection property="activity" resultMap="activityResultSet"/>
+	  	<collection property="product" resultMap="productResultSet"/>
+	  	<collection property="order" resultMap="orderResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultSet">
+	  	<id property="revNo" column="REV_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="revRating" column="REV_RATING"/>
+	  	<result property="revLastRating" column="REV_LAST_RATING"/>
+	  	<result property="revContent" column="REV_CONTENT"/>
+	  	<result property="revDate" column="REV_DATE"/>
+	  	<result property="revStatus" column="REV_STATUS"/>
+	  	<result property="revRefcode" column="REV_REFCODE"/>
+	  	<result property="revRefno" column="REV_REFNO"/>
+	  	<result property="ordNo" column="ORD_NO"/>
+	  	<collection property="img" resultMap="imageResultSet"/>
+	  	<collection property="activity" resultMap="activityResultSet"/>
+	  	<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
 	<resultMap type="Activity" id="activityResultSet">
@@ -198,6 +344,23 @@
 	  	<result property="imgStatus" column="IMG_STATUS"/>
 	  	<result property="imgRefcode" column="IMG_REFCODE"/>
 	  	<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+	
+	<resultMap type="Product" id="productResultSet">
+	  	<id property="proNo" column="PRO_NO"/>
+	  	<result property="memId" column="MEM_ID"/>
+	  	<result property="proCharge" column="PRO_CHARGE"/>
+	  	<result property="proStock" column="PRO_STOCK"/>
+	  	<result property="proMaximum" column="PRO_MAXIMUM"/>
+	  	<result property="proCategory" column="PRO_CATEGORY"/>
+	  	<result property="proTitle" column="PRO_TITLE"/>
+	  	<result property="proPrice" column="PRO_PRICE"/>
+	  	<result property="proUrl" column="PRO_URL"/>
+	  	<result property="proContent" column="PRO_CONTENT"/>
+	  	<result property="proGuide" column="PRO_GUIDE"/>
+	  	<result property="proCount" column="PRO_COUNT"/>
+	  	<result property="proDate" column="PRO_DATE"/>
+	  	<result property="proStatus" column="PRO_STATUS"/>
 	</resultMap>
 	
 </mapper>

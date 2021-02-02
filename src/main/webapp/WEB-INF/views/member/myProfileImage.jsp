@@ -39,23 +39,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
 	.profileDiv {
-		display: inline-block;
-		width: 150px;
-		height: 150px;
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
 		border: 2px solid gray;
+		background: black;
 	}
 	.profileImg {
-		width: 170px;
+		position: absolute;
+		margin: auto;
+		width: 146px;
 		height: auto;
-		margin-left: -10px;
-		object-fit: cover;
+		left: -100%;
+		right: -100%;
+		top: -100%;
+		bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -95,14 +104,38 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -129,22 +162,20 @@
 	
 /* 컨텐츠 */
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
-		height: 40px;
-		width: 100px;
+		width: 80px;
 		padding: 5px;
+		padding-bottom: 2px;
 		border: 1px solid #C4C4C4;
 		background: white;
-		color: #747474;
 		font-family: "Gmarket Sans TTF";
-		font-size: 16px;
-		cursor:pointer;
+		cursor: pointer;
 		outline: 0;
 	}
 	.button:hover {
@@ -194,7 +225,7 @@
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 	}
 </style>
@@ -218,18 +249,9 @@
 							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 	    				</c:if>
     				</c:if>
-    				<%-- <c:if test="${ img.size() != 0 }">
-	    				<c:forEach var="i" items="${ img }">
-		    					<c:if test="${ i.imgStatus == 'Y' }">
-									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
-			    				</c:if>
-			    				<c:if test="${ i.imgStatus == 'N' }">
-									<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-			    				</c:if>
-	    				</c:forEach>
-	    			</c:if> --%>
     			</div>
-				<p class="nickname"> <c:out value="${ loginUser.memName } (${ loginUser.memNickname }) 님"/> </p>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -276,6 +298,31 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -299,21 +346,8 @@
 				<form action="profileImgInsert.me" method="post" enctype="Multipart/form-data">
 					<table>
 						<tr>
-							<td colspan="3">
+							<td colspan="4">
 								<div class="profileDiv">
-				    				<%-- <c:if test="${ img.size() == 0 }">
-										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-				    				</c:if>
-					    			<c:if test="${ img.size() != 0 }">
-					    				<c:forEach var="i" items="${ img }">
-						    					<c:if test="${ i.imgStatus == 'Y' }">
-													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
-							    				</c:if>
-							    				<c:if test="${ i.imgStatus == 'N' }">
-													<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
-							    				</c:if>
-					    				</c:forEach>
-					    			</c:if> --%>
 					    			<c:if test="${ empty img }">
 										<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 				    				</c:if>
@@ -329,6 +363,9 @@
 							</td>
 						</tr>
 						<tr>
+							<td>
+								<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
+							</td>
 							<td>
 								<button type="button" class="button" id="imgDeleteBtn">사진 삭제</button>
 							</td>
@@ -353,11 +390,10 @@
 	
 	<script>
 		$("#imgDeleteBtn").click(function() { // 
-			/* $(".profileImg").attr("src", "${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png"); */
 			var bool = confirm("정말 프로필 사진을 삭제하시겠습니까?")
 			
 			if(bool) {
-				location.href='profileImgDeleteView.me';
+				location.href='profileImgDelete.me';
 			}
 		});
 	</script>

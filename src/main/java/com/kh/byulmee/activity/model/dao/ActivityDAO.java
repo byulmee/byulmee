@@ -96,4 +96,8 @@ public class ActivityDAO {
 	public ArrayList<Activity> getNearEndDateActList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("activityMapper.getNearEndDateActList");
 	}
+	
+	public int updateActRatingCnt(SqlSessionTemplate sqlSession, Activity a) {
+		return sqlSession.update("activityMapper.updateActRatingCnt", a);
+	}
 }

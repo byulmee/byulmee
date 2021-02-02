@@ -39,4 +39,6 @@ public interface ActivityService {
 	ArrayList<Activity> getPopularActList();
 
 	ArrayList<Activity> getNearEndDateActList();
+
+int updateActRatingCnt(Activity a);
 }
