@@ -896,5 +896,16 @@
 			console.log(imgName3);
 		});
 	</script>
+	
+	<script>
+		$("#reviewImgDel1").click(function() {
+			if($("#reviewImgDelDiv2").css("display") == ("none") || $("#reviewImgDelDiv3").css("display") == ("none")) {
+				alert("두 번째, 세 번째 사진을 먼저 삭제해주세요.");
+		});
+		
+		$("#reviewImgDel2").click(function() {
+				alert("세 번째 사진을 사진을 먼저 삭제해주세요.");
+		});
+	</script>
 </body>
 </html>
