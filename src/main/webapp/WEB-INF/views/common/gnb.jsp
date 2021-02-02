@@ -37,17 +37,17 @@
 			           	</c:if>
                 </c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
-                <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
+                <li class="menu-list-item" onclick="location.href='productList.pd'"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
             </ul>
         </div>
         <div id="gnb-cate">
             <ul id="cate">
-                <li class="cate act" onclick="location.href='#">액티비티</li>
-                <li class="cate liv" onclick="location.href='#">리빙</li>
-                <li class="cate bea" onclick="location.href='#">건강/미용</li>
-                <li class="cate hel" onclick="location.href='#">힐링</li>
-                <li class="cate fod" onclick="location.href='#">푸드</li>
-                <li class="cate cur" onclick="location.href='#">커리어</li>
+               	<li class="cate act" onclick="location.href='aList.ac?actCategory=0'">액티비티</li>
+                <li class="cate liv" onclick="location.href='aList.ac?actCategory=1'">리빙</li>
+                <li class="cate bea" onclick="location.href='aList.ac?actCategory=2'">건강/미용</li>
+                <li class="cate hel" onclick="location.href='aList.ac?actCategory=3'">힐링</li>
+                <li class="cate fod" onclick="location.href='aList.ac?actCategory=4'">푸드</li>
+                <li class="cate cur" onclick="location.href='aList.ac?actCategory=5'">커리어</li>
             </ul>
         </div>
     </nav>

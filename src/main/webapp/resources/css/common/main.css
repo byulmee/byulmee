@@ -14,10 +14,11 @@
 }
 
 #ban {
+	margin: 1.7rem 0;
     width: 100vw;
-    height: 7vh;
+    height: 50px;
     background-color: #ECECEC;
-    display: none;
+    /* display: none; */
 }
 
 .ban-img {
@@ -50,7 +51,7 @@
 #searchBox{
     width: 60vw;
     max-width: 580px;
-    padding: 0.6rem;
+    padding: 0.4rem;
     border-radius: 20px;
     overflow: hidden;
     background: #FAFAFA;
@@ -60,6 +61,7 @@
 
 #searchBar{
     width: 95%;
+    height: 1.5em;
     font-family: 'GmarketSansLight';
     font-size: 1rem;
     border: none;

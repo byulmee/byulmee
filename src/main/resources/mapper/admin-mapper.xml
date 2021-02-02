@@ -63,6 +63,13 @@
 	  	from banner
 	</select>
 
+	<select id="selectMainBannerList" resultMap="bannerResultSet">
+		select *
+		from banner
+		where ban_status='Y'
+		order by ban_no desc
+	</select>
+	
 	<select id="selectBannerList" resultMap="bannerResultSet">
 		select *
 		from banner

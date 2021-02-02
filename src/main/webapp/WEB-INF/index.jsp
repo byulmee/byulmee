@@ -17,11 +17,7 @@
 <script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- 배너 이미지가 있을 경우, #bam의 display:nonel;속성값 제거-->
-    <section id="ban">
-        <img class="ban-img" onerror="this.style.display='none'" src="#"  alt="배너 영역">
-    </section>
-
+	
     <nav id="gnb">
         <div id="gnb-menu">
             <img src="resources/images/common/logo.png" id="home-logo" alt="별난취미_별미" onclick="location.href='home.do'">
@@ -47,29 +43,29 @@
                 <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기"><i class="fas fa-search"></i>
             </div>
             <ul id="cate">
-                <li class="cate act" onclick="location.href='activityList.ac'">
+                <li class="cate act" onclick="location.href='activityList.ac?actCategory=0'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
-                <li class="cate liv">
+                <li class="cate liv" onclick="location.href='activityList.ac?actCategory=1'">
                     <i class="fas fa-chair"></i><br><span class="cate-name">리빙</span>
                 </li>
-                <li class="cate bea">
+                <li class="cate bea" onclick="location.href='activityList.ac?actCategory=2'">
                     <i class="fas fa-spray-can"></i><br><span class="cate-name">건강/미용</span>
                 </li>
-                <li class="cate hel">
+                <li class="cate hel" onclick="location.href='activityList.ac?actCategory=3'">
                     <i class="fas fa-heartbeat"></i><br><span class="cate-name">힐링</span>
                 </li>
-                <li class="cate fod">
+                <li class="cate fod" onclick="location.href='activityList.ac?actCategory=4'">
                     <i class="fas fa-utensils"></i><br><span class="cate-name">푸드</span>
                 </li>
-                <li class="cate cur">
+                <li class="cate cur" onclick="location.href='activityList.ac?actCategory=5'">
                     <i class="fas fa-laptop"></i><br><span class="cate-name">커리어</span>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-----------------------추천 영역=--------------------->
+    <!-----------------------추천 영역--------------------->
 	    <div class="rec-top">
 	        <div class="rec-title">이번주 핫한 별미</div>
 	        <div class="rec-top-divider1">
@@ -82,6 +78,10 @@
 	        </ul>
 	    </div>
 	
+	    <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
+	    <section id="ban">
+	        <img class="ban-img" src="#"  alt="배너 영역">
+	    </section>
 		
 	    <div class="rec-top">
 	        <div class="rec-title">마감일 임박 별미</div>
@@ -94,7 +94,6 @@
 	        <ul class="list nedAct">
 	        </ul>
 	    </div>
-	
 	
 	    <div class="rec-top">
 	        <div class="rec-title">플리마켓 인기상품</div>

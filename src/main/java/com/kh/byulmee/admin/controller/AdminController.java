@@ -130,6 +130,7 @@ public class AdminController {
 
 
 	}
+	
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
 			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl,

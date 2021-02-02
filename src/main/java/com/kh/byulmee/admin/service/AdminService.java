@@ -43,7 +43,6 @@ public interface AdminService {
 
 	void updateAdminBannerOpenById(Map param);
 
-
-
+	ArrayList<Banner> selectBannerList();
 
 }
