@@ -49,11 +49,11 @@ public class ActivityController {
 	private ReviewService rvService;
 
 	
-	@RequestMapping("activityList.ac")
-	public String activityListView() {
-		return "activityList";
-	}
-	
+//	@RequestMapping("activityList.ac")
+//	public String activityListView() {
+//		return "activityList";
+//	}
+//	
 	@RequestMapping("activityDetail.ac")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
 		
@@ -254,35 +254,29 @@ public class ActivityController {
 
 	@RequestMapping("alist.ac")         
     public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
-                     // (value="page", required=false) --> page��� ���� ���� ���� �ְ� ���� ���� ����
+                     
 		int currentPage = 1;
-		  if(page != null) {
+		if(page != null) {
 		     currentPage = page;
-		  }
+		}
 		  
-		  int listCount = aService.getListCount();
+		int listCount = aService.getActBoardListCount();
 		  
 		  
 		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		  
 		  ArrayList<Activity> list = aService.selectList(pi);
-
-		  list.add(new Activity());
-		  list.add(new Activity());
-		  list.add(new Activity());
-		  list.add(new Activity());
-		  list.add(new Activity());
-		  
+  
 		  System.out.println("list == > " + list);
 		  System.out.println("list.size 1== > " + list.size());
 		  
-		  if(list == null) {
+		  if(list != null) {
+			 model.addAttribute("list", list);
+			 model.addAttribute("pi", pi);
+			 System.out.println("list.size 2== > " + list.size());
+			 return "activityList";
+		  } else {
 			  throw new ActivityException("조회에 실패하였습니다.");
 		  }
-	  
-		 model.addAttribute("list", list);
-		 model.addAttribute("pi", pi);
-		 System.out.println("list.size 2== > " + list.size());
-		 return "activityList";
 	}
 }

@@ -64,5 +64,16 @@ public class OrderServiceImpl implements OrderService {
 	public int updateOrder(Order o) {
 		return odDAO.updateOrder(sqlSession, o);
 	}
+
+	@Override
+	public int insertPayOrder(Order o) {
+		int ordNo = odDAO.insertPayOrder(sqlSession, o);
+		return ordNo;
+	}
+
+	@Override
+	public Order selectPayOrder(int ordNo) {
+		return odDAO.selectPayOrder(sqlSession, ordNo);
+	}
 	
 }

@@ -2,9 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%
-    Activity activity = (Activity)request.getAttribute("activity");
-    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +58,10 @@ ul li{
 
 <body onload="init();">   
      <div>
+     	<input type="hidden" value="${ a.actNo }" id="acId" name="acId">
+         <input type="hidden" value="${ m.memNo }" id="memNo" name="memNo">
+         <input type="hidden" value="${ o.ordCount }" id="ordCount" name="ordCount">
+           <input type="hidden" value="${ o.ordPay }" id="ordPay" name="ordPay">
          <h2 align="left" style="padding: 10px;">결제</h2>
          <div id="alldiv" style="width: 500px;">
          <div id=paymentmtd style="padding: 10px; width: 600px;">
@@ -96,7 +97,7 @@ ul li{
              <option value="NH">농협카드  예금주:별난취미 계좌번호: 100-20-30-4000-50</option>
              </select>
          
-             <input style="background: #d3d3d3; width: 100px; height: 34px; margin-left: 10px;" type="text" value ="${loginUser.m_name}" readonly="readonly">
+             <input style="background: #d3d3d3; width: 100px; height: 34px; margin-left: 10px;" type="text" value ="${a.actNo }" readonly="readonly">
 		</div>            
             <div style="margin-top:10px;";>
                <span style="font-weight: bold;">가상 계좌 안내 :</span><span id="Account" style="color: red;"></span> 
@@ -174,9 +175,11 @@ $(document).ready(function(){
 		}, function (rsp) { // callback
 		  console.log("응답 :: " + JSON.stringify(rsp))
 		  if (rsp.success) {
-			  var acId = $(this).parent().children('.personal-info-check').children('.acId').val();
-				var memNo = $(this).parent().children('.personal-info-check').children('.memNo').val();
-				location.href = "payment-success.py?acId=" + acId + "&memNo=" + memNo;
+			  var acId = $('#acId').val();
+				var memNo = $('#memNo').val();
+				var ordCount = $('#ordCount').val();
+				var ordPay = $('#ordPay').val()
+				location.href = "payment-success.pt?acId=" + acId + "&memNo=" + memNo + '&ordCount=' + ordCount + '&ordPay=' + ordPay;
 		  } else {
 			  if(rsp.error_msg){
 				alert(rsp.error_msg);

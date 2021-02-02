@@ -105,12 +105,12 @@ public class ActivityDAO {
 		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList) sqlSession.selectList("activityMapper.selectList",pi,rowBounds);
+		return (ArrayList) sqlSession.selectList("activityMapper.selectActBoardList",pi,rowBounds);
 		
 	}
 	
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("activityMapper.getListCount");		
+	public int getActBoardListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("activityMapper.getActBoardListCount");		
 	}
 	
 }
