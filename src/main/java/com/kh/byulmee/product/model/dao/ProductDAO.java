@@ -23,11 +23,11 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.getListCount");
 	}
 
-	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("productMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("productMapper.selectList", memId, rowBounds);
 	}
 
 	public Product selectPro(SqlSessionTemplate sqlSession, int proNo) {
@@ -50,6 +50,17 @@ public class ProductDAO {
 		return sqlSession.update("productMapper.updateProduct", p);
 	}
 
+	public int getUserListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("productMapper.getUserListCount", memId);
+	}
+
+	public ArrayList<Product> selectUserList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("productMapper.selectUserList", memId, rowBounds);
+  }
+  
 	public int geProSearchListCount(SqlSessionTemplate sqlSession, String[] keywords) {
 		return sqlSession.selectOne("productMapper.getProSearchListCount", keywords);
 	}
@@ -71,6 +82,10 @@ public class ProductDAO {
 
 	public int selectOrderSum(SqlSessionTemplate sqlSession, int pdId) {
 		return sqlSession.selectOne("productMapper.selectOrderSum", pdId);
+	}
+	
+	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
 	}
 
 }

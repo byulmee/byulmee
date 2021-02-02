@@ -1,12 +1,17 @@
 package com.kh.byulmee.main.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.byulmee.activity.model.exception.ActivityException;
@@ -15,8 +20,10 @@ import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
+import com.kh.byulmee.main.model.exception.MainException;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.product.model.service.ProductService;
+import com.kh.byulmee.product.model.vo.Product;
 
 @Controller
 public class MainCotroller {
@@ -85,7 +92,11 @@ public class MainCotroller {
 	}
 
 	@RequestMapping("searchPro.do")
-	public ModelAndView getProSearchResult(@RequestParam(value="page", required=false) Integer page, @RequestParam("keyword") String keyword, ModelAndView mv) {
+	public ModelAndView getProSearchResult(@RequestParam(value="page", required=false) Integer page, @RequestParam("keyword") String keyword, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json");
+		
 		//키워드 정제
 		String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
         keyword = keyword.replaceAll(match, "");
@@ -124,6 +135,25 @@ public class MainCotroller {
 			return mv;
 		} else {
 			throw new ActivityException("검색 결과 조회에 실패했습니다.\n오류가 지속되면 관리자에게 문의해주세요.");
+		}
+	}
+	
+	@RequestMapping("loadMainPopAct.do")
+	@ResponseBody
+	public Map loadMainView() {
+		ArrayList<Activity> popularActList = aService.getPopularActList();
+		ArrayList<Activity> nearEndDateActList = aService.getNearEndDateActList();
+		ArrayList<Product> popularProList = pService.getPopularProList();
+		
+		if(popularActList != null && nearEndDateActList != null && popularProList != null) {
+			Map<String, Object> result = new HashMap<>();
+			result.put("popularActList", popularActList);
+			result.put("nearEndDateActList", nearEndDateActList);
+			result.put("popularProList", popularProList);
+		
+		return result;
+		} else {
+			throw new MainException("페이지를 불러올 수 없습니다.\n잠시후에 다시 시도해주세요.");
 		}
 	}
 }

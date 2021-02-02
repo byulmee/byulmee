@@ -253,6 +253,11 @@ input.checkbox:checked + label.input-label.radio::before {
 	border-radius: 25px;	
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 </head>
 <body>
@@ -333,11 +338,11 @@ input.checkbox:checked + label.input-label.radio::before {
 				<div class="inputText">
 					제목&nbsp;&nbsp;<input type="text" name="actTitle" class="inputValue" id="inputTitle" value="${ activity.actTitle }"><br> 
 					연락처&nbsp;&nbsp;<input type="text" name="actPhone" class="inputValue" id="inputTitle" value="${ activity.actPhone }"><br>
-					활동비&nbsp;&nbsp;<input type="text" name="actPrice" class="inputValue"	id="inputTitle" value="${ activity.actPrice }"><br> 
+					활동비&nbsp;&nbsp;<input type="number" name="actPrice" class="inputValue"	id="inputTitle" value="${ activity.actPrice }"><br> 
 					활동기간&nbsp;&nbsp;<input	type="text" name="actStartday" class="inputTime" id="inputTitle" placeholder="2020-11-30" value="${ activity.actStartday }"> -&nbsp;&nbsp;
 					<input type="text" name="actEndday" class="inputTime" id="inputTitle" placeholder="2020-11-30" value="${ activity.actEndday }"><br> 
 					활동 장소&nbsp;&nbsp;<input type="text" name="actPlace" class="inputValue" id="inputTitle" value="${ activity.actPlace }"><br>
-					참여 가능 인원&nbsp;&nbsp;<input type="text" name="actPeople" class="inputValue" id="inputTitle" value="${ activity.actPeople }"><br> 
+					참여 가능 인원&nbsp;&nbsp;<input type="number" name="actPeople" class="inputValue" id="inputTitle" value="${ activity.actPeople }"><br> 
 					신청 마감일&nbsp;&nbsp;<input type="text" name="actRequestend" class="inputValue" id="inputTitle" value="${ activity.actRequestend }"><br> 
 					관련 상품 링크&nbsp;&nbsp;<input type="text" name="actUrl" class="inputValue" id="inputTitle" placeholder="http://" value="${ activity.actUrl }">
 				</div>

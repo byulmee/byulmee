@@ -56,6 +56,22 @@
  	where not_no = #{notNo}
  </update>
  
+ <select id="getSearchNoticeListCount" resultType="_int">
+ 	select count(*)
+ 	from notice
+ 		 join member using(mem_id)
+ 	where not_status = 'Y' and not_title like '%' || #{value} || '%'
+ </select>
+ 
+ <select id="selectSearchNoticeList" resultMap="noticeResultSet">
+ 	select *
+ 	from notice
+ 		 join member using(mem_id)
+ 	where not_status = 'Y' and not_title like '%' || #{value} || '%'
+ 	order by not_no desc
+ </select>
+ 
+ 
  <!-- QnA -->
  <select id="getQnAListCount" resultType="_int">
    	select count(*)
@@ -81,5 +97,70 @@
 	<result property="cusqnaDate" column="CUSQNA_DATE"/>
 	<result property="cusqnaStatus" column="CUSQNA_STATUS"/>
  </resultMap>
+
+ <insert id="insertCusQna">
+ 	insert into customer_qna
+ 	values(seq_cusqnaid.nextval, #{memId}, #{cusqnaTitle}, #{cusqnaCategory}, #{cusqnaContent}, default, sysdate, default)
+ </insert>
+
+ <update id="updateCusCount">
+ 	update customer_qna
+ 	set cusqna_count = cusqna_count + 1
+ 	where cusqna_no = #{cusqnaNo}
+ </update>
+
+ <select id="selectCusQnA" resultMap="cusQnAResultSet">
+ 	select *
+ 	from customer_qna
+ 	     join member using(mem_id)
+ 	where cusqna_no = #{cusqnaNo} and cusqna_status = 'Y'
+ </select>
+
+ <update id="updateCusQna">
+ 	update customer_qna
+ 	set cusqna_title = #{cusqnaTitle}, cusqna_category = #{cusqnaCategory}, cusqna_content = #{cusqnaContent}, cusqna_date = sysdate
+ 	where cusqna_no = #{cusqnaNo}
+ </update>
+
+ <update id="cusQnaDelete">
+ 	update customer_qna
+ 	set cusqna_status = 'N'
+ 	where cusqna_no = #{cusqnaNo}
+ </update>
+
+ <select id="getSearchCusListCount" resultType="_int">
+ 	select count(*)
+ 	from customer_qna
+ 		 join member using(mem_id)
+ 	where cusqna_status = 'Y'
+ 	<if test="writer != null">
+ 		and mem_nickname = #{writer}
+ 	</if>
+ 	<if test="title != null">
+ 		and cusqna_title like '%' || #{title} || '%'
+ 	</if>
+ 	<if test="category != null">
+ 		and cusqna_category = #{category}
+ 	</if>
+ </select>
+ 
+ <select id="selectSearchCusQnAList" resultMap="cusQnAResultSet">
+ 	select *
+ 	from customer_qna
+ 		 join member using(mem_id)
+ 	where cusqna_status = 'Y'
+ 	<choose>
+ 		<when test="writer != null">
+ 			and mem_nickname like '%' || #{writer} || '%'
+ 		</when>
+ 		<when test="title != null">
+ 			and cusqna_title like '%' || #{title} || '%'
+ 		</when>
+ 		<when test="category != null">
+ 			and cusqna_category = #{category}
+ 		</when>
+ 	</choose>
+ 	order by cusqna_no desc
+ </select>
 
 </mapper>

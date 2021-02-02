@@ -19,6 +19,17 @@ public class FavoriteDAO {
 	public int insertProductFavorite(SqlSessionTemplate sqlSession, Favorite fv) {
 		return sqlSession.insert("favoriteMapper.insertProductFavorite", fv);
 	}
-	
+
+	public int selectStarFavorite(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.selectOne("favoriteMapper.selectStarFavorite", f);
+	}
+
+	public int starFavInsert(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.insert("favoriteMapper.starFavInsert", f);
+	}
+
+	public int starFavDelete(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("favoriteMapper.starFavDelete", f);
+	}
 
 }

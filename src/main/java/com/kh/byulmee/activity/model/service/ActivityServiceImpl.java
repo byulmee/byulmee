@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.dao.ActivityDAO;
 import com.kh.byulmee.activity.model.vo.Activity;
-
 import com.kh.byulmee.board.model.vo.PageInfo;
-
-import com.kh.byulmee.member.model.vo.Member;
 
 
 @Service("aService")
@@ -41,17 +38,15 @@ public class ActivityServiceImpl implements ActivityService {
 		return ac;
 	}
 
-
-
 	@Override
-	public int getListCount() {
-		return aDAO.getListCount(sqlSession);
+	public int getListCount(String memId) {
+		return aDAO.getListCount(sqlSession, memId);
 	}
 
 	@Override
-	public ArrayList<Activity> selectList(PageInfo pi) {
+	public ArrayList<Activity> selectList(String memId, PageInfo pi) {
 		
-		return aDAO.selectList(sqlSession, pi);
+		return aDAO.selectList(sqlSession, memId, pi);
 	}
 
 	@Override
@@ -97,6 +92,26 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public int selectOrderSum(int acId) {
 		return aDAO.selectOrderSum(sqlSession, acId);
+	}
+	
+	@Override
+	public ArrayList<Activity> getPopularActList() {
+		return aDAO.getPopularActList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Activity> getNearEndDateActList() {
+		return aDAO.getNearEndDateActList(sqlSession);
+	}
+
+	@Override
+	public int getUserListCount(String memId) {
+		return aDAO.getUserListCount(sqlSession, memId);
+	}
+
+	@Override
+	public ArrayList<Activity> selectUserList(String memId, PageInfo pi) {
+		return aDAO.selectUserList(sqlSession, memId, pi);
 	}
 
 }

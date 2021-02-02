@@ -20,6 +20,7 @@
 		<typeAlias type="com.kh.byulmee.reply.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.byulmee.review.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.kh.byulmee.image.model.vo.Image" alias="Image"/>
+
 	</typeAliases>
 	
 	<mappers>
@@ -34,6 +35,7 @@
 		<mapper resource="mapper/reply-mapper.xml"/>
 		<mapper resource="mapper/review-mapper.xml"/>
 		<mapper resource="mapper/mypage-mapper.xml"/>
-
+		<mapper resource="mapper/order-mapper.xml"/>
+		<mapper resource="mapper/admin-mapper.xml"/> 
 	</mappers>
 </configuration>

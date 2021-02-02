@@ -50,10 +50,26 @@ $(document).ready(function(){
 	 
     var select = $('.select-script select');
     select.change(function(){
-        var select_name = $(this).children('option:selected').text();
+         var select_name = $(this).children('option:selected').text();
         $(this).siblings("label").text(select_name);
+        console.log(select_name);
+        if(select_name == "배송"){
+			$('#cusqnaCategory').val("0");
+        } else if(select_name == "환불/반품") {
+        	$('#cusqnaCategory').val("1");
+        } else if(select_name == "주문/결제") {
+        	$('#cusqnaCategory').val("2");
+        } else if(select_name == "상품정보") {
+        	$('#cusqnaCategory').val("3");
+        } else if(select_name == "마이페이지") {
+        	$('#cusqnaCategory').val("4");
+        } else if(select_name == "기타") {
+        	$('#cusqnaCategory').val("5");
+        } else {
+        	$('#cusqnaCategory').val("6");
+        } 
     });
- 
+ 	
 });
 </script>
 </head>
@@ -63,11 +79,13 @@ $(document).ready(function(){
 		<h2 align="center" style="padding-top: 15px; font-weight: bold">QnA
 			등록</h2>
 		<hr>
-		<form>
+		<form action="cusQnaInsert.bo" method="post">
 			<div class="form-group row">
+				<input type="hidden" name="memId" value="${ loginUser.memId }">
+				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
-					<input type="text" name="title" class="form-control"
+					<input type="text" name="cusqnaTitle" class="form-control"
 						id="inputTitle">
 				</div>
 			</div>
@@ -81,7 +99,7 @@ $(document).ready(function(){
         						<option>배송</option>
 						        <option>환불/반품</option>
 						        <option>주문/결제</option>
-						        <option>상품 정보</option>
+						        <option>상품정보</option>
 						        <option>마이페이지</option>
 						        <option>기타</option>
 						        <option>신고</option>
@@ -92,7 +110,7 @@ $(document).ready(function(){
 			<div class="form-group row">
 				<label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
 				<div class="col-sm-10">
-					<textarea type="text" name="content" class="form-control"
+					<textarea type="text" name="cusqnaContent" class="form-control"
 						id="inputContent" style="height: 400px"></textarea>
 				</div>
 			</div>

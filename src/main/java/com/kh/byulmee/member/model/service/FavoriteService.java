@@ -10,4 +10,12 @@ public interface FavoriteService {
 
 	int insertProductFavorite(Favorite fv);
 
+	int selectStarFavorite(Favorite f);
+
+	int starFavInsert(Favorite f);
+
+	int starFavDelete(Favorite f);
+
+
+
 }

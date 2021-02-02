@@ -5,10 +5,59 @@
 		<id property="repNo" column="REP_NO"/>
 		<result property="memId" column="MEM_ID"/>
 		<result property="repContent" column="REP_CONTENT"/>
+		<result property="nickName" column="MEM_NICKNAME"/>
 		<result property="repDate" column="REP_DATE"/>
 		<result property="repStatus" column="REP_STATUS"/>
 		<result property="repRefcode" column="REP_REFCODE"/>
 		<result property="repRefno" column="REP_REFNO"/>
 	</resultMap>
+
+	<select id="selectQnaReply" resultMap="replyResultSet">
+		select *
+		from reply
+		where rep_refcode = 1 and rep_refno = #{qnaNo} and rep_status = 'Y'
+	</select>
 	
+	<select id="selectCusQnaReply" resultMap="replyResultSet">
+		select *
+		from reply
+			join member using(mem_id)
+		where rep_refcode = #{repRefcode} and rep_refno = #{repRefno} and rep_status = 'Y'
+	</select>
+	
+	<insert id="cusReplyInsert">
+		insert into reply
+		values(seq_repid.nextval, #{memId}, #{repContent}, sysdate, default, #{repRefcode}, #{repRefno})
+	</insert>
+	
+	<update id="updateCusReply">
+		update reply
+		set rep_content = #{repContent}, rep_date = sysdate
+		where rep_refcode = #{repRefcode} and rep_refno = #{repRefno}
+	</update>
+	
+	<update id="deleteCusReply">
+		update reply
+		set rep_status = 'N'
+		where rep_no = #{repNo}
+	</update>
+	
+	<select id="selectSalQna" resultMap="replyResultSet">
+		select *
+		from reply
+			join member using(mem_id)
+		where rep_refcode = #{repRefcode} and rep_refno = #{repRefno} and rep_status = 'Y'
+	</select>
+	
+	 <update id="updateSalReply">
+	 	update reply
+	 	set rep_content = #{repContent}, rep_date = sysdate
+	 	where rep_no = #{repNo}
+	 </update>
+	 
+	 <update id="deleteSalReply">
+	 	update reply
+	 	set rep_status = 'N'
+	 	where rep_no = #{repNo}
+	 </update>
 </mapper>

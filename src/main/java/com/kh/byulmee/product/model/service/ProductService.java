@@ -12,7 +12,7 @@ public interface ProductService {
 
 	int getListCount();
 
-	ArrayList<Product> selectList(PageInfo pi);
+	ArrayList<Product> selectList(PageInfo pi, String memId);
 
 	Product selectPro(int proNo);
 
@@ -24,6 +24,10 @@ public interface ProductService {
 
 	int updateProduct(Product p);
 
+	int getUserListCount(String memId);
+
+	ArrayList<Product> selectUserList(String memId, PageInfo pi);
+  
 	int getProSearchListCount(String[] keywords);
 
 	ArrayList<Activity> getProSearchResult(PageInfo proListPi, String[] keywords);
@@ -32,4 +36,5 @@ public interface ProductService {
 
 	int selectOrderSum(int pdId);
 
+	ArrayList<Product> getPopularProList();
 }
