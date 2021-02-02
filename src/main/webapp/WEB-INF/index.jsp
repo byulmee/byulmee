@@ -66,48 +66,48 @@
     </nav>
 
     <!-----------------------추천 영역--------------------->
-	    <div class="rec-top">
-	        <div class="rec-title">이번주 핫한 별미</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-   	 		</div>
-   	 	</div>
+    <div class="rec-top">
+        <div class="rec-title">이번주 핫한 별미</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+  	 		</div>
+  	 	</div>
+
+    <div class="rec-list">
+        <ul class="list popAct" id="popularActList">
+        </ul>
+    </div>
+
+    <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
+    <section id="ban">
+        <img class="ban-img" src="#"  alt="배너 영역">
+    </section>
 	
-	    <div class="rec-list">
-	        <ul class="list popAct" id="popularActList">
-	        </ul>
-	    </div>
-	
-	    <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
-	    <section id="ban">
-	        <img class="ban-img" src="#"  alt="배너 영역">
-	    </section>
-		
-	    <div class="rec-top">
-	        <div class="rec-title">마감일 임박 별미</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-	        </div>
-	    </div>
-	
-	    <div class="rec-list" id="nearEndDateActList">
-	        <ul class="list nedAct">
-	        </ul>
-	    </div>
-	
-	    <div class="rec-top">
-	        <div class="rec-title">플리마켓 인기상품</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-	        </div>
-	    </div>
-	
-	    <div class="rec-list last">
-	        <ul class="list popPro" id="popularProduct">
-	        </ul>
-	    </div>
+    <div class="rec-list">
+        <div class="rec-title">마감일 임박 별미</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+        </div>
+    </div>
+
+    <div class="rec-list">
+        <ul class="list nedAct" id="nearEndDateActList">
+        </ul>
+    </div>
+
+    <div class="rec-top">
+        <div class="rec-title">별미마켓 인기상품</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+        </div>
+    </div>
+
+    <div class="rec-list last">
+        <ul class="list popPro" id="popularProduct">
+        </ul>
+    </div>
 	    
-	    <c:import url="views/common/footer.jsp"/>
-	    <script type="text/javascript" src="../resources/js/common/main.js"> </script>
+    <c:import url="views/common/footer.jsp"/>
+    <script type="text/javascript" src="../resources/js/common/main.js"> </script>
 </body>
 </html>

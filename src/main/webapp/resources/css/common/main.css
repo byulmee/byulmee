@@ -14,9 +14,10 @@
 }
 
 #ban {
-	margin: 1.7rem 0;
-    width: 100vw;
-    height: 50px;
+	margin: 1.8rem auto;
+    max-width: 1050px;
+    width: 80vw;
+    height: 80px;
     background-color: #ECECEC;
     /* display: none; */
 }
@@ -120,7 +121,7 @@
 }
 
 .strong {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 #gnb-cate li>i{
@@ -151,6 +152,7 @@ hr{
     }
 
     .rec-title {
+    	font-size: 1.3rem;
         text-align: center;
         color: #313131;
         position: relative;
@@ -179,8 +181,6 @@ hr{
     }
 
     .list{
-        display: flex;
-        justify-content: space-between;
         white-space: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
@@ -189,10 +189,9 @@ hr{
     .list-item {
         width: 170px;
         display: inline-block;
-        font-size: 0.6rem;
         margin-right: 1.2rem;
     }
-
+	
     .item5 {
         margin-right: 0;
     }
@@ -203,7 +202,7 @@ hr{
         line-height: 1.2rem;
         font-family: 'GmarketSansLight';
     }
-
+	
     .list-cate {
         white-space: nowrap;
         overflow: hidden;
@@ -218,6 +217,7 @@ hr{
         object-fit: cover;
         overflow:hidden;
 	}
+	
     .list-item img{
     	transition: transform 1s;
         overflow:hidden;
@@ -235,20 +235,25 @@ hr{
     }
 
     .list-item span:nth-of-type(1){
+    	margin-top: 5px;
         color: #9E9E9E;
-        font-size: 0.2rem;
-        font-weight: 500;
+        font-size: 0.8rem;
+        font-weight: 900;
     }
-
+	
+	.list-cate {
+		font-size: 1rem;
+	}
+	   
     .list-item span:nth-of-type(2){
         font-family: 'GmarketSansMidium';
-        font-size: 0.7rem;
-        font-weight: 700;
+        font-size: 0.9rem;
+        font-weight: 600;
     }
 
     .list-item span:nth-of-type(3){
         color: #9E9E9E;
-        font-size: 0.4rem;
+        font-size: 0.7rem;
     }
     .fa-receipt {
         font-size: 0.8rem;
@@ -263,6 +268,10 @@ hr{
 	
 	.rec-list.last {
 		margin-bottom: 80px;
+	}
+	
+	b {
+		font-family: 'GmarketSansMedium';
 	}
 	
 @media screen and (max-width: 830px) {
