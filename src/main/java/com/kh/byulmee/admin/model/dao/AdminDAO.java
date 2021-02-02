@@ -81,5 +81,16 @@ return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", id , row
 	public void updateBannerOpen(Map param) {
 		sqlSession.update("adminMapper.updateBannerOpen", param);
 	}
+
+	public int getSearchIdListCount(SqlSessionTemplate sqlSession2, String searchId) {
+		return sqlSession.selectOne("adminMapper.getSearchIdListCount", searchId);
+	}
+
+	public ArrayList<Member> selectSerachMemberList(SqlSessionTemplate sqlSession2, PageInfo pi, String searchId) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectSerachMemberList", searchId, rowBounds);
+	}
 	
 }

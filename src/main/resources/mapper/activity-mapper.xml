@@ -119,10 +119,21 @@
   	where mem_id = #{memId} 
   </select>
   
+  <select id="getActBoardListCount" resultType="_int">
+  	select count(*)from activity
+  </select>
+  
   <select id="selectList" resultMap="activityResultSet">
   	select *
   	from activity
   	where mem_id = #{memId}
+  	order by act_no desc
+  </select>
+  
+  <select id="selectActBoardList" resultMap="activityResultSet">
+  	select *
+  	from activity
+  	
   	order by act_no desc
   </select>
   
