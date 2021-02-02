@@ -11,6 +11,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/admin/admin_notice.css">
 </head>
+<!-- <script> -->
+<!-- // $(document).ready(function(){ -->
+	 
+<!-- //     var select = $('.select-script select'); -->
+<!-- //     select.change(function(){ -->
+<!-- //          var select_name = $(this).children('option:selected').text(); -->
+<!-- //         $(this).siblings("label").text(select_name); -->
+<!-- //         console.log(select_name); -->
+<!-- //     }); -->
+ 	
+<!-- // }); -->
+<!-- </script> -->
 <body>
  	<header class="navbar">
 		<span class="navbar_logo">
@@ -71,7 +83,6 @@
 					<c:if test="${ p eq pi.currentPage }">
 						<button class="btn btn-light" id="numBtn" class="text-reset" onclick="#"  disabled="disabled">${ p }</button>
 					</c:if>
-					
 					<c:if test="${ p ne pi.currentPage }">
 						<c:url var="pagination" value="adminNotice.ad">
 							<c:param name="page" value="${ p }"/>
@@ -96,17 +107,17 @@
 		<br>
 		<div class="idlist">
 			<h2 align="center">Q&A</h2>
-		    <div class="op1">
-			    <label>분류 선택</label>
-	      		<select id="searchCondition" name="searchCondition">
-        						<option>배송</option>
-						        <option>환불/반품</option>
-						        <option>주문/결제</option>
-						        <option>상품 정보</option>
-						        <option>마이페이지</option>
-						        <option>기타</option>
-						        <option>신고</option>
-	      		</select>
+<!-- 		    <div class="select-box select-script"> -->
+<!-- 			    <label for="selectbox" id="selectlabel"></label> -->
+<!-- 	      		<select id="selectbox" name="searchCondition"> -->
+<!--         						<option>배송</option> -->
+<!-- 						        <option>환불/반품</option> -->
+<!-- 						        <option>주문/결제</option> -->
+<!-- 						        <option>상품 정보</option> -->
+<!-- 						        <option>마이페이지</option> -->
+<!-- 						        <option>기타</option> -->
+<!-- 						        <option>신고</option> -->
+<!-- 	      		</select> -->
 	      	<br>
  <!--      		</div>
 		<div class="idlist"> -->
@@ -121,7 +132,16 @@
            		<c:forEach var="q" items="${ qlist }">
            		<tr class="QnA">
                   	<td align="center">${ q.cusqnaNo }</td>
-                 	<td align="center">${ q.cusqnaCategory }</td>
+					<td><c:choose>
+						<c:when test="${ q.cusqnaCategory eq '0' }">배송</c:when>
+						<c:when test="${ q.cusqnaCategory eq '1' }">환불/반품</c:when>
+						<c:when test="${ q.cusqnaCategory eq '2' }">주문/결제</c:when>
+						<c:when test="${ q.cusqnaCategory eq '3' }">상품정보</c:when>
+						<c:when test="${ q.cusqnaCategory eq '4' }">마이페이지</c:when>
+						<c:when test="${ q.cusqnaCategory eq '5' }">기타</c:when>
+						<c:when test="${ q.cusqnaCategory eq '6' }">신고</c:when>
+						</c:choose>
+					</td>
                   	<td align="left">${ q.cusqnaContent  }</td>
                   	<td align="center">${ q.memId }</td>
                   	<td align="center">${ q.cusqnaDate }</td>
@@ -186,18 +206,60 @@
 			});
 		</script>
 		
-		<script>
+		<script>			
 			$(function() {
 				$('.QnA').mouseenter(function(){
 					$(this).css({'color': '#3B3A5A',  'font-weight':'bold', 'cursor': 'pointer'});
 				}).mouseout(function(){
 					$(this).css({'color': '#585858', 'font-weight':'normal'});
 				}).click(function(){
-					var notNo=$(this).children('td').eq(0).text();
-					console.log(banNo);
-					location.href='notDetail.bo?notNo=' + banNo + '&page=' + ${pi2.currentPage};
+					var cusqnaNo=$(this).children('td').eq(0).text();
+					console.log(cusqnaNo);
+					location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage};
 				});
 			});
+			function searchCusQna(){
+				var searchValue = $("#searchValue").val();
+				var searchCondition;
+				var seCd = $("#selectlabel").text();
+				if(seCd == "카테고리") {
+					searchCondition = "category";
+				} else if(seCd == "제목") {
+					searchCondition = "title";
+				} else {
+					searchCondition = "writer";
+				}
+
+				
+				console.log(searchCondition);
+				console.log(searchValue);
+	 			if(searchCondition == "category"){
+					if(searchValue == "배송"){
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "환불/반품") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "주문/결제") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "상품정보") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "마이페이지") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "기타") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else if(searchValue == "신고") {
+						location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+					} else {
+						alert("카테고리 검색어가 정확하지 않습니다.");
+						$("#searchValue").focus();
+						return false;
+					}
+				} else {
+					location.href="searchCusQna.bo?searchValue="+ searchValue + "&searchCondition=" + searchCondition;
+				}
+			}
+			
 		</script>
+		
+		
 </body>
 </html>
