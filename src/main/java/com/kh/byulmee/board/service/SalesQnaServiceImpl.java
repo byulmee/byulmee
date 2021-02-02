@@ -85,5 +85,10 @@ public class SalesQnaServiceImpl implements SalesQnaService{
 		return sqDAO.salQnaUpdate(sqlSession, s);
 	}
 
+	@Override
+	public SalesQna selectQnaDetail(int qnaNo) {
+		return sqDAO.selectQnaDetail(sqlSession, qnaNo);
+	}
+
 
 }

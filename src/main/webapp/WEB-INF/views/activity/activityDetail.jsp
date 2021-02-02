@@ -159,12 +159,7 @@ input:focus {
 	outline: 0;
 	cursor: pointer;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
   
->>>>>>> master
 #button3 {
 	border: 1px solid #E9E9E9;
 	background: white;
@@ -178,11 +173,6 @@ input:focus {
 	cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
->>>>>>> master
 #button2 {
 	border: 1px solid #FF6833;
 	background: #FF6833;
@@ -196,10 +186,6 @@ input:focus {
 	outline: 0;
 	cursor: pointer;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 #button4 {
 	border: 1px solid #FF6833;
@@ -215,11 +201,6 @@ input:focus {
 	cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
->>>>>>> master
 .starInfo {
 	padding-top: 12px;
 	line-height: 30px;
@@ -275,10 +256,6 @@ input:focus {
 	vertical-align: middle;
 	margin-top: 4px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 #star-button3 {
 	border: 1px solid #888888;
@@ -294,11 +271,6 @@ input:focus {
 	margin-top: 4px;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
->>>>>>> master
 hr {
 	width: 1280px;
 	visibility: hidden;
@@ -457,10 +429,6 @@ hr {
 	width: 800px;
 	min-height: auto;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 .trReviewExpand {
 	text-align: center; 
@@ -469,37 +437,18 @@ hr {
 }
 
 .expandButton {
-<<<<<<< HEAD
-=======
-#expandButton {
->>>>>>> master
-=======
->>>>>>> master
 	cursor: pointer;
 	font-family: 'GmarketSansMedium';
 	font-size: 12px;
 	text-align: right;
 	margin-right: 2px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 .expandButton:hover {
 	color: black;
 }
 
 .expandButton {
-<<<<<<< HEAD
-=======
-#expandButton:hover {
-	color: black;
-}
-#expandButton {
->>>>>>> master
-=======
->>>>>>> master
 	border: 0;
 	background-color: white;
 	color: #9E9E9E;
@@ -517,42 +466,38 @@ hr {
  	margin-bottom: 10px;
  	table-layout: fixed;
 } 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .question td:not(.noqna){
-=======
-.question td{
->>>>>>> master
-=======
-
-.question td:not(.noqna){
->>>>>>> master
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
 }
   
-#memId, #salqnaTitle, #salqnaDate, #salqnaDetail{
+#memId, #salqnaTitle, #salqnaDate, .salqnaDetail{
  	text-overflow: ellipsis;
  	overflow: hidden;
  	white-space: nowrap;
 } 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 .noqna {
 	text-align: center;
 }
 
+#MdsalqnaDate{
+	color: #9E9E9E;
+}
+
+#MdqnaContent{
+	border-bottom: 1px solid gray;
+	padding-bottom: 10px;
+}
+
+#MdqnaReply{
+	height: 80px;
+	color: gray;
+	
+}
+
 .question tr:not(.noqna):hover{
-<<<<<<< HEAD
-=======
-.question tr:hover{
->>>>>>> master
-=======
->>>>>>> master
  	background-color: #f9f9f9;
 } 
   
@@ -575,7 +520,7 @@ hr {
  	color: #9E9E9E;
  	text-align: center;
 }
-#salqnaDetail, #salqnaDetailExcept {
+.salqnaDetail, .salqnaDetailExcept {
  	font-size: 12px;
  	margin-right: 20px;
  	color: #9E9E9E;
@@ -597,22 +542,8 @@ hr {
 	font-size:12px;
 	background-color: #f9f9f9;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-.show2 {
-=======
-.salqnaReply{
- 	display: none; 
-	background-color: red;
-	height: 50px;
-	width: 800px;
-}
-#repArea{
->>>>>>> master
-=======
 
 .show2 {
->>>>>>> master
 	display:table-row; 
 	height: auto;
 	font-size:12px;
@@ -621,10 +552,6 @@ hr {
 .trQuestion td {
 	cursor:pointer;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 #qnaReply, #qnaContent {
 	padding-left: 30px;
@@ -632,18 +559,13 @@ hr {
 	font-size: 13px;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
->>>>>>> master
 #all-question {
 	width: 800px;
 	text-align: right;
 	font-size: 13px;
 	cursor: pointer;
 	color: #9E9E9E;
-	margin-right: 15px;
+	padding-right: 57px;
 }
   
 #all-question:hover{
@@ -722,10 +644,6 @@ hr {
 	background: white;
 	z-index: 1000;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 
 .review_modal{
 	width: 650px;
@@ -737,13 +655,31 @@ hr {
 	padding: 20px;
 	background: white;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> master
-=======
+.qna_wrap {
+	display: none;
+	width: 650px;
+	min-height: 223px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -150px -350px; 0 -250 px;
+	padding: 20px;
+	background: white;
+	z-index: 1000;
+}
+
+.qna_modal{
+	width: 650px;
+	min-height: 200px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -150px -350px; 0 -250 px;
+	padding: 20px;
+	background: white;
+}
   
->>>>>>> master
 .black_bg {
 	display: none;
 	position: fixed;
@@ -755,6 +691,7 @@ hr {
 	left: 0;
 	z-index: 999;
 }
+
 .review_close {
 	width: 26px;
 	height: 26px;
@@ -762,6 +699,15 @@ hr {
 	top: -30px;
 	right: 0;
 }
+
+.qna_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
 .review_close>a {
 	display: block;
 	width: 100%;
@@ -769,6 +715,15 @@ hr {
 	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
 	text-indent: -9999px;
 }
+
+.qna_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
 /* 이런 별미는 어때요 */
 .rec-list {
 	width: 80vw;
@@ -1475,35 +1430,56 @@ hr {
 				<a href="#menu4">취소/환불 규정</a>
 			</div>
 		</div>
-
-		<!-- 문의 영역 -->
-		<table class="question">
-			<colgroup>
-			  	<col style="width:18%"/>
-			  	<col style="width:57%"/>
-			  	<col style="width:15%"/>
-			  	<col style="width:10%"/>
-			</colgroup>
-			<thead>
-				<tr>
-				</tr>			
-			</thead>
-			<tbody></tbody>
-		</table>
 		
-		<table class="questionExcept">
-			<colgroup>
-			  	<col style="width:18%"/>
-			  	<col style="width:57%"/>
-			  	<col style="width:15%"/>
-			  	<col style="width:10%"/>
-			</colgroup>
-			<thead>
-				<tr>
-				</tr>			
-			</thead>
-			<tbody></tbody>
-		</table>
+		<!-- 별미 문의 -->
+		<div class="qnaArea">
+			<table class="question">
+				<colgroup>
+				  	<col style="width:18%"/>
+				  	<col style="width:57%"/>
+				  	<col style="width:15%"/>
+				  	<col style="width:10%"/>
+				</colgroup>
+				<thead>
+					<tr>
+					</tr>			
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+			<table class="questionExcept">
+				<colgroup>
+				  	<col style="width:18%"/>
+				  	<col style="width:57%"/>
+				  	<col style="width:15%"/>
+				  	<col style="width:10%"/>
+				</colgroup>
+				<thead>
+					<tr>
+					</tr>			
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+			<div class="expand" align="right">
+				
+				<div class="black_bg"></div>
+				
+				<div class="qna_wrap">
+					<div class="qna_close">
+						<a href="javascript:;"></a>
+							<table class="qna_modal">
+								<thead>
+									<tr></tr>			
+								</thead>
+								<tbody></tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
 		
 		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
 
@@ -1519,46 +1495,28 @@ hr {
 					$question = $('.question tbody');
 					
 					var $tr;
-					var $tr2;
-					var $tr3;
 					var $memId;
 					var $salqnaTitle;
 					var $salqnaDate;
-					var $salqnaContent;
 					var $salqnaDetail;
 					var $salqnaNo;
-					var $salqnaReply;
 					var $noqna;
 					
 					if(data.length > 0){
 						for(var i in data){
 							$tr = $('<tr class="trQuestion">');
-							$tr2 = $('<tr class="trContent">');
-							$tr3 = $('<tr class="salqnaReply">');
 							$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
 							$memId = $('<td id="memId">').text(data[i].member.memNickname);
 							$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
 							$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
-							$salqnaDetail = $('<td id="salqnaDetail">').text("+내용보기");
-							$salqnaContent = $('<td colspan="5" id="qnaContent">').text("Q.   " + data[i].salqnaContent);
+							$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
 							
-							if(data[i].reply.repContent != null){
-								$salqnaReply = $('<td colspan="5" colspan="5" id="qnaReply">').text("A.   " + data[i].reply.repContent);
-							} else{
-								$salqnaReply = $('<td colspan="5" colspan="5" id="qnaReply">').text("등록된 답변이 없습니다.");
-							}
-							
-							$tr.append($salqnaNo);
 							$tr.append($memId);
 							$tr.append($salqnaTitle);
 							$tr.append($salqnaDate);
 							$tr.append($salqnaDetail);
 							$tr.append($salqnaNo);
 							$question.append($tr);
-							$tr2.append($salqnaContent);
-							$question.append($tr2);
-							$tr3.append($salqnaReply);
-							$question.append($tr3);
 						}
 					} else{
 						$tr = $('<tr class="noqna">');
@@ -1569,124 +1527,139 @@ hr {
 					}
 				}
 			});
+		</script>
+		
+		<script>
+		$(document).on("click", ".salqnaDetail", function(){ 
+			var qnaNo = $(this).next().text();
+			console.log(qnaNo);
 			
-			// 문의게시판 토글
-	        $(function(){
-	            var article = (".question .show"); 
-	            var article2 = (".question .show2"); 
-	            $(".question .trQuestion  td").on("click", function() { 
-	                var myArticle =$(this).parents().next("tr"); 
-	                var myArticle2 =$(this).parents().next().next("tr");
-	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
-	                    $(article).removeClass('show').addClass('trContent'); 
-	                    $(article2).removeClass('show2').addClass('salqnaReply'); 
-	                    $(myArticle).removeClass('trContent').addClass('show'); 
-	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
-	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
-	                    $('.questionExcept .show2 td').removeClass('show2').addClass('salqnaReply');
-	                } 
-	                else { 
-	                    $(myArticle).addClass('trContent').removeClass('show');
-	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
-	                } 
-	            }); 
-	        });
-			
-			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
 			$.ajax({
-				url: 'salesQnaExceptList.ac',
-				data: {acId:acId},
+				url: 'salesQnaDetail.ac',
+				data: {qnaNo:qnaNo},
 				success: function(data){
 					console.log(data);
 					
-					$question = $('.questionExcept tbody');
+					$qna = $('.qna_modal tbody');
 					
 					var $tr;
 					var $tr2;
 					var $tr3;
+					var $tr4;
 					var $memId;
 					var $salqnaTitle;
-					var $salqnaDate;
 					var $salqnaContent;
-					var $salqnaDetail;
-					var $salqnaNo;
 					var $salqnaReply;
 					var $noqna;
 					
-					if(data.length > 0){
-						for(var i in data){
-							$tr = $('<tr class="trQuestion">');
-							$tr2 = $('<tr class="trContent">');
-							$tr3 = $('<tr class="salqnaReply">');
-							$salqnaNo = $('<td id="salqnaNoExcept">').text(data[i].salqnaNo);
-							$memId = $('<td id="memIdExcept">').text(data[i].member.memNickname);
-							$salqnaTitle = $('<td id="salqnaTitleExcept">').text(data[i].salqnaTitle);
-							$salqnaDate = $('<td id="salqnaDateExcept">').text(data[i].salqnaDate);
-							$salqnaDetail = $('<td id="salqnaDetailExcept">').text("+내용보기");
-							$salqnaContent = $('<td colspan="5" id="qnaContent">').text("Q.   " + data[i].salqnaContent);
-							
-							if(data[i].reply.repContent != null){
-								$salqnaReply = $('<td colspan="5" colspan="5" id="qnaReply">').text("A.   " + data[i].reply.repContent);
-							} else{
-								$salqnaReply = $('<td colspan="5" colspan="5" id="qnaReply">').text("등록된 답변이 없습니다.");
-							}
-							
-							$tr.append($salqnaNo);
-							$tr.append($memId);
-							$tr.append($salqnaTitle);
-							$tr.append($salqnaDate);
-							$tr.append($salqnaDetail);
-							$tr.append($salqnaNo);
-							$question.append($tr);
-							$tr2.append($salqnaContent);
-							$question.append($tr2);
-							$tr3.append($salqnaReply);
-							$question.append($tr3);
-						}
-					} else{
-						$tr = $('<tr class="noqna">');
-						$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
+						$tr = $('<tr class="trMdQuestion">');
+						$tr2 = $('<tr class="trMdContent">');
+						$tr3 = $('<tr class="salqnaMdReply">');
+						$tr4 = $('<tr class="salqnaMdTitle">');
+						$memId = $('<td width="200px" id="MdmemId">').text("작성자 : " + data.member.memNickname);
+						$salqnaTitle = $('<td colspan="2" id="MdsalqnaTitle">').text("제　목 : " + data.salqnaTitle);
+						$salqnaContent = $('<td colspan="2" id="MdqnaContent">').text("내　용 : " + data.salqnaContent);
 						
-						$tr.append($noqna);
+						if(data.reply.repContent != null){
+							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("스타답변 : " + data.reply.repContent);
+						} else{
+							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("등록된 스타의 	답변이 없습니다.");
+						}
+						
+						$tr.append($memId);
+						$qna.append($tr);
+						$tr4.append($salqnaTitle);
+						$qna.append($tr4);
+						$tr2.append($salqnaContent);
+						$qna.append($tr2);
+						$tr3.append($salqnaReply);
+						$qna.append($tr3);
+				}	
+			});
+		});
+		</script>
+		
+		<script>
+		// 문의 전체보기 토글버튼
+        function toggleQuestion(){
+        	var toggleBtn = document.getElementById("all-question").innerHTML;
+        	
+        	if(toggleBtn == '+문의 전체보기'){
+					$('.questionExcept').css("visibility", "visible");
+					$('#all-question').html("-접기");	        		
+        	} else{
+					$('.questionExcept').css("visibility", "collapse");
+					$('#all-question').html("+문의 전체보기");	 	        		
+        	}
+        }
+		</script>
+		
+		<script>
+		// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
+		$.ajax({
+			url: 'salesQnaExceptList.ac',
+			data: {acId:acId},
+			success: function(data){
+				console.log(data);
+				
+				$question = $('.questionExcept tbody');
+				
+				var $tr;
+				var $memId;
+				var $salqnaTitle;
+				var $salqnaDate;
+				var $salqnaDetail;
+				var $salqnaNo;
+				var $noqna;
+				
+				if(data.length > 0){
+					for(var i in data){
+						$tr = $('<tr class="trQuestion">');
+						$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
+						$memId = $('<td id="memId">').text(data[i].member.memNickname);
+						$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
+						$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
+						$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
+						
+						$tr.append($memId);
+						$tr.append($salqnaTitle);
+						$tr.append($salqnaDate);
+						$tr.append($salqnaDetail);
+						$tr.append($salqnaNo);
 						$question.append($tr);
 					}
+				} else{
+					$tr = $('<tr class="noqna">');
+					$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
+					
+					$tr.append($noqna);
+					$question.append($tr);
 				}
-			});
-			
-	        $(function(){
-	            var article = (".questionExcept .show"); 
-	            var article2 = (".questionExcept .show2"); 
-	            $(".questionExcept .trQuestion  td").on("click", function() { 
-	                var myArticle =$(this).parents().next("tr"); 
-	                var myArticle2 =$(this).parents().next().next("tr");
-	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
-	                    $(article).removeClass('show').addClass('trContent'); 
-	                    $(article2).removeClass('show2').addClass('salqnaReply');
-	                    $(myArticle).removeClass('trContent').addClass('show');
-	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
-	                    $('.question .show td').removeClass('show').addClass('trContent');
-	                    $('.question .show2 td').removeClass('show2').addClass('salqnaReply');
-	                } 
-	                else { 
-	                    $(myArticle).addClass('trContent').removeClass('show');
-	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
-	                } 
-	            }); 
-	        });
-	        
-			// 문의 전체보기 토글버튼
-	        function toggleQuestion(){
-	        	var toggleBtn = document.getElementById("all-question").innerHTML;
-	        	
-	        	if(toggleBtn == '+문의 전체보기'){
- 					$('.questionExcept').css("visibility", "visible");
- 					$('#all-question').html("-접기");	        		
-	        	} else{
- 					$('.questionExcept').css("visibility", "collapse");
- 					$('#all-question').html("+문의 전체보기");	 	        		
-	        	}
-	        }
+			}
+		});
 		</script>
+		
+		<!-- 문의 모달 열기 -->
+		<script>
+			window.onload = function(){
+				function onClick(){
+					document.querySelector('.qna_wrap').style.display = 'block';
+					document.querySelector('.black_bg').style.display = 'block';
+				}
+				function offClick(){
+					document.querySelector('.qna_wrap').style.display = 'none';
+					document.querySelector('.black_bg').style.display = 'none';
+					$( '.qna_wrap tbody').empty();
+				}
+				
+				var expand = document.querySelectorAll('.salqnaDetail');
+				for(var i = 0; i < expand.length; i++){
+					expand[i].addEventListener('click', onClick);
+					document.querySelector('.qna_close').addEventListener('click', offClick);
+				}
+			}
+		</script>
+		
 		
 		<c:if test="${ !empty loginUser }">
 			<c:url var="salesQnaInsertView" value="salesQnaInsertView.sq">
@@ -1716,7 +1689,7 @@ hr {
 
 		<!-- 취소 환불 규정 영역 -->
 		<div class="refundArea" align="left">
-			<div class="refund" align="left">${ activity.actGuide }</div>
+			<div class="refund" align="left">${ guideText }</div>
 		</div>
 		
 		<!-- 불편사항 신고하기 -->

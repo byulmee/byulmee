@@ -32,4 +32,6 @@ public interface SalesQnaService {
 	int salQnaDelete(int salqnaNo);
 
 	int salQnaUpdate(SalesQna s);
+
+	SalesQna selectQnaDetail(int qnaNo);
 }

@@ -365,12 +365,12 @@ td{
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
 					
-					<c:url var="starFavoriteInsert" value="starFavoriteInsert.fa">
+					<c:url var="starFavoriteInsertProduct" value="starFavoriteInsertProduct.fa">
 						<c:param name="starNo" value="${ writer.memNo }"></c:param>
-						<c:param name="acId" value="${ activity.actNo }"></c:param>
+						<c:param name="pdId" value="${ product.proNo }"></c:param>
 					</c:url>
 					<c:if test="${ !empty loginUser }">
-					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsert }'">
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsertProduct }'">
 					</c:if>
 					<c:if test="${ empty loginUser }">
 					<input type="button" id="star-button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="alert('로그인 후 이용 가능합니다.')">

@@ -67,4 +67,8 @@ public class SalesQnaDAO {
 		return sqlSession.update("salesQnaMapper.salQnaUpdate", s);
 	}
 
+	public SalesQna selectQnaDetail(SqlSessionTemplate sqlSession, int qnaNo) {
+		return sqlSession.selectOne("salesQnaMapper.selectQnaDetail", qnaNo);
+	}
+
 }
