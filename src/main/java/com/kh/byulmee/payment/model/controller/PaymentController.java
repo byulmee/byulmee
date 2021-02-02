@@ -12,7 +12,6 @@ import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
-import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.product.model.service.ProductService;
 
 @Controller
@@ -32,6 +31,7 @@ public class PaymentController {
 		Activity a = aService.selectActivity(acId);
 		Member m = mService.selectMemberWithNo(memNo);
 		
+		System.out.println("acid : "+ acId);
 		mv.addObject("a", a);
 		mv.addObject("m", m);
 		mv.setViewName("payment");
@@ -48,15 +48,7 @@ public class PaymentController {
 //	}
 	
 	@RequestMapping("payment-success.py")
-	public ModelAndView getpaymentSuccess(@RequestParam("acId") int acId, @RequestParam("memNo") int memNo,@RequestParam("ardNo") int ardNo, ModelAndView mv, HttpServletRequest request) {
-		Activity a = aService.selectActivity(acId);
-		Member m = mService.selectMemberWithNo(memNo);
-		
-		
-		mv.addObject("a",a);
-		mv.addObject("m",m);
-		mv.setViewName("activity_pay_Success");
-		
-		return mv;
+	public String getpaymentSuccess() {		
+		return "product_pay_Success";
 	}
 }

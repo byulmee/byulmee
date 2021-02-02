@@ -163,7 +163,7 @@ $(document).ready(function(){
 		IMP.request_pay({ // param
 		  pg: "kakaopay",
 		  pay_method: payway,
-		  merchant_uid: ${ a.actNo },
+		  merchant_uid: "${ a.actNo }",
 		  name: "${ a.actTitle }",
 		  amount: 250,
 		  buyer_email: "${ m.memEmail }",
