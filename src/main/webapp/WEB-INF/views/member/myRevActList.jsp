@@ -506,9 +506,14 @@
 					<c:forEach var="r" items="${ r }">
 						<form action="myRevActUpdateView.me" method="post">
 							<div class="list">
-								<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ r.activity.actNo }'">
+								<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ r.activity.actNo }#menu2'">
 									<div class="imgDiv">
-										<img class="img" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ r.img.imgName }">
+										<c:if test="${ r.img.imgName ne null}">
+											<img class="img" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ r.img.imgName }">
+										</c:if>
+										<c:if test="${ r.img.imgName eq null}">
+											<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/revActDefault.png">
+										</c:if>
 									</div>
 									<div class="textDiv">
 										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">

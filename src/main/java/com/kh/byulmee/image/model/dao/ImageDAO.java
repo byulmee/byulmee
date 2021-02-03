@@ -50,5 +50,5 @@ public class ImageDAO {
 	public ArrayList<Image> selectProductImage(SqlSessionTemplate sqlSession, int pdId) {
 		return (ArrayList)sqlSession.selectList("imageMapper.selectProductImage", pdId);
 	}
-	
+
 }

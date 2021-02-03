@@ -229,14 +229,14 @@
 	}
 	.tdName {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 110px;
 		text-align: left;
 		background: #F4F4F4;
 		padding: 5px;
 	}
 	.tdContent {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 110px;
 		text-align: left;
 		padding: 5px;
 	}
@@ -245,14 +245,14 @@
 		vertical-align: middle;
 	}
 	.inputIdField {
-		width: 150px;
+		width: 106px;
 		outline: 0;
 		border: none;
 		background: white;
 		color: black;
 	}
 	.inputPwdField {
-		width: 150px;
+		width: 106px;
 		outline: 0;
 		border: none;
 	}

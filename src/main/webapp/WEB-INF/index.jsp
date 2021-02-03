@@ -33,7 +33,7 @@
 		           	</c:if>
             </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
-                <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
+                <li><img onclick="location.href='productList.pd'" src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
             </ul>
         </div>
 
@@ -80,9 +80,9 @@
     </div>
 
     <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
-    <section id="ban">
+    <div id="ban">
         <img class="ban-img" src="#"  alt="배너 영역">
-    </section>
+    </div>
 	
     <div class="rec-list">
         <div class="rec-title">마감일 임박 별미</div>

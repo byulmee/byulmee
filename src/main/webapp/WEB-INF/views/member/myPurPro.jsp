@@ -770,7 +770,7 @@
 								<button class="detailProBtn" onclick="openModal('detail')">상세내역</button>
 								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.product.proNo }'">문의하기</button>
 								<c:if test="${ o.ordReview == 'N' }">
-									<button class="reviewProBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
+									<button class="reviewProBtn" onclick="openModal('reviewWrite')">후기작성</button>
 								</c:if>
 								<c:if test="${ o.ordReview == 'Y' }">
 									<button class="button" disabled>작성완료</button>

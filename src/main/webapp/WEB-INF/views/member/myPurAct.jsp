@@ -764,7 +764,7 @@
 								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
 								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.activity.actNo }'">문의하기</button>
 								<c:if test="${ o.ordReview == 'N' }">
-									<button class="reviewActBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
+									<button class="reviewActBtn" onclick="openModal('reviewWrite')">후기작성</button>
 								</c:if>
 								<c:if test="${ o.ordReview == 'Y' }">
 									<button class="button" disabled>작성완료</button>
@@ -940,13 +940,11 @@
 		</div>
 	</div>
 	
-<!-- 	<script>
+ 	<!-- <script>
 		$("#finishBtn").click(function(){
 			var chk1 = $('reviewImgFile1').val();
-			var chk2 = $('reviewImgFile2').val();
-			var chk3 = $('reviewImgFile3').val();
-			if(chk1 == null || chk2 == null || chk3 == null) {
-				alert("사진");
+			if(chk1 == null) {
+				alert("최소 1개 이상의 사진을 등록해주세요.");
 				return false;
 			}
 		});

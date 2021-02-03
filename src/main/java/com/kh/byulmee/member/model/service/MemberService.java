@@ -14,7 +14,7 @@ public interface MemberService {
 
 	int checkId(String memId);
 	
-	int checkNickname(String nickname);
+	int checkNickname(String memNickname);
 	
 	int checkPhone(String memPhone);
 	
