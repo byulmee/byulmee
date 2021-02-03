@@ -71,8 +71,8 @@
         <div class="rec-title">이번주 핫한 별미</div>
         <div class="rec-top-divider1">
             <hr class="rec-top-divider2"></hr>
-  	 		</div>
   	 	</div>
+  	</div>
 
     <div class="rec-list">
         <ul class="list popAct" id="popularActList">
