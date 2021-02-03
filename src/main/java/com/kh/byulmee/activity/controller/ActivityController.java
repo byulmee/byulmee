@@ -252,31 +252,30 @@ public class ActivityController {
 	}
 	
 
-	@RequestMapping("alist.ac")         
-    public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
-                     
+	@RequestMapping("alist.ac")
+	public ModelAndView activityList(@RequestParam(value = "page", required = false) Integer page, ModelAndView model) {
+
 		int currentPage = 1;
-		if(page != null) {
-		     currentPage = page;
+		if (page != null) {
+			currentPage = page;
 		}
-		  
+
 		int listCount = aService.getActBoardListCount();
-		  
-		  
-		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
-		  
-		  ArrayList<Activity> list = aService.selectList(pi);
-  
-		  System.out.println("list == > " + list);
-		  System.out.println("list.size 1== > " + list.size());
-		  
-		  if(list != null) {
-			 model.addAttribute("list", list);
-			 model.addAttribute("pi", pi);
-			 System.out.println("list.size 2== > " + list.size());
-			 return "activityList";
-		  } else {
-			  throw new ActivityException("조회에 실패하였습니다.");
-		  }
+		int code = 1;
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
+
+		ArrayList<Activity> list = aService.selectList(pi);
+		ArrayList<Image> ilist = iService.selectList(code);
+
+		if (list != null) {
+			model.addObject("list", list);
+			model.addObject("pi", pi);
+			model.addObject("ilist", ilist);
+			model.setViewName("activityList");
+			return model;
+		} else {
+			throw new ActivityException("조회에 실패하였습니다.");
+		}
 	}
 }

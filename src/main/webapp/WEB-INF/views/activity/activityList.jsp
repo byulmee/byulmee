@@ -90,31 +90,39 @@ body {
          </select>
       </div>
       <br>
-      <%
-      ActivityDAO activityDAO = new ActivityDAO();   
-   %>
- 	
+    
          <c:forEach items="${ list }" varStatus="status" var="val">
       <div class="rec-list" style="display: inline-block;">
             <ul class="list" style="list-style: none;">
-            	<c:if test="${status.index mod 5 eq 0}">
-			    </c:if>
+               <c:if test="${status.index mod 5 eq 0}">
+             </c:if>
                <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
                   <div class="img-frame">
-                     <img class="list-thumb" src="resources/images/common/test.png"
-                        alt="zz" width="210px;">
+                  <c:forEach var="i" items="${ ilist }">
+                     <c:if test="${ val.actNo eq i.imgRefno and i.imgLevel eq '0'}">
+                        <img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }" alt="zz" width="210px;">
+                     </c:if>
+                  </c:forEach>
+          
                   </div> <span>${val.memId }</span>
-                  <div class="list-cate">[${val.actCategory }]&nbsp;${val.actTitle }</div>
+                  <div class="list-cate">[<c:choose>
+                     <c:when test="${ val.actCategory eq '0' }">액티비티</c:when>   
+                     <c:when test="${ val.actCategory eq '1' }">리빙</c:when>
+                     <c:when test="${ val.actCategory eq '2' }">건강/미용</c:when>
+                     <c:when test="${ val.actCategory eq '3' }">힐링</c:when>
+                     <c:when test="${ val.actCategory eq '4' }">푸드</c:when>
+                     <c:when test="${ val.actCategory eq '5' }">커리어</c:when>               
+                  </c:choose>]&nbsp;${val.actTitle }</div>
                   <span class="list-price"><i class="fas fa-receipt"></i>${val.actPrice }원</span><br>
                   <span class="list-social">⭐️4.9 9999개의 평가</span>
                </li>
                <c:if test="${(status.index + 1) mod 5 eq 0}">
             </ul>
             </c:if>
-    	  </div>
+         </div>
          </c:forEach>
-		<br><br>
-		
+      <br><br>
+      
 
 
 
