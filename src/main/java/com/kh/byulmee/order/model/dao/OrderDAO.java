@@ -61,4 +61,14 @@ public class OrderDAO {
 		return sqlSession.update("orderMapper.updateOrder", o);
 	}
 
+	public int insertPayOrder(SqlSessionTemplate sqlSession, Order o) {
+		sqlSession.insert("orderMapper.insertPayOrder", o);
+		int ordNo = o.getOrdNo();
+		return ordNo;
+	}
+
+	public Order selectPayOrder(SqlSessionTemplate sqlSession, int ordNo) {
+		return sqlSession.selectOne("orderMapper.selectPayOrder", ordNo);
+	}
+
 }

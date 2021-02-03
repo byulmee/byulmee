@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +26,6 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
-import com.kh.byulmee.order.model.vo.Order;
 
 @Controller
 public class AdminController {
@@ -37,9 +34,36 @@ public class AdminController {
 	private AdminService abService;
 
 	@RequestMapping("adminMain.ad")
-	public String adminMain(@ModelAttribute("Order") Order order) {
-		
+	public String adminMain() {
 		return "admin_main";
+	
+	}
+	
+	@RequestMapping("searchId.ad")
+	public ModelAndView searchId(@RequestParam(value = "page", required = false) Integer page, @RequestParam("searchId") String searchId, ModelAndView mv) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = abService.getSearchIdListCount(searchId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Member> list = abService.selectSerachMemberList(pi, searchId);
+		
+		if (list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("searchId", searchId);
+			mv.setViewName("admin_member");
+
+		} else {
+			throw new MemberException("회원 조회에 실패했습니다.");
+		}
+		
+		return mv;
 	}
 
 	@RequestMapping("adminMember.ad")
@@ -130,6 +154,7 @@ public class AdminController {
 
 
 	}
+	
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
 			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl,

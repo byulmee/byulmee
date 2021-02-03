@@ -322,7 +322,9 @@ td{
 <body>
 	<c:import url="../common/gnb.jsp"/>
    <div class="outer" align="center">
+   <form id="payment" action="payment.pt" method="post">
           <div class="product-check" align="left">활동 신청 확인</div>
+          
        <!-- 상단 섬네일, 상품 정보 -->
       <div class="top">
 	       <div class="thumbnail" align="center">
@@ -485,12 +487,35 @@ td{
 			※ 자바봄은 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 자바봄은 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.
        </div>
        <div class="personal-info-check">
+       	    <input type="hidden" value="${ activity.actNo }" name="acId">
+           <input type="hidden" value="${ writer.memNo }" name="memNo">
+            <input type="hidden" value="${ amount }" name="ordCount">
+            <input type="hidden" value="${ activity.actPrice }" name="ordPay">
 	       <span>구매 동의 : 활동 신청 정보, 취소 및 환불 정책, 개인 정보 제공 동의 등을 최종 확인하고 구매에 동의합니다.(필수)</span>
 	       <span><input type="checkbox" id="check"></span>
        </div>
-       	<input type="button" id="orderButton" value="결제">
+       	<input type="submit" id="orderButton" value="결제">
        	<input type="button" id="cancleButton" value="취소">
+       	</form>
 	</div>
+	
+		<script>
+	
+	// 결제 페이지 이동
+	/* $(document).ready(function(){
+		var acId = $(this).val();
+		console.log(acId);
+		$('#orderButton').click(function(){
+			location.href = "payment.py";
+		});
+	}); */
+// 	$('#orderButton').click(function(){
+// 		var acId = $(this).parent().children('.personal-info-check').children('.acId').val();
+// 		var memNo = $(this).parent().children('.personal-info-check').children('.memNo').val();
+// // 		location.href = "payment.pt?acId=" + acId + "&memNo=" + memNo;
+// 		location.href = "payment.pt";
+// 	});
+	</script>	
 	
 		<!-- 네이버 지도 api -->
 		<script>

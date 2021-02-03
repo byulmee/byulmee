@@ -44,8 +44,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 	
 	@Override
-	public int getListCount() {
-		return aDAO.getListCount(sqlSession);
+	public int getActBoardListCount() {
+		return aDAO.getActBoardListCount(sqlSession);
 	}
 
 	@Override
@@ -128,4 +128,5 @@ public class ActivityServiceImpl implements ActivityService {
 	public int updateActRatingCnt(Activity a) {
 		return aDAO.updateActRatingCnt(sqlSession, a);
 	}
-}
+	
+	}

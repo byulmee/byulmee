@@ -60,7 +60,42 @@
    	 set ord_parcelcode = #{ordParcelcode}, ord_repay = #{ordRePay}
    	 where ord_no = #{ordNo}	  
    </update>
-  
+   
+   <insert id="insertPayOrder"  useGeneratedKeys="true" keyProperty="ordNo" keyColumn="ORD_NO">
+   	insert into orders (ORD_NO, MEM_ID, ORD_COUNT, ORD_DATE, ORD_NAME, ORD_PHONE, ORD_POSTCODE, ORD_BASICADDR, ORD_DETAILADDR, ORD_REQUEST, ORD_PAYNO, ORD_PAY, ORD_PAY_WAY, ORD_REVIEW, ORD_STATUS, ORD_REFCODE, ORD_REFNO, ORD_STARCODE, ORD_PARCELCODE, ORD_REPAY)
+   	values (seq_ordid.nextval, #{memId}, #{ordCount}, sysdate, #{ordName}, #{ordPhone}, #{ordPostcode}, #{ordBasicaddr}, #{ordDetailaddr}, default, #{ordPayno}, #{ordPay}, #{ordPayWay}, default, default, #{ordRefcode}, #{ordRefno}, #{ordStarcode}, default, default)
+   </insert>
+ 
+ 
+ <select id="selectPayOrder" resultMap="orderResultSet">
+ 	select *
+ 	from orders
+ 	where ord_no =#{ordNo}
+ </select>
+ 
+ <resultMap type="Order" id="orderResultSet">
+ 	<id property="ordNo" column="ORD_NO"/>
+  	<result property="memId" column="MEM_ID"/>
+  	<result property="ordCount" column="ORD_COUNT"/>
+  	<result property="ordDate" column="ORD_DATE"/>
+  	<result property="ordName" column="ORD_NAME"/>
+  	<result property="ordPhone" column="ORD_PHONE"/>
+  	<result property="ordPostcode" column="ORD_POSTCODE"/>
+  	<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+  	<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+  	<result property="ordRequest" column="ORD_REQUEST"/>
+  	<result property="ordPayno" column="ORD_PAYNO"/>
+  	<result property="ordPay" column="ORD_PAY"/>
+  	<result property="ordPayWay" column="ORD_PAY_WAY"/>
+  	<result property="ordReview" column="ORD_REVIEW"/>
+  	<result property="ordStatus" column="ORD_STATUS"/>
+  	<result property="ordRefcode" column="ORD_REFCODE"/>
+  	<result property="ordRefno" column="ORD_REFNO"/>
+  	<result property="ordStarcode" column="ORD_STARCODE"/>
+  	<result property="ordParcelcode" column="ORD_PARCELCODE"/>
+  	<result property="ordRePay" column="ORD_REPAY"/>
+ </resultMap>
+ 
   <resultMap type="Order" id="orderAcResultSet">
   	<id property="ordNo" column="ORD_NO"/>
   	<result property="memId" column="MEM_ID"/>
@@ -145,4 +180,5 @@
   		<result property="proDate" column="PRO_DATE"/>
   		<result property="proStatus" column="PRO_STATUS"/>
   	</resultMap>
+  	
 </mapper>
