@@ -5,6 +5,7 @@
 'use strict!';
 
 (() => {
+	let banUrl ='';
 	/***** by.다혜: 메인 추천 게시글 추가 스크립트 *****/
 	async function getMainContent() {
 		let response = await fetch('loadMainContent.do');
@@ -29,6 +30,22 @@
 		//인기 상품
 		let popProList = loadList(data.popularProList);
 		document.querySelector('#popularProduct').innerHTML += popProList;
+	
+		//배너
+		let imgDataList = data.bannerList;
+		let bannerSection = document.querySelector('#ban');
+		let banImg = document.querySelector('.ban-img');
+	
+		if(imgDataList.length > 0) {
+			bannerSection.display = '';
+			let randomBanner = getBanImg(imgDataList);
+			
+			banImg.src = 'resources/piUploadFiles/' + randomBanner.banOrigin;	
+			banImg.alt = randomBanner.banAlt;
+			banUrl = randomBanner.banUrl;
+		} else {
+			bannerSection.style.display = 'none';
+		}
 	});
 	
 	//화면에 노출할 데이터를 뽑는 메소드
@@ -128,12 +145,24 @@
 		location.href='http://localhost:9380/productDetail.pd?pdId=' + boardNo;
 	});
 	
+	document.querySelector('#ban').addEventListener('click', () => {
+		location.href = banUrl;
+	});
+	
 	//콤마 추가하는 메소드
 	function addComma(num) {
   		var regexp = /\B(?=(\d{3})+(?!\d))/g;
   	return num.toString().replace(regexp, ',');
 	}
 
+	//배너 추가 메소드
+	function getBanImg(imgDataList) {
+		
+		let ranNo =  Math.floor(Math.random() * imgDataList.length);
+		return imgDataList[ranNo];
+	}
+	
+	
 	//제출 전 검색어 검증
 	/***** by.다혜: 검색 관련 스크립트 *****/
 	document.querySelector('#searchBar').addEventListener('keypress', e => {
