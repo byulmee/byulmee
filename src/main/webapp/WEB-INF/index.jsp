@@ -33,7 +33,7 @@
 		           	</c:if>
             </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
-                <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
+                <li><img onclick="location.href='productList.pd'" src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
             </ul>
         </div>
 

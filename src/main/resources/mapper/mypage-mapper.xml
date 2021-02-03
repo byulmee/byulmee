@@ -34,14 +34,7 @@
 	</select>
 	
 	<select id="selectActOrderList" resultMap="orderResultSet">
-		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
-		        a.act_no, a.act_title,
-                i.img_name
-		from orders o 
-		    left outer join activity a on o.ord_refno = a.act_no
-            left outer join image i on a.act_no = i.img_refno
-		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
-		order by o.ord_no desc
+		ty
 	</select>
 	
 	<select id="selectProOrderList" resultMap="orderResultSet">
