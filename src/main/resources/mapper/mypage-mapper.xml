@@ -34,14 +34,7 @@
 	</select>
 	
 	<select id="selectActOrderList" resultMap="orderResultSet">
-		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
-		        a.act_no, a.act_title,
-                i.img_name
-		from orders o 
-		    left outer join activity a on o.ord_refno = a.act_no
-            left outer join image i on a.act_no = i.img_refno
-		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
-		order by o.ord_no desc
+		ty
 	</select>
 	
 	<select id="selectProOrderList" resultMap="orderResultSet">
@@ -168,7 +161,7 @@
 	</select>
 	
 	<select id="selectFavStarList" resultMap="favoriteResultSet">
-		select fs.fav_no, fs.fav_refno, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
+		select fs.fav_no, fs.fav_refno, m.mem_no, m.mem_id, m.mem_nickname, i.img_no, i.img_name, i.img_refno <!-- mem_no 대신 fs.fav_refno 사용 -->
 		from(select * from favorite
 				where fav_refcode = 0
 				and mem_id = #{memId}
@@ -264,7 +257,7 @@
 		<result property="ordRefno" column="ORD_REFNO"/>
 		<collection property="activity" resultMap="activityResultSet"/>
 		<collection property="member" resultMap="memberResultSet"/>
-		<collection property="img" resultMap="imageResultSet"/>
+		<collection property="image" resultMap="imageResultSet"/>
 		<collection property="product" resultMap="productResultSet"/>
 	</resultMap>
 	
@@ -275,7 +268,7 @@
 	  	<result property="favStatus" column="FAV_STATUS"/>
 	  	<result property="favRefcode" column="FAV_REFCODE"/>
 	  	<result property="favRefno" column="FAV_REFNO"/>
-	  	<collection property="img" resultMap="imageResultSet"/>
+	  	<collection property="image" resultMap="imageResultSet"/>
 	  	<collection property="member" resultMap="memberResultSet"/>
 	  	<collection property="activity" resultMap="activityResultSet"/>
 	  	<collection property="product" resultMap="productResultSet"/>

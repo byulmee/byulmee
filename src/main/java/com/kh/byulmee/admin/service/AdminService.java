@@ -45,4 +45,8 @@ public interface AdminService {
 
 	ArrayList<Banner> selectBannerList();
 
+	int getSearchIdListCount(String searchId);
+
+	ArrayList<Member> selectSerachMemberList(PageInfo pi, String searchId);
+
 }

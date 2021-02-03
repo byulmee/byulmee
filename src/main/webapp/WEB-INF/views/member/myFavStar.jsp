@@ -469,7 +469,7 @@
 				<c:if test="${ f.size() > 0 }">
 					<c:forEach var="f" items="${ f }">
 						<div class="star">
-							<div class="hoverDiv">
+							<div class="hoverDiv" onclick="location.href='acWorkRoomMain.wr?memId=${ f.member.memId }&memNo=${ f.member.memNo }'">
 								<div class="starDiv">
 									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
 									<input type="hidden" class="memNo" value="${ f.member.memNo }" name="memNo">

@@ -33,7 +33,7 @@
 		           	</c:if>
             </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
-                <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
+                <li><img onclick="location.href='productList.pd'" src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
             </ul>
         </div>
 
@@ -43,7 +43,8 @@
                 <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기"><i class="fas fa-search"></i>
             </div>
             <ul id="cate">
-                <li class="cate act" onclick="location.href='activityList.ac?actCategory=0'">
+				
+                <li class="cate act" onclick="location.href='alist.ac'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
                 <li class="cate liv" onclick="location.href='activityList.ac?actCategory=1'">
@@ -79,9 +80,9 @@
     </div>
 
     <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
-    <section id="ban">
+    <div id="ban">
         <img class="ban-img" src="#"  alt="배너 영역">
-    </section>
+    </div>
 	
     <div class="rec-list">
         <div class="rec-title">마감일 임박 별미</div>

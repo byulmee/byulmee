@@ -482,7 +482,7 @@
 				<c:if test="${ f.size() > 0 }">
 					<c:forEach var="f" items="${ f }">
 						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ f.product.proNo }'">
+							<div class="hoverDiv" onclick="location.href='productDetail.pd?pdId=${ f.product.proNo }'">
 								<div class="imgDiv">
 									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ f.image.imgName }">
 								</div>

@@ -9,12 +9,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="resources/js/member/jquery.validate.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 	body {
 		margin: 0;
-		overflow:scroll
+		overflow:scroll;
 	}
 	
 	.outer {
@@ -229,21 +231,41 @@
 	}
 	.tdName {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 120px;
 		text-align: left;
 		background: #F4F4F4;
 		padding: 5px;
 	}
 	.tdContent {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 320px;
 		text-align: left;
 		padding: 5px;
 	}
 	.inputPwdField {
-		width: 150px;
+		width: 314px;
 		outline: 0;
 		border: none;
+	}
+	label.error {
+		/* position: absolute;
+		left: 760px; */
+		font-family: 'GmarketSansLight';
+		font-weight: bold;
+		color: rgb(59, 59, 59);
+		font-size: 0.7rem;
+		padding-bottom: 0.4rem;
+		line-height: 0.9rem;
+		color: #FF6833;
+	}
+	/* #memPwd-error{
+		top: 297px;
+	}
+	#pwdCheck-error{
+		top: 329px;
+	} */
+	input.error {
+		border: 1px solid #FF6833;
 	}
 	#wrap {
 		display: table-cell;
@@ -358,7 +380,7 @@
 				</ul>
 			</div>
 		</div>
-		<form action="myPwdUpdate.me" method="post">
+		<form id="join" action="myPwdUpdate.me" method="post">
 			<div class="content">
 				<div class="tab-box">
 					<ul>
@@ -372,13 +394,16 @@
 					<p id="title">
 						비밀번호 변경
 					</p>
+					<p id="text">
+						비밀번호는 8자~20자 이내여야 하고, 영문자/특수문자/숫자가 반드시 하나 이상 포함되어야 합니다.
+					</p>
 					<table>
 						<tr>
 							<td class="tdName">
 								현재 비밀번호
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="memPwd">
+								<input type="password" class="inputPwdField" name="beforePwd">
 							</td>
 						</tr>
 						<tr>
@@ -386,7 +411,7 @@
 								새 비밀번호
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="newPwd1">
+								<input type="password" class="inputPwdField" name="memPwd">
 							</td>
 						</tr>
 						<tr>
@@ -394,7 +419,7 @@
 								새 비밀번호 확인
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="newPwd2">
+								<input type="password" class="inputPwdField" name="pwdCheck">
 							</td>
 						</tr>
 					</table>
@@ -406,5 +431,41 @@
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		$.validator.addMethod("checkPwd", function(value, element) {
+			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
+		},"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
+		
+		$.validator.addMethod("pwdCheck",  function( value, element ) {
+			return this.optional(element) || /^.(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).$/.test(value);
+		});
+		
+		$('#join').validate({
+			rules : {
+				memPwd : {
+					required : true,
+					minlength : 8,
+					maxlength : 20,
+					checkPwd : true
+				},
+				pwdCheck : {
+					required : true,
+					equalTo : "[name='memPwd']"
+				},
+			},
+			messages : {
+				memPwd : {
+					required : "비밀번호는 필수 입력입니다.",
+					minlength : "비밀번호는 8자 이상이어야 합니다.",
+					maxlength : "비밀번호는 20자 이내여야 합니다.",
+				},
+				pwdCheck : {
+					required : "비밀번호를 한 번 더 확인해주세요.",
+					equalTo : "비밀번호가 일치하지 않습니다."
+				},
+			}
+		});
+	</script>
 </body>
 </html>

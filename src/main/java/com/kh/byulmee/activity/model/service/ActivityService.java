@@ -40,10 +40,10 @@ public interface ActivityService {
 
 	ArrayList<Activity> getNearEndDateActList();
 
-	int getListCount();
-
 	ArrayList<Activity> selectList(PageInfo pi);
 
 	int updateActRatingCnt(Activity a);
+
+	int getActBoardListCount();
 
 }

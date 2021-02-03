@@ -1,5 +1,4 @@
 'use strict';
-
 window.onload = function() {
 	document.getElementById("join").reset();
 }
@@ -275,7 +274,7 @@ $('#join').validate({
     },
     memNickname: {
       required: true,
-      maxlength: 7,
+      maxlength: 8,
       remote : {
         url: 'checkNickname.me',
         data: { nickname : function() { 
@@ -305,8 +304,8 @@ $('#join').validate({
     },
     memPwd : {
       required: "비밀번호는 필수 입력입니다.",
-      minlength: "비밀번호는 8자 이상이어야합니다.",
-      maxlength: "비밀번호는 20자 이내여야합니다.",
+      minlength: "비밀번호는 8자 이상이어야 합니다.",
+      maxlength: "비밀번호는 20자 이내여야 합니다.",
     },
     pwdCheck : {
       required: "비밀번호를 한 번 더 확인해주세요.",
@@ -330,11 +329,12 @@ $('#join').validate({
     },
     memNickname: {
       required: "닉네임은 필수 입력입니다.",
+      maxlength : "닉네임은 8자 이내여야 합니다.",
       remote: "이미 사용 중인 닉네임입니다."
     },
     memEmail : {
       required: "이메일은 필수 입력입니다.",
-      email: "유표한 이메일 주소인지 확인해주세요.",
+      email: "유효한 이메일 주소인지 확인해주세요.",
       emailChek: "유표한 이메일 주소인지 확인해주세요.",
       remote: "이미 사용 중인 이메일 주소입니다."
     }
