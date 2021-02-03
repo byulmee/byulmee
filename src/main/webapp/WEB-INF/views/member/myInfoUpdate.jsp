@@ -13,6 +13,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="resources/js/member/jquery.validate.min.js"></script>
 <style>
 	body {
 		margin: 0;
@@ -171,9 +172,8 @@
 	}
 	.button {
 		width: 80px;
-		margin-top: 5px;
-		padding: 5px;
-		padding-bottom: 2px;
+		height: 27px;
+		padding-top: 3px;
 		border: 1px solid #C4C4C4;
 		background: white;
 		font-family: "Gmarket Sans TTF";
@@ -250,6 +250,7 @@
 		width: 420px;
 	}
 	.colContentTd_btn {
+		height: 45px;
 		padding: 5px;
 		vertical-align: middle;
 		text-align: center;
@@ -281,6 +282,24 @@
 		height: 23px;
 		width: 400px;
 		margin-bottom: 10px;
+	}
+	label.error {
+		padding-left: 5px;
+		font-family: 'GmarketSansLight';
+		font-weight: bold;
+		color: rgb(59, 59, 59);
+		font-size: 0.8rem;
+		padding-bottom: 0.4rem;
+		line-height: 0.9rem;
+		color: #FF6833;
+	}
+	#phone-error {
+		position: absolute;
+		top: 351px;
+		left: 788px;
+	}
+	input.error {
+		border: 1px solid #FF6833;
 	}
 </style>
 </head>
@@ -396,7 +415,7 @@
 					<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
 				</ul>
 			</div>
-			<form action="myInfoUpdate.me" method="post">
+			<form id="join" action="myInfoUpdate.me" method="post">
 				<p id="title">개인정보 변경</p>
 				<table>
 					<tr>
@@ -422,7 +441,7 @@
 						</td>
 						<td class="colContentTd">
 							<input type="text" name="memNickname" id="nickname" class="input" value="<c:out value="${ loginUser.memNickname }"/>">
-							<a class="alert_gray">사용 가능한 닉네임입니다.</a>
+							<a class="alert_gray"></a>
 						</td>
 					</tr>
 					<tr>
@@ -431,7 +450,7 @@
 						</td>
 						<td class="colContentTd">
 							<input type="text" name="memEmail" id="email" class="input" value="<c:out value="${ loginUser.memEmail }"/>">
-							<a class="alert_orange">중복된 이메일 주소입니다.</a>
+							<a class="alert_orange"></a>
 						</td>
 					</tr>
 					<tr>
@@ -475,53 +494,196 @@
 	<c:import url="../common/footer.jsp"/>
 	
 	<script>
-    function address() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	    function address() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("detailAddr").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("detailAddr").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+					document.getElementById("postcode").value = data.zonecode;
+					document.getElementById("basicAddr").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("detailAddr").focus();
+	            }
+	        }).open();
+	    }
+	</script>
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("detailAddr").value = extraAddr;
-                
-                } else {
-                    document.getElementById("detailAddr").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-				document.getElementById("postcode").value = data.zonecode;
-				document.getElementById("basicAddr").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("detailAddr").focus();
-            }
-        }).open();
-    }
-</script>
+	<script>
+		$.validator.addMethod("checkPwd", function(value, element) {
+			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
+		},"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
+		
+		$.validator.addMethod("idCheck",  function( value, element ) {
+			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[-_])(?=.{4,})/g.test(value);
+		});
+		
+		$.validator.addMethod("idCheck",  function( value, element ) {
+			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\\(\\)-_+])(?=.{8,})/g.test(value);
+		});
+		
+		$.validator.addMethod("pwdCheck",  function( value, element ) {
+			return this.optional(element) || /^.(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).$/.test(value);
+		});
+		
+		$.validator.addMethod("phoneCheck",  function( value, element ) {
+			return this.optional(element) || /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/.test(value);
+		});
+		
+		$.validator.addMethod("korChracter",  function( value, element ) {
+			return this.optional(element) ||  /^[가-힣]*$/.test(value);
+		});
+		
+		$.validator.addMethod("emailChek",  function( value, element ) {
+			return this.optional(element) ||  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(value);
+		});
+	
+		
+		$('#join').validate({
+			rules : {
+				memId : {
+					required : true,
+					minlength : 4,
+					maxlength : 20,
+					remote : {
+						url : 'checkId.me',
+						data : {
+							memId : function() {
+								return $('input[name=memId]').val();
+							}
+						}
+					}
+				},
+				memPwd : {
+					required : true,
+					minlength : 8,
+					maxlength : 20,
+					checkPwd : true
+				},
+				pwdCheck : {
+					required : true,
+					equalTo : "[name='memPwd']"
+				},
+				memName : {
+					required : true,
+					korChracter : true
+				},
+				memPostcode : {
+					required : true
+				},
+				memBasicAddr : {
+					required : true
+				},
+				memPhone : {
+					required : true,
+					maxlength : 20,
+					number : true,
+					phoneCheck : true
+				},
+				memNickname : {
+					required : true,
+					maxlength : 8,
+					remote : {
+						url : 'checkChangeNickname.me',
+						data : {
+							nickname : function() {
+								return $('input[name=memNickname]').val();
+							}
+						}
+					}
+				},
+				memEmail : {
+					required : true,
+					emailChek : true,
+					remote : {
+						url : 'checkChangeEmail.me',
+						data : {
+							email : function() {
+								return $('input[name=memEmail]').val();
+							}
+						}
+					}
+				}
+			},
+			messages : {
+				memId : {
+					required : "아이디는 필수 입력입니다.",
+					minlength : "아이디는 4자 이상 20자 이하의 영문과 숫자 조합만 가능합니다.",
+					maxlength : "아이디는 4자 이상 20자 이하의 영문과 숫자 조합만 가능합니다.",
+					remote : "이미 사용 중인 Id입니다."
+				},
+				memPwd : {
+					required : "비밀번호는 필수 입력입니다.",
+					minlength : "비밀번호는 8자 이상이어야 합니다.",
+					maxlength : "비밀번호는 20자 이내여야 합니다.",
+				},
+				pwdCheck : {
+					required : "비밀번호를 한 번 더 확인해주세요.",
+					equalTo : "비밀번호가 일치하지 않습니다."
+				},
+				memName : {
+					required : "이름은 필수 입력입니다.",
+					korChracter : "유효한 한글 이름인지 확인해주세요."
+				},
+				memPostcode : {
+					required : "우편번호는 필수 입력입니다."
+				},
+				memBasicAddr : {
+					required : "주소는 필수 입력입니다."
+				},
+				memPhone : {
+					required : "전화번호는 필수 입력입니다.",
+					maxlength : "유효한 전화번호인지 확인해주세요.",
+					number : "-를 제외한 숫자만 입력해주세요.",
+					phoneCheck : "유효한 전화번호인지 확인해주세요."
+				},
+				memNickname : {
+					required : "닉네임은 필수 입력입니다.",
+					maxlength : "닉네임은 8자 이내여야 합니다.",
+					remote : "이미 사용 중인 닉네임입니다."
+				},
+				memEmail : {
+					required : "이메일은 필수 입력입니다.",
+					email : "유효한 이메일 주소인지 확인해주세요.",
+					emailChek : "유효한 이메일 주소인지 확인해주세요.",
+					remote : "이미 사용 중인 이메일 주소입니다."
+				}
+			}
+		});
+	</script>
 </body>
 </html>

@@ -149,8 +149,9 @@ tr > .secondTitle {
 					<div class="form-group">
 						<label for="inputContent" class="col-sm-2 col-form-label"><strong>답변</strong></label>
 						<div class="col-sm-10">
-							<input type="hidden" id="memId" value="${ memId }">
+							<input type="hidden" id="memId" value="${ salesqna.memId }">
 							<input type="hidden" id="salqnaNo" value="${ salesqna.salqnaNo }">
+							<input type="hidden" id="repRefcode" value="${ salesqna.salqnaType }">
 							<textarea name="repContent" class="form-control" id="repContent" style="height: 200px; width: 765px"></textarea>
 						</div>
 						<div class="ReplyArea">
@@ -225,10 +226,11 @@ tr > .secondTitle {
 			var memId = $('#memId').val();
 			var repContent = $('#repContent').val();
 			var repRefno = $('#salqnaNo').val();
+			var repRefcode = $('#repRefcode').val();
 			
 			$.ajax({
 				url: 'salrepInsert.wr',
-				data: {memId:memId, repContent:repContent, repRefno:repRefno},
+				data: {memId:memId, repContent:repContent, repRefno:repRefno, repRefcode:repRefcode},
 				success: function(data){
 					if(data == 'success'){
 						window.location.reload();
