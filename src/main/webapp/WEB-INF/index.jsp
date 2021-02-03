@@ -80,9 +80,9 @@
     </div>
 
     <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
-    <section id="ban">
+    <div id="ban">
         <img class="ban-img" src="#"  alt="배너 영역">
-    </section>
+    </div>
 	
     <div class="rec-list">
         <div class="rec-title">마감일 임박 별미</div>
