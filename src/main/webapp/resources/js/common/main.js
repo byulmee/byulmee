@@ -29,6 +29,25 @@
 		//인기 상품
 		let popProList = loadList(data.popularProList);
 		document.querySelector('#popularProduct').innerHTML += popProList;
+	
+		//배너
+		let bannerSection = document.querySelector('#ban');
+		let banImg = document.querySelector('.ban-img');
+		
+		if(banImg.length > 0) {
+			bannerSection.display = 'none';
+			banImg.src = getBanImg(data.bannerList);
+			banImg.alt = get
+			
+			bannerSection.addEventListener('click', () => {
+				lodation.href = banImg.;
+			});
+		} else {
+			bannerSection.display = 'hidden';
+		}
+		console.log(data.bannerList);
+		banImg.src = getBanImg(data.bannerList);
+
 	});
 	
 	//화면에 노출할 데이터를 뽑는 메소드
@@ -134,6 +153,16 @@
   	return num.toString().replace(regexp, ',');
 	}
 
+	//배너 추가 메소드
+	function getBanImg(imgDataList) {
+		
+		let randomBan;
+		let ranNo =  Math.floor(Math.random() * imgDataList.length + 1);
+		
+		return imgDataList[ranNo];
+	}
+	
+	
 	//제출 전 검색어 검증
 	/***** by.다혜: 검색 관련 스크립트 *****/
 	document.querySelector('#searchBar').addEventListener('keypress', e => {

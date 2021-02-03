@@ -275,7 +275,7 @@ $('#join').validate({
     },
     memNickname: {
       required: true,
-      maxlength: 25,
+      maxlength: 7,
       remote : {
         url: 'checkNickname.me',
         data: { nickname : function() { 
