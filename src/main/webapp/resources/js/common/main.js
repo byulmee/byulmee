@@ -5,6 +5,7 @@
 'use strict!';
 
 (() => {
+	let banUrl ='';
 	/***** by.다혜: 메인 추천 게시글 추가 스크립트 *****/
 	async function getMainContent() {
 		let response = await fetch('loadMainContent.do');
@@ -31,17 +32,17 @@
 		document.querySelector('#popularProduct').innerHTML += popProList;
 	
 		//배너
-		let imgDataList = data.bannerList
+		let imgDataList = data.bannerList;
 		let bannerSection = document.querySelector('#ban');
 		let banImg = document.querySelector('.ban-img');
 	
 		if(imgDataList.length > 0) {
 			bannerSection.display = '';
-			console.log(imgDataList);
 			let randomBanner = getBanImg(imgDataList);
-			console.log(randomBanner.banOrigin);
-			banImg.alt = randomBanner.banAlt;
+			
 			banImg.src = 'resources/piUploadFiles/' + randomBanner.banOrigin;	
+			banImg.alt = randomBanner.banAlt;
+			banUrl = randomBanner.banUrl;
 		} else {
 			bannerSection.style.display = 'none';
 		}
@@ -145,8 +146,9 @@
 	});
 	
 	document.querySelector('#ban').addEventListener('click', () => {
-		lodation.href = banImg
+		location.href = banUrl;
 	});
+	
 	//콤마 추가하는 메소드
 	function addComma(num) {
   		var regexp = /\B(?=(\d{3})+(?!\d))/g;

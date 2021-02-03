@@ -54,7 +54,7 @@
   	<!-- 배너 -->
   	<insert id="insertBanner">
   		insert into banner
-  		values(seq_bannid.nextval, #{banAlt}, default, #{banOrigin}, 
+  		values(seq_bannid.nextval, #{banAlt}, 'N', #{banOrigin}, 
   				#{banName}, #{banPath}, #{banUrl})
   	</insert>
   	
