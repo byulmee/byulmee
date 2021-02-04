@@ -435,14 +435,14 @@
 		});
 
 		$(document).ready(function(){
-			//var price = $('.price').text();
+			// var price = $('.price').text();
 			var totalprice = $('.totalprice').text();
-			//var Reprice = $('.Reprice').text();
-	       // price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			// var Reprice = $('.Reprice').text();
+	        // price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        totalprice = totalprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        //Reprice = Reprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        //$('.price').html(price);
-	       // $('.Reprice').html(Reprice);
+	        // Reprice = Reprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        // $('.price').html(price);
+	        // $('.Reprice').html(Reprice);
 	        $('.totalprice').html(totalprice);
 		});
 

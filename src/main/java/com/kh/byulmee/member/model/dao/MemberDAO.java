@@ -31,8 +31,8 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.checkPhone", memPhone);
 	}
 
-	public int checkNickname(SqlSessionTemplate sqlSession, String nickname) {
-		return sqlSession.selectOne("memberMapper.checkNickname", nickname);
+	public int checkNickname(SqlSessionTemplate sqlSession, String memNickname) {
+		return sqlSession.selectOne("memberMapper.checkNickname", memNickname);
 	}
 
 	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
@@ -76,5 +76,9 @@ public class MemberDAO {
 
 	public Member selectProductWriter(SqlSessionTemplate sqlSession, int pdId) {
 		return sqlSession.selectOne("memberMapper.selectProductWriter", pdId);
-	}	
+	}
+
+	public Member selectMemberWithNo(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberWithNo", memNo);
+	}
 }

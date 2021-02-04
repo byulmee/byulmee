@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,14 +19,14 @@ import com.google.gson.JsonIOException;
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.SalesQna;
 import com.kh.byulmee.board.service.SalesQnaService;
+import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
-import com.kh.byulmee.reply.model.service.ReplyService;
-import com.kh.byulmee.reply.model.vo.Reply;
 import com.kh.byulmee.review.model.service.ReviewService;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -48,11 +49,11 @@ public class ActivityController {
 	private ReviewService rvService;
 
 	
-	@RequestMapping("activityList.ac")
-	public String activityListView() {
-		return "activityList";
-	}
-	
+//	@RequestMapping("activityList.ac")
+//	public String activityListView() {
+//		return "activityList";
+//	}
+//	
 	@RequestMapping("activityDetail.ac")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
 		
@@ -87,8 +88,9 @@ public class ActivityController {
 			case 5: category = "커리어"; break;
 		}
 		
-		// content textarea에 저장된 값 줄바꿈해서 가져오기
+		// 본문과 유의사항 textarea에 저장된 값 줄바꿈해서 가져오기
 		String contentText = activity.getActContent().replaceAll("\r\n", "<br>");
+		String guideText = activity.getActGuide().replaceAll("\r\n", "<br>");
 		
 		// 섬네일 이미지와 본문 이미지(4개) 나누기 
 		String thumb = null;
@@ -120,6 +122,7 @@ public class ActivityController {
 			  .addObject("content4", content4)
 			  .addObject("writer", writer)
 			  .addObject("contentText", contentText)
+			  .addObject("guideText", guideText)
 			  .addObject("reviewNum", reviewNum)
 			  .addObject("ratingAvg", ratingAvg)
 			  .addObject("possibleNum", possibleNum)
@@ -163,6 +166,24 @@ public class ActivityController {
 			e.printStackTrace();
 		}
 	}
+	
+	// 문의 디테일+답변 불러오기
+	@RequestMapping("salesQnaDetail.ac")
+	public void getQnaDetail(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
+		SalesQna sq = sqService.selectQnaDetail(qnaNo);
+		System.out.println(sq);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(sq, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// 후기 불러오기
 	@RequestMapping("salesReviewList.ac")
@@ -248,5 +269,34 @@ public class ActivityController {
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");
 		}
 		return mv;
+	}
+	
+
+	@RequestMapping("alist.ac")         
+    public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
+                     
+		int currentPage = 1;
+		if(page != null) {
+		     currentPage = page;
+		}
+		  
+		int listCount = aService.getActBoardListCount();
+		  
+		  
+		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		  
+		  ArrayList<Activity> list = aService.selectList(pi);
+  
+		  System.out.println("list == > " + list);
+		  System.out.println("list.size 1== > " + list.size());
+		  
+		  if(list != null) {
+			 model.addAttribute("list", list);
+			 model.addAttribute("pi", pi);
+			 System.out.println("list.size 2== > " + list.size());
+			 return "activityList";
+		  } else {
+			  throw new ActivityException("조회에 실패하였습니다.");
+		  }
 	}
 }

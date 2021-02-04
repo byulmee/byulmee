@@ -73,6 +73,8 @@ public class WorkRoomController {
 	@Autowired 
 	private FavoriteService fService;
 	
+	//private static String OS = System.getProperty("os.name").toLowerCase();
+	
 	@RequestMapping("pdWorkRoomUser.wr")
 	public ModelAndView pdWorkRoomUserMain(@RequestParam(value="page", required=false) Integer page, @RequestParam("memNo") int memNo, @RequestParam("memId") String memId, 
 											ModelAndView mv, HttpServletRequest request) {
@@ -837,10 +839,19 @@ public class WorkRoomController {
 	public Image saveFile(MultipartFile file, HttpServletRequest request) {
 		Image i = new Image();
 		//"C:\\dev\\Final_byulmee\\byulmee\\src\\main\\webapp\\resources";
+		
+		
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		// 웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더 )
 		System.out.println(root);
-		String savePath = root + "\\auploadFiles";
+		
+		String savePath;
+		String osName = System.getProperty("os.name").toLowerCase();
+		if(osName.indexOf("mac") >= 0) {
+			savePath = root + "/auploadFiles";
+		} else {
+			savePath = root + "\\auploadFiles";
+		}
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -852,16 +863,24 @@ public class WorkRoomController {
 		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum 
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
-		String renamePath = folder + "\\" + renameFileName;
+		
+		String renamePath = "";
+		if(osName.indexOf("mac") >= 0) {
+			renamePath = folder + "/" + renameFileName;
+		} else {
+			renamePath = folder + "\\" + renameFileName;
+		}
+		
+		
+		
 		i.setImgPath(renamePath);
 		i.setImgName(renameFileName);
+		
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// DB에 저장할 용도로 리턴하는 값

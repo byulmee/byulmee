@@ -37,4 +37,6 @@ public interface ProductService {
 	int selectOrderSum(int pdId);
 
 	ArrayList<Product> getPopularProList();
+	
+	int updateProRatingCnt(Product p);
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="activityMapper">
-
 	<resultMap type="Activity" id="activityResultSet">
 	  	<id property="actNo" column="ACT_NO"/>
 	  	<result property="memId" column="MEM_ID"/>
@@ -20,8 +19,9 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
-  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actTotalScore" column="ACT_TOTAL_SCORE"/>
   		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
+  		<result property="actRating" column="ACT_RATING"/>
   </resultMap>
   
   <resultMap type="Activity" id="activityListResultSet">
@@ -42,8 +42,9 @@
 	  	<result property="actCount" column="ACT_COUNT"/>
 	  	<result property="actDate" column="ACT_DATE"/>
   		<result property="actStatus" column="ACT_STATUS"/>
-  		<result property="actRating" column="ACT_RATING"/>
+  		<result property="actTotalScore" column="ACT_TOTAL_SCORE"/>
   		<result property="actReviewCnt" column="ACT_REVIEW_CNT"/>
+  		<result property="actRating" column="ACT_RATING"/>
   		<collection property="member" resultMap="memberResultSet"/>
   		<collection property="image" resultMap="imageResultSet"/>
   </resultMap>
@@ -92,11 +93,11 @@
 	<!-- 활동 게시물 등록 -->
 	<insert id="insertActivity" useGeneratedKeys="true" keyProperty="actNo" keyColumn="ACT_NO">
   		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
-  							  ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
-  							  ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
-  							  ACT_COUNT, ACT_DATE, ACT_STATUS, ACT_RATING, ACT_REVIEW_CNT)
+  								ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
+  								ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
+  								ACT_COUNT, ACT_DATE, ACT_STATUS, ACT_TOTAL_SCORE, ACT_REVIEW_CNT, ACT_RATING)
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
-  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default, default, default)
+  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default, default, default, default)
 	</insert>
 	
 	<select id="selectOrderSum" resultType="_int">
@@ -105,6 +106,7 @@
 		where ord_refno = #{acId} and ord_refcode = 0
 	</select>
 	
+
  <select id="getUserListCount" resultType="_int">
  	select count(*)
   	from activity
@@ -117,10 +119,21 @@
   	where mem_id = #{memId} 
   </select>
   
+  <select id="getActBoardListCount" resultType="_int">
+  	select count(*)from activity
+  </select>
+  
   <select id="selectList" resultMap="activityResultSet">
   	select *
   	from activity
   	where mem_id = #{memId}
+  	order by act_no desc
+  </select>
+  
+  <select id="selectActBoardList" resultMap="activityResultSet">
+  	select *
+  	from activity
+  	
   	order by act_no desc
   </select>
   
@@ -197,12 +210,14 @@
   	<select id="getPopularActList" resultMap="activityListResultSet">
 		select orderedlist.*
 		from 
-		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
-		        from activity a
-		            inner join image i on i.img_refno = a.act_no
-		            inner join member m on a.mem_id = m.mem_id
-		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
-		        order by a.act_rating desc, a.act_review_cnt desc, act_date asc) orderedlist
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_category,
+		    		a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname,
+		    		i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+	         from activity a
+	            inner join image i on i.img_refno = a.act_no
+	            inner join member m on a.mem_id = m.mem_id
+	         where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+	         order by a.act_rating desc, a.act_review_cnt desc, act_date asc) orderedlist
 		where rownum <![CDATA[<]]>= 50
   	</select>
   	
@@ -210,12 +225,20 @@
   	<select id="getNearEndDateActList" resultMap="activityListResultSet">
 		select orderedlist.*
 		from 
-		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
-		        from activity a
-		            inner join image i on i.img_refno = a.act_no
-		            inner join member m on a.mem_id = m.mem_id
-		        where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
-		        order by a.act_endday asc) orderedlist
+		    (select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_category,
+		    		a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname,
+		    		i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno 
+	         from activity a
+	            inner join image i on i.img_refno = a.act_no
+	            inner join member m on a.mem_id = m.mem_id
+	         where act_status = 'Y' and a.act_endday <![CDATA[>]]> sysdate and i.img_refcode = 1 and i.img_level = 0
+	         order by a.act_endday asc) orderedlist
 		where rownum <![CDATA[<]]> = 5	
   	</select>
+  	
+  	<update id="updateActRatingCnt">
+	  	update activity
+	  	set act_total_score = #{actTotalScore}, act_review_cnt = #{actReviewCnt}, act_rating = #{actRating}
+	  	where act_no = #{actNo}
+  	</update>
 </mapper>

@@ -12,7 +12,7 @@
 		<result property="revRefcode" column="REV_REFCODE"/>
 		<result property="revRefno" column="REV_REFNO"/>
 		<collection property="member" resultMap="memberResultSet"></collection>
-		<collection property="image" resultMap="imageResultSet"></collection>
+		<collection property="img" resultMap="imageResultSet"></collection>
 	</resultMap>
 	
 	<resultMap type="Member" id="memberResultSet">

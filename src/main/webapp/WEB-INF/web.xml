@@ -169,7 +169,6 @@
 		<url-pattern>*.sq</url-pattern>
 	</servlet-mapping>
 	
-
 	<!-- product 관련 URL 요청 처리 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>
@@ -183,7 +182,7 @@
 		<servlet-name>productServlet</servlet-name>
 		<url-pattern>*.pd</url-pattern>
 	</servlet-mapping>
-
+	
 	<!--  	admin 관련 URL 요청 처리  -->
 	<servlet>
 		<servlet-name>adminServlet</servlet-name>
@@ -196,5 +195,18 @@
 	<servlet-mapping>
 		<servlet-name>adminServlet</servlet-name>
 		<url-pattern>*.ad</url-pattern>
+	</servlet-mapping>
+	<!-- payment 관련 URL 요청 처리 -->
+	<servlet>
+		<servlet-name>paymentServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/payment-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>paymentServlet</servlet-name>
+		<url-pattern>*.pt</url-pattern>
 	</servlet-mapping>
 </web-app>

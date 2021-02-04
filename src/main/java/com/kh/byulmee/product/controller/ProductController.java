@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.byulmee.activity.model.exception.ActivityException;
-import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.SalesQna;
 import com.kh.byulmee.board.service.SalesQnaService;
 import com.kh.byulmee.image.model.service.ImageService;
@@ -160,6 +159,7 @@ public class ProductController {
 	@RequestMapping("salesProductReviewList.pd")
 	public void getReviewList(@RequestParam("pdId") int pdId, HttpServletResponse response) {
 		ArrayList<Review> reviewList = rvService.selectProductReviewList(pdId);
+		System.out.println(reviewList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

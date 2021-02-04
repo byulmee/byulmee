@@ -43,7 +43,10 @@ public interface AdminService {
 
 	void updateAdminBannerOpenById(Map param);
 
+	ArrayList<Banner> selectBannerList();
 
+	int getSearchIdListCount(String searchId);
 
+	ArrayList<Member> selectSerachMemberList(PageInfo pi, String searchId);
 
 }

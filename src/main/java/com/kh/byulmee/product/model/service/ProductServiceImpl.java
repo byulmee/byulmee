@@ -62,7 +62,6 @@ public class ProductServiceImpl implements ProductService{
 		return pDAO.updateProduct(sqlSession, p);
 	}
 
-	@Override
 	public int getUserListCount(String memId) {
 		return pDAO.getUserListCount(sqlSession, memId);
 	}
@@ -101,11 +100,15 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int selectOrderSum(int pdId) {
 		return pDAO.selectOrderSum(sqlSession, pdId);
-  }
-  
+	}	
+		
 	@Override
 	public ArrayList<Product> getPopularProList() {
 		return pDAO.getPopularProList(sqlSession);
 	}
 	
+	@Override
+	public int updateProRatingCnt(Product p) {
+		return pDAO.updateProRatingCnt(sqlSession, p);
+	}
 }
