@@ -600,11 +600,6 @@ public class WorkRoomController {
 									@RequestParam("thumbnailImg3") MultipartFile thumbnailImg3, 
 									@RequestParam("thumbnailImg4") MultipartFile thumbnailImg4,
 									HttpServletRequest request) {
-		System.out.println("thumbnailImg5 : " + thumbnailImg5);
-		System.out.println("thumbnailImg1 : " + thumbnailImg1);
-		System.out.println("thumbnailImg2 : " + thumbnailImg2);
-		System.out.println("thumbnailImg3 : " + thumbnailImg3);
-		System.out.println("thumbnailImg4 : " + thumbnailImg4);
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;
@@ -710,8 +705,6 @@ public class WorkRoomController {
 			
 			result5 = iService.insertImage(i);
 		}
-		
-		System.out.println(actNo + ", " + result1 + ", " + result2 + ", " + result3 + ", " + result4 + ", " + result5);
 		
 		if(actNo > 0 && (result1 > 0 || result2 > 0 || result3 > 0 || result4 > 0 || result5 > 0 )) {
 			return "redirect:wookroomView.wr";
@@ -833,9 +826,7 @@ public class WorkRoomController {
 			
 			result5 = iService.insertImage(i);
 		}
-		
-		System.out.println(proNo + ", " + result1 + ", " + result2 + ", " + result3 + ", " + result4 + ", " + result5);
-		
+
 		if(proNo > 0 && (result1 > 0 || result2 > 0 || result3 > 0 || result4 > 0 || result5 > 0 ) ) {
 			return "redirect:productView.wr";
 		} else {

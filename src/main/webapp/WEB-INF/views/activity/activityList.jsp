@@ -70,7 +70,9 @@ body {
       <div class="listMain" style="font-size: 20px; font-weight: bold;">
          <span style="color: orange;">별</span>난취<span style="color: orange;">미</span> 리스트
       </div>
+      
       <br>
+      
       <table>
          <tr>
             <th style="background-color: #eeeeee;"
@@ -81,6 +83,7 @@ body {
                width="490px;"></th>
          </tr>
       </table>
+      
       <div id="searchArea" align="right">
          <select id="searchCondition" name="searchCondition">
             <option value="">인기순</option>
@@ -89,79 +92,81 @@ body {
             <option value="">리뷰순</option>
          </select>
       </div>
+     
       <br>
-      <%
-      ActivityDAO activityDAO = new ActivityDAO();   
-   %>
+      
+      <% ActivityDAO activityDAO = new ActivityDAO(); %>
  	
-         <c:forEach items="${ list }" varStatus="status" var="val">
-      <div class="rec-list" style="display: inline-block;">
-            <ul class="list" style="list-style: none;">
-            	<c:if test="${status.index mod 5 eq 0}">
-			    </c:if>
-               <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
-                  <div class="img-frame">
-                     <img class="list-thumb" src="resources/images/common/test.png"
-                        alt="zz" width="210px;">
-                  </div> <span>${val.memId }</span>
-                  <div class="list-cate">[${val.actCategory }]&nbsp;${val.actTitle }</div>
-                  <span class="list-price"><i class="fas fa-receipt"></i>${val.actPrice }원</span><br>
-                  <span class="list-social">⭐️4.9 9999개의 평가</span>
-               </li>
-               <c:if test="${(status.index + 1) mod 5 eq 0}">
-            </ul>
-            </c:if>
-    	  </div>
-         </c:forEach>
-		<br><br>
+		<c:forEach items="${ list }" varStatus="status" var="val">
+			<div class="rec-list" style="display: inline-block;">
+			      <ul class="list" style="list-style: none;">
+			      	<c:if test="${status.index mod 5 eq 0}">
+			 		</c:if>
+			         <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
+			            <div class="img-frame">
+			               <img class="list-thumb" src="resources/images/common/test.png"
+			                  alt="zz" width="210px;">
+			            </div> <span>${val.memId }</span>
+			            <div class="list-cate">[${val.actCategory }]&nbsp;${val.actTitle }</div>
+			            <span class="list-price"><i class="fas fa-receipt"></i>${val.actPrice }원</span><br>
+			            <span class="list-social">⭐️4.9 9999개의 평가</span>
+			         </li>
+			         <c:if test="${(status.index + 1) mod 5 eq 0}">
+			      </ul>
+			      </c:if>
+			</div>
+		</c:forEach>
 		
+		<br><br>
 
-
-
-      <!-- 페이징 처리 -->
-      <div id="paging" align="center">
-         <table>
-            <tr height="20" id="buttonTab">
-               <td>
-                  <!-- [이전] --> <c:if test="${ pi.currentPage <= 1 }">
-               [이전] &nbsp;
-            </c:if> <c:if test="${ pi.currentPage > 1 }">
-                     <c:url var="before" value="alist.ac">
-                        <c:param name="page" value="${ pi.currentPage - 1 }" />
-                     </c:url>
-                     <a href="${ before }">[이전]</a> &nbsp;
-            </c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-                     end="${ pi.endPage }">
-                     <c:if test="${ p eq pi.currentPage }">
-                        <font color="red" size="4"><b>[${ p }]</b></font>
-                     </c:if>
-
-                     <c:if test="${ p ne pi.currentPage }">
-                        <c:url var="pagination" value="alist.ac">
-                           <c:param name="page" value="${ p }" />
-                        </c:url>
-                        <a href="${ pagination }">${ p }</a> &nbsp;
-               </c:if>
-                  </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage >= pi.maxPage }">
-               [다음]
-            </c:if> <c:if test="${ pi.currentPage < pi.maxPage }">
-                     <c:url var="after" value="alist.ac">
-                        <c:param name="page" value="${ pi.currentPage + 1 }" />
-                     </c:url>
-                     <a href="${ after }">[다음]</a>
-                  </c:if>
-               </td>
-            </tr>
-         </table>
-      </div>
-   </div>
+	   <!-- 페이징 처리 -->
+	   <div id="paging" align="center">
+	      <table>
+	         <tr height="20" id="buttonTab">
+	            <td>
+	               <!-- [이전] --> 
+	               <c:if test="${ pi.currentPage <= 1 }">
+	            	[이전] &nbsp;
+	         		</c:if>
+	         		<c:if test="${ pi.currentPage > 1 }">
+	                	<c:url var="before" value="alist.ac">
+	                		<c:param name="page" value="${ pi.currentPage - 1 }" />
+	                  	</c:url>
+	                 	<a href="${ before }">[이전]</a> &nbsp;
+	        		 </c:if>
+	        		<!-- 페이지 -->
+	        		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                	<c:if test="${ p eq pi.currentPage }">
+	                    	<font color="red" size="4"><b>[${ p }]</b></font>
+	                	</c:if>
+	
+	               		<c:if test="${ p ne pi.currentPage }">
+		                    <c:url var="pagination" value="alist.ac">
+		                       <c:param name="page" value="${ p }" />
+		                    </c:url>
+	                     	<a href="${ pagination }">${ p }</a> &nbsp;
+	           			</c:if>
+	               </c:forEach>
+	               <!-- [다음] -->
+	               <c:if test="${ pi.currentPage >= pi.maxPage }">
+	            	[다음]
+	         	   </c:if>
+	         	   <c:if test="${ pi.currentPage < pi.maxPage }">
+	                  <c:url var="after" value="alist.ac">
+	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+	                  </c:url>
+	                  <a href="${ after }">[다음]</a>
+	               </c:if>
+	            </td>
+	         </tr>
+	      </table>
+	   </div>
+	</div>
 
 
 
    <c:import url="../common/footer.jsp" />
    <br>
    <br>
-
-
 </body>
 </html>

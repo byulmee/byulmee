@@ -19,8 +19,6 @@
 	}
 	
 	getMainContent().then((data) => {
-		
-			console.log(data);
 		//인기 활동
 		let popActList = loadList(data.popularActList);
 		document.querySelector('#popularActList').innerHTML += popActList;
@@ -61,7 +59,6 @@
 		
 		for(let i = 0; i<randomList.length; i++) {
 			if(randomList[i] != null) {
-				console.log(randomList);
 				
 				if(randomList[i].actNo) {
 					listTag = '<li class="list-item">'

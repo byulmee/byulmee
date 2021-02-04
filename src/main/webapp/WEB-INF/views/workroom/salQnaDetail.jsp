@@ -184,15 +184,15 @@ tr > .secondTitle {
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h4 class="modal-title">답글 수정</h4>
+		                <h4 class="modal-title">답변 수정</h4>
 		            </div>
 		            <div class="modal-body">
 		                <input type="hidden" id="moRepNo" name="repNo">
 		                <input type="hidden" id="moRepRefno" name="repRefno">
 		              
 		                <div class="form-group">
-		                    <label for="repContent">댓글 내용</label>
-		                    <textArea class="form-control" id="moRepContent" name="repContent" placeholder="댓글 내용을 입력해주세요" style="height: 200px; width: 470px"></textArea>
+		                    <label for="repContent">답변 내용</label>
+		                    <textArea class="form-control" id="moRepContent" name="repContent" placeholder="답변 내용을 입력해주세요" style="height: 200px; width: 470px"></textArea>
 		                </div>
 		            </div>
 		            <div class="modal-footer">
