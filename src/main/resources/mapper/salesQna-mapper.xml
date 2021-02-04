@@ -57,6 +57,14 @@
 		<result property="repRefno" column="REP_REFNO"/>
 	</resultMap>
 	
+	<select id="selectQnaDetail" resultMap="salesQnaResultSet">
+		select *
+		from sales_qna sq
+			left outer join reply r on sq.salqna_no = r.rep_refno
+			left outer join member m on sq.mem_id = m.mem_id
+		where salqna_type = 'A' and salqna_no = #{qnaNo}		
+	</select>
+	
 	<select id="selectQnaList" resultMap="salesQnaResultSet">
 		select *
 			from (
@@ -126,7 +134,6 @@
 		    <![CDATA[where rownum <= 5]]>
 		    )
 		where salqna_refno = #{pdId} and salqna_type = 'P'
-		where salqna_refno = #{acId}
 		order by salqna_no desc
 	</select>
 	

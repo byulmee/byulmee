@@ -52,7 +52,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp"/>
+	<c:import url="../common/gnbTypeB.jsp" />
 	<div id="mainFrame" style="padding-left: 10%; padding-right: 10%;">
 		<h2 align="center" style="padding-top: 15px; font-weight: bold">상품 문의 등록</h2>
 		<hr>
@@ -70,7 +70,7 @@
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>상품</strong></label>
 				<div class="col-sm-10" id="activityTitle">
 					<span>[${ pd.proTitle }]</span>
-					<input type="hidden" name="acId" value="${ pd.proNo }">
+					<input type="hidden" name="pdId" value="${ pd.proNo }">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -81,7 +81,7 @@
 				</div>
 			</div>
 			<div id="buttonArea">
-			<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">등록</button>
+			<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: black; color: white">등록</button>
 			<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="#">취소</button>
 			</div>
 		</form>

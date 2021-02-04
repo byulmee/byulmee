@@ -48,8 +48,9 @@ public class SalesQnaServiceImpl implements SalesQnaService{
 	@Override
 	public int insertProductQna(SalesQna sq) {
 		return sqDAO.insertProductQna(sqlSession, sq);
-  }
-  
+	}
+	
+	@Override
 	public int getListCount(String memId) {
 		return sqDAO.getListCount(sqlSession, memId);
 	}
@@ -82,6 +83,11 @@ public class SalesQnaServiceImpl implements SalesQnaService{
 	@Override
 	public int salQnaUpdate(SalesQna s) {
 		return sqDAO.salQnaUpdate(sqlSession, s);
+	}
+
+	@Override
+	public SalesQna selectQnaDetail(int qnaNo) {
+		return sqDAO.selectQnaDetail(sqlSession, qnaNo);
 	}
 
 
