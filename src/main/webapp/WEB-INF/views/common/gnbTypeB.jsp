@@ -26,13 +26,14 @@
                    <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기" onsubmit="location.href='search.bo'">
                </form>
             <ul id="menu-list">
-            	<c:if test="${ empty sessionScope.loginUser }">
-            		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
-            	</c:if>
-            	<c:if test="${ !empty sessionScope.loginUser }">
-                	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
-					<li class="menu-list-item" onclick="location.href='myPageMainView.me'">마이페이지</li>
-                </c:if>
+            	<c:if test="${ sessionScope.loginUser.memLevel eq 0 || sessionScope.loginUser.memLevel eq 1}">
+                	<li onclick="location.href='logout.me'">로그아웃</li>
+               		<li onclick="location.href='myPageMainView.me'">마이페이지</li>
+           		</c:if>
+           		<c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
+           			<li onclick="location.href='logout.me'">로그아웃</li>
+		        	<li onclick="location.href='adminMain.ad'">시스템관리</li>
+	        	</c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
                 <li class="menu-list-item" onclick="location.href='home.do'"><img src="resources/images/common/logo.png" id="mk-logo" alt="market logo"></li>
             </ul>

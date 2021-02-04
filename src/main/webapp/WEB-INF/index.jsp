@@ -25,13 +25,14 @@
             <c:if test="${ empty sessionScope.loginUser }">
                 <li onclick="location.href='loginView.me'">로그인</li>
             </c:if>
-            <c:if test="${ !empty sessionScope.loginUser }">
+            <c:if test="${ sessionScope.loginUser.memLevel eq 0 || sessionScope.loginUser.memLevel eq 1}">
                 <li onclick="location.href='logout.me'">로그아웃</li>
                	<li onclick="location.href='myPageMainView.me'">마이페이지</li>
-	            	<c:if test="${loginUser.memId.equals('admin')}">
-		           	<li onclick="location.href='adminMain.ad'">관리자</li>
-		           	</c:if>
             </c:if>
+            <c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
+           		<li onclick="location.href='logout.me'">로그아웃</li>
+		        <li onclick="location.href='adminMain.ad'">시스템관리</li>
+	        </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
                 <li><img onclick="location.href='productList.pd'" src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
             </ul>
