@@ -94,9 +94,9 @@
   		insert into activity (ACT_NO, MEM_ID, ACT_PHONE, ACT_STARTDAY, 
   							  ACT_ENDDAY, ACT_PLACE, ACT_PEOPLE, ACT_REQUESTEND, 
   							  ACT_CATEGORY, ACT_TITLE, ACT_PRICE, ACT_URL, ACT_CONTENT, ACT_GUIDE,
-  							  ACT_COUNT, ACT_DATE, ACT_STATUS)
+  							  ACT_COUNT, ACT_DATE, ACT_STATUS, ACT_RATING, ACT_REVIEW_CNT)
   		VALUES (seq_actid.nextval, #{memId}, #{actPhone}, #{actStartday}, #{actEndday}, #{actPlace},
-  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default)
+  				#{actPeople}, #{actRequestend}, #{actCategory}, #{actTitle}, #{actPrice}, #{actUrl}, #{actContent}, #{actGuide}, default, sysdate, default, default, default)
 	</insert>
 	
 	<select id="selectOrderSum" resultType="_int">

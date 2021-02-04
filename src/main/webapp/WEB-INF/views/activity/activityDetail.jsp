@@ -1471,7 +1471,7 @@ hr {
 	        $(function(){
 	            var article = (".question .show"); 
 	            var article2 = (".question .show2"); 
-	            $(".question .trQuestion  td").on("click", function() { 
+	            $(".question .trQuestion td").on("click", function() { 
 	                var myArticle =$(this).parents().next("tr"); 
 	                var myArticle2 =$(this).parents().next().next("tr");
 	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 

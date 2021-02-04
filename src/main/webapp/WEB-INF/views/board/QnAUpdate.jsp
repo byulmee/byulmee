@@ -97,13 +97,13 @@ $(document).ready(function(){
 		<hr>
 		<form action="cusUpdate.bo" method="post">
 			<div class="form-group row">
-				<input type="hidden" name="cusqnaNo" value="${ customerqna.cusqnaNo }">
+				<input type="hidden" name="cusqnaNo" value="${ customer.cusqnaNo }">
 				<input type="hidden" name="page" value="${ page }">
-				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory" value="${ customerqna.cusqnaCategory }">
+				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory" value="${ customer.cusqnaCategory }">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
 					<input type="text" name="cusqnaTitle" class="form-control"
-						id="inputTitle" value="${ customerqna.cusqnaTitle }">
+						id="inputTitle" value="${ customer.cusqnaTitle }">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -128,7 +128,7 @@ $(document).ready(function(){
 				<label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
 				<div class="col-sm-10">
 					<textarea type="text" name="cusqnaContent" class="form-control"
-						id="inputContent" style="height: 400px">${ customerqna.cusqnaContent }</textarea>
+						id="inputContent" style="height: 400px">${ customer.cusqnaContent }</textarea>
 				</div>
 			</div>
 			<div id="buttonArea">
