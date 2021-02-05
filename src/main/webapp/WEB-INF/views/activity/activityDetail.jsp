@@ -1535,6 +1535,29 @@ hr {
 			var qnaNo = $(this).next().text();
 			console.log(qnaNo);
 			
+			// 문의게시판 토글
+	        $(function(){
+	            var article = (".question .show"); 
+	            var article2 = (".question .show2"); 
+	            $(".question .trQuestion td").on("click", function() { 
+	                var myArticle =$(this).parents().next("tr"); 
+	                var myArticle2 =$(this).parents().next().next("tr");
+	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
+	                    $(article).removeClass('show').addClass('trContent'); 
+	                    $(article2).removeClass('show2').addClass('salqnaReply'); 
+	                    $(myArticle).removeClass('trContent').addClass('show'); 
+	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
+	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
+	                    $('.questionExcept .show2 td').removeClass('show2').addClass('salqnaReply');
+	                } 
+	                else { 
+	                    $(myArticle).addClass('trContent').removeClass('show');
+	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
+	                } 
+	            }); 
+	        });
+			
+			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
 			$.ajax({
 				url: 'salesQnaDetail.ac',
 				data: {qnaNo:qnaNo},

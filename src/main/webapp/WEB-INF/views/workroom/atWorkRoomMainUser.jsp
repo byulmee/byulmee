@@ -306,7 +306,7 @@
 							<c:when test="${ a.actCategory eq '5' }">커리어</c:when>					
 						</c:choose>] ${ a.actTitle }</p>
 						<p class="priceText"><img class="btnimg" src="${ pageContext.servletContext.contextPath }/resources/images/board/button1.PNG" align="middle"><span id="price">${ a.actPrice }</span>원</p>
-						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">4.8 1891개의 평가</p>
+						<p class="priceText2"><img class="btnimg2" src="${ pageContext.servletContext.contextPath }/resources/images/board/star1.PNG" align="middle">${ a.actRating } ${ a.actReviewCnt }개의 평가</p>
 					</div>
 				</c:forEach>
 			</div>
@@ -373,11 +373,11 @@
 		});
 
 		// 가격에 천단위 ,(콤마)추가
-	    $(document).ready(function(){
+/* 	    $(document).ready(function(){
 			var price = $('#price').text();
 	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        $('#price').html(price);
-	    });
+	    }); */
 
 	    function productView() {
 			var memId = $('#memId').val();
