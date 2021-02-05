@@ -72,8 +72,23 @@ public class ProductDAO {
 		return (ArrayList)sqlSession.selectList("productMapper.proSearchLsit", keywords, rowBounds);
 	}
 
+	public Product selectProduct(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.selectOne("productMapper.selectProduct", pdId);
+	}
+
+	public int addReadCount(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.update("productMapper.addReadCount", pdId);
+	}
+
+	public int selectOrderSum(SqlSessionTemplate sqlSession, int pdId) {
+		return sqlSession.selectOne("productMapper.selectOrderSum", pdId);
+	}
+	
 	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
 	}
 
+	public int updateProRatingCnt(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("productMapper.updateProRatingCnt", p);
+	}
 }

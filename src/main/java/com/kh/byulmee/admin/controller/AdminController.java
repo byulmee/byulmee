@@ -154,6 +154,7 @@ public class AdminController {
 
 
 	}
+	
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
 			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl, 
@@ -198,7 +199,13 @@ public class AdminController {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		// 웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
 		
-		String savePath = root + "\\piUploadFiles";
+		String os= System.getProperty("os.name").toLowerCase();
+		String savePath;
+		if(os.indexOf("mac") >= 0) {
+			savePath = root + "/piUploadFiles";
+		} else {
+			savePath = root + "\\piUploadFiles";
+		}
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -210,8 +217,12 @@ public class AdminController {
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
 		
-		String renamePath = folder + "\\" + renameFileName;
-		
+		String renamePath;
+		if(os.indexOf("mac") >= 0) {
+			renamePath = folder + "/" + renameFileName;
+		} else {
+			renamePath = folder + "\\" + renameFileName;
+		}
 		ba.setBanPath(renamePath);
 		ba.setBanName(renameFileName);
 		

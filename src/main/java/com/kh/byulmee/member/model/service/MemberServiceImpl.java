@@ -46,8 +46,8 @@ public class MemberServiceImpl implements MemberService {
 
 	//닉네임 중복 체크
 	@Override
-	public int checkNickname(String nickname) {
-		return mDAO.checkNickname(sqlSession, nickname);
+	public int checkNickname(String memNickname) {
+		return mDAO.checkNickname(sqlSession, memNickname);
 	}
 	
 	//휴대전화 중복 체크
@@ -127,11 +127,6 @@ public class MemberServiceImpl implements MemberService {
 			return "user_not_found";
 		}
 	}
-
-	@Override
-	public Member selectActivityWriter(int acId) {
-		return mDAO.selectActivityWriter(sqlSession, acId);
-	}
 	
 	//검색 키워드와 일치하는 전체 스타 수
 	@Override
@@ -142,5 +137,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<Activity> getStarSearchResult(PageInfo pi, String[] keywords) {
 		return mDAO.getStarSearchResult(sqlSession, pi, keywords);
+	}
+	
+	@Override
+	public Member selectActivityWriter(int acId) {
+		return mDAO.selectActivityWriter(sqlSession, acId);
+	}
+
+	@Override
+	public Member selectMemberWithNo(int memNo) {
+		return mDAO.selectMemberWithNo(sqlSession, memNo);
+	}
+
+	@Override
+	public Member selectProductWriter(int pdId) {
+		return mDAO.selectProductWriter(sqlSession, pdId);
 	}
 }

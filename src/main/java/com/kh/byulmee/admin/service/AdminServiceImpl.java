@@ -80,6 +80,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
+	public ArrayList<Banner> selectBannerList() {
+		return abDAO.selectBannerList(sqlSession);
+	}
+	
+	
+	@Override
 	public void updateAdminBannerOpenById(Map param) {
 		 abDAO.updateBannerOpen(param);
 	}

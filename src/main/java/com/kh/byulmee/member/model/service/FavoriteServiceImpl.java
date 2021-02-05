@@ -17,8 +17,18 @@ public class FavoriteServiceImpl implements FavoriteService{
 	private FavoriteDAO fDAO;
 
 	@Override
-	public int insertActivityFavorite(int acId) {
-		return fDAO.insertActivityFavorite(sqlSession, acId);
+	public int insertActivityFavorite(Favorite fv) {
+		return fDAO.insertActivityFavorite(sqlSession, fv);
+	}
+
+	@Override
+	public int insertStarFavorite(Favorite fv) {
+		return fDAO.insertStarFavorite(sqlSession, fv);
+	}
+
+	@Override
+	public int insertProductFavorite(Favorite fv) {
+		return fDAO.insertProductFavorite(sqlSession, fv);
 	}
 
 	@Override

@@ -56,7 +56,6 @@
   	<insert id="insertBanner">
   		insert into banner
   		values (seq_bannid.nextval, #{banAlt}, 'N', #{banOrigin}, #{banName}, #{banPath}, #{banUrl}, #{banBgc})
-  		
   	</insert>
   	
   	<select id="getBannerListCount" resultType="_int">
@@ -64,6 +63,13 @@
 	  	from banner
 	</select>
 
+	<select id="selectMainBannerList" resultMap="bannerResultSet">
+		select *
+		from banner
+		where ban_open = 'Y'
+		order by ban_no desc
+	</select>
+	
 	<select id="selectBannerList" resultMap="bannerResultSet">
 		select *
 		from banner

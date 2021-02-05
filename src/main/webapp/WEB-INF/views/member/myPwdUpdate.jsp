@@ -9,12 +9,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="resources/js/member/jquery.validate.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 	body {
 		margin: 0;
-		overflow:scroll
+		overflow:scroll;
 	}
 	
 	.outer {
@@ -38,16 +40,32 @@
 		background: #F4F4F4;
 	}
 	.profile {
-		padding: 25px;
+		padding: 25px 25px 23px 25px;
 	}
-	.profileImg {
-		width: 150px;
-		height: 150px;
+	.profileDiv {
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		width: 146px;
+		height: 146px;
 		border-radius: 90%;
 		overflow: hidden;
-		object-fit: cover;
+		border: 2px solid gray;
+		background: black;
+	}
+	.profileImg {
+		position: absolute;
+	    margin: auto;
+	    width: 146px;
+	    height: auto;
+	    left: -100%;
+	    right: -100%;
+	    top: -100%;
+	    bottom: -100%;
 	}
 	.nickname {
+		margin: 0;
+		padding-top: 10px;
 		text-align: center;
 		font-size: 14px;
 	}
@@ -87,14 +105,38 @@
 		background: #F4F4F4;
 		border: 1px solid #DCDCDC;
 	}
+	.sideMenuUl > li ul.qnaDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 150px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
+	.sideMenuUl > li ul.reviewDropdown {
+		list-style: none;
+		display: none;
+		position: absolute;
+		top: 200px;
+		left: 200px;
+		background: #F4F4F4;
+		border: 1px solid #DCDCDC;
+		z-index: 1;
+	}
 	.sideMenuUl > li:hover ul.myinfoDropdown,
 	.sideMenuUl > li:hover ul.purDropdown,
-	.sideMenuUl > li:hover ul.favDropdown {
+	.sideMenuUl > li:hover ul.favDropdown,
+	.sideMenuUl > li:hover ul.qnaDropdown,
+	.sideMenuUl > li:hover ul.reviewDropdown {
 		display: block;
 	}
 	.sideMenuUl > li ul.myinfoDropdown > li
 	.sideMenuUl > li ul.purDropdown > li,
-	.sideMenuUl > li ul.favDropdown > li {
+	.sideMenuUl > li ul.favDropdown > li,
+	.sideMenuUl > li ul.qnaDropdown > li,
+	.sideMenuUl > li ul.reviewDropdown > li {
 		display: inline-block;
 		text-align: center;
 	}
@@ -121,7 +163,7 @@
 	
 /* 컨텐츠 */	
 	.content {
-		min-height: 500px;
+		min-height: 550px;
 		margin-left: 250px;
 		text-align: center;
 		border-top: 2px solid #FF6833;
@@ -189,28 +231,48 @@
 	}
 	.tdName {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 120px;
 		text-align: left;
 		background: #F4F4F4;
 		padding: 5px;
 	}
 	.tdContent {
 		border: 1px solid #C4C4C4;
-		width: 160px;
+		width: 320px;
 		text-align: left;
 		padding: 5px;
 	}
 	.inputPwdField {
-		width: 150px;
+		width: 314px;
 		outline: 0;
 		border: none;
+	}
+	label.error {
+		/* position: absolute;
+		left: 760px; */
+		font-family: 'GmarketSansLight';
+		font-weight: bold;
+		color: rgb(59, 59, 59);
+		font-size: 0.7rem;
+		padding-bottom: 0.4rem;
+		line-height: 0.9rem;
+		color: #FF6833;
+	}
+	/* #memPwd-error{
+		top: 297px;
+	}
+	#pwdCheck-error{
+		top: 329px;
+	} */
+	input.error {
+		border: 1px solid #FF6833;
 	}
 	#wrap {
 		display: table-cell;
 		margin: 0;
 		padding: 0;
 		width: 750px;
-		height: 460px;
+		height: 510px;
 		vertical-align: middle;
 	}
 </style>
@@ -222,8 +284,21 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-				<img class="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/a.jpg">
-				<p class="nickname"> <c:out value="${ loginUser.memName }님"/> </p>
+    			<div class="profileDiv">
+					<c:if test="${ empty img }">
+						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+    				</c:if>
+    				<c:if test="${ !empty img }">
+    					<c:if test="${ img.imgStatus == 'Y' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ img.imgName }">
+	    				</c:if>
+	    				<c:if test="${ img.imgStatus == 'N' }">
+							<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+	    				</c:if>
+    				</c:if>
+    			</div>
+				<p class="nickname"> <c:out value="${ loginUser.memName } 님"/> </p>
+				<p class="nickname"> <c:out value="(${ loginUser.memNickname })"/> </p>
 			</div>
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
@@ -237,7 +312,7 @@
 								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn" id="selectedBtn">비밀번호 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">프로필사진 변경</button>
+								<button onclick="location.href='profileImageUpdateView.me'" class="sideMenuBtn">프로필사진 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='memberDeleteView.me'" class="sideMenuBtn">회원 탈퇴</button>
@@ -270,6 +345,31 @@
 						</ul>
 					</li>
 					<li>
+						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
+						<ul class="qnaDropdown">
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+							</li>
+							<li>
+								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button class="sideMenuBtn" style="cursor: default;">후기 목록</button>
+						<ul class="reviewDropdown">
+							<li>
+								<button onclick="location.href='myRevActListView.me'" class="sideMenuBtn">활동 후기</button>
+							</li>
+							<li>
+								<button onclick="location.href='myRevProListView.me'" class="sideMenuBtn">상품 후기</button>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
@@ -280,13 +380,13 @@
 				</ul>
 			</div>
 		</div>
-		<form action="myPwdUpdate.me" method="post">
+		<form id="join" action="myPwdUpdate.me" method="post">
 			<div class="content">
 				<div class="tab-box">
 					<ul>
 						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
 						<li onclick="location.href='myPwdUpdateView.me'" class="selected">비밀번호 변경</li>
-						<li onclick="location.href=''">프로필사진 변경</li>
+						<li onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</li>
 						<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
 					</ul>
 				</div>
@@ -294,13 +394,16 @@
 					<p id="title">
 						비밀번호 변경
 					</p>
+					<p id="text">
+						비밀번호는 8자~20자 이내여야 하고, 영문자/특수문자/숫자가 반드시 하나 이상 포함되어야 합니다.
+					</p>
 					<table>
 						<tr>
 							<td class="tdName">
 								현재 비밀번호
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="memPwd">
+								<input type="password" class="inputPwdField" name="beforePwd">
 							</td>
 						</tr>
 						<tr>
@@ -308,7 +411,7 @@
 								새 비밀번호
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="newPwd1">
+								<input type="password" class="inputPwdField" name="memPwd">
 							</td>
 						</tr>
 						<tr>
@@ -316,7 +419,7 @@
 								새 비밀번호 확인
 							</td>
 							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="newPwd2">
+								<input type="password" class="inputPwdField" name="pwdCheck">
 							</td>
 						</tr>
 					</table>
@@ -328,5 +431,41 @@
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		$.validator.addMethod("checkPwd", function(value, element) {
+			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
+		},"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
+		
+		$.validator.addMethod("pwdCheck",  function( value, element ) {
+			return this.optional(element) || /^.(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).$/.test(value);
+		});
+		
+		$('#join').validate({
+			rules : {
+				memPwd : {
+					required : true,
+					minlength : 8,
+					maxlength : 20,
+					checkPwd : true
+				},
+				pwdCheck : {
+					required : true,
+					equalTo : "[name='memPwd']"
+				},
+			},
+			messages : {
+				memPwd : {
+					required : "비밀번호는 필수 입력입니다.",
+					minlength : "비밀번호는 8자 이상이어야 합니다.",
+					maxlength : "비밀번호는 20자 이내여야 합니다.",
+				},
+				pwdCheck : {
+					required : "비밀번호를 한 번 더 확인해주세요.",
+					equalTo : "비밀번호가 일치하지 않습니다."
+				},
+			}
+		});
+	</script>
 </body>
 </html>

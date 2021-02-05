@@ -42,5 +42,4 @@ public class ReplyDAO {
 		return sqlSession.update("replyMapper.deleteSalReply", repNo);
 	}
 
-
 }

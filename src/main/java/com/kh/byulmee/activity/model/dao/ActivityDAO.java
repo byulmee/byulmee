@@ -63,6 +63,10 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActivity", a);
 	}
 
+	public int selectOrderSum(SqlSessionTemplate sqlSession, int acId) {
+		return sqlSession.selectOne("activityMapper.selectOrderSum", acId);
+	}
+	
 	public int getUserListCount(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("activityMapper.getUserListCount", memId);
 	}
@@ -92,4 +96,21 @@ public class ActivityDAO {
 	public ArrayList<Activity> getNearEndDateActList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("activityMapper.getNearEndDateActList");
 	}
+	
+	public int updateActRatingCnt(SqlSessionTemplate sqlSession, Activity a) {
+		return sqlSession.update("activityMapper.updateActRatingCnt", a);
+	}
+	
+	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession,PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList) sqlSession.selectList("activityMapper.selectActBoardList",pi,rowBounds);
+		
+	}
+	
+	public int getActBoardListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("activityMapper.getActBoardListCount");		
+	}
+	
 }

@@ -73,6 +73,10 @@ return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", id , row
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectBannerList", null, rowBounds);
 	}
+	
+	public ArrayList<Banner> selectBannerList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectMainBannerList");
+	}
 
 	public void updateBannerOpen(Map param) {
 		sqlSession.update("adminMapper.updateBannerOpen", param);

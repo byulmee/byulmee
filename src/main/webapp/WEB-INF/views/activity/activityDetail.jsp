@@ -38,6 +38,7 @@
 	font-style: normal;
 }
 body {
+	margin: 0;
 	font-family: 'GmarketSansMedium';
 }
 .outer {
@@ -138,7 +139,7 @@ input:focus {
 	font-size: 15px;
 }
 #all-price-fix{
-	width: 103px;
+	min-width: 103px auto;
 	border: none;
 	font-size: 25px;
 	color: black;
@@ -159,6 +160,20 @@ input:focus {
 	outline: 0;
 	cursor: pointer;
 }
+  
+#button3 {
+	border: 1px solid #E9E9E9;
+	background: white;
+	border-radius: 18px;
+	color: #9B9B9B;
+	width: 197px;
+	height: 76px;
+	text-align: center;
+	font-size: 18px;
+	outline: 0;
+	cursor: pointer;
+}
+
 #button2 {
 	border: 1px solid #FF6833;
 	background: #FF6833;
@@ -172,6 +187,21 @@ input:focus {
 	outline: 0;
 	cursor: pointer;
 }
+
+#button4 {
+	border: 1px solid #FF6833;
+	background: #FF6833;
+	border-radius: 18px;
+	color: white;
+	width: 197px;
+	height: 76px;
+	text-align: center;
+	font-size: 18px;
+	margin-left: 7px;
+	outline: 0;
+	cursor: pointer;
+}
+
 .starInfo {
 	padding-top: 12px;
 	line-height: 30px;
@@ -227,6 +257,21 @@ input:focus {
 	vertical-align: middle;
 	margin-top: 4px;
 }
+
+#star-button3 {
+	border: 1px solid #888888;
+	background: white;
+	border-radius: 5px;
+	color: #888888;
+	width: 110px;
+	height: 20px;
+	font-size: 12px;
+	outline: 0;
+	cursor: pointer;
+	vertical-align: middle;
+	margin-top: 4px;
+}
+
 hr {
 	width: 1280px;
 	visibility: hidden;
@@ -276,10 +321,30 @@ hr {
 	min-height: auto;
 }
 .review_flex{
-	border-spacing: 15px;
+ 	width: 800px;
+	table-layout: fixed;
+}
+
+.reviewDetail_Main{
+	width: 630px;
+	text-overflow: ellipsis;
+ 	overflow: hidden;
+	display:-webkit-box; 
+    word-wrap:break-word; 
+    -webkit-line-clamp:2; 
+    -webkit-box-orient:vertical; 
+    height: 40px;
+    line-height: 20px;
+}
+
+.reviewMdDetail_Main{
+	width: 630px;
+	color : black;
+	font-size: 14px;
+	font-family: 'GmarketSansMedium';
 }
 .reviewWriter {
-	width: 100px;
+	width: auto;
 }
 .reviewWriter_Main {
 	width: 800px;
@@ -289,13 +354,17 @@ hr {
 #reviewDate {
 	color: #9E9E9E;
 	font-size: 13px;
-	text-align: right;
+	text-align: left;
 }
 #reviewStar {
 	color: #ffd400;
 	font-size: 15px;
-	margin-left: 10px;
-	text-align: right;
+	text-align: left;
+	vertical-align: middle;
+}
+
+#reviewNo {
+	visibility: collapse;
 }
 .reviewImageArea {
 	width: 800px;
@@ -304,9 +373,29 @@ hr {
 	border-spacing: 5px;
 }
 .reviewImageArea_Main {
+	width: 110px;
+	height: 100px;
+	background-color: none;
+}
+
+.reviewMdImageArea_Main {
+	width: 200px;
+	height: 200px;
+	background-color: none;
+}
+
+.reviewMdThumb {
+	width: 200px;
+	height: 200px;
+	object-fit: fill;
+	border-radius: 10px;
+}
+
+.reviewThumb {
 	width: 100px;
 	height: 100px;
-	background-color: gray;
+	object-fit: fill;
+	border-radius: 10px;
 }
 .reviewWriter_Main {
 	width: 800px;
@@ -321,8 +410,8 @@ hr {
 	background-color: #E9E9E9;
 }
 .reviewImage_Main {
-	width: 120px;
-	height: 120px;
+	width: 100px;
+	height: 100px;
 	background-color: #E9E9E9;
 }
 .reviewDetail {
@@ -341,13 +430,26 @@ hr {
 	width: 800px;
 	min-height: auto;
 }
-#expandButton {
-	cursor: pointer;
+
+.trReviewExpand {
+	text-align: center; 
+	position:relative; 
+	margin:0 auto; 
 }
-#expandButton:hover {
+
+.expandButton {
+	cursor: pointer;
+	font-family: 'GmarketSansMedium';
+	font-size: 12px;
+	text-align: right;
+	margin-right: 2px;
+}
+
+.expandButton:hover {
 	color: black;
 }
-#expandButton {
+
+.expandButton {
 	border: 0;
 	background-color: white;
 	color: #9E9E9E;
@@ -365,25 +467,50 @@ hr {
  	margin-bottom: 10px;
  	table-layout: fixed;
 } 
-.question td{
+
+.question td:not(.noqna){
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
-} 
-#memId, #salqnaTitle, #salqnaDate, #salqnaDetail{
+}
+  
+#memId, #salqnaTitle, #salqnaDate, .salqnaDetail{
  	text-overflow: ellipsis;
  	overflow: hidden;
  	white-space: nowrap;
 } 
-.question tr:hover{
+
+.noqna {
+	text-align: center;
+}
+
+#MdsalqnaDate{
+	color: #9E9E9E;
+}
+
+#MdqnaContent{
+	border-bottom: 1px solid gray;
+	padding-bottom: 10px;
+}
+
+#MdqnaReply{
+	height: 80px;
+	color: gray;
+	
+}
+
+.question tr:not(.noqna):hover{
  	background-color: #f9f9f9;
 } 
+  
 .questionExcept td{
  	border-bottom: 1px solid #E9E9E9;
  	text-align: left;
 } 
+  
 .questionExcept tr:hover{
  	background-color: #f9f9f9;
 } 
+  
 #salqnaTitle, #salqnaTitleExcept {
  	font-size: 15px;
  	margin-right: 400px;
@@ -394,7 +521,7 @@ hr {
  	color: #9E9E9E;
  	text-align: center;
 }
-#salqnaDetail, #salqnaDetailExcept {
+.salqnaDetail, .salqnaDetailExcept {
  	font-size: 12px;
  	margin-right: 20px;
  	color: #9E9E9E;
@@ -404,38 +531,48 @@ hr {
  	visibility: hidden; 
 }
 .trContent{
- 	display: none;
+  	display: none;
+}
+
+.salqnaReply{
+	display: none;
 }
 .show {
 	display:table-row; 
 	height: auto;
 	font-size:12px;
+	background-color: #f9f9f9;
 }
-.salqnaReply{
- 	display: none; 
-	background-color: red;
-	height: 50px;
-	width: 800px;
-}
-#repArea{
+
+.show2 {
 	display:table-row; 
 	height: auto;
 	font-size:12px;
+	background-color: #f9f9f9;
 }
 .trQuestion td {
 	cursor:pointer;
 }
+
+#qnaReply, #qnaContent {
+	padding-left: 30px;
+	padding-right: 30px;
+	font-size: 13px;
+}
+
 #all-question {
 	width: 800px;
 	text-align: right;
 	font-size: 13px;
 	cursor: pointer;
 	color: #9E9E9E;
-	margin-right: 15px;
+	padding-right: 57px;
 }
+  
 #all-question:hover{
 	color: black;
 }
+  
 #questionButton {
 	margin-top: 15px;
 	border: 1px solid #FF6833;
@@ -451,18 +588,25 @@ hr {
 	cursor: pointer;
 	font-weight: bold;
 }
+  
 .refundArea {
 	width: 957px;
 	border-bottom: 1px solid #E9E9E9;
 }
+  
 .refund {
 	width: 800px;
 	height: 200px;
+	text-align: left; 
+	position: relative; 
+	margin: 0 auto; 
 }
+  
 .declare {
 	width: 957px;
 	height: 130px;
 }
+  
 #declareButton {
 	margin-top: 15px;
 	border: 0;
@@ -478,18 +622,21 @@ hr {
 	cursor: pointer;
 	font-weight: bold;
 }
+  
 .recommendArea {
 	margin-bottom: 10px;
 }
+  
 #recommend {
 	font-size: 22px;
 	font-weight: bold;
 }
+  
 /* 후기 모달창 */
 .review_wrap {
 	display: none;
-	width: 680px;
-	height: 350px;
+	width: 650px;
+	min-height: 410px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -498,6 +645,42 @@ hr {
 	background: white;
 	z-index: 1000;
 }
+
+.review_modal{
+	width: 650px;
+	min-height: 410px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -250px -350px; 0 -250 px;
+	padding: 20px;
+	background: white;
+}
+
+.qna_wrap {
+	display: none;
+	width: 650px;
+	min-height: 223px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -150px -350px; 0 -250 px;
+	padding: 20px;
+	background: white;
+	z-index: 1000;
+}
+
+.qna_modal{
+	width: 650px;
+	min-height: 200px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -150px -350px; 0 -250 px;
+	padding: 20px;
+	background: white;
+}
+  
 .black_bg {
 	display: none;
 	position: fixed;
@@ -509,6 +692,7 @@ hr {
 	left: 0;
 	z-index: 999;
 }
+
 .review_close {
 	width: 26px;
 	height: 26px;
@@ -516,6 +700,15 @@ hr {
 	top: -30px;
 	right: 0;
 }
+
+.qna_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
 .review_close>a {
 	display: block;
 	width: 100%;
@@ -523,6 +716,15 @@ hr {
 	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
 	text-indent: -9999px;
 }
+
+.qna_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
 /* 이런 별미는 어때요 */
 .rec-list {
 	width: 80vw;
@@ -624,35 +826,94 @@ hr {
 				<div class="price">
 					<span id="price">${ activity.actPrice }</span> <span id="one">원</span>
 				</div>
-				<div class="star">
-					<span id="star1">★★★★★</span> <span id="star2">4.8</span> <span
-						id="star3">1,800개의 평가</span>
-				</div>
+				
+				<c:if test="${ reviewNum != 0 }">
+					<div class="star">
+						<c:if test="${ ratingAvg >= 4.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star10.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 4 && ratingAvg < 4.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star9.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 3.5 && ratingAvg < 4 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star8.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 3 && ratingAvg < 3.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star7.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 2.5 && ratingAvg < 3 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star6.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 2 && ratingAvg < 2.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star5.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 1.5 && ratingAvg < 2 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star4.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 1 && ratingAvg < 1.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star3.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg >= 0.5 && ratingAvg < 1 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star2.png'></span> 
+						</c:if>
+						<c:if test="${ ratingAvg < 0.5 }">
+							<span id="star1"><img class='rating' src='resources\\images\\rating\\star1.png'></span> 
+						</c:if>
+						<span id="star2">${ ratingAvg }</span> 
+						<span id="star3">${ reviewNum }개의 평가</span>
+					</div>
+				</c:if>
+				<c:if test="${ reviewNum == 0 }">
+					<div class="star">
+						<span id="star3">등록된 별점이 없습니다.</span>
+					</div>
+				</c:if>
+				
 				<div class="option">
 					<span id="option1">인원선택&nbsp;</span> 
 					<span><button type="button" id="minus" onclick="cntNum(-1);">-</button></span>
 					<span id="option2"><input type="text" id="amount" name="amount" value="1" onchange="setNum();" readonly></span> 
 					<span><button type="button" id="plus" onclick="cntNum(1);">+</button></span> 
-					<span id="option3">잔여 인원 : 7명</span>
+					<span id="option3">잔여 인원 : ${ possibleNum }명</span>
 				</div>
 				<div class="all-price">
 					<span id="all-price1">총 활동비</span> 
-					<span id="all-price2"><input type="text" id="all-price-fix" name="all-price2" value="${ activity.actPrice }" onchange="setNum();" readonly></span>
-					<span id="all-price3">원</span>
+					<span id="all-price2"><input type="text" id="all-price-fix" name="all-price2" value="${ activity.actPrice }원" onchange="setNum();" readonly></span>
 				</div>
+				
 				<div class="button">
+					<c:if test="${ !empty loginUser }">
 					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기"> 
+					</c:if>
+					<c:if test="${ !empty loginUser }">
 					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기">
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="별미 찜하기" onclick="alert('로그인 후 이용 가능합니다.')"> 
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="button4" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					</c:if>
 				</div>
 				<div class="starInfo">
-					<span><img src="resources/images/common/star.png" width="18px" id="star_img" alt="별"></span>
+					<span><img src="resources/images/detail/star.png" width="18px" id="star_img" alt="별"></span>
 					<span><strong id="starInfo1">${ writer.memNickname }</strong></span><br>
 					<span id="starInfo2">${ writer.memPhone }&nbsp;&nbsp;</span>
 					<span id="starInfo3"> &nbsp;&nbsp;${ writer.memEmail }</span><br>
 					<input type="hidden" name="memId" id="starMemId" value="${ writer.memId }">
 					<input type="hidden" name="memId" id="starMemNo" value="${ writer.memNo }">
 					<input type="button" id="star-button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+작업실 방문하기"> 
-					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기">
+					
+					<c:url var="starFavoriteInsert" value="starFavoriteInsert.fa">
+						<c:param name="starNo" value="${ writer.memNo }"></c:param>
+						<c:param name="acId" value="${ activity.actNo }"></c:param>
+					</c:url>
+					<c:if test="${ !empty loginUser }">
+					<input type="button" id="star-button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="location.href='${ starFavoriteInsert }'">
+					</c:if>
+					<c:if test="${ empty loginUser }">
+					<input type="button" id="star-button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+스타 찜하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -662,6 +923,7 @@ hr {
 			var cnt = 1;
 			var amount = document.getElementById("amount");
 			var price = document.getElementById("price").innerHTML;
+			var possibleNum = "<c:out value='${ possibleNum }'/>";
 			
 			function cntNum(n){
 				cnt += n;
@@ -676,22 +938,32 @@ hr {
 			function checkNum(){
 				if(cnt < 1){
 					cnt = 1
-				} else if(cnt > 99){
-					cnt = 99;
-					alert("남은  수량이 없습니다.");
+				} else if(cnt > possibleNum){
+					cnt = possibleNum;
+					alert("신청 가능한 최대 인원을 초과하였습니다.");
+					cnt = possibleNum - 1;
 				}
 				amount.value = cnt;
 				var total = String(price * cnt);
 				total = total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
- 				document.getElementById("all-price2").innerHTML = '<input type="text" id="all-price-fix" name="all-price2" value="' + total + '"onchange="setNum();" readonly>';
+ 				document.getElementById("all-price2").innerHTML = '<input type="text" id="all-price-fix" name="all-price2" value="' + total + "원" + '"onchange="setNum();" readonly>';
 //  				document.getElementById("all-price2").innerHTML = total;
 			}
+			
+			// 평균 별점 소수점 절삭
+			var rating = "<c:out value='${ ratingAvg }'/>";
+		    $(document).ready(function(){
+				var rating = $('#star2').text();
+				var ratingAvg = parseFloat(rating).toFixed(1);
+		        $('#star2').text(ratingAvg);
+		    });
 		
-			// 글번호 가져오기 (찜하기에 활용)
+			// 별미 찜하기
 			var acId = "<c:out value='${ activity.actNo}'/>";
 			$(function(){
 				$('#button1').click(function(){
 					location.href='activityFavorite.fa?acId=' + acId;
+					alert('찜목록에 추가되었습니다!');
 				});
 			});
 			
@@ -941,28 +1213,19 @@ hr {
 			</table>
 			
 			<div class="expand" align="right">
-				<input type="button" id="expandButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="+확대하기">
+				
 				<div class="black_bg"></div>
+				
 				<div class="review_wrap">
 					<div class="review_close">
-						<a href="#"></a>
-					</div>
-					<div>
-						<div class="reviewWriter" align="left">
-							<span id="reviewWriter">스프링</span> <span id="revieDate">2020-11-28</span>
-							<span id="reviewStar">★★★★★</span>
-						</div>
-						<div class="reviewImageArea" align="left">
-							<div class="reviewImage"></div>
-							<div class="reviewImage"></div>
-							<div class="reviewImage"></div>
-						</div>
-						<div class="reviewDetail" align="left">
-							<div>
-								텃밭이 너무 작아서 별로였어요. 좀 더 컸으면 좋았을텐데.. 그리고 밥도 안주고 텃밭만 가꾸게 시켜요<br>
-								노잼노잼 아무도 이거 하지마세요 왜 별점이 4.8이나 되는지 모르겠네요; <br> 별미텃밭이 너무 작아서
-								별로였어요. 좀 더 컸으면 좋았을텐데..
-							</div>
+						<a href="javascript:;"></a>
+						<div>
+							<table class="review_modal">
+								<thead>
+									<tr></tr>			
+								</thead>
+								<tbody></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -976,6 +1239,7 @@ hr {
 				url: 'salesReviewList.ac',
 				data: {acId:acId},
 				success: function(data){
+					
 					console.log(data);
 					
 					$review = $('.review_flex tbody');
@@ -987,27 +1251,59 @@ hr {
 					var $revDate;
 					var $revRating;
 					var $revContent;
-					var $revNo;
+					var $revNo;	
+					var $expand;
 					
 					if(data.length > 0){
 						for(var i in data){
 							$tr = $('<tr class="trReview">');
 							$tr2 = $('<tr class="trReviewContent">');
-							$div = $('<td rowspan="2" class="reviewImageArea_Main">');
-							$memId = $('<td id="reviewWriter">').text(data[i].memId);
+							$memId = $('<td id="reviewWriter">').text(data[i].member.memNickname);
 							$revDate = $('<td id="reviewDate">').text(data[i].revDate);
 							$revRating = $('<td id="reviewStar">').text(data[i].revRating);
-							$revContent = $('<td colspan="4" class="reviewDetail_Main">').text(data[i].revContent);
 							$revNo = $('<td id="reviewNo">').text(data[i].revNo);
+							$revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
+							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
+							
+							if(data[i].img != "" ){
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].img.imgName + "'>");
+// 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
+							} else{
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
+							}
+							
+							if(data[i].revRating == 0.5){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star1.png'>");
+							} else if(data[i].revRating == 1){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star2.png'>");
+							} else if(data[i].revRating == 1.5){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star3.png'>");
+							} else if(data[i].revRating == 2){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star4.png'>");
+							} else if(data[i].revRating == 2.5){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star5.png'>");
+							} else if(data[i].revRating == 3){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star6.png'>");
+							} else if(data[i].revRating == 3.5){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star7.png'>");
+							} else if(data[i].revRating == 4){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star8.png'>");
+							} else if(data[i].revRating == 4.5){
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star9.png'>");
+							} else {
+								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star10.png'>");
+							}
 							
 							$tr.append($div);
 							$tr.append($memId);
-							$tr.append($revDate);
 							$tr.append($revRating);
+							$tr.append($revDate);
 							$tr.append($revNo);
+							$tr.append($expand);
 							$review.append($tr);
 							$tr2.append($revContent);
 							$review.append($tr2);
+							
 						}
 					} else{
 						$tr = $('<tr>');
@@ -1019,8 +1315,87 @@ hr {
 				}
 			});
 		</script>
-		
-		
+				
+		<script>
+		$(document).on("click", ".expandButton", function(){ 
+			var revNo = $(this).prev().text();
+			console.log(revNo);
+			
+			$.ajax({
+				url: 'salesReviewDetail.ac',
+				data: {revNo:revNo},
+				success: function(data){
+					console.log(data);
+					
+					$review = $('.review_modal tbody');
+					
+					var $tr;
+					var $tr2;
+					var $tr3;
+					var $div1;
+					var $div2;
+					var $div3;
+					var $memId;
+					var $revDate;
+					var $revRating;
+					var $revContent;
+					
+					$tr = $('<tr height="30px" class="trMdReview">');
+					$tr2 = $('<tr class="trMdReviewContent">');
+					$tr3 = $('<tr class="reviewMdImageArea">');
+					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data.member.memNickname);
+					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
+					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
+					
+					if(data.img != ""){
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+					} else{
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+					}
+					
+					
+					if(data.revRating == 0.5){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star1.png'>");
+					} else if(data.revRating == 1){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star2.png'>");
+					} else if(data.revRating == 1.5){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star3.png'>");
+					} else if(data.revRating == 2){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star4.png'>");
+					} else if(data.revRating == 2.5){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star5.png'>");
+					} else if(data.revRating == 3){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star6.png'>");
+					} else if(data.revRating == 3.5){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star7.png'>");
+					} else if(data.revRating == 4){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star8.png'>");
+					} else if(data.revRating == 4.5){
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star9.png'>");
+					} else {
+						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star10.png'>");
+					}
+					
+					$tr.append($memId);
+					$tr.append($revRating);
+					$tr.append($revDate);
+					$review.append($tr);
+					$tr2.append($revContent);
+					$review.append($tr2);
+					$tr3.append($div1);
+					$tr3.append($div2);
+					$tr3.append($div3);
+					$review.append($tr3);
+				}
+			});
+		});
+		</script>
+				
+		<!-- 후기 모달 열기 -->
 		<script>
 			window.onload = function(){
 				function onClick(){
@@ -1030,10 +1405,14 @@ hr {
 				function offClick(){
 					document.querySelector('.review_wrap').style.display = 'none';
 					document.querySelector('.black_bg').style.display = 'none';
+					$( '.review_wrap tbody').empty();
 				}
 				
-				document.getElementById('expandButton').addEventListener('click', onClick);
-				document.querySelector('.review_close').addEventListener('click', offClick);
+				var expand = document.querySelectorAll('.expandButton');
+				for(var i = 0; i < expand.length; i++){
+					expand[i].addEventListener('click', onClick);
+					document.querySelector('.review_close').addEventListener('click', offClick);
+				}
 			}
 		</script>
 
@@ -1052,35 +1431,56 @@ hr {
 				<a href="#menu4">취소/환불 규정</a>
 			</div>
 		</div>
-
-		<!-- 문의 영역 -->
-		<table class="question">
-			<colgroup>
-			  	<col style="width:15%"/>
-			  	<col style="width:60%"/>
-			  	<col style="width:15%"/>
-			  	<col style="width:10%"/>
-			</colgroup>
-			<thead>
-				<tr>
-				</tr>			
-			</thead>
-			<tbody></tbody>
-		</table>
 		
-		<table class="questionExcept">
-			<colgroup>
-			  	<col style="width:15%"/>
-			  	<col style="width:60%"/>
-			  	<col style="width:15%"/>
-			  	<col style="width:10%"/>
-			</colgroup>
-			<thead>
-				<tr>
-				</tr>			
-			</thead>
-			<tbody></tbody>
-		</table>
+		<!-- 별미 문의 -->
+		<div class="qnaArea">
+			<table class="question">
+				<colgroup>
+				  	<col style="width:18%"/>
+				  	<col style="width:57%"/>
+				  	<col style="width:15%"/>
+				  	<col style="width:10%"/>
+				</colgroup>
+				<thead>
+					<tr>
+					</tr>			
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+			<table class="questionExcept">
+				<colgroup>
+				  	<col style="width:18%"/>
+				  	<col style="width:57%"/>
+				  	<col style="width:15%"/>
+				  	<col style="width:10%"/>
+				</colgroup>
+				<thead>
+					<tr>
+					</tr>			
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+			<div class="expand" align="right">
+				
+				<div class="black_bg"></div>
+				
+				<div class="qna_wrap">
+					<div class="qna_close">
+						<a href="javascript:;"></a>
+							<table class="qna_modal">
+								<thead>
+									<tr></tr>			
+								</thead>
+								<tbody></tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
 		
 		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
 
@@ -1091,169 +1491,199 @@ hr {
 				url: 'salesQnaList.ac',
 				data: {acId:acId},
 				success: function(data){
-					salQna = data;
+					console.log(data);
 					
 					$question = $('.question tbody');
 					
 					var $tr;
-					var $tr2;
-					var $tr3;
 					var $memId;
 					var $salqnaTitle;
 					var $salqnaDate;
-					var $salqnaContent;
 					var $salqnaDetail;
 					var $salqnaNo;
-					var $salqnaReply;
+					var $noqna;
 					
 					if(data.length > 0){
 						for(var i in data){
 							$tr = $('<tr class="trQuestion">');
-							$tr2 = $('<tr class="trContent">');
-							$tr3 = $('<tr class="salqnaReply">');
 							$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
-							$memId = $('<td id="memId">').text(data[i].memId);
+							$memId = $('<td id="memId">').text(data[i].member.memNickname);
 							$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
 							$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
-							$salqnaDetail = $('<td id="salqnaDetail">').text("+내용보기");
-							$salqnaContent = $('<td colspan="5">').text(data[i].salqnaContent);
-							$salqnaReply = $('<td id="repArea" colspan="5">');
+							$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
 							
-							$tr.append($salqnaNo);
 							$tr.append($memId);
 							$tr.append($salqnaTitle);
 							$tr.append($salqnaDate);
 							$tr.append($salqnaDetail);
 							$tr.append($salqnaNo);
 							$question.append($tr);
-							$tr2.append($salqnaContent);
-							$question.append($tr2);
-							$tr3.append($salqnaReply);
-							$question.append($tr3);
 						}
 					} else{
-						$tr = $('<tr>');
-						$salqnaTitle = $('<td>').text('등록된 질문이 없습니다.');
+						$tr = $('<tr class="noqna">');
+						$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
 						
-						$tr.append($salqnaTitle);
+						$tr.append($noqna);
 						$question.append($tr);
 					}
 				}
 			});
+		</script>
+		
+		<script>
+		$(document).on("click", ".salqnaDetail", function(){ 
+			var qnaNo = $(this).next().text();
+			console.log(qnaNo);
 			
 			// 문의게시판 토글
 	        $(function(){
 	            var article = (".question .show"); 
-	            $(".question .trQuestion  td").on("click", function() { 
+	            var article2 = (".question .show2"); 
+	            $(".question .trQuestion td").on("click", function() { 
 	                var myArticle =$(this).parents().next("tr"); 
-	                if($(myArticle).hasClass('trContent')) { 
+	                var myArticle2 =$(this).parents().next().next("tr");
+	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
 	                    $(article).removeClass('show').addClass('trContent'); 
+	                    $(article2).removeClass('show2').addClass('salqnaReply'); 
 	                    $(myArticle).removeClass('trContent').addClass('show'); 
+	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
 	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
+	                    $('.questionExcept .show2 td').removeClass('show2').addClass('salqnaReply');
 	                } 
 	                else { 
 	                    $(myArticle).addClass('trContent').removeClass('show');
+	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
 	                } 
 	            }); 
 	        });
-			
-			// 댓글 갖다 붙이기
-			var qnaNo;
-			$(function(){
-				$(".question tbody").on("click", "tr", function(){
-					qnaNo = $(this).find("td:eq(4)").text();
-					
-					$.ajax({
-						url: 'salesQnaReply.ac',
-						data: {qnaNo:qnaNo},
-						success: function(data){
-							console.log(data);
-							
-// 							$(this).nextAll().find("td").text(data.repContent);
-// 							$(".question tbody tr #repArea").text(data.repContent);
-							
-						}
-					});
-				});
-			});
 			
 			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
 			$.ajax({
-				url: 'salesQnaExceptList.ac',
-				data: {acId:acId},
+				url: 'salesQnaDetail.ac',
+				data: {qnaNo:qnaNo},
 				success: function(data){
 					console.log(data);
 					
-					$question = $('.questionExcept tbody');
+					$qna = $('.qna_modal tbody');
 					
 					var $tr;
 					var $tr2;
+					var $tr3;
+					var $tr4;
 					var $memId;
 					var $salqnaTitle;
-					var $salqnaDate;
 					var $salqnaContent;
-					var $salqnaDetail;
-					var $salqnaNo;
+					var $salqnaReply;
+					var $noqna;
 					
-					if(data.length > 0){
-						for(var i in data){
-							$tr = $('<tr class="trQuestion">');
-							$tr2 = $('<tr class="trContent">');
-							$salqnaNo = $('<td id="salqnaNoExcept">').text(data[i].salqnaNo);
-							$memId = $('<td id="memIdExcept">').text(data[i].memId);
-							$salqnaTitle = $('<td id="salqnaTitleExcept">').text(data[i].salqnaTitle);
-							$salqnaDate = $('<td id="salqnaDateExcept">').text(data[i].salqnaDate);
-							$salqnaDetail = $('<td id="salqnaDetailExcept">').text("+내용보기");
-							$salqnaContent = $('<td colspan="5">').text(data[i].salqnaContent);
-							
-							$tr.append($salqnaNo);
-							$tr.append($memId);
-							$tr.append($salqnaTitle);
-							$tr.append($salqnaDate);
-							$tr.append($salqnaDetail);
-							$tr.append($salqnaNo);
-							$question.append($tr);
-							$tr2.append($salqnaContent);
-							$question.append($tr2);
-						}
-					} else{
-						$tr = $('<tr>');
-						$salqnaTitle = $('<td>').text('등록된 질문이 없습니다.');
+						$tr = $('<tr class="trMdQuestion">');
+						$tr2 = $('<tr class="trMdContent">');
+						$tr3 = $('<tr class="salqnaMdReply">');
+						$tr4 = $('<tr class="salqnaMdTitle">');
+						$memId = $('<td width="200px" id="MdmemId">').text("작성자 : " + data.member.memNickname);
+						$salqnaTitle = $('<td colspan="2" id="MdsalqnaTitle">').text("제　목 : " + data.salqnaTitle);
+						$salqnaContent = $('<td colspan="2" id="MdqnaContent">').text("내　용 : " + data.salqnaContent);
 						
+						if(data.reply.repContent != null){
+							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("스타답변 : " + data.reply.repContent);
+						} else{
+							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("등록된 스타의 	답변이 없습니다.");
+						}
+						
+						$tr.append($memId);
+						$qna.append($tr);
+						$tr4.append($salqnaTitle);
+						$qna.append($tr4);
+						$tr2.append($salqnaContent);
+						$qna.append($tr2);
+						$tr3.append($salqnaReply);
+						$qna.append($tr3);
+				}	
+			});
+		});
+		</script>
+		
+		<script>
+		// 문의 전체보기 토글버튼
+        function toggleQuestion(){
+        	var toggleBtn = document.getElementById("all-question").innerHTML;
+        	
+        	if(toggleBtn == '+문의 전체보기'){
+					$('.questionExcept').css("visibility", "visible");
+					$('#all-question').html("-접기");	        		
+        	} else{
+					$('.questionExcept').css("visibility", "collapse");
+					$('#all-question').html("+문의 전체보기");	 	        		
+        	}
+        }
+		</script>
+		
+		<script>
+		// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
+		$.ajax({
+			url: 'salesQnaExceptList.ac',
+			data: {acId:acId},
+			success: function(data){
+				console.log(data);
+				
+				$question = $('.questionExcept tbody');
+				
+				var $tr;
+				var $memId;
+				var $salqnaTitle;
+				var $salqnaDate;
+				var $salqnaDetail;
+				var $salqnaNo;
+				var $noqna;
+				
+				if(data.length > 0){
+					for(var i in data){
+						$tr = $('<tr class="trQuestion">');
+						$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
+						$memId = $('<td id="memId">').text(data[i].member.memNickname);
+						$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
+						$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
+						$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
+						
+						$tr.append($memId);
 						$tr.append($salqnaTitle);
+						$tr.append($salqnaDate);
+						$tr.append($salqnaDetail);
+						$tr.append($salqnaNo);
 						$question.append($tr);
 					}
+				} else{
+					$tr = $('<tr class="noqna">');
+					$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
+					
+					$tr.append($noqna);
+					$question.append($tr);
 				}
-			});
-			
-	        $(function(){
-	            var article = (".questionExcept .show"); 
-	            $(".questionExcept .trQuestion  td").on("click", function() { 
-	                var myArticle =$(this).parents().next("tr"); 
-	                if($(myArticle).hasClass('trContent')) { 
-	                    $('.question .show td').removeClass('show').addClass('trContent');
-	                    $(article).removeClass('show').addClass('trContent'); 
-	                    $(myArticle).removeClass('trContent').addClass('show'); 
-	                } 
-	                else { 
-	                    $(myArticle).addClass('trContent').removeClass('show');
-	                } 
-	            }); 
-	        });
-	        
-			// 문의 전체보기 토글버튼
-	        function toggleQuestion(){
-	        	var toggleBtn = document.getElementById("all-question").innerHTML;
-	        	
-	        	if(toggleBtn == '+문의 전체보기'){
- 					$('.questionExcept').css("visibility", "visible");
- 					$('#all-question').html("-접기");	        		
-	        	} else{
- 					$('.questionExcept').css("visibility", "collapse");
- 					$('#all-question').html("+문의 전체보기");	 	        		
-	        	}
-	        }
+			}
+		});
 		</script>
+		
+		<!-- 문의 모달 열기 -->
+		<script>
+			window.onload = function(){
+				function onClick(){
+					document.querySelector('.qna_wrap').style.display = 'block';
+					document.querySelector('.black_bg').style.display = 'block';
+				}
+				function offClick(){
+					document.querySelector('.qna_wrap').style.display = 'none';
+					document.querySelector('.black_bg').style.display = 'none';
+					$( '.qna_wrap tbody').empty();
+				}
+				
+				var expand = document.querySelectorAll('.salqnaDetail');
+				for(var i = 0; i < expand.length; i++){
+					expand[i].addEventListener('click', onClick);
+					document.querySelector('.qna_close').addEventListener('click', offClick);
+				}
+			}
+		</script>
+		
 		
 		<c:if test="${ !empty loginUser }">
 			<c:url var="salesQnaInsertView" value="salesQnaInsertView.sq">
@@ -1283,12 +1713,24 @@ hr {
 
 		<!-- 취소 환불 규정 영역 -->
 		<div class="refundArea" align="left">
-			<div class="refund" align="left">${ activity.actGuide }</div>
+			<div class="refund" align="left">${ guideText }</div>
 		</div>
-
+		
+		<!-- 불편사항 신고하기 -->
+		<c:if test="${ !empty loginUser }">
+			<c:url var="QnAInsertView" value="QnAInsertView.bo">
+				<c:param name="starNo" value="${ writer.memNo }"></c:param>
+				<c:param name="acId" value="${ activity.actNo }"></c:param>
+			</c:url>		
 		<div class="declare" align="right">
-			<input type="button" id="declareButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansLight';" value="불편사항 신고하기">
+			<input type="button" id="declareButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansLight';" value="불편사항 신고하기" onclick="location.href='${ QnAInsertView }'">
 		</div>
+		</c:if>
+		<c:if test="${ empty loginUser }">
+		<div class="declare" align="right">
+			<input type="button" id="declareButton" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansLight';" value="불편사항 신고하기" onclick="alert('로그인 후 이용 가능합니다.')">
+		</div>
+		</c:if>
 
 		<!-- 별미 추천 영역 -->
 		<div class="recommendArea" align="center">

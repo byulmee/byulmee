@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -325,10 +325,6 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 				
 				<script>
-					document.querySelector('#insertBtn').addEventListener('click', e) => {
-						alert('test');
-						e.preventDefault;
-					})
 						// 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수
 						$(function(){
 							$("#fileArea").hide();
