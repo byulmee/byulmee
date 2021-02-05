@@ -3,89 +3,136 @@
  */
 
 'use strict!';
+
 (() => {
+	let banUrl ='';
 	/***** by.다혜: 메인 추천 게시글 추가 스크립트 *****/
-	async function getBoardData() {
-		let response = await fetch('loadMainPopAct.do');
+	async function getMainContent() {
+		let response = await fetch('loadMainContent.do');
 		let data = await response.json();
 		
-		await loadList(data);
-	}
-
-	function loadList(data) {
-		const popAct = data.popularActList;
-		const nedAct =data.nearEndDateActList;
-		const popPro =data.popularProList;
-		let ranNo;
-		let randomList;
-		let popActList = '';
-		let neActList = '';
-		let popProList = '';
-		
-		//인기 활동
-		ranNo = getRandomNumber();
-		randomList = getRandomList(ranNo, popAct);
-		
-		for(let i in randomList) {
-			let list = '<li class="list-item item1">'
-						+ 	'<input type="hidden" name="actNo" value="' + randomList[i].actNo + '"/>'
-						+	'<div class="img-frame">'
-	                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].actTitle  + '">'
-	                  	+	'</div>'
-	                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
-	                  	+	'<div class="list-cate">' + randomList[i].actTitle + '</div>'
-	                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + randomList[i].actPrice + '원</span>'
-	                  	+	'<span class="list-social">⭐' + randomList[i].actRating + ' / ' + randomList[i].actReviewCnt + '개의 평가</span>'
-	           		  	+'</li>';
-			popActList += list;
+		if(response.status === 200) {
+			return data;
+		} else {
+			throw new HttpError(response);
 		}
-		$(".popAct").html(popActList);
+	}
+	
+	getMainContent().then((data) => {
+		//인기 활동
+		let popActList = loadList(data.popularActList);
+		document.querySelector('#popularActList').innerHTML += popActList;
 		
 		//마감일 임박 활동
-		for(let i in nedAct) {
+		let neActList = loadList(data.nearEndDateActList);
+		document.querySelector('#nearEndDateActList').innerHTML += neActList;
+		
+		//인기 상품
+		let popProList = loadList(data.popularProList);
+		document.querySelector('#popularProduct').innerHTML += popProList;
+	
+		//배너
+		let imgDataList = data.bannerList;
+		let bannerSection = document.querySelector('#ban');
+		let banImg = document.querySelector('.ban-img');
+	
+		if(imgDataList.length > 0) {
+			bannerSection.display = '';
+			let randomBanner = getBanImg(imgDataList);
 			
-			let list = '<li class="list-item item1">'
-						+ 	'<input type="hidden" name="actNo" value="' + nedAct[i].actNo + '"/>'
-						+	'<div class="img-frame">'
-	                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + nedAct[i].image.imgName + '" alt="' + nedAct[i].actTitle  + '">'
-	                  	+	'</div>'
-	                  	+	'<span>' + nedAct[i].member.memNickname + '</span>'
-	                  	+	'<div class="list-cate">' + nedAct[i].actTitle + '</div>'
-	                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + nedAct[i].actPrice + '원</span>'
-	                  	+	'<span class="list-social">⭐' + nedAct[i].actRating + ' / ' + nedAct[i].actReviewCnt + '개의 평가</span>'
-	           		  	+'</li>';
-			neActList += list;
+			bannerSection.style.backgroundColor = randomBanner.banBgc;
+			banImg.src = 'resources/piUploadFiles/' + randomBanner.banOrigin;	
+			banImg.alt = randomBanner.banAlt;
+			banUrl = randomBanner.banUrl;
+		} else {
+			bannerSection.style.display = 'none';
 		}
-		$(".nedAct").html(neActList);
+	});
+	
+	//화면에 노출할 데이터를 뽑는 메소드
+	function loadList(listSet) {
+		let randomList;
+		let resultView = '';
+		let listTag = '';
 		
-		//플리마켓 인기 상품
-		ranNo = getRandomNumber();
-		randomList = getRandomList(ranNo, popPro);
-		console.log(randomList);
+		randomList = getRandomList(listSet);
 		
-		for(let i in randomList) {
-			let list = '<li class="list-item item1">'
-						+ 	'<input type="hidden" name="proNo" value="' + randomList[i].proNo + '"/>'
-						+	'<div class="img-frame">'
-	                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + popPro[i].proTitle  + '">'
-	                  	+	'</div>'
-	                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
-	                  	+	'<div class="list-cate">' + randomList[i].proTitle + '</div>'
-	                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + randomList[i].proPrice + '원</span>'
-	                  	+	'<span class="list-social">⭐' + randomList[i].proRating + ' / ' + randomList[i].proReviewCnt + '개의 평가</span>'
-	           		  	+'</li>';
-			popProList += list;
+		for(let i = 0; i<randomList.length; i++) {
+			if(randomList[i] != null) {
+				
+				if(randomList[i].actNo) {
+					listTag = '<li class="list-item">'
+								+ 	'<input type="hidden" name="actNo" value="' + randomList[i].actNo + '"/>'
+								+	'<div class="img-frame">'
+			                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].actTitle  + '">'
+			                  	+	'</div>'
+			                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
+			                  	+	'<div class="list-cate">[' + getCategoryString(randomList[i].actCategory) + '] ' + randomList[i].actTitle + '</div>'
+			                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].actPrice) + '원</span>'
+			                  	+	'<span class="list-social">⭐ <b>' + randomList[i].actRating + '</b>  ' + addComma(randomList[i].actReviewCnt) + '개의 평가</span>'
+			           		  	+'</li>';
+					resultView += listTag;
+				} else {
+					listTag = '<li class="list-item">'
+								+ 	'<input type="hidden" name="actNo" value="' + randomList[i].proNo + '"/>'
+								+	'<div class="img-frame">'
+			                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].proTitle  + '">'
+			                  	+	'</div>'
+			                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
+			                  	+	'<div class="list-cate">[' +  getCategoryString(randomList[i].proCategory) + '] ' + randomList[i].proTitle + '</div>'
+			                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].proPrice) + '원</span>'
+			                  	+	'<span class="list-social">⭐ <b>' + randomList[i].proRating + '</b>  ' + addComma(randomList[i].proReviewCnt) + '개의 평가</span>'
+			           		  	+'</li>';
+					resultView += listTag;
+				}
+			}
 		}
-		$('.popPro').html(popProList);
+		return resultView;
 	}
-	getBoardData();
+
+	//getRandomNum()으로 받아온 5개 인덱스를 사용하여 50개 중 5개 게시글 추출,
+	//단 게시글이 50개 미만일 경우 순서대로 top5만 randomlist에 담음
+	function getRandomList(dataList) {
+			let randomList = [];
+			
+			if(dataList.length < 50) {
+				for(let i = 0; i < 5; i++) {
+					if(dataList[i] != null) {
+						randomList[i] = dataList[i];
+					} else {
+						break;
+					}
+				}
+			} else {
+				let noArr = getRandomNumber();
+				for(let i = 0; i < noArr.length; i++)
+					randomList[i] = dataList[noArr[i]];
+			}
+			return randomList;
+	}
 	
-	//게시글 클릭 이벤트 정의
-	const paUl = document.querySelector('#popularActList');
-	const neUl = document.querySelector('#nearEndDateActList');
-	const ppUl = document.querySelector('#popularProduct');
+	//5개의 중복되지 않는 랜덤 함수를 추출하는 함수
+	function getRandomNumber() {
+		
+		let noArr = [];
+		
+		for(let i = 0; i < 5; i++) {
+			let ranNo = Math.floor(Math.random() * 50 + 1);
+			if(!isSameNum(ranNo)) {
+				noArr[i] = ranNo;
+			} else {
+				i--;
+			}
+		}
+		
+		//중복된 숫자인지 확인하는 함수
+		function isSameNum(no) {
+			return noArr.find((e) => (e === no));
+		}
+		return noArr;
+	}
 	
-	
+	//메인 활동/상품 콘텐츠 리스트 클릭 이벤트 정의
 	$('#popularActList').on('click','li', function(event){
 		event.preventDefault();
 		let boardNo = event.currentTarget.childNodes[0].value;
@@ -104,36 +151,40 @@
 		location.href='http://localhost:9380/productDetail.pd?pdId=' + boardNo;
 	});
 	
+	document.querySelector('#ban').addEventListener('click', () => {
+		location.href = banUrl;
+	});
 	
-	//5개의 중보고되지 않는 랜덤 함수를 추출하는 함수
-	function getRandomNumber() {
-		
-		let noArr = [];
-		
-		for(let i = 0; i < 5; i++) {
-			let ranNo = Math.floor(Math.random() * 50 + 1);
-			if(!isSameNum(ranNo)) {
-				noArr[i] = ranNo;
-			} else {
-				i--;
-			}
-		}
-		
-		function isSameNum(no) {
-			return noArr.find((e) => (e === no));
-		}
-		return noArr;
+	//콤마 추가하는 메소드
+	function addComma(num) {
+  		var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  	return num.toString().replace(regexp, ',');
 	}
 	
-	//getRandomNum()으로 받아온 5개 인덱스를 사용하여 50개 중 5게 게시글 추
-	function getRandomList(noArr, dataList) {
-			
-			let randomList = [];
-			for(let i in noArr) {
-				randomList[i] = dataList[noArr[i]];
-			}
-		return randomList;
+	//카테고리 코드를 대치하는 메소드
+	function getCategoryString(categoryNo) {
+		
+		let categoryString = '';
+		
+		switch(categoryNo) {
+			case 0: categoryString ='액티비티'; break;
+			case 1: categoryString = '리빙'; break;
+			case 2: categoryString = '건강/미용'; break;
+			case 3: categoryString = '힐링'; break;
+			case 4: categoryString = '푸드'; break;
+			case 5: categoryString = '커리어'; break;
+		}
+		
+		return categoryString;
 	}
+	
+	//배너 추가 메소드
+	function getBanImg(imgDataList) {
+		
+		let ranNo =  Math.floor(Math.random() * imgDataList.length);
+		return imgDataList[ranNo];
+	}
+	
 	
 	//제출 전 검색어 검증
 	/***** by.다혜: 검색 관련 스크립트 *****/

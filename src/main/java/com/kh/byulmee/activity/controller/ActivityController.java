@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,14 +19,14 @@ import com.google.gson.JsonIOException;
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.SalesQna;
 import com.kh.byulmee.board.service.SalesQnaService;
+import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
-import com.kh.byulmee.reply.model.service.ReplyService;
-import com.kh.byulmee.reply.model.vo.Reply;
 import com.kh.byulmee.review.model.service.ReviewService;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -44,18 +45,15 @@ public class ActivityController {
 	@Autowired
 	private SalesQnaService sqService;
 	
-	@Autowired
-	private ReplyService rService;
-	
 	@Autowired 
 	private ReviewService rvService;
 
 	
-	@RequestMapping("activityList.ac")
-	public String activityListView() {
-		return "activityList";
-	}
-	
+//	@RequestMapping("activityList.ac")
+//	public String activityListView() {
+//		return "activityList";
+//	}
+//	
 	@RequestMapping("activityDetail.ac")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
 		
@@ -65,6 +63,20 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
+		
+		// 활동 신청 가능한 인원수 조회
+		int actPeople = activity.getActPeople();
+		int orderSum = aService.selectOrderSum(acId);
+		int possibleNum = actPeople - orderSum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -76,8 +88,9 @@ public class ActivityController {
 			case 5: category = "커리어"; break;
 		}
 		
-		// content textarea에 저장된 값 줄바꿈해서 가져오기
+		// 본문과 유의사항 textarea에 저장된 값 줄바꿈해서 가져오기
 		String contentText = activity.getActContent().replaceAll("\r\n", "<br>");
+		String guideText = activity.getActGuide().replaceAll("\r\n", "<br>");
 		
 		// 섬네일 이미지와 본문 이미지(4개) 나누기 
 		String thumb = null;
@@ -98,12 +111,6 @@ public class ActivityController {
 				content4 = "resources\\auploadFiles\\" + image.get(i).getImgName();
 			}
 		}
-		System.out.println(image);
-		System.out.println("thumb " + thumb);
-		System.out.println("content1 " + content1);
-		System.out.println("content2 " + content2);
-		System.out.println("content3 " + content3);
-		System.out.println("content4 " + content4);
 		
 		if(activity != null && image != null) {
 			mv.addObject("activity", activity)
@@ -115,11 +122,14 @@ public class ActivityController {
 			  .addObject("content4", content4)
 			  .addObject("writer", writer)
 			  .addObject("contentText", contentText)
+			  .addObject("guideText", guideText)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
+			  .addObject("possibleNum", possibleNum)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
 		}
-		
 		return mv;
 	}
 	
@@ -127,7 +137,8 @@ public class ActivityController {
 	@RequestMapping("salesQnaList.ac")
 	public void getQnaList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaList(acId);
-		System.out.println(sqList);
+		
+		System.out.println(acId);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -156,22 +167,33 @@ public class ActivityController {
 		}
 	}
 	
+	// 문의 디테일+답변 불러오기
+	@RequestMapping("salesQnaDetail.ac")
+	public void getQnaDetail(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
+		SalesQna sq = sqService.selectQnaDetail(qnaNo);
+		System.out.println(sq);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(sq, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	// 후기 불러오기
 	@RequestMapping("salesReviewList.ac")
 	public void getReviewList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<Review> reviewList = rvService.selectReviewList(acId);
-//		ArrayList<Image> image = new ArrayList<Image>();
-//		
-//		for(int i = 0; i < reviewList.size(); i++) {
-//			int revImgNo = reviewList.get(i).getRevNo();
-//			image = iService.selectReviewImage(revImgNo);
-//		}
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
 			gson.toJson(reviewList, response.getWriter());
-//			gson.toJson(image, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -179,17 +201,15 @@ public class ActivityController {
 		}
 	}
 	
-	
-	// 문의 답변 불러오기
-	@RequestMapping("salesQnaReply.ac")
-	public void getQnaReply(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
-		Reply r = rService.getQnaReply(qnaNo);
-		System.out.println(r);
+	// 후기 디테일 불러오기
+	@RequestMapping("salesReviewDetail.ac")
+	public void getReviewDetail(@RequestParam("revNo") int revNo, HttpServletResponse response) {
+		Review review = rvService.selectReviewDetail(revNo);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
-			gson.toJson(r, response.getWriter());
+			gson.toJson(review, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -197,6 +217,7 @@ public class ActivityController {
 		}
 	}
 	
+	// 활동 신청 페이지
 	@RequestMapping("activityCheck.ac")
 	public ModelAndView activityCheckView(@RequestParam("acId") int acId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
 		
@@ -206,6 +227,15 @@ public class ActivityController {
 		ArrayList<Image> image = iService.selectImage(acId);
 		// 활동 게시판 작성자 조회
 		Member writer = mService.selectActivityWriter(acId);
+		
+		// 전체 리뷰 평균 별점 조회
+		ArrayList<Review> review = rvService.selectReviewAll(acId);
+		int reviewNum = review.size();
+		int ratingSum = 0;
+		for(int i = 0; i < review.size(); i++) {
+			ratingSum += review.get(i).getRevRating();
+		}
+		double ratingAvg = (double)ratingSum / reviewNum;
 		
 		String category = null;
 		switch(activity.getActCategory()) {
@@ -232,10 +262,41 @@ public class ActivityController {
 			  .addObject("writer", writer)
 			  .addObject("amount", amount)
 			  .addObject("price", price)
+			  .addObject("reviewNum", reviewNum)
+			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityCheck");
 		} else {
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");
 		}
 		return mv;
+	}
+	
+
+	@RequestMapping("alist.ac")         
+    public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
+                     
+		int currentPage = 1;
+		if(page != null) {
+		     currentPage = page;
+		}
+		  
+		int listCount = aService.getActBoardListCount();
+		  
+		  
+		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		  
+		  ArrayList<Activity> list = aService.selectList(pi);
+  
+		  System.out.println("list == > " + list);
+		  System.out.println("list.size 1== > " + list.size());
+		  
+		  if(list != null) {
+			 model.addAttribute("list", list);
+			 model.addAttribute("pi", pi);
+			 System.out.println("list.size 2== > " + list.size());
+			 return "activityList";
+		  } else {
+			  throw new ActivityException("조회에 실패하였습니다.");
+		  }
 	}
 }

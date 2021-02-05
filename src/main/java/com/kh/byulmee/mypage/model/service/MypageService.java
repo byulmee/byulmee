@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
@@ -19,11 +20,19 @@ public interface MypageService {
 
 	int deleteMember(String id);
 
-	int getOrderListCount(String id);
+	int getOrderListCount(Order ord);
 
-	ArrayList<Order> selectOrderList(PageInfo pi, String id);
+	ArrayList<Order> selectActOrderList(PageInfo pi, String id);
 
-	ArrayList<Order> selectDetailList(int ordNo);
+	ArrayList<Order> selectProOrderList(PageInfo pi, String id);
+
+	ArrayList<Order> selectActDetailList(int ordNo);
+	
+	ArrayList<Order> selectProDetailList(int ordNo);
+	
+	int deletePurAct(Order o);
+	
+	int deletePurPro(Order o);
 
 	int insertProfileImage(Image img);
 
@@ -35,5 +44,30 @@ public interface MypageService {
 
 	int updateReviewStatus(Review r);
 
-//	ArrayList<Image> selectProfileImgN(int memNo);
+	int getFavListCount(Favorite fav);
+
+	ArrayList<Favorite> selectFavActList(PageInfo pi, String id);
+	
+	ArrayList<Favorite> selectFavProList(PageInfo pi, String id);
+	
+	ArrayList<Favorite> selectFavStarList(PageInfo pi, String id);
+
+	int deleteFavAct(Favorite f);
+
+	int deleteFavPro(Favorite f);
+
+	int deleteFavStar(Favorite f);
+
+	int getReviewListCount(Review rev);
+
+	ArrayList<Review> selectRevActList(PageInfo pi, String id);
+
+	Review selectRevActDetail(int revNo);
+
+	int updateRevAct(Review r);
+	
+	ArrayList<Image> selectRevDetailImg(int revNo);
+
+
+
 }

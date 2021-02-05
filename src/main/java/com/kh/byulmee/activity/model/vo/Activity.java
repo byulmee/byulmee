@@ -35,8 +35,9 @@ public class Activity {
 	private int actCount;
 	private Date actDate;
 	private String actStatus;
-	private double actRating;
+	private double actTotalScore;
 	private int actReviewCnt;
+	private double actRating;
 	private Member member;
 	private Image image;
 }

@@ -26,4 +26,8 @@ public interface OrderService {
 
 	int updateOrder(Order o);
 
+	int insertPayOrder(Order o);
+
+	Order selectPayOrder(int ordNo);
+
 }

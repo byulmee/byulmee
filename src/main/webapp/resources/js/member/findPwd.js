@@ -97,7 +97,7 @@ async function sendCodeAndCheck(url) {
 	//step1.존재하는 아이디인지 확인
 	let checkIdRes = await fetch('checkId.me?memId='+input_id.value);
  	let idNotExisted = await checkIdRes.text();
-	
+	console.log(checkIdRes);
 	if(idNotExisted != 'true') { //존재하는 아이디라면
 	
 		//step2아이디와 입력 정보를 대조하여 회원 조회

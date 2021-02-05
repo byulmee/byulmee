@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
@@ -32,22 +33,44 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.deleteMember", id);
 	}
 
-	public int getOrderListCount(SqlSessionTemplate sqlSession, String id) {
-		return sqlSession.selectOne("mypageMapper.getOrderListCount", id);
+	public int getOrderListCount(SqlSessionTemplate sqlSession, Order ord) {
+		return sqlSession.selectOne("mypageMapper.getOrderListCount", ord);
+	}
+	
+	public int getProOrderListCount(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("mypageMapper.getProOrderListCount", id);
 	}
 
-	public ArrayList<Order> selectOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+	public ArrayList<Order> selectActOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectOrderList", id, rowBounds);
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectActOrderList", id, rowBounds);
+	}
+	
+	public ArrayList<Order> selectProOrderList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProOrderList", id, rowBounds);
 	}
 
-	// ajax 부분
-	public ArrayList<Order> selectDetailList(SqlSessionTemplate sqlSession, int ordNo) {
-		return (ArrayList)sqlSession.selectList("mypageMapper.selectDetailList", ordNo);
+	public ArrayList<Order> selectActDetailList(SqlSessionTemplate sqlSession, int ordNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectActDetailList", ordNo);
+	}
+	
+	public ArrayList<Order> selectProDetailList(SqlSessionTemplate sqlSession, int ordNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectProDetailList", ordNo);
 	}
 
+	public int deletePurAct(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("mypageMapper.deletePurAct", o);
+	}
+
+	public int deletePurPro(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("mypageMapper.deletePurPro", o);
+	}
+	
 	public int insertProfileImage(SqlSessionTemplate sqlSession, Image i) {
 		return sqlSession.insert("mypageMapper.insertProfileImage", i);
 	}
@@ -70,7 +93,65 @@ public class MypageDAO {
 		return sqlSession.update("mypageMapper.updateReviewStatus", r);
 	}
 
-//	public ArrayList<Image> selectProfileImgN(SqlSessionTemplate sqlSession, int memNo) {
-//		return (ArrayList)sqlSession.selectList("mypageMapper.selectProfileImgN", memNo);
-//	}
+	public int getFavListCount(SqlSessionTemplate sqlSession, Favorite fav) {
+		return sqlSession.selectOne("mypageMapper.getFavListCount", fav);
+	}
+
+	public ArrayList<Favorite> selectFavActList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavActList", id, rowBounds);
+	}
+
+	public ArrayList<Favorite> selectFavProList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavProList", id, rowBounds);
+	}
+	
+	public ArrayList<Favorite> selectFavStarList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavStarList", id, rowBounds);
+	}
+
+	public int deleteFavAct(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavAct", f);
+	}
+
+	public int deleteFavPro(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavPro", f);
+	}
+
+	public int deleteFavStar(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFavStar", f);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession, Review rev) {
+		return sqlSession.selectOne("mypageMapper.getReviewListCount", rev);
+	}
+
+	public ArrayList<Review> selectRevActList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevActList", id, rowBounds);
+	}
+
+	public ArrayList<Image> selectRevDetailImg(SqlSessionTemplate sqlSession, int revNo) {
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevDetailImg", revNo);
+	}
+
+	public Review selectRevActDetail(SqlSessionTemplate sqlSession, int revNo) {
+		return sqlSession.selectOne("mypageMapper.selectRevActDetail", revNo);
+	}
+
+	public int updateRevAct(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("mypageMapper.updateRevAct", r);
+	}
+
+
 }

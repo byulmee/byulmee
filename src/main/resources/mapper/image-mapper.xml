@@ -16,7 +16,7 @@
 	<insert id="insertImage">
 		insert into image
 		values(seq_imgid.nextval, #{imgOrigin}, #{imgName}, #{imgPath}, sysdate, #{imgLevel},
-				default, #{imgRefcode}w, #{imgRefno})
+				default, #{imgRefcode}, #{imgRefno})
 	</insert>
 	
 	<select id="selectList" resultMap="imageResultSet">
@@ -50,10 +50,16 @@
 		where img_refcode=1 and img_refno=#{acId} and img_status='Y'
 	</select>
 	
+	<select id="selectProductImage" resultMap="imageResultSet">
+		select *
+		from image
+		where img_refcode=2 and img_refno=#{pdId} and img_status='Y'
+	</select>
+	
 	<select id="selectReviewImage" resultMap="imageResultSet">
 		select *
 		from image
 		where img_refcode=3 and img_refno=#{revImgNo} and img_status='Y'
 	</select>
-
+	
 </mapper>

@@ -2,6 +2,11 @@ package com.kh.byulmee.member.model.vo;
 
 import java.sql.Date;
 
+import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.image.model.vo.Image;
+import com.kh.byulmee.order.model.vo.Order;
+import com.kh.byulmee.product.model.vo.Product;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +25,10 @@ public class Favorite {
 	private String favStatus;
 	private int favRefcode;
 	private int favRefno;
+	
+	private Image image;
+	private Member member;
+	private Activity activity;
+	private Product product;
+	private Order order;
 }

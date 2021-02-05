@@ -26,6 +26,7 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.order.model.vo.Order;
 
 @Controller
 public class AdminController {
@@ -33,9 +34,35 @@ public class AdminController {
 	@Autowired
 	private AdminService abService;
 
+//	@RequestMapping("adminMain.ad")
+//	public String adminMain() {
+//		
+//		return "admin_main";
+//	
+//	}
 	@RequestMapping("adminMain.ad")
-	public String adminMain() {
-		return "admin_main";
+	public ModelAndView adminMainList( ModelAndView mv,HttpServletRequest request) {
+		int mResult = abService.getMemberCount();
+		int tmResult = abService.getMemberTotal();
+		int aoResult = abService.getActivityCount();
+		int poResult = abService.getProductCount();
+		int oResult = abService.getOdersCount();
+		
+		if (mResult > 0 && tmResult > 0 && aoResult > 0 && poResult > 0 && oResult > 0 ) {
+			mv.addObject("mResult", mResult);
+			mv.addObject("tmResult", tmResult);
+			mv.addObject("aoResult", aoResult);
+			mv.addObject("poResult", poResult);
+			mv.addObject("oResult", oResult);
+			mv.setViewName("admin_main");
+			
+			
+		}
+		else {
+			throw new BoardException("매출조회에 실패하였습니다.");
+		}
+		
+		return mv;
 	
 	}
 	
@@ -154,6 +181,7 @@ public class AdminController {
 
 
 	}
+	
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
 			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl, 
@@ -198,7 +226,13 @@ public class AdminController {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		// 웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
 		
-		String savePath = root + "\\piUploadFiles";
+		String os= System.getProperty("os.name").toLowerCase();
+		String savePath;
+		if(os.indexOf("mac") >= 0) {
+			savePath = root + "/piUploadFiles";
+		} else {
+			savePath = root + "\\piUploadFiles";
+		}
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -210,8 +244,12 @@ public class AdminController {
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
 		
-		String renamePath = folder + "\\" + renameFileName;
-		
+		String renamePath;
+		if(os.indexOf("mac") >= 0) {
+			renamePath = folder + "/" + renameFileName;
+		} else {
+			renamePath = folder + "\\" + renameFileName;
+		}
 		ba.setBanPath(renamePath);
 		ba.setBanName(renameFileName);
 		

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!DOCTYPE html>
 <html>
@@ -37,22 +37,18 @@
 			<div class="idlook">
 			<table id="idlookup">
 					<tr>
-						<th align="center">새 글</th>
 	     				<th align="center">새 회원 </th>
 	          			<th align="center">누적 회원</th>
-	           			<th align="center">방문자</th>
 	          			<th align="center">활동 매출</th>
 	           			<th align="center">상품 매출</th>
 	          	 		<th align="center">총 매출</th>
 	       			</tr>
 	       			<tr>
-	                  <td align="center">1</td>
-	                  <td align="center">1</td>
-	                  <td align="center">1</td>
-	                  <td align="center">1</td>
-	                  <td align="center">${Order.ordPhone}</td>
-	                  <td align="center">${Order.ordName}</td>
-	                  <td align="center">${Order.ordRequest}</td>
+	                  <td align="center">${mResult }</td>
+	                  <td align="center">${tmResult }</td>
+	                  <td align="center">${aoResult }</td>
+	                  <td align="center">${poResult }</td>
+	                  <td align="center">${oResult }</td>
 	               </tr>
 	       		</table>
 	       	</div>
@@ -84,80 +80,79 @@
            			<th align="center">상품 매출</th>
            			<th align="center">일 매출 합계</th>
            		</tr>
+
            		<tr>
-                  <td align="center">20.12.01 화</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
+                  <td align="center"></td>
+                  <td align="center"></td>
+                  <td align="center"></td>
+                  <td align="center"></td>
                 </tr>
-           		<tr>
-                  <td align="center">20.12.02 수</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.03 목</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.04 금</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.05 토</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.06 일</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.07 월</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.08 화</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.09 수</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.10 목</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-           		<tr>
-                  <td align="center">20.12.11 금</td>
-                  <td align="center">500,000</td>
-                  <td align="center">300,000</td>
-                  <td align="center">800,000</td>
-                </tr>
-                <tfoot>
-                <tr>
-                  <th align="center">매출 합계</th>
-                  <th colspan="3" align="center">24,800,000</th>
-                </tr>
-                </tfoot>
+
+                
+				
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.02 수</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.03 목</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.04 금</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.05 토</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.06 일</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.07 월</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.08 화</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.09 수</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.10 목</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
+<!--            		<tr> -->
+<!--                   <td align="center">20.12.11 금</td> -->
+<!--                   <td align="center">500,000</td> -->
+<!--                   <td align="center">300,000</td> -->
+<!--                   <td align="center">800,000</td> -->
+<!--                 </tr> -->
 
            	</table>
+           	
          </div>
 	  	</div>
 	  	

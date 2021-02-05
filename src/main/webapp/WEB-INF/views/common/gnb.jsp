@@ -29,25 +29,26 @@
             	<c:if test="${ empty sessionScope.loginUser }">
             		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
             	</c:if>
-            	<c:if test="${ !empty sessionScope.loginUser }">
-                	<li class="menu-list-item" onclick="location.href='logout.me'">로그아웃</li>
-					<li class="menu-list-item" onclick="location.href='myPageMainView.me'">마이페이지</li>
-	               		<c:if test="${loginUser.memId.equals('admin')}">
-			           	<li onclick="location.href='adminMain.ad'">관리자</li>
-			           	</c:if>
-                </c:if>
+            	<c:if test="${ sessionScope.loginUser.memLevel eq 0 || sessionScope.loginUser.memLevel eq 1}">
+                	<li onclick="location.href='logout.me'">로그아웃</li>
+               		<li onclick="location.href='myPageMainView.me'">마이페이지</li>
+	            </c:if>
+	            <c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
+	           		<li onclick="location.href='logout.me'">로그아웃</li>
+			        <li onclick="location.href='adminMain.ad'">시스템관리</li>
+		        </c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
-                <li class="menu-list-item" onclick="location.href='#"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
+                <li class="menu-list-item" onclick="location.href='productList.pd'"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
             </ul>
         </div>
         <div id="gnb-cate">
             <ul id="cate">
-                <li class="cate act" onclick="location.href='#">액티비티</li>
-                <li class="cate liv" onclick="location.href='#">리빙</li>
-                <li class="cate bea" onclick="location.href='#">건강/미용</li>
-                <li class="cate hel" onclick="location.href='#">힐링</li>
-                <li class="cate fod" onclick="location.href='#">푸드</li>
-                <li class="cate cur" onclick="location.href='#">커리어</li>
+               	<li class="cate act" onclick="location.href='aList.ac?actCategory=0'">액티비티</li>
+                <li class="cate liv" onclick="location.href='aList.ac?actCategory=1'">리빙</li>
+                <li class="cate bea" onclick="location.href='aList.ac?actCategory=2'">건강/미용</li>
+                <li class="cate hel" onclick="location.href='aList.ac?actCategory=3'">힐링</li>
+                <li class="cate fod" onclick="location.href='aList.ac?actCategory=4'">푸드</li>
+                <li class="cate cur" onclick="location.href='aList.ac?actCategory=5'">커리어</li>
             </ul>
         </div>
     </nav>

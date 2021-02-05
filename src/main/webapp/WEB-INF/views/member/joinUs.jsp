@@ -13,7 +13,6 @@
     <script type="text/javascript" src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
    	<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
    	<script type="text/javascript" src="resources/js/member/jquery.validate.min.js"></script>
-   	<script type="text/javascript" src="resources/js/member/joinUs.js"></script>
     <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
