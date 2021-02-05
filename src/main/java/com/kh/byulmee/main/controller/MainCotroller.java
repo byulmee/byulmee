@@ -55,10 +55,6 @@ public class MainCotroller {
         keyword = keyword.replaceAll(match, "");
 		String[] keywords = keyword.split(" ");
 		
-		for(String i : keywords) {
-			System.out.println(i);
-		}
-		
 		//페이징 처리
 		//키워드에 매칭하는 스타, 전체 게시글의 갯수 계산
 		int currentPage = 1;
@@ -151,9 +147,6 @@ public class MainCotroller {
 		ArrayList<Activity> nearEndDateActList = aService.getNearEndDateActList();
 		ArrayList<Product> popularProList = pService.getPopularProList();
 		ArrayList<Banner> bannerList = abService.selectBannerList();
-		
-		System.out.println(nearEndDateActList);
-		System.out.println(popularActList);
 		
 		if(popularActList != null && nearEndDateActList != null && popularProList != null) {
 			Map<String, Object> result = new HashMap<>();

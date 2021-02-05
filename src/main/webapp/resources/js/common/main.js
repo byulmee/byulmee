@@ -19,8 +19,6 @@
 	}
 	
 	getMainContent().then((data) => {
-		console.log(data);
-		console.log(data.popularActList);
 		//인기 활동
 		let popActList = loadList(data.popularActList);
 		if(popActList.length > 0) {
