@@ -164,4 +164,9 @@ public class MainCotroller {
 			throw new MainException("페이지를 불러올 수 없습니다.\n잠시후에 다시 시도해주세요.");
 		}
 	}
+	
+	@RequestMapping(value="aboutUs.do", produces="text/plain;charset=UTF-8")
+	public String aboutUsView() {		
+		return "common/aboutUs";
+	}
 }

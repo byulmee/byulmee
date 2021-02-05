@@ -1,0 +1,115 @@
+html, body  {
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+}
+
+.video-frame {
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+
+.cover {
+    position: absolute;
+    height: 1080px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index:1;
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    color: white;
+    z-index: 2;
+}
+
+.type_text {
+    font-size: 52px;
+    line-height: 1.2em;
+}
+
+.content-wrapper {
+    margin: auto;
+    margin-top: 250px;
+    width: 70%;
+    height: 70vh;
+}
+
+.last{
+	height: 50vh;
+	text-align: center;
+}
+
+.content-box{
+    display: flex;
+    align-items: center;
+}
+
+.content-img {
+    width: 40%;
+    height: 350px;
+    overflow: hidden;
+}
+
+.content-img  image {
+    object-fit: cover;
+}
+
+.content-text{
+    padding: 1.4rem;
+    line-height: 1.8rem;
+    vertical-align: center;
+    width: 70%;
+}
+
+.content-btn {
+	padding: 1.2rem;
+}
+
+.content-text {
+	margin: auto;
+    font-size: 1.2rem;
+}
+
+.content-text span {
+	background-color: #FCDCCB;
+	padding: 0.025em 0.2em;
+    font-size: 2.5rem;
+    line-height: 1.2em;
+    margin-bottom: 35px;
+    vertical-align: center;
+}
+.content-text h2 {
+	font-size: 2.6rem;
+	line-height: 1.1em;
+	color:#FF6833
+}
+
+.content-btn {
+	color: #FF6833;
+}
+
+.content-btn span {
+	color: #3f3f3f;
+}
+
+.content-btn img {
+	height: 20px;
+	cursor: pointer;
+	vertical-align: bottom;
+}
+
+.content-img img{
+    width: 100%;
+    height: auto;
+}
