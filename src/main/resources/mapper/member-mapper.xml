@@ -34,7 +34,7 @@
 	<select id="checkId" resultType="_int">
   		select count(*)
   		from member
-  		where mem_id = #{memId} and mem_status = 'Y'
+  		where mem_id = #{memId}  and mem_status = 'Y'
   	</select>
   	
   	<select id="checkPhone" resultType="_int">
