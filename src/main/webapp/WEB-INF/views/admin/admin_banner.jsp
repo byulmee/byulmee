@@ -52,7 +52,8 @@
   			</tr>
   			<tr>
   				<td class="batd1"> alt : <input type="text" name="altBan" required align="left" style="width:230px;"> 
-  				  &nbsp; url : <input type="url" name="banUrl" style="width:350px;"/>
+  				  &nbsp; url : <input type="url" name="banUrl" style="width:300px;"/>
+  				   <br><br> 배경색 : <input type="text" name="banBgc" style="width:200px;"/>
   				</td>
   			</tr>
   			<tr>

@@ -1,7 +1,5 @@
 package com.kh.byulmee.banner.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +19,5 @@ public class Banner {
 	private String banName;
 	private String banPath;
 	private String banUrl;
+	private String banBgc;
 }

@@ -156,8 +156,8 @@ public class AdminController {
 	}
 	@RequestMapping("BannerInsert.ad")
 	public String bannerInsert(@RequestParam("updateBan") MultipartFile updateBan,
-			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl,
-								HttpServletRequest request, HttpSession session, Model model) {
+			@RequestParam("altBan") String altBan,@RequestParam("banUrl") String banUrl, 
+			@RequestParam("banBgc") String banBgc, HttpServletRequest request, HttpSession session, Model model) {
 		
 
 		
@@ -177,6 +177,7 @@ public class AdminController {
 				ba.setBanPath(banPath);
 				ba.setBanAlt(altBan);
 				ba.setBanUrl(banUrl);
+				ba.setBanBgc(banBgc);
 			}
 				
 
