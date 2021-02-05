@@ -48,12 +48,6 @@ public class ActivityController {
 	@Autowired 
 	private ReviewService rvService;
 
-	
-//	@RequestMapping("activityList.ac")
-//	public String activityListView() {
-//		return "activityList";
-//	}
-//	
 	@RequestMapping("activityDetail.ac")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
 		
@@ -138,8 +132,6 @@ public class ActivityController {
 	public void getQnaList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaList(acId);
 		
-		System.out.println(acId);
-		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -171,7 +163,6 @@ public class ActivityController {
 	@RequestMapping("salesQnaDetail.ac")
 	public void getQnaDetail(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
 		SalesQna sq = sqService.selectQnaDetail(qnaNo);
-		System.out.println(sq);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
