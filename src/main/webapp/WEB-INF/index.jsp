@@ -79,7 +79,7 @@
         <ul class="list popAct" id="popularActList">
         </ul>
     </div>
-
+			
     <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
     <div id="ban">
         <img class="ban-img" src="#"  alt="배너 영역">
@@ -107,7 +107,7 @@
     <div class="rec-list last">
         <ul class="list popPro" id="popularProduct">
         </ul>
-    </div>
+   	</div>
 	    
     <c:import url="views/common/footer.jsp"/>
     <script type="text/javascript" src="../resources/js/common/main.js"> </script>

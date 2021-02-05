@@ -152,6 +152,9 @@ public class MainCotroller {
 		ArrayList<Product> popularProList = pService.getPopularProList();
 		ArrayList<Banner> bannerList = abService.selectBannerList();
 		
+		System.out.println(nearEndDateActList);
+		System.out.println(popularActList);
+		
 		if(popularActList != null && nearEndDateActList != null && popularProList != null) {
 			Map<String, Object> result = new HashMap<>();
 			result.put("popularActList", popularActList);
