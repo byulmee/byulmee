@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.product.model.vo.Product;
 
 public interface ProductService {
@@ -39,4 +40,13 @@ public interface ProductService {
 	ArrayList<Product> getPopularProList();
 	
 	int updateProRatingCnt(Product p);
+
+	
+
+	// 상품 조회
+	int ProductListCount(int proCategory);
+
+	ArrayList<Product> selectList(PageInfo pi, int proCategory);
+	
+	
 }
