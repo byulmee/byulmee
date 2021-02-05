@@ -37,7 +37,8 @@
 		           	</c:if>
             </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
-                <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓"></li>
+                <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓" 
+                onclick="location.href='plist.pd?proCategory=0'"></li>
             </ul>
         </div>
 
@@ -47,22 +48,22 @@
                 <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기"><i class="fas fa-search"></i>
             </div>
             <ul id="cate">
-                <li class="cate act" onclick="location.href='alist.ac'">
+                <li class="cate act" onclick="location.href='alist.ac?actCategory=0'">
                     <i class="fas fa-running"></i><br><span class="cate-name">액티비티</span>
                 </li>
-                <li class="cate liv">
+                <li class="cate liv" onclick="location.href='alist.ac?actCategory=1'">
                     <i class="fas fa-chair"></i><br><span class="cate-name">리빙</span>
                 </li>
-                <li class="cate bea">
+                <li class="cate bea" onclick="location.href='alist.ac?actCategory=2'">
                     <i class="fas fa-spray-can"></i><br><span class="cate-name">건강/미용</span>
                 </li>
-                <li class="cate hel">
+                <li class="cate hel" onclick="location.href='alist.ac?actCategory=3'">
                     <i class="fas fa-heartbeat"></i><br><span class="cate-name">힐링</span>
                 </li>
-                <li class="cate fod">
+                <li class="cate fod" onclick="location.href='alist.ac?actCategory=4'">
                     <i class="fas fa-utensils"></i><br><span class="cate-name">푸드</span>
                 </li>
-                <li class="cate cur">
+                <li class="cate cur" onclick="location.href='alist.ac?actCategory=5'">
                     <i class="fas fa-laptop"></i><br><span class="cate-name">커리어</span>
                 </li>
             </ul>

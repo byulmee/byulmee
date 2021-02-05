@@ -2,6 +2,7 @@ package com.kh.byulmee.product.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.jdbc.Null;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -91,4 +92,21 @@ public class ProductDAO {
 	public int updateProRatingCnt(SqlSessionTemplate sqlSession, Product p) {
 		return sqlSession.update("productMapper.updateProRatingCnt", p);
 	}
-}
+
+	public int ProductListCount(SqlSessionTemplate sqlSession, int proCategory) {
+		
+		return sqlSession.selectOne("productMapper.ProductListCount", proCategory);
+	}
+
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, int proCategory) {
+			int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+			return (ArrayList) sqlSession.selectList("productMapper.selectProBoardList",proCategory,rowBounds);
+		}
+	}
+
+	
+
+	
+

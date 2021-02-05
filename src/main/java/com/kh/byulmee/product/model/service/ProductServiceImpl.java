@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.product.model.dao.ProductDAO;
 import com.kh.byulmee.product.model.vo.Product;
 
@@ -101,7 +102,6 @@ public class ProductServiceImpl implements ProductService{
 	public int selectOrderSum(int pdId) {
 		return pDAO.selectOrderSum(sqlSession, pdId);
   }
-  
 	@Override
 	public ArrayList<Product> getPopularProList() {
 		return pDAO.getPopularProList(sqlSession);
@@ -111,4 +111,28 @@ public class ProductServiceImpl implements ProductService{
 	public int updateProRatingCnt(Product p) {
 		return pDAO.updateProRatingCnt(sqlSession, p);
 	}
-}
+
+	@Override
+	public int ProductListCount(int proCategory) {		
+		return pDAO.ProductListCount(sqlSession, proCategory);
+	}
+
+	@Override
+	public ArrayList<Product> selectList(PageInfo pi, int proCategory) {
+			return pDAO.selectList(sqlSession, pi, proCategory);
+		}
+	}
+
+	
+
+
+	
+
+	
+
+
+
+
+
+
+	

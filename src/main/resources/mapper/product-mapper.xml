@@ -30,6 +30,13 @@
 		order by pro_no desc
 	</select>
 	
+	<!-- 상품 조회 -->
+	<select id="selectProductList" resultMap="productResultSet">
+		select *
+		from product
+		order by pro_no desc
+	</select>
+	
 	<select id="selectUserList" resultMap="productResultSet">
 		select *
 		from product
@@ -206,4 +213,16 @@
 	 		pro_url = #{proUrl}, pro_content = #{proContent}, pro_guide = #{proGuide}
 	 	where pro_no = #{proNo}
 	 </update>
+	 
+	 <!-- product -->
+	 <select id="ProductListCount" resultType="_int">
+	 	select count(*)
+  		from product 	
+  		where pro_category = #{proCategory}
+	 </select>
+	   <select id="selectProBoardList" resultMap="productResultSet">
+  	select *
+  	from product 	
+  	where pro_category = #{proCategory}
+  </select>
 </mapper>
