@@ -106,6 +106,9 @@ public class ActivityController {
 			}
 		}
 		
+		ArrayList<Activity> popularActList = aService.getPopularActList();
+		System.out.println("포퓰러" + popularActList);
+		
 		if(activity != null && image != null) {
 			mv.addObject("activity", activity)
 			  .addObject("category", category)
@@ -120,6 +123,7 @@ public class ActivityController {
 			  .addObject("reviewNum", reviewNum)
 			  .addObject("ratingAvg", ratingAvg)
 			  .addObject("possibleNum", possibleNum)
+			  .addObject("popularActList", popularActList)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
