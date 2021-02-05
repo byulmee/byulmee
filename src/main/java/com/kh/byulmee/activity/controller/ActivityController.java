@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -266,6 +265,7 @@ public class ActivityController {
 			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityCheck");
 		} else {
+			
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");
 		}
 		return mv;
@@ -273,30 +273,31 @@ public class ActivityController {
 	
 
 	@RequestMapping("alist.ac")         
-    public String activityList(@RequestParam(value="page", required=false) Integer page, Model model) {
+    public ModelAndView activityList(@RequestParam(value="page", required=false) Integer page, @RequestParam("actCategory") int actCategory , ModelAndView model) {
                      
 		int currentPage = 1;
 		if(page != null) {
 		     currentPage = page;
 		}
 		  
-		int listCount = aService.getActBoardListCount();
+		int listCount = aService.getActBoardListCount(actCategory);
+		  int code = 1;
 		  
+		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
 		  
-		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
-		  
-		  ArrayList<Activity> list = aService.selectList(pi);
+		  ArrayList<Activity> list = aService.selectList(pi, actCategory);
+		  ArrayList<Image> ilist = iService.selectList(code);
   
-		  System.out.println("list == > " + list);
-		  System.out.println("list.size 1== > " + list.size());
 		  
 		  if(list != null) {
-			 model.addAttribute("list", list);
-			 model.addAttribute("pi", pi);
-			 System.out.println("list.size 2== > " + list.size());
-			 return "activityList";
+			 model.addObject("list", list);
+			 model.addObject("pi", pi);
+			 model.addObject("ilist", ilist);
+			 model.setViewName("activityList");
+			 System.out.println("list : "+ list.size());
 		  } else {
 			  throw new ActivityException("조회에 실패하였습니다.");
 		  }
+		  return model;
 	}
 }

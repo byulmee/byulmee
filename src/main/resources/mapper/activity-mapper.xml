@@ -120,7 +120,9 @@
   </select>
   
   <select id="getActBoardListCount" resultType="_int">
-  	select count(*)from activity
+  	select count(*)
+  	from activity
+  	where act_category = #{actCategory}	
   </select>
   
   <select id="selectList" resultMap="activityResultSet">
@@ -133,7 +135,7 @@
   <select id="selectActBoardList" resultMap="activityResultSet">
   	select *
   	from activity
-  	
+  	where act_category = #{actCategory}	
   	order by act_no desc
   </select>
   

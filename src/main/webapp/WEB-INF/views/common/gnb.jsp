@@ -19,13 +19,13 @@
            <div id="gnb-menu-box">
                <img src="resources/images/common/logo.png" id="home-logo" alt="byulmee logo" onclick="location.href='home.do'">
            </div>
-               <div id="searchBox">
-                   <div>
-                       <i class="fas fa-search"></i>
-                   </div>
-                   <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기">
+           <div id="searchBox">
+               <div>
+                   <i class="fas fa-search"></i>
                </div>
-            <ul id="menu-list">
+               <input id="searchBar" name="search" type="text" placeholder="텃밭 가꾸기">
+           </div>
+           <ul id="menu-list">
             	<c:if test="${ empty sessionScope.loginUser }">
             		<li class="menu-list-item" onclick="location.href='loginView.me'">로그인</li>
             	</c:if>
@@ -36,11 +36,12 @@
 	            <c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
 	           		<li onclick="location.href='logout.me'">로그아웃</li>
 			        <li onclick="location.href='adminMain.ad'">시스템관리</li>
-		        </c:if>
+		          </c:if>
                 <li class="menu-list-item" onclick="location.href='ccView.bo'">고객센터</li>
-                <li class="menu-list-item" onclick="location.href='productList.pd'"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
-            </ul>
+                <li class="menu-list-item" onclick="location.href='plist.pd?proCategory=0'"><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="market logo"></li>
+           </ul>
         </div>
+      
         <div id="gnb-cate">
             <ul id="cate">
                	<li class="cate act" onclick="location.href='aList.ac?actCategory=0'">액티비티</li>

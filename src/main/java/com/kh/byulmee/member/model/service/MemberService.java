@@ -39,5 +39,4 @@ public interface MemberService {
 	Member selectMemberWithNo(int memNo);
 
 	Member selectProductWriter(int pdId);
-
 }
