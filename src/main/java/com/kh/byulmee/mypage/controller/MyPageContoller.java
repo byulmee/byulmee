@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,7 @@ import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.exception.MemberException;
+import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.service.MypageService;
@@ -57,6 +59,9 @@ public class MyPageContoller {
 	
 	@Autowired
 	private ImageService iService;
+
+	@Autowired
+	private MemberService mService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
@@ -275,9 +280,9 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("myPwdUpdate.me")
-	public String updateMyPwd(@RequestParam("memPwd") String pwd,
-							  @RequestParam("newPwd1") String newPwd1,
-							  @RequestParam("newPwd2") String newPwd2,
+	public String updateMyPwd(@RequestParam("beforePwd") String pwd,
+							  @RequestParam("memPwd") String newPwd1,
+							  @RequestParam("pwdCheck") String newPwd2,
 							  HttpSession session, HttpServletRequest request, Model model) {
 		
 		Member m = mpService.memberLogin((Member)session.getAttribute("loginUser"));
@@ -805,6 +810,17 @@ public class MyPageContoller {
 		return mv;
 	}
 	
+	// 사진 실제 삭제
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\riUploadFiles";
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+	}
 	
 	@RequestMapping("reviewUpdate.me")
 	public String updateReview(@ModelAttribute Review r,
@@ -812,6 +828,9 @@ public class MyPageContoller {
 							   @RequestParam("reviewImgFile1") MultipartFile reviewImgFile1,
 							   @RequestParam("reviewImgFile2") MultipartFile reviewImgFile2,
 							   @RequestParam("reviewImgFile3") MultipartFile reviewImgFile3,
+							   @RequestParam("sendImgName1") String sendImgName1,
+							   @RequestParam("sendImgName2") String sendImgName2,
+							   @RequestParam("sendImgName3") String sendImgName3,
 							   Model model) {
 		int result1 = 0;
 		int result2 = 0;
@@ -824,11 +843,39 @@ public class MyPageContoller {
 		System.out.println("reviewImgFile1 : " + reviewImgFile1);
 		System.out.println("reviewImgFile2 : " + reviewImgFile2);
 		System.out.println("reviewImgFile3 : " + reviewImgFile3);
+		System.out.println("sendImgName1 : " + sendImgName1);
+		System.out.println("sendImgName2 : " + sendImgName2);
+		System.out.println("sendImgName3 : " + sendImgName3);
 		
 		int result = mpService.updateRevAct(r);
 		
 		Image reviewImg = new Image();
 		Image i = new Image();
+		Image deli = new Image();
+		
+		if(sendImgName1 != null) {
+			deleteFile(sendImgName1, request);
+			int imgLev = 0;
+			deli.setImgName(sendImgName1);
+			deli.setImgLevel(imgLev);
+			iService.delImg(deli);
+		}
+		
+		if(sendImgName2 != null) {
+			deleteFile(sendImgName2, request);
+			int imgLev = 1;
+			deli.setImgName(sendImgName2);
+			deli.setImgLevel(imgLev);
+			iService.delImg(deli);
+		}
+		
+		if(sendImgName3 != null) {
+			deleteFile(sendImgName3, request);
+			int imgLev = 2;
+			deli.setImgName(sendImgName3);
+			deli.setImgLevel(imgLev);
+			iService.delImg(deli);
+		}
 		
 		if(reviewImgFile1 != null && !reviewImgFile1.isEmpty()) {
 			reviewImg = saveReviewImg(reviewImgFile1, request);
@@ -944,5 +991,36 @@ public class MyPageContoller {
 		mv.setViewName("myQnaList");
 		
 		return mv;
+	}
+	
+	@RequestMapping("checkChangeNickname.me")
+	@ResponseBody
+	public boolean checkChangeNickname(@RequestParam("nickname") String nickname,
+								 HttpServletResponse response,
+								 HttpServletRequest request) {
+		String nowNickname = ((Member)request.getSession().getAttribute("loginUser")).getMemNickname();
+		System.out.println("nowNickname : " + nowNickname);
+		System.out.println("nickname : " + nickname);
+		if(nickname.equals(nowNickname)) {
+			return mService.checkNickname(nickname) < 1 ? false : true;
+		} else {
+			return mService.checkNickname(nickname) < 1 ? true : false;
+		}
+	}
+	
+	@RequestMapping("checkChangeEmail.me")
+	@ResponseBody
+	public boolean checkChangeEmail(@RequestParam("email") String email,
+									HttpServletResponse response,
+									HttpServletRequest request) {
+		String nowEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemEmail();
+		System.out.println("nowEmail : " + nowEmail);
+		System.out.println("email : " + email);
+		if(email.equals(nowEmail)) {
+			return mService.checkEmail(email) < 1 ? false : true;
+		} else {
+			return mService.checkEmail(email) < 1 ? true : false;
+		}
+		
 	}
 }

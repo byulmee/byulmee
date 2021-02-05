@@ -49,13 +49,13 @@
   		<result property="banName" column="BAN_ORIGIN"/>
   		<result property="banPath" column="BAN_PATH"/>
   		<result property="banUrl" column="BAN_URL"/>
+  		<result property="banBgc" column="BAN_BGC"/>
   	</resultMap>
   	
   	<!-- 배너 -->
   	<insert id="insertBanner">
   		insert into banner
-  		values(seq_bannid.nextval, #{banAlt}, default, #{banOrigin}, 
-  				#{banName}, #{banPath}, #{banUrl})
+  		values (seq_bannid.nextval, #{banAlt}, 'N', #{banOrigin}, #{banName}, #{banPath}, #{banUrl}, #{banBgc})
   	</insert>
   	
   	<select id="getBannerListCount" resultType="_int">
@@ -63,6 +63,13 @@
 	  	from banner
 	</select>
 
+	<select id="selectMainBannerList" resultMap="bannerResultSet">
+		select *
+		from banner
+		where ban_open = 'Y'
+		order by ban_no desc
+	</select>
+	
 	<select id="selectBannerList" resultMap="bannerResultSet">
 		select *
 		from banner
@@ -124,5 +131,18 @@
 		update member set mem_status = #{status}
 		where mem_id = #{memberId}
 	</update>
+	
+	<select id="getSearchIdListCount" resultType="_int">
+		select count(*)
+		from member
+		where mem_id like '%' || #{searchId} || '%'
+	</select>
+	
+	<select id="selectSerachMemberList" resultMap="memberResultSet">
+		select *
+  		from member
+  		where mem_id like '%' || #{searchId} || '%'
+		order by mem_id desc
+	</select>
 	
 </mapper>

@@ -196,7 +196,9 @@
 			<![CDATA[
 			  	select orderedlist.*
 				from
-				    (select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
+				    (select p.pro_no, p.mem_id, p.pro_title, p.pro_price, p.pro_category,
+				    		p.pro_rating, p.pro_review_cnt, m.mem_no, m.mem_nickname,
+				     		i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
 				     from product p
 				     inner join image i on p.pro_no = i.img_refno
 				     inner join member m on p.mem_id = m.mem_id

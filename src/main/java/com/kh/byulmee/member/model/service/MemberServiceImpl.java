@@ -46,8 +46,8 @@ public class MemberServiceImpl implements MemberService {
 
 	//닉네임 중복 체크
 	@Override
-	public int checkNickname(String nickname) {
-		return mDAO.checkNickname(sqlSession, nickname);
+	public int checkNickname(String memNickname) {
+		return mDAO.checkNickname(sqlSession, memNickname);
 	}
 	
 	//휴대전화 중복 체크
@@ -151,7 +151,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectProductWriter(int pdId) {
-		
 		return mDAO.selectProductWriter(sqlSession, pdId);
 	}
 }

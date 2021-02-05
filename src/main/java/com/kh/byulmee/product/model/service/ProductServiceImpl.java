@@ -101,7 +101,8 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int selectOrderSum(int pdId) {
 		return pDAO.selectOrderSum(sqlSession, pdId);
-  }
+	}	
+
 	@Override
 	public ArrayList<Product> getPopularProList() {
 		return pDAO.getPopularProList(sqlSession);
@@ -122,17 +123,3 @@ public class ProductServiceImpl implements ProductService{
 			return pDAO.selectList(sqlSession, pi, proCategory);
 		}
 	}
-
-	
-
-
-	
-
-	
-
-
-
-
-
-
-	

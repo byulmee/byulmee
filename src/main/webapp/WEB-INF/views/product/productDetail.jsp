@@ -39,6 +39,7 @@
 }
 
 body {
+	margin: 0;
 	font-family: 'GmarketSansMedium';
 }
 
@@ -1113,8 +1114,8 @@ hr {
 							$revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
 							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
 							
-							if(data[i].image != "" ){
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image.imgName + "'>");
+							if(data[i].image != null ){
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image[i].imgName + "'>");
 // 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
 							} else{
 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
@@ -1195,7 +1196,7 @@ hr {
 					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
 					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
 					
-					if(data.image != ""){
+					if(data.image != null){
 						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[0].imgName + "'>");
 						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[1].imgName + "'>");
 						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[2].imgName + "'>");

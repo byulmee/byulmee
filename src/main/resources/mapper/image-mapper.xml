@@ -61,5 +61,5 @@
 		from image
 		where img_refcode=3 and img_refno=#{revImgNo} and img_status='Y'
 	</select>
-
+	
 </mapper>

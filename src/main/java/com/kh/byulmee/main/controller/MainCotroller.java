@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.admin.service.AdminService;
+import com.kh.byulmee.banner.model.vo.Banner;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
@@ -39,6 +41,10 @@ public class MainCotroller {
 	
 	@Autowired
 	private ImageService iService;
+	
+	@Autowired
+	private AdminService abService;
+
 	
 	/* by다혜, 활동 검색하기 */
 	@RequestMapping("searchAct.do")
@@ -138,22 +144,29 @@ public class MainCotroller {
 		}
 	}
 	
-	@RequestMapping("loadMainPopAct.do")
+	@RequestMapping("loadMainContent.do")
 	@ResponseBody
 	public Map loadMainView() {
 		ArrayList<Activity> popularActList = aService.getPopularActList();
 		ArrayList<Activity> nearEndDateActList = aService.getNearEndDateActList();
 		ArrayList<Product> popularProList = pService.getPopularProList();
+		ArrayList<Banner> bannerList = abService.selectBannerList();
 		
 		if(popularActList != null && nearEndDateActList != null && popularProList != null) {
 			Map<String, Object> result = new HashMap<>();
 			result.put("popularActList", popularActList);
 			result.put("nearEndDateActList", nearEndDateActList);
 			result.put("popularProList", popularProList);
-		
-		return result;
+			result.put("bannerList", bannerList);
+			
+			return result;
 		} else {
 			throw new MainException("페이지를 불러올 수 없습니다.\n잠시후에 다시 시도해주세요.");
 		}
+	}
+	
+	@RequestMapping(value="aboutUs.do", produces="text/plain;charset=UTF-8")
+	public String aboutUsView() {		
+		return "common/aboutUs";
 	}
 }

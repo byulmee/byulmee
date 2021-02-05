@@ -57,4 +57,5 @@ public class ReplyServiceImpl implements ReplyService{
 	public int deleteSalReply(int repNo) {
 		return rDAO.deleteSalReply(sqlSession, repNo);
 	}
+
 }

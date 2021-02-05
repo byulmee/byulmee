@@ -17,11 +17,7 @@
 <script src="https://kit.fontawesome.com/34238d14b4.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- 배너 이미지가 있을 경우, #bam의 display:nonel;속성값 제거-->
-    <section id="ban">
-        <img class="ban-img" onerror="this.style.display='none'" src="#"  alt="배너 영역">
-    </section>
-
+	
     <nav id="gnb">
         <div id="gnb-menu">
             <img src="resources/images/common/logo.png" id="home-logo" alt="별난취미_별미" onclick="location.href='home.do'">
@@ -29,13 +25,14 @@
             <c:if test="${ empty sessionScope.loginUser }">
                 <li onclick="location.href='loginView.me'">로그인</li>
             </c:if>
-            <c:if test="${ !empty sessionScope.loginUser }">
+            <c:if test="${ sessionScope.loginUser.memLevel eq 0 || sessionScope.loginUser.memLevel eq 1}">
                 <li onclick="location.href='logout.me'">로그아웃</li>
                	<li onclick="location.href='myPageMainView.me'">마이페이지</li>
-	            	<c:if test="${loginUser.memId.equals('admin')}">
-		           	<li onclick="location.href='adminMain.ad'">관리자</li>
-		           	</c:if>
             </c:if>
+            <c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
+           		<li onclick="location.href='logout.me'">로그아웃</li>
+		        <li onclick="location.href='adminMain.ad'">시스템관리</li>
+	        </c:if>
                 <li onclick="location.href='ccView.bo'">고객센터</li>
                 <li><img src="resources/images/common/marketlogo.png" id="mk-logo" alt="별미마켓" 
                 onclick="location.href='plist.pd?proCategory=0'"></li>
@@ -70,46 +67,49 @@
         </div>
     </nav>
 
-    <!-----------------------추천 영역=--------------------->
-	    <div class="rec-top">
-	        <div class="rec-title">이번주 핫한 별미</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-   	 		</div>
-   	 	</div>
+    <!-----------------------추천 영역--------------------->
+    <div class="rec-top">
+        <div class="rec-title">이번주 핫한 별미</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+  	 	</div>
+  	</div>
+
+    <div class="rec-list">
+        <ul class="list popAct" id="popularActList">
+        </ul>
+    </div>
+
+    <!-- 배너 이미지가 있을 경우, #ban의 display:none;속성값 제거-->
+    <div id="ban">
+        <img class="ban-img" src="#"  alt="배너 영역">
+    </div>
 	
-	    <div class="rec-list">
-	        <ul class="list popAct" id="popularActList">
-	        </ul>
-	    </div>
-	
-		
-	    <div class="rec-top">
-	        <div class="rec-title">마감일 임박 별미</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-	        </div>
-	    </div>
-	
-	    <div class="rec-list" id="nearEndDateActList">
-	        <ul class="list nedAct">
-	        </ul>
-	    </div>
-	
-	
-	    <div class="rec-top">
-	        <div class="rec-title">플리마켓 인기상품</div>
-	        <div class="rec-top-divider1">
-	            <hr class="rec-top-divider2"></hr>
-	        </div>
-	    </div>
-	
-	    <div class="rec-list last">
-	        <ul class="list popPro" id="popularProduct">
-	        </ul>
-	    </div>
+    <div class="rec-list">
+        <div class="rec-title">마감일 임박 별미</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+        </div>
+    </div>
+
+    <div class="rec-list">
+        <ul class="list nedAct" id="nearEndDateActList">
+        </ul>
+    </div>
+
+    <div class="rec-top">
+        <div class="rec-title">별미마켓 인기상품</div>
+        <div class="rec-top-divider1">
+            <hr class="rec-top-divider2"></hr>
+        </div>
+    </div>
+
+    <div class="rec-list last">
+        <ul class="list popPro" id="popularProduct">
+        </ul>
+    </div>
 	    
-	    <c:import url="views/common/footer.jsp"/>
-	    <script type="text/javascript" src="../resources/js/common/main.js"> </script>
+    <c:import url="views/common/footer.jsp"/>
+    <script type="text/javascript" src="../resources/js/common/main.js"> </script>
 </body>
 </html>

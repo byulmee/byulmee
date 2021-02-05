@@ -210,6 +210,18 @@
         overflow: hidden;
         text-overflow: ellipsis;
 	}
+	
+	#ordCode {	
+		white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+	}
+	
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+    	-webkit-appearance: none;
+    	margin: 0;
+	}
 </style>
 </head>
 <body>
@@ -285,7 +297,7 @@
 								<th scope="col" class="text-center" width="10%">상품명</th>
 								<th scope="col" class="text-center" width="2%">수</th>
 								<th scope="col" class="text-center" width="10%">구매자</th>
-								<th scope="col" class="text-center" width="10%">주문일</th>
+								<th scope="col" class="text-center" width="12%">주문일</th>
 								<th scope="col" class="text-center" width="10%">구매액</th>
 								<th scope="col" class="text-center" width="10%">배송 번호</th>
 								<th scope="col" class="text-center" width="10%">결제 수단</th>
@@ -294,19 +306,19 @@
 						</thead>
 						<tbody>
 						<c:forEach var="od" items="${ odlist }">
-							<tr>
-								<td>${ od.ordPayno }</td>
+							<tr class="order" data-toggle='modal' data-target='#modifyModal'>
+								<td><input type="hidden" name="ordNo" value="${ od.ordNo }">${ od.ordPayno }</td>
 								<td class="ordTitle">${ od.product.proTitle }</td>
 								<td>${ od.ordCount }</td>
 								<td>${ od.memId }</td>
 								<td>${ od.ordDate }</td>
-								<td><span class="price">${ od.ordPay }</span></td>
+								<td><span class="price">${ od.ordPay }</span>원</td>
 								<c:choose>
 									<c:when test="${ od.ordParcelcode eq null }">
-										<td>&nbsp;&nbsp;</td>
+										<td id="ordCode">&nbsp;</td>
 									</c:when>
 									<c:when test="${ od.ordParcelcode ne null }">
-										<td>${ od.ordParcelcode }</td>
+										<td id="ordCode">${ od.ordParcelcode }</td>
 									</c:when>
 								</c:choose>
 								<c:choose>
@@ -319,10 +331,10 @@
 								</c:choose>
 								<c:choose>
 									<c:when test="${ od.ordRePay eq 0 }">
-										<td>&nbsp;&nbsp;</td>
+										<td id="ordRepay">&nbsp;</td>
 									</c:when>
 									<c:when test="${ od.ordRePay ne 0 }">
-										<td><span class="price">${ od.ordRePay }</span>원</td>
+										<td><span class="price" id="ordRepay">${ od.ordRePay }</span>원</td>
 									</c:when>
 								</c:choose>
 							</tr>
@@ -331,6 +343,29 @@
 						</tbody>
 					</table>
 				</div>
+			<div class="modal fade" id="modifyModal" role="dialog">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h4 class="modal-title">주문내역수정</h4>
+			            </div>
+			            <div class="modal-body">
+			                <input type="hidden" id="moOrdNo" name="reOrdNo">
+			              
+			                <div class="form-group">
+			                    <label for="repContent">배송번호</label>
+			                    <textArea class="form-control" id="moOrdParcelcode" name="repContent" placeholder="배송번호를 입력해주세요." style="height: 50px; width: 470px"></textArea>
+			                    <label for="repRepay">환불액</label>
+			                    <input type="number" class="form-control" id="moOrdRePay" name="repRepay" placeholder="환불액을 입력해주세요." style="height: 50px; width: 470px">
+			                </div>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn pull-left" data-dismiss="modal" style="background-color: #EFEFEF; color: #5A5A5A">닫기</button>
+			                <button type="button" class="btn modalModBtn" style="background-color: #FF6833; color: white">수정</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 			</div>
 			<div id="pagingArea">
 			
@@ -400,11 +435,11 @@
 		});
 
 		$(document).ready(function(){
-			var price = $('.price').text();
+			//var price = $('.price').text();
 			var totalprice = $('.totalprice').text();
-	        price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	       // price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        totalprice = totalprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        $('.price').html(price);
+	       // $('.price').html(price);
 	        $('.totalprice').html(totalprice);
 		});
 
@@ -419,6 +454,51 @@
 
 			location.href="searchPdOrder.wr?searchId=" + searchId + "&startday=" + startday + "&endday=" + endday;
 		}
+
+		$(function() {
+			$('.order').click(function(){
+				var ordNo = $(this).children('td').children('input').val();
+				var ordCode = $('#ordCode').text();
+				var ordRepay = $('#ordRepay').text();
+				var blank_pattern = /^\s+|\s+$/g;
+				if(ordCode.replace(blank_pattern, '') != "") {
+					$("#moOrdParcelcode").val(ordCode);
+				}
+				if(ordRepay.replace(blank_pattern, '') != "") {
+					var oRe = parseInt(ordRepay.replace(/,/g,""));
+					$("#moOrdRePay").val(oRe);
+				}
+				
+				$("#moOrdNo").val(ordNo);
+				
+			});
+		});
+
+		$('.modalModBtn').on("click", function(){
+			var ordNo = $('#moOrdNo').val();
+			var ordRePay = $('#moOrdRePay').val();
+			var ordParcelcode = $('#moOrdParcelcode').val();
+			
+			if(!ordRePay){
+				ordRePay = 0;
+			}
+			if(!ordParcelcode){
+				ordParcelcode = null;
+			}
+			
+			$.ajax({
+			 	url: 'updateOrder.wr',
+				data: {ordNo:ordNo, ordRePay:ordRePay, ordParcelcode:ordParcelcode},
+				success: function(data){
+					console.log(data);
+					if(data == 'success') {
+						alert("정보 입력 완료");
+						$("#modifyModal").modal("hide");
+						window.location.reload();
+					}
+				} 
+			});
+		});
 	</script>
 </body>
 </html>

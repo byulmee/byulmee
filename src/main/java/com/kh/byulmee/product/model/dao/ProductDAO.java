@@ -83,8 +83,8 @@ public class ProductDAO {
 
 	public int selectOrderSum(SqlSessionTemplate sqlSession, int pdId) {
 		return sqlSession.selectOne("productMapper.selectOrderSum", pdId);
-  }
-  
+	}
+	
 	public ArrayList<Product> getPopularProList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("productMapper.getPopularProList");
 	}
