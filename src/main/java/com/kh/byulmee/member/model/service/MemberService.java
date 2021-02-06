@@ -37,4 +37,6 @@ public interface MemberService {
 	ArrayList<Activity> getStarSearchResult(PageInfo starListPi, String[] keywords);
 
 	Member selectMemberWithNo(int memNo);
+
+	Member selectProductWriter(int pdId);
 }

@@ -14,15 +14,22 @@
 }
 
 #ban {
-	margin : auto;
+	box-sizing: border-box;
+	margin: 100px 0;
     max-width: 1000px;
-    width: 75vw;
-    height: 85px;
+    width: 80%;
+	margin : auto;
+    height: 120px;
     cursor: pointer;
+    text-align: center;
+    line-height: 120px;
+    overflow: hidden;
 }
 
 #ban img {
-	object-fit: cover;
+	max-width: 626px;
+	height: auto;
+	vertical-align: middle;
 }
 
 .ban-img {
@@ -309,7 +316,7 @@ hr{
 		height: 1.2rem;
 	}
 	
-    #gnb-cate li{
+    /* #gnb-cate li{
         width: 20%;
     }
     #gnb-cate li>i{
@@ -317,18 +324,13 @@ hr{
     }
     #gnb-cate li>span{
         font-size: 0.6rem;
-    }
+    } */
     #searchBar {
         width: 85%;
     }
-
-    .list-thumb{
-        width: 110px;
-        height: 110px;
-    }
-
-    .list-item {
-        width: 110px;
-    }
+    
+    #ban img {
+		width: 100%;
+	}
 
 }

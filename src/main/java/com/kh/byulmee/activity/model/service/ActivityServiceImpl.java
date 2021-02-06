@@ -44,8 +44,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 	
 	@Override
-	public int getActBoardListCount() {
-		return aDAO.getActBoardListCount(sqlSession);
+	public int getActBoardListCount(int actCategory) {
+		return aDAO.getActBoardListCount(sqlSession,actCategory);
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 	
 	@Override
-	public ArrayList<Activity> selectList(PageInfo pi) {
+	public ArrayList<Activity> selectList(PageInfo pi, int actCategory) {
 		
-		return aDAO.selectList(sqlSession, pi);
+		return aDAO.selectList(sqlSession, pi, actCategory);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public int selectOrderSum(int acId) {
 		return aDAO.selectOrderSum(sqlSession, acId);
-  }
+	}
   
 	public ArrayList<Activity> getPopularActList() {
 		return aDAO.getPopularActList(sqlSession);

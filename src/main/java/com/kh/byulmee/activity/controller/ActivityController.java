@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,8 +87,9 @@ public class ActivityController {
 			case 5: category = "커리어"; break;
 		}
 		
-		// content textarea에 저장된 값 줄바꿈해서 가져오기
+		// 본문과 유의사항 textarea에 저장된 값 줄바꿈해서 가져오기
 		String contentText = activity.getActContent().replaceAll("\r\n", "<br>");
+		String guideText = activity.getActGuide().replaceAll("\r\n", "<br>");
 		
 		// 섬네일 이미지와 본문 이미지(4개) 나누기 
 		String thumb = null;
@@ -121,6 +121,7 @@ public class ActivityController {
 			  .addObject("content4", content4)
 			  .addObject("writer", writer)
 			  .addObject("contentText", contentText)
+			  .addObject("guideText", guideText)
 			  .addObject("reviewNum", reviewNum)
 			  .addObject("ratingAvg", ratingAvg)
 			  .addObject("possibleNum", possibleNum)
@@ -164,6 +165,24 @@ public class ActivityController {
 			e.printStackTrace();
 		}
 	}
+	
+	// 문의 디테일+답변 불러오기
+	@RequestMapping("salesQnaDetail.ac")
+	public void getQnaDetail(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
+		SalesQna sq = sqService.selectQnaDetail(qnaNo);
+		System.out.println(sq);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(sq, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// 후기 불러오기
 	@RequestMapping("salesReviewList.ac")
@@ -246,6 +265,7 @@ public class ActivityController {
 			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("activityCheck");
 		} else {
+			
 			throw new ActivityException("활동 신청페이지 조회에 실패하였습니다.");
 		}
 		return mv;
@@ -253,29 +273,31 @@ public class ActivityController {
 	
 
 	@RequestMapping("alist.ac")
-	public ModelAndView activityList(@RequestParam(value = "page", required = false) Integer page, ModelAndView model) {
-
+    public ModelAndView activityList(@RequestParam(value="page", required=false) Integer page, @RequestParam("actCategory") int actCategory , ModelAndView model) {
+                     
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
-
-		int listCount = aService.getActBoardListCount();
-		int code = 1;
-
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
-
-		ArrayList<Activity> list = aService.selectList(pi);
-		ArrayList<Image> ilist = iService.selectList(code);
-
-		if (list != null) {
-			model.addObject("list", list);
-			model.addObject("pi", pi);
-			model.addObject("ilist", ilist);
-			model.setViewName("activityList");
-			return model;
-		} else {
-			throw new ActivityException("조회에 실패하였습니다.");
-		}
+		  
+		int listCount = aService.getActBoardListCount(actCategory);
+		  int code = 1;
+		  
+		  PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
+		  
+		  ArrayList<Activity> list = aService.selectList(pi, actCategory);
+		  ArrayList<Image> ilist = iService.selectList(code);
+  
+		  
+		  if(list != null) {
+			 model.addObject("list", list);
+			 model.addObject("pi", pi);
+			 model.addObject("ilist", ilist);
+			 model.setViewName("activityList");
+			 System.out.println("list : "+ list.size());
+		  } else {
+			  throw new ActivityException("조회에 실패하였습니다.");
+		  }
+		  return model;
 	}
 }

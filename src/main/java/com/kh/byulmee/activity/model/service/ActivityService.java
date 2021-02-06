@@ -27,7 +27,7 @@ public interface ActivityService {
 	Activity selectActivity(int acId);
 
 	int selectOrderSum(int acId);
-
+	
 	int getUserListCount(String memId);
 
 	ArrayList<Activity> selectUserList(String memId, PageInfo pi);
@@ -40,10 +40,10 @@ public interface ActivityService {
 
 	ArrayList<Activity> getNearEndDateActList();
 
-	ArrayList<Activity> selectList(PageInfo pi);
+	ArrayList<Activity> selectList(PageInfo pi , int actCategory);
 
 	int updateActRatingCnt(Activity a);
 
-	int getActBoardListCount();
+	int getActBoardListCount(int actCategory);
 
 }

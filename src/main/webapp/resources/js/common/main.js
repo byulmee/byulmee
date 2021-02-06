@@ -21,16 +21,20 @@
 	getMainContent().then((data) => {
 		//인기 활동
 		let popActList = loadList(data.popularActList);
-		document.querySelector('#popularActList').innerHTML += popActList;
+		if(popActList.length > 0) {
+			document.querySelector('#popularActList').innerHTML += popActList;
+		}
 		
 		//마감일 임박 활동
 		let neActList = loadList(data.nearEndDateActList);
-		document.querySelector('#nearEndDateActList').innerHTML += popActList;
-		
+		if(neActList.length > 0) {
+			document.querySelector('#nearEndDateActList').innerHTML += neActList;
+		}
 		//인기 상품
 		let popProList = loadList(data.popularProList);
-		document.querySelector('#popularProduct').innerHTML += popProList;
-	
+		if(popProList.length > 0) {
+ 			document.querySelector('#popularProduct').innerHTML += popProList;
+		}
 		//배너
 		let imgDataList = data.bannerList;
 		let bannerSection = document.querySelector('#ban');
@@ -40,7 +44,8 @@
 			bannerSection.display = '';
 			let randomBanner = getBanImg(imgDataList);
 			
-			banImg.src = '${ pageContext.servletContext.contextPath }/resources/piUploadFiles/' + randomBanner.banOrigin;	
+			bannerSection.style.backgroundColor = randomBanner.banBgc;
+			banImg.src = 'resources/piUploadFiles/' + randomBanner.banOrigin;	
 			banImg.alt = randomBanner.banAlt;
 			banUrl = randomBanner.banUrl;
 		} else {
@@ -58,27 +63,32 @@
 		
 		for(let i = 0; i<randomList.length; i++) {
 			if(randomList[i] != null) {
-				let actCategory = randomList[i].actCategory;
-				switch(actCategory) {
-					case 0: actCategory = '액티비티'; break;
-					case 1: actCategory = '리빙'; break;
-					case 2: actCategory = '건강/미용'; break;
-					case 3: actCategory = '힐링'; break;
-					case 4: actCategory = '푸드'; break;
-					case 5: actCategory = '커리어'; break;
-				}
 				
-				listTag = '<li class="list-item">'
-							+ 	'<input type="hidden" name="actNo" value="' + randomList[i].actNo + '"/>'
-							+	'<div class="img-frame">'
-		                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].actTitle  + '">'
-		                  	+	'</div>'
-		                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
-		                  	+	'<div class="list-cate">[' + actCategory + '] ' + randomList[i].actTitle + '</div>'
-		                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].actPrice) + '원</span>'
-		                  	+	'<span class="list-social">⭐ <b>' + randomList[i].actRating + '</b>  ' + addComma(randomList[i].actReviewCnt) + '개의 평가</span>'
-		           		  	+'</li>';
-				resultView += listTag;
+				if(randomList[i].actNo) {
+					listTag = '<li class="list-item">'
+								+ 	'<input type="hidden" name="actNo" value="' + randomList[i].actNo + '"/>'
+								+	'<div class="img-frame">'
+			                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].actTitle  + '">'
+			                  	+	'</div>'
+			                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
+			                  	+	'<div class="list-cate">[' + getCategoryString(randomList[i].actCategory) + '] ' + randomList[i].actTitle + '</div>'
+			                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].actPrice) + '원</span>'
+			                  	+	'<span class="list-social">⭐ <b>' + randomList[i].actRating + '</b>  ' + addComma(randomList[i].actReviewCnt) + '개의 평가</span>'
+			           		  	+'</li>';
+					resultView += listTag;
+				} else {
+					listTag = '<li class="list-item">'
+								+ 	'<input type="hidden" name="actNo" value="' + randomList[i].proNo + '"/>'
+								+	'<div class="img-frame">'
+			                  	+			'<img class="list-thumb" src="resources/auploadFiles/' + randomList[i].image.imgName + '" alt="' + randomList[i].proTitle  + '">'
+			                  	+	'</div>'
+			                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
+			                  	+	'<div class="list-cate">[' +  getCategoryString(randomList[i].proCategory) + '] ' + randomList[i].proTitle + '</div>'
+			                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].proPrice) + '원</span>'
+			                  	+	'<span class="list-social">⭐ <b>' + randomList[i].proRating + '</b>  ' + addComma(randomList[i].proReviewCnt) + '개의 평가</span>'
+			           		  	+'</li>';
+					resultView += listTag;
+				}
 			}
 		}
 		return resultView;
@@ -154,7 +164,24 @@
   		var regexp = /\B(?=(\d{3})+(?!\d))/g;
   	return num.toString().replace(regexp, ',');
 	}
-
+	
+	//카테고리 코드를 대치하는 메소드
+	function getCategoryString(categoryNo) {
+		
+		let categoryString = '';
+		
+		switch(categoryNo) {
+			case 0: categoryString ='액티비티'; break;
+			case 1: categoryString = '리빙'; break;
+			case 2: categoryString = '건강/미용'; break;
+			case 3: categoryString = '힐링'; break;
+			case 4: categoryString = '푸드'; break;
+			case 5: categoryString = '커리어'; break;
+		}
+		
+		return categoryString;
+	}
+	
 	//배너 추가 메소드
 	function getBanImg(imgDataList) {
 		

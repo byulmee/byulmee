@@ -34,8 +34,8 @@ public class SalesQnaDAO {
 
 	public int insertProductQna(SqlSessionTemplate sqlSession, SalesQna sq) {
 		return sqlSession.insert("salesQnaMapper.insertProductQna", sq);
-  }
-  
+	}
+	
 	public int getListCount(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("salesQnaMapper.getListCount", memId);
 	}
@@ -66,4 +66,9 @@ public class SalesQnaDAO {
 	public int salQnaUpdate(SqlSessionTemplate sqlSession, SalesQna s) {
 		return sqlSession.update("salesQnaMapper.salQnaUpdate", s);
 	}
+
+	public SalesQna selectQnaDetail(SqlSessionTemplate sqlSession, int qnaNo) {
+		return sqlSession.selectOne("salesQnaMapper.selectQnaDetail", qnaNo);
+	}
+
 }

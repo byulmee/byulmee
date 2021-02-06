@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,7 +26,7 @@
     </footer>
     <script>
     	document.getElementById('goToAbout').addEventListener('click', () => {
-    		location.href = "#";
+    		location.href = "aboutUs.do";
     	});
     	
     	document.getElementById('goToCustomerService').addEventListener('click', () => {

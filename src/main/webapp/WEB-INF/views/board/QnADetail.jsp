@@ -119,101 +119,101 @@ tr > .secondTitle {
 </style>
 </head>
 <body>
-   <c:import url="../common/gnb.jsp"/>
-   <div class="outer">
-      <div class="MainLogoText">
-         <p class="MainText">Q&A</p>
-      </div>
-      <div class="table table-responsive" id="TableArea">
-         <table class="table">
-            <tr>
-               <th class="category">분류 > <c:choose>
-                        <c:when test="${ customerqna.cusqnaCategory eq '0' }">배송</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '1' }">환불/반품</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '2' }">주문/결제</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '3' }">상품 정보</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '4' }">마이페이지</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '5' }">기타</c:when>
-                        <c:when test="${ customerqna.cusqnaCategory eq '6' }">신고</c:when>
-                     </c:choose></th>
-            </tr>
-            <tr>
-               <th class="mainTitle">${ customerqna.cusqnaTitle }</th>
-            </tr>
-            <tr>
-               <th class="secondTitle">${ customerqna.cusqnaDate }<br>${ customerqna.nickName } 작성</th>
-            </tr>
-            <tr class="textArea">
-               <% pageContext.setAttribute("newLineChar", "\r\n"); %>
-               <td>${ fn:replace(customerqna.cusqnaContent, newLineChar, "<br>") }</td>
-            </tr>
-         </table>
-         <c:if test="${ empty reply }">
-         <div class="answerArea">
-            <c:if test="${ loginUser.memId eq 'admin' }">
-               <div class="form-group">
-                  <label for="inputContent" class="col-sm-2 col-form-label"><strong>답변</strong></label>
-                  <div class="col-sm-10">
-                     <textarea name="repContent" class="form-control" id="repContent" style="height: 200px; width: 765px"></textarea>
-                  </div>
-                  <div class="ReplyArea">
-                     <button type="button" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">답변등록</button>
-                  </div>
-                  
-               </div>
-            </c:if>
-         </div>   
-         </c:if>
-         <c:if test="${ !empty reply }">
-         <div class="answerArea" id="answerArea">
-               <div class="table-active">답변</div>
-               <input type="hidden" id="reRepNo" value="${reply.repNo }">
-               <div class="answerName">${ reply.nickName }<br>${ reply.repDate }</div>
-               <hr>
-               <div class="answerText" id="answerText">${ reply.repContent }</span></div>
-               <input type="hidden" id="reRepContent" value="${reply.repContent }">
-               <c:if test="${ loginUser.memId eq 'admin' }">
-               <hr>
-               <div class="replybtn">
-                  <!-- <button type="button" id="repDelBtn" class="btn btn mb-3">삭제</button> -->
-                  <button type="submit" id="repUpdateBtn" class="btn btn mb-3" data-toggle='modal' data-target='#modifyModal'>수정</button>
-               </div>   
-               </c:if>
-         </div>
-         </c:if>
-         <div class="modal fade" id="modifyModal" role="dialog">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title">답변 수정</h4>
-                  </div>
-                  <div class="modal-body">
-                      <input type="hidden" id="moRepNo" name="repNo">
-                      <input type="hidden" id="moRepRefno" name="repRefno">
-                    
-                      <div class="form-group">
-                          <label for="repContent">답변 내용</label>
-                          <textArea class="form-control" id="moRepContent" name="repContent" placeholder="답변 내용을 입력해주세요" style="height: 200px; width: 470px"></textArea>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn pull-left" data-dismiss="modal" style="background-color: #EFEFEF; color: #5A5A5A">닫기</button>
-                      <button type="button" class="btn modalDelBtn" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
-                      <button type="button" class="btn modalModBtn" style="background-color: #FF6833; color: white">수정</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>
-      <div class="buttonArea">
-         <c:if test="${ loginUser.memId eq customerqna.memId }">
-            <button type="button" id="delBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
-            <button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }'">수정</button>
-         </c:if>
-         <button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
-      </div>
-   </div>
-   <script>
+	<c:import url="../common/gnb.jsp"/>
+	<div class="outer">
+		<div class="MainLogoText">
+			<p class="MainText">Q&A</p>
+		</div>
+		<div class="table table-responsive" id="TableArea">
+			<table class="table">
+				<tr>
+					<th class="category">분류 > <c:choose>
+								<c:when test="${ customerqna.cusqnaCategory eq '0' }">배송</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '1' }">환불/반품</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '2' }">주문/결제</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '3' }">상품 정보</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '4' }">마이페이지</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '5' }">기타</c:when>
+								<c:when test="${ customerqna.cusqnaCategory eq '6' }">신고</c:when>
+							</c:choose></th>
+				</tr>
+				<tr>
+					<th class="mainTitle">${ customerqna.cusqnaTitle }</th>
+				</tr>
+				<tr>
+					<th class="secondTitle">${ customerqna.cusqnaDate }<br>${ customerqna.nickName } 작성</th>
+				</tr>
+				<tr class="textArea">
+					<% pageContext.setAttribute("newLineChar", "\r\n"); %>
+					<td>${ fn:replace(customerqna.cusqnaContent, newLineChar, "<br>") }</td>
+				</tr>
+			</table>
+			<c:if test="${ empty reply }">
+			<div class="answerArea">
+				<c:if test="${ loginUser.memId eq 'admin' }">
+					<div class="form-group">
+						<label for="inputContent" class="col-sm-2 col-form-label"><strong>답변</strong></label>
+						<div class="col-sm-10">
+							<textarea name="repContent" class="form-control" id="repContent" style="height: 200px; width: 765px"></textarea>
+						</div>
+						<div class="ReplyArea">
+							<button type="button" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">답변등록</button>
+						</div>
+						
+					</div>
+				</c:if> 
+			</div>	
+			</c:if>
+			<c:if test="${ !empty reply }">
+			<div class="answerArea" id="answerArea">
+					<div class="table-active">답변</div>
+					<input type="hidden" id="reRepNo" value="${reply.repNo }">
+					<div class="answerName">${ reply.nickName }<br>${ reply.repDate }</div>
+					<hr>
+					<div class="answerText" id="answerText">${ reply.repContent }</span></div>
+					<input type="hidden" id="reRepContent" value="${reply.repContent }">
+					<c:if test="${ loginUser.memId eq 'admin' }">
+					<hr>
+					<div class="replybtn">
+						<!-- <button type="button" id="repDelBtn" class="btn btn mb-3">삭제</button> -->
+						<button type="submit" id="repUpdateBtn" class="btn btn mb-3" data-toggle='modal' data-target='#modifyModal'>수정</button>
+					</div>	
+					</c:if>
+			</div>
+			</c:if>
+			<div class="modal fade" id="modifyModal" role="dialog">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">답변 수정</h4>
+		            </div>
+		            <div class="modal-body">
+		                <input type="hidden" id="moRepNo" name="repNo">
+		                <input type="hidden" id="moRepRefno" name="repRefno">
+		              
+		                <div class="form-group">
+		                    <label for="repContent">답변 내용</label>
+		                    <textArea class="form-control" id="moRepContent" name="repContent" placeholder="답변 내용을 입력해주세요" style="height: 200px; width: 470px"></textArea>
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn pull-left" data-dismiss="modal" style="background-color: #EFEFEF; color: #5A5A5A">닫기</button>
+		                <button type="button" class="btn modalDelBtn" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
+		                <button type="button" class="btn modalModBtn" style="background-color: #FF6833; color: white">수정</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		</div>
+		<div class="buttonArea">
+			<c:if test="${ loginUser.memId eq customerqna.memId }">
+				<button type="button" id="delBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
+				<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }'">수정</button>
+			</c:if>
+			<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
+		</div>
+	</div>
+	<script>
 
       $(document).ready(function(){
          var Content = $('#answerText').text();

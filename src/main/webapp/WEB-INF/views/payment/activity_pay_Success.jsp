@@ -63,6 +63,27 @@ ul li{
    }
    .tdContent {
          width: 250px;
+   		font-family: 'Gmarket Sans TTF';
+   }
+   
+   .PayName {
+   	text-align: center;
+   	width: 500px;
+   	margin-left: auto;
+   	margin-right: auto;
+   }
+   .infoTable {
+   		width: 500px;
+   		
+   }
+   .tdName, .tdContent {
+   	text-align: left;
+   }
+   .tdName {
+   		width: 110px;
+   }
+   .tdContent {
+   		width: 250px;
    }
 </style>
 
@@ -110,92 +131,93 @@ $( document ).ready(function() {
    </ul>
 </nav><br>
 <hr>
-    
- <span style="text-align: left; font-size: 30px;"><strong>주문 완료</strong></span><br><br>         
+
+ <span style="text-align: left; font-size: 30px;"><strong>주문 완료</strong></span><br><br>			
  
       
-      <div id="info" align="center" style="display: block;">
-         <h2 style=" color: purple;"> Byulmee를 이용해 주셔서 감사합니다</h2>
-         <img src="${ pageContext.servletContext.contextPath }/resources/images/board/Payment_sucess.PNG"><br>
-      <div style=" color: purple; display: inline-block;">
-         <span style="font-size: 20px; align="center"><strong>${ m.memName }고객님, 주문이 완료되었습니다.</strong></span><br><br>             
-      </div>   
-         <!-- <p> 주문내역 확인은 배송 / 마이페이지의</p>
-         <p>* 주문 / 배송조회에서 하실 수 있습니다. *</p> -->
+   	<div id="info" align="center" style="display: block;">
+   		<h2 style=" color: purple;"> Byulmee를 이용해 주셔서 감사합니다</h2>
+   		<img src="${ pageContext.servletContext.contextPath }/resources/images/board/Payment_sucess.PNG"><br>
+   	<div style=" color: purple; display: inline-block;">
+   		<span style="font-size: 20px; align="center"><strong>${ m.memName }고객님, 주문이 완료되었습니다.</strong></span><br><br>    			
+		</div>	
+			<!-- <p> 주문내역 확인은 배송 / 마이페이지의</p>
+			<p>* 주문 / 배송조회에서 하실 수 있습니다. *</p> -->
     
     <div class="PayName">  
    <h4 >주문 정보</h4>    
-     <table class="infoTable">
-        <tr>
-           <td class="tdName">
-              사용자 이름
-           </td>
-           <td class="tdContent">
-              ${m.memName}
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              연락처
-           </td>
-           <td class="tdContent">
-              ${m.memPhone}
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              인원
-           </td>
-           <td class="tdContent">
-              ${ o.ordCount }
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              결제 방식
-           </td>
-           <td class="tdContent">
-              <c:choose>
-               <c:when test="${ o.ordPayWay eq 0 }">카드</c:when>
-               <c:when test="${ o.ordPayWay eq 1 }">페이</c:when>
-            </c:choose>
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              활동명
-           </td>
-           <td class="tdContent">
-              ${ a.actTitle }
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              주문일자
-           </td>
-           <td class="tdContent">
-              ${ o.ordDate }
-           </td>
-        </tr>
-        <tr>
-           <td class="tdName">
-              총 결제금액
-           </td>
-           <td class="tdContent">
-              ${ o.ordPay }
-           </td>
-        </tr>
-     </table>
-  
-   
-      
+  	<table class="infoTable">
+  		<tr>
+  			<td class="tdName">
+  				사용자 이름
+  			</td>
+  			<td class="tdContent">
+  				${m.memName}
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				연락처
+  			</td>
+  			<td class="tdContent">
+  				${m.memPhone}
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				인원
+  			</td>
+  			<td class="tdContent">
+  				${ o.ordCount }
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				결제 방식
+  			</td>
+  			<td class="tdContent">
+  				<c:choose>
+		      	<c:when test="${ o.ordPayWay eq 0 }">카드</c:when>
+		      	<c:when test="${ o.ordPayWay eq 1 }">페이</c:when>
+		      </c:choose>
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				활동명
+  			</td>
+  			<td class="tdContent">
+  				${ a.actTitle }
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				주문일자
+  			</td>
+  			<td class="tdContent">
+  				${ o.ordDate }
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class="tdName">
+  				총 결제금액
+  			</td>
+  			<td class="tdContent">
+  				${ o.ordPay }
+  			</td>
+  		</tr>
+  	</table>
+
       </div>
-         <p>
+     	 <p>
+
            <a href="#" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-home"></span> 
            </a>
          </p>  
       </div>
     </div>
+
+    <div class="btn" align="center"><button onclick="location.href='home.do'">완료</button></div>
 </body>
 </html>
