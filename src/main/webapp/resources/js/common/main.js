@@ -40,7 +40,7 @@
 			bannerSection.display = '';
 			let randomBanner = getBanImg(imgDataList);
 			
-			banImg.src = 'resources/piUploadFiles/' + randomBanner.banOrigin;	
+			banImg.src = '${ pageContext.servletContext.contextPath }/resources/piUploadFiles/' + randomBanner.banOrigin;	
 			banImg.alt = randomBanner.banAlt;
 			banUrl = randomBanner.banUrl;
 		} else {

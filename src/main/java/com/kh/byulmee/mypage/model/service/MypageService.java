@@ -7,6 +7,7 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.mypage.model.vo.RevImgChange;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -30,9 +31,7 @@ public interface MypageService {
 	
 	ArrayList<Order> selectProDetailList(int ordNo);
 	
-	int deletePurAct(Order o);
-	
-	int deletePurPro(Order o);
+	int deletePur(Order o);
 
 	int insertProfileImage(Image img);
 
@@ -52,22 +51,23 @@ public interface MypageService {
 	
 	ArrayList<Favorite> selectFavStarList(PageInfo pi, String id);
 
-	int deleteFavAct(Favorite f);
-
-	int deleteFavPro(Favorite f);
-
-	int deleteFavStar(Favorite f);
+	int deleteFav(Favorite f);
 
 	int getReviewListCount(Review rev);
 
 	ArrayList<Review> selectRevActList(PageInfo pi, String id);
 
+	ArrayList<Review> selectRevProList(PageInfo pi, String id);
+
 	Review selectRevActDetail(int revNo);
+	
+	Review selectRevProDetail(int revNo);
 
 	int updateRevAct(Review r);
 	
 	ArrayList<Image> selectRevDetailImg(int revNo);
 
+	int changeImgLevel(RevImgChange ric);
 
 
 }

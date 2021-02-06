@@ -132,5 +132,7 @@ $( document ).ready(function() {
          </p>  
       </div>
     </div>
+    
+    <div class="btn" align="center"><button onclick="location.href='home.do'">완료</button></div>
 </body>
 </html>

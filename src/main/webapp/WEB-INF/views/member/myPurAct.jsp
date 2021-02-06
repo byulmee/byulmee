@@ -690,13 +690,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -752,8 +752,7 @@
 								</div>
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
-									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
-									<input type="hidden" class="actTitle" value="${ o.activity.actTitle }" name="actTitle">
+									<input type="hidden" class="ordRefcode" value="0" name="ordRefcode">
 									
 									<p class="text">${ o.activity.actTitle }</p>
 									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
@@ -762,7 +761,7 @@
 							</div>
 							<div class="btnDiv">
 								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
-								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.activity.actNo }'">문의하기</button>
+								<button class="button" onclick="location.href='salesQnaInsertView.me?acId=${ o.activity.actNo }'">문의하기</button>
 								<c:if test="${ o.ordReview == 'N' }">
 									<button class="reviewActBtn" onclick="openModal('reviewWrite')">후기작성</button>
 								</c:if>
@@ -856,7 +855,7 @@
 							<input type="hidden" class="revRefcode" value="0" name="revRefcode">
 							<input type="hidden" class="revRefno" value="" name="revRefno">
 							<input type="hidden" class="ordNo" value="" name="ordNo">
-							상품은 만족하셨나요?
+							활동은 만족하셨나요?
 						</td>
 					</tr>
 					<tr>
@@ -940,16 +939,6 @@
 		</div>
 	</div>
 	
- 	<!-- <script>
-		$("#finishBtn").click(function(){
-			var chk1 = $('reviewImgFile1').val();
-			if(chk1 == null) {
-				alert("최소 1개 이상의 사진을 등록해주세요.");
-				return false;
-			}
-		});
-	</script> -->
-	
 	<script>
 		function openModal(modalname) {
 			document.get
@@ -979,10 +968,10 @@
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-			var ordRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
+			var ordRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordRefcode").val();
 			
 			if(bool) {
-				location.href='deletePurAct.me?ordNo=' + ordNo + '&ordRefno=' + ordRefno;
+				location.href='deletePur.me?ordNo=' + ordNo + '&ordRefcode=' + ordRefcode;
 			}			
 		});
 	</script>
@@ -1064,11 +1053,12 @@
 						return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					}
 
-					var num1 = data[0].ordPay;
-					var num2 = data[0].activity.actPrice;
+					var num1 = data[0].activity.actPrice;
+					var num2 = data[0].activity.actPrice * data[0].ordCount;
 
-					var ordPay = currencyFormat(num1);
-					var actPrice = currencyFormat(num2);
+					var actPrice = currencyFormat(num1);
+					var totalPrice = currencyFormat(num2);
+					
 					//////////////////////////////////////////////////////////////////////
 					
 					// 전화번호 - 표시 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1103,7 +1093,7 @@
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("활동 장소")).append($("<td class='tdContent'>").text(data[0].activity.actPlace)));
 					$tableBody.append($("<tr>").append($payInfoTd).append($("<td class='tdName2'>").text("① 1인당 활동비")).append($("<td class='tdContent'>").text(actPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("② 신청 인원")).append($("<td class='tdContent'>").text(data[0].ordCount + " 명")));
-					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("③ 총 결제 금액 (① × ②)")).append($("<td class='tdContent'>").text(ordPay + ' 원')));
+					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("③ 총 결제 금액 (① × ②)")).append($("<td class='tdContent'>").text(totalPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("결제 수단")).append($("<td class='tdContent'>").text(ordPayWay)));
 					$tableBody.append($("<tr>").append($reqInfoTd).append($("<td class='tdName2'>").text("신청자")).append($("<td class='tdContent'>").text(data[0].ordName)));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("연락처")).append($("<td class='tdContent'>").text(ordPhone)));

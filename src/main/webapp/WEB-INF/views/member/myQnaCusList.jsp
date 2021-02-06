@@ -1,4 +1,3 @@
-<!-- ajax 방식 -->
 <!--
 	메인컬러 - #FF6833
 	메인폰트 - font-family: "Gmarket Sans TTF";
@@ -7,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -199,6 +199,83 @@
 		color: white;
 		background: #FF6833;
 	}
+	.listArea {
+		min-height: 480px;
+	}
+	.list {
+		display: inline-block;
+		width: 100%;
+		height: 160px;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	.hoverDiv {
+		display: inline-block;
+		width: 620px;
+		height: 160px;
+		vertical-align: middle;
+	}
+	.hoverDiv:hover {
+		opacity: 0.6;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.imgDiv {
+		display: inline-block;
+		position: relative;
+		width: 136px;
+		height: 136px;
+		margin-top: 10px;
+		overflow: hidden;
+		border: 2px solid gray;
+		background: black;
+		left: 10px;
+	}
+	.img {
+		position: absolute;
+		width: 136px;
+		height: auto;
+		margin: auto;
+		left: -100%;
+		right: -100%;
+		top: -100%;
+		bottom: -100%;
+	}
+	.textDiv {
+		position: absolute;
+		width: 350px;
+		height: 130px;
+		display: inline-block;
+		padding: 15px 0px 0px 20px;
+	}
+	.btnDiv {
+		width: 90px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: right;
+	}
+	.button {
+		margin: 5px;
+		padding: 5px;
+		padding-bottom: 2px;
+		border: 1px solid #9F9F9F;
+		background: white;
+		font-size: 15px;
+		font-family: "Gmarket Sans TTF";
+		cursor: pointer;
+		outline: 0;
+		vertical-align: middle;
+	}
+	.button:hover {
+		background: #FF6833;
+		color: white;
+		cursor: pointer;
+	}
+	.delBtnDiv {
+		width: 30px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: right;
+	}
 	#wrap {
 		display: table-cell;
 		margin: 0;
@@ -262,6 +339,19 @@
 		background: #E4E4E4;
 		corsur: default;
 	}
+	.xImg {
+		padding: 10px 10px 0px 0px;
+		width: 15px;
+		height: 15px;
+		object-fit: cover;
+		cursor: pointer;
+		opacity: 0.2;
+	}
+	.xImg:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+
 </style>
 </head>
 <body>
@@ -271,7 +361,7 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-	    		<div class="profileDiv">
+    			<div class="profileDiv">
 					<c:if test="${ empty img }">
 						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
     				</c:if>
@@ -335,13 +425,13 @@
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn" id="selectedBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn" id="selectedBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -358,7 +448,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -371,57 +461,41 @@
 			<div class="listArea">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href=''" class="selected">고객 문의</li>
-						<li onclick="location.href=''">활동 문의</li>
-						<li onclick="location.href=''">상품 문의</li>
+						<li onclick="location.href='myFavActView.me'" class="selected">고객 문의</li>
+						<li onclick="location.href='myFavProView.me'">활동 문의</li>
+						<li onclick="location.href='myFavStarView.me'">상품 문의</li>
 					</ul>
 				</div>
-			<!-- 작성한 고객 문의가 없는 경우 -->
-				<%-- <c:if test="${ o.size() == 0 }">
+			<!-- 찜한 활동이 없는 경우 -->
+				<%-- <c:if test="${ f.size() == 0 }">
 					<div id="wrap">
 						<table>
 							<tr>
 								<td class="nothing">
-									작성한 고객 문의가 없습니다.
+									찜한 활동이 없습니다.
 								</td>
 							</tr>
 						</table>
 					</div>
 				</c:if> --%>
-					<div id="wrap">
-						<table>
-							<tr>
-								<td class="nothing">
-									작성한 고객 문의가 없습니다.
-								</td>
-							</tr>
-						</table>
-					</div>
-			<!-- 작성한 고객 문의가 있는 경우 반복문 시작 -->
-				<%-- <c:if test="${ o.size() > 0 }">
-					<c:forEach var="o" items="${ o }">
+			<!-- 찜한 활동이 있는 경우 반복문 시작 -->	
+				<%-- <c:if test="${ f.size() > 0 }">
+					<c:forEach var="f" items="${ f }">
 						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ o.activity.actNo }'">
+							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ f.activity.actNo }'">
 								<div class="imgDiv">
-									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ o.image.imgName }">
+									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ f.image.imgName }">
 								</div>
 								<div class="textDiv">
-									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
-									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
-									<p class="text">${ o.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
-									<p class="text">${ o.ordDate } 신청</p>
+									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
+									<input type="hidden" class="actNo" value="${ f.activity.actNo }" name="actNo">
+									<p class="text">${ f.activity.actTitle }</p>
+									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
+									<p class="text">${ f.favDate } 찜</p>
 								</div>
 							</div>
 							<div class="btnDiv">
-								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
-								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.activity.actNo }'">문의하기</button>
-								<c:if test="${ o.ordReview == 'N' }">
-									<button class="reviewActBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
-								</c:if>
-								<c:if test="${ o.ordReview == 'Y' }">
-									<button class="button" disabled>작성완료</button>
-								</c:if>
+								<!-- 구매하기 버튼 -->
 							</div>
 							<div class="delBtnDiv">
 								<div class="delBtn">
@@ -438,7 +512,7 @@
 									<a class="pageBtnEnd">&lt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="before" value="myPurActView.me">
+									<c:url var="before" value="myFavActView.me">
 										<c:param name="page" value="${ pi.currentPage - 1 }"/>
 									</c:url>
 									<a href="${ before }" class="pageBtn">&lt;</a>
@@ -451,7 +525,7 @@
 									</c:if>
 									
 									<c:if test="${ p ne pi.currentPage }">
-										<c:url var="pagination" value="myPurActView.me">
+										<c:url var="pagination" value="myFavActView.me">
 											<c:param name="page" value="${ p }"/>
 										</c:url>
 										<a href="${ pagination }" class="pageBtn">${ p }</a>
@@ -463,7 +537,7 @@
 									<a class="pageBtnEnd">&gt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage < pi.maxPage }">
-									<c:url var="after" value="myPurActView.me">
+									<c:url var="after" value="myFavActView.me">
 										<c:param name="page" value="${ pi.currentPage + 1 }"/>
 									</c:url> 
 									<a href="${ after }" class="pageBtn">&gt;</a>
@@ -477,5 +551,19 @@
 			</div>
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
+	
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var favNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favNo").val();
+			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
+			
+			if(bool) {
+				location.href='deleteFavAct.me?favNo=' + favNo + '&favRefno=' + favRefno;
+			}			
+		});
+	</script>
 </body>
 </html>

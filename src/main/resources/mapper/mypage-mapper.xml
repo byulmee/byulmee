@@ -34,7 +34,14 @@
 	</select>
 	
 	<select id="selectActOrderList" resultMap="orderResultSet">
-		ty
+		select o.ord_no, o.ord_date, o.ord_pay, o.ord_review,
+		        a.act_no, a.act_title,
+                i.img_name
+		from orders o 
+		    left outer join activity a on o.ord_refno = a.act_no
+            left outer join image i on a.act_no = i.img_refno
+		where o.ord_status='Y' and o.mem_id=#{memId} and o.ord_refcode=0 and i.img_level=0 and i.img_refcode=1
+		order by o.ord_no desc
 	</select>
 	
 	<select id="selectProOrderList" resultMap="orderResultSet">
@@ -76,33 +83,11 @@
 		order by o.ord_no desc
 	</select>
 	
-	<update id="deletePurAct">
+	<update id="deletePur">
 		update orders
 		set ord_status='N'
-		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=0 and ord_refno=#{ordRefno}
+		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=#{ordRefcode}
 	</update>
-	
-	<update id="deletePurPro">
-		update orders
-		set ord_status='N'
-		where ord_no=#{ordNo} and mem_id=#{memId} and ord_refcode=1 and ord_refno=#{ordRefno}
-	</update>
-	
-	<!-- ajax 이미지 가져오는 쿼리 -->
-	<!-- <select id="selectDetailList" resultMap="orderResultSet">
-		select o.ord_no, o.ord_count, o.ord_date, o.ord_name, o.ord_phone,
-		        o.ord_postcode, o.ord_basicaddr, o.ord_detailaddr, o.ord_request,
-		        o.ord_pay, o.ord_pay_way, o.ord_status,
-		        a.act_no, a.mem_id as act_id, a.act_startday, a.act_endday, a.act_place,
-		        a.act_title, a.act_price, a.act_status,
-		        m.mem_no, m.mem_nickname, i.img_name
-		from orders o 
-		    left outer join activity a on o.ord_refno = a.act_no
-		    left outer join member m on a.mem_id = m.mem_id
-		    left outer join image i on a.act_no = i.img_refno
-		where o.ord_status='Y' and o.ord_no=#{ordNo} and i.img_level=0
-		order by o.ord_no desc
-	</select> -->
 	
 	<select id="selectProfileImg" resultMap="imageResultSet">
 		select img_name, img_status
@@ -173,22 +158,10 @@
 			order by fs.fav_no desc
 	</select>
 	
-	<update id="deleteFavAct">
+	<update id="deleteFav">
 		update favorite
 		set fav_status='N'
-		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=1 and fav_refno=#{favRefno}
-	</update>
-	
-	<update id="deleteFavPro">
-		update favorite
-		set fav_status='N'
-		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=2 and fav_refno=#{favRefno}
-	</update>
-	
-	<update id="deleteFavStar">
-		update favorite
-		set fav_status='N'
-		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=0 and fav_refno=#{favRefno}
+		where fav_no=#{favNo} and mem_id=#{memId} and fav_refcode=#{favRefcode}
 	</update>
 	
 	<select id="getReviewListCount" resultType="_int">
@@ -198,19 +171,22 @@
 	</select>
 	
 	<select id="selectRevActList" resultMap="reviewResultSet">
-		<!-- select r.rev_no, r.mem_id, r.rev_rating, r.rev_content, r.rev_date,
-		        a.act_no, a.act_title,
-                i.img_name
-		from review r
-		    left outer join activity a on r.rev_refno = a.act_no
-            left outer join image i on r.rev_no = i.img_refno
-		where r.rev_status='Y' and r.mem_id=#{memId} and r.rev_refcode=0 and i.img_level=0 and i.img_refcode=3
-		order by r.rev_no desc -->
 		select ra.rev_no, ra.mem_id, ra.rev_rating, ra.rev_content, ra.rev_date,
 		        a.act_no, a.act_title,
                 i.img_name
 		from(select * from review where rev_status='Y' and mem_id=#{memId} and rev_refcode=0) ra
 			left outer join activity a on ra.rev_refno = a.act_no
+			left outer join (select * from image 
+							where img_refcode = 3 and img_level=0) i on ra.rev_no = i.img_refno
+			order by ra.rev_no desc
+	</select>
+	
+	<select id="selectRevProList" resultMap="reviewResultSet">
+		select ra.rev_no, ra.mem_id, ra.rev_rating, ra.rev_content, ra.rev_date,
+		        p.pro_no, p.pro_title,
+                i.img_name
+		from(select * from review where rev_status='Y' and mem_id=#{memId} and rev_refcode=1) ra
+			left outer join product p on ra.rev_refno = p.pro_no
 			left outer join (select * from image 
 							where img_refcode = 3 and img_level=0) i on ra.rev_no = i.img_refno
 			order by ra.rev_no desc
@@ -224,8 +200,16 @@
 		where r.rev_no=#{revNo}
 	</select>
 	
+	<select id="selectRevProDetail" resultMap="reviewResultSet">
+		select r.rev_no, r.mem_id, r.rev_rating, r.rev_content, r.rev_date, r.rev_refcode, r.rev_refno, r.ord_no, r.rev_last_rating,
+		        p.pro_no, p.pro_title
+		from review r
+			left outer join product p on r.rev_refno = p.pro_no
+		where r.rev_no=#{revNo}
+	</select>
+	
 	<select id="selectRevDetailImg" resultMap="imageResultSet">
-		select img_name
+		select img_name, img_level
 		from image
 		where img_refcode=3 and img_refno=#{revNo}
 		order by img_level asc
@@ -235,6 +219,12 @@
 		update review
 		set rev_rating=#{revRating}, rev_last_rating=#{revRating}, rev_content=#{revContent}, rev_date=sysdate
 		where rev_no=#{revNo}
+	</update>
+
+	<update id="changeImgLevel">
+		update image
+		set img_level=#{afterLevel}
+		where img_level=#{beforeLevel} and img_refcode=3 and img_refno=#{revNo}
 	</update>
 	
 	<resultMap type="Order" id="orderResultSet">

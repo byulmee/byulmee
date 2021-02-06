@@ -39,7 +39,7 @@
             <li>
                 <button type="submit" class="submit-btn">로그인</button>
                 <button type="button" class="submit-btn kakao"><i class="fas fa-comment"></i>카카오로 시작하기</button>
-                <button type="button" class="submit-btn fb"><i class="fab fa-facebook" onclick="location.href='#'"></i>페이스북으로 시작하기</button>
+               <!--  <button type="button" class="submit-btn fb"><i class="fab fa-facebook" onclick="location.href='#'"></i>페이스북으로 시작하기</button> -->
             </li>
             <li>
                 <span id="joinUs" onclick="location.href='joinUsView.me'">별미 회원이 아니신가요?</span>

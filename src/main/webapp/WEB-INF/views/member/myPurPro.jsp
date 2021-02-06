@@ -696,13 +696,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -752,14 +752,13 @@
 				<c:if test="${ o.size() > 0 }">
 					<c:forEach var="o" items="${ o }">
 						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ o.product.proNo }'">
+							<div class="hoverDiv" onclick="location.href='productDetail.pd?pdId=${ o.product.proNo }'">
 								<div class="imgDiv">
 									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ o.image.imgName }">
 								</div>
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
-									<input type="hidden" class="proNo" value="${ o.product.proNo }" name="proNo">
-									<input type="hidden" class="proTitle" value="${ o.product.proTitle }" name="proTitle">
+									<input type="hidden" class="ordRefcode" value="1" name="ordRefcode">
 									
 									<p class="text">${ o.product.proTitle }</p>
 									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
@@ -862,7 +861,6 @@
 							<input type="hidden" class="revRefcode" value="1" name="revRefcode">
 							<input type="hidden" class="revRefno" value="" name="revRefno">
 							<input type="hidden" class="ordNo" value="" name="ordNo">
-							<input type="hidden" class="revTitle" value="" name="revTitle">
 							상품은 만족하셨나요?
 						</td>
 					</tr>
@@ -947,18 +945,6 @@
 		</div>
 	</div>
 	
-<!-- 	<script>
-		$("#finishBtn").click(function(){
-			var chk1 = $('reviewImgFile1').val();
-			var chk2 = $('reviewImgFile2').val();
-			var chk3 = $('reviewImgFile3').val();
-			if(chk1 == null || chk2 == null || chk3 == null) {
-				alert("사진");
-				return false;
-			}
-		});
-	</script> -->
-	
 	<script>
 		function openModal(modalname) {
 			document.get
@@ -981,19 +967,17 @@
 		$(".reviewProBtn").click(function(){
 			var revRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proNo").val();
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-			var revTitle = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proTitle").val();
 			$('.revRefno').val(revRefno);
 			$('.ordNo').val(ordNo);
-			$('.revTitle').val(revTitle);
 		});
 		
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-			var ordRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".proNo").val();
+			var ordRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordRefcode").val();
 			
 			if(bool) {
-				location.href='deletePurPro.me?ordNo=' + ordNo + '&ordRefno=' + ordRefno;
+				location.href='deletePur.me?ordNo=' + ordNo + '&ordRefcode=' + ordRefcode;
 			}			
 		});
 	</script>
@@ -1075,15 +1059,15 @@
 						return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					}
 					
-					var num1 = data[0].ordPay;
-					var num2 = data[0].product.proPrice;
-					var num3 = data[0].product.proPrice*data[0].ordCount;
-					var num4 = data[0].product.proCharge;
+					var num1 = data[0].product.proPrice;
+					var num2 = data[0].product.proPrice*data[0].ordCount;
+					var num3 = data[0].product.proCharge;
+					var num4 = num2 + num3;
 
-					var ordPay = currencyFormat(num1);
-					var proPrice = currencyFormat(num2);
-					var totalProPrice = currencyFormat(num3);
-					var proCharge = currencyFormat(num4);
+					var proPrice = currencyFormat(num1);
+					var totalProPrice = currencyFormat(num2);
+					var proCharge = currencyFormat(num3);
+					var totalPrice = currencyFormat(num4);
 					//////////////////////////////////////////////////////////////////////
 					
 					// 전화번호 - 표시 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1118,7 +1102,7 @@
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("② 구매 수량")).append($("<td class='tdContent'>").text(data[0].ordCount + " 개")));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("③ 총 상품 금액 (① × ②)")).append($("<td class='tdContent'>").text(totalProPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("④ 배송비")).append($("<td class='tdContent'>").text(proCharge + ' 원')));
-					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("⑤ 총 결제 금액 (③ + ④)")).append($("<td class='tdContent'>").text(ordPay + ' 원')));
+					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("⑤ 총 결제 금액 (③ + ④)")).append($("<td class='tdContent'>").text(totalPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("결제 수단")).append($("<td class='tdContent'>").text(ordPayWay)));
 					$tableBody.append($("<tr>").append($reqInfoTd).append($("<td class='tdName2'>").text("신청자")).append($("<td class='tdContent'>").text(data[0].ordName)));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("연락처")).append($("<td class='tdContent'>").text(ordPhone)));

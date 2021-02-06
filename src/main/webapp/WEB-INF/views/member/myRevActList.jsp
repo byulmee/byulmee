@@ -247,12 +247,6 @@
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
 	}
-/* 	.text {
-		display: inline-block;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	} */
 	.conTable {
 		width: 460px;
 		height: 130px;
@@ -273,7 +267,7 @@
 		vertical-align: middle;
 		text-align: right;
 	}
-	.button, .detailActBtn, .reviewActBtn {
+	.button, .detailActBtn {
 		margin: 5px;
 		padding: 5px;
 		padding-bottom: 2px;
@@ -285,7 +279,7 @@
 		outline: 0;
 		vertical-align: middle;
 	}
-	.button:hover, .detailActBtn:hover ,.reviewActBtn:hover {
+	.button:hover, .detailActBtn:hover {
 		background: #FF6833;
 		color: white;
 		cursor: pointer;
@@ -449,13 +443,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -540,7 +534,6 @@
 												</td>
 											</tr>
 										</table>
-										<!-- <p class="text"></p> -->
 									</div>
 								</div>
 								<div class="btnDiv">
@@ -603,5 +596,16 @@
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var revNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revNo").val();
+			
+			if(bool) {
+				location.href='deleteFavPro.me?favNo=' + favNo + '&favRefno=' + favRefno;
+			}			
+		});
+	</script>
 </body>
 </html>

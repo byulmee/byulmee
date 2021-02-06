@@ -404,13 +404,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -428,14 +428,6 @@
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
 		            		<button class="sideMenuBtn">스타 신청</button>
-		            	</c:if>
-		            	<c:if test="${ loginUser.memLevel == 1 }">
-		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
-		            	</c:if>
-					</li>
-					<li>
-						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -472,7 +464,7 @@
 							<div class="hoverDiv" onclick="location.href='acWorkRoomMain.wr?memId=${ f.member.memId }&memNo=${ f.member.memNo }'">
 								<div class="starDiv">
 									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
-									<input type="hidden" class="memNo" value="${ f.member.memNo }" name="memNo">
+									<input type="hidden" class="favRefcode" value="0" name="favRefcode">
 									<c:if test="${ f.image.imgRefno ne f.favRefno }">
 										<img class="starImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
 									</c:if>
@@ -547,10 +539,10 @@
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var favNo = $(this).parent().parent().children(".hoverDiv").children(".starDiv").children(".favNo").val();
-			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".starDiv").children(".memNo").val();
+			var favRefcode = $(this).parent().parent().children(".hoverDiv").children(".starDiv").children(".favRefcode").val();
 			
 			if(bool) {
-				location.href='deleteFavStar.me?favNo=' + favNo + '&favRefno=' + favRefno;
+				location.href='deleteFav.me?favNo=' + favNo + '&favRefcode=' + favRefcode;
 			}			
 		});
 	</script>

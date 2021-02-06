@@ -425,13 +425,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -488,7 +488,7 @@
 								</div>
 								<div class="textDiv">
 									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
-									<input type="hidden" class="actNo" value="${ f.activity.actNo }" name="actNo">
+									<input type="hidden" class="favRefcode" value="1" name="favRefcode">
 									<p class="text">${ f.activity.actTitle }</p>
 									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
 									<p class="text">${ f.favDate } 찜</p>
@@ -558,10 +558,10 @@
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var favNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favNo").val();
-			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
+			var favRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favRefcode").val();
 			
 			if(bool) {
-				location.href='deleteFavAct.me?favNo=' + favNo + '&favRefno=' + favRefno;
+				location.href='deleteFav.me?favNo=' + favNo + '&favRefcode=' + favRefcode;
 			}			
 		});
 	</script>

@@ -599,7 +599,7 @@
 									<td colspan="3" class="reviewTitleTd">
 										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
 										<input type="hidden" class="memId" value="${ r.memId }" name="memId" >
-										<input type="hidden" class="revRefcode" value="0" name="revRefcode">
+										<input type="hidden" class="revRefcode" value="1" name="revRefcode">
 										<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
 										<input type="hidden" class="ordNo" value="${ r.ordNo }" name="ordNo">
 										<input type="hidden" class="revLastRating" value="${ r.revLastRating }" name="revLastRating">
