@@ -22,6 +22,7 @@ import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.product.model.exception.ProductException;
 import com.kh.byulmee.product.model.service.ProductService;
 import com.kh.byulmee.product.model.vo.Product;
 import com.kh.byulmee.review.model.service.ReviewService;
@@ -117,7 +118,7 @@ public class ProductController {
 			  .addObject("possibleStock", possibleStock)
 			  .setViewName("productDetail");
 		} else {
-			throw new ActivityException("상품 조회에 실패하였습니다.");
+			throw new ProductException("상품 조회에 실패하였습니다.");
 		}
 		return mv;
 	}
@@ -237,7 +238,7 @@ public class ProductController {
 			  .addObject("ratingAvg", ratingAvg)
 			  .setViewName("productCheck");
 		} else {
-			throw new ActivityException("상품 구매페이지 조회에 실패하였습니다.");
+			throw new ProductException("상품 구매페이지 조회에 실패하였습니다.");
 		}
 		return mv;
 	}
