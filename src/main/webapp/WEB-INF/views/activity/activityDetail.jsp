@@ -479,7 +479,7 @@ hr {
  	white-space: nowrap;
 } 
 
-.noqna {
+.noqna, .noreview {
 	text-align: center;
 }
 
@@ -725,6 +725,10 @@ hr {
 	text-indent: -9999px;
 }
 
+.list-nickname{
+	font-size: 15px;
+}
+
 /* 이런 별미는 어때요 */
 .rec-list {
 	width: 80vw;
@@ -771,18 +775,22 @@ hr {
 	object-fit: cover;
 }
 .list-item span:nth-of-type(1) {
-	color: #9E9E9E;
-	font-size: 0.2rem;
-	font-weight: 500;
+	margin-top: 5px;
+    color: #9E9E9E;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+.list-cate {
+	font-size: 1rem;
 }
 .list-item span:nth-of-type(2) {
 	font-family: 'GmarketSansMidium';
 	font-size: 0.7rem;
-	font-weight: 700;
+	font-weight: 600;
 }
 .list-item span:nth-of-type(3) {
 	color: #9E9E9E;
-	font-size: 0.4rem;
+	font-size: 0.7rem;
 }
 .fa-receipt {
 	font-size: 0.8rem;
@@ -1307,7 +1315,7 @@ hr {
 						}
 					} else{
 						$tr = $('<tr>');
-						$revContent = $('<td>').text('등록된 후기가 없습니다.');
+						$revContent = $('<td class="noreview">').text('등록된 후기가 없습니다.');
 						
 						$tr.append($revContent);
 						$review.append($tr);
@@ -1480,10 +1488,8 @@ hr {
 			</div>
 		</div>
 		
-
-		
 		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
-
+		
 		<script>
 			var acId = "<c:out value='${ activity.actNo}'/>";
 			
@@ -1535,29 +1541,6 @@ hr {
 			var qnaNo = $(this).next().text();
 			console.log(qnaNo);
 			
-			// 문의게시판 토글
-	        $(function(){
-	            var article = (".question .show"); 
-	            var article2 = (".question .show2"); 
-	            $(".question .trQuestion td").on("click", function() { 
-	                var myArticle =$(this).parents().next("tr"); 
-	                var myArticle2 =$(this).parents().next().next("tr");
-	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
-	                    $(article).removeClass('show').addClass('trContent'); 
-	                    $(article2).removeClass('show2').addClass('salqnaReply'); 
-	                    $(myArticle).removeClass('trContent').addClass('show'); 
-	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
-	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
-	                    $('.questionExcept .show2 td').removeClass('show2').addClass('salqnaReply');
-	                } 
-	                else { 
-	                    $(myArticle).addClass('trContent').removeClass('show');
-	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
-	                } 
-	            }); 
-	        });
-			
-			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
 			$.ajax({
 				url: 'salesQnaDetail.ac',
 				data: {qnaNo:qnaNo},
@@ -1740,60 +1723,24 @@ hr {
 			<!-- Swiper -->
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
-					<div class="swiper-slide">
-						<ul class="list">
-							<li class="list-item item1"><img class="list-thumb"
-								src="resources/images/common/test.png" alt=""> <span>nickName</span>
-								<div class="list-cate">[카테고리]제목제목너무길어무길어</div> <span
-								class="list-price"><i class="fas fa-receipt"></i>50,000원</span>
-								<span class="list-social">⭐️4.9 9999개의 평가</span></li>
-						</ul>
-					</div>
+					<c:forEach var="popularAct" items="${ popularActList }">
+						<div class="swiper-slide">
+							<ul class="list">
+								<li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${popularAct.actNo }'">
+									<img class="list-thumb" src="resources/auploadFiles/${ popularAct.image.imgName }" alt=""> 
+									<span class="list-nickname">${ popularAct.member.memNickname }</span>
+									<c:if test="${ popularAct.actCategory == 0 }"><div class="list-cate">[액티비티] ${ popularAct.actTitle }</div></c:if>
+									<c:if test="${ popularAct.actCategory == 1 }"><div class="list-cate">[리빙] ${ popularAct.actTitle }</div></c:if>
+									<c:if test="${ popularAct.actCategory == 2 }"><div class="list-cate">[건강/미용] ${ popularAct.actTitle }</div></c:if>
+									<c:if test="${ popularAct.actCategory == 3 }"><div class="list-cate">[힐링] ${ popularAct.actTitle }</div></c:if>
+									<c:if test="${ popularAct.actCategory == 4 }"><div class="list-cate">[푸드] ${ popularAct.actTitle }</div></c:if>
+									<c:if test="${ popularAct.actCategory == 5 }"><div class="list-cate">[커리어] ${ popularAct.actTitle }</div></c:if>
+									<span class="list-price"><i class="fas fa-receipt"></i> ${ popularAct.actPrice }원</span>
+									<span class="list-social">⭐${ popularAct.actRating }  ${ popularAct.actReviewCnt }개의 평가</span>
+								</li>
+							</ul>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
