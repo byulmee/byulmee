@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.dao.MemberDAO;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
@@ -152,5 +153,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member selectProductWriter(int pdId) {
 		return mDAO.selectProductWriter(sqlSession, pdId);
+	}
+
+	@Override
+	public ArrayList<Image> getStarProfileList() {
+		return mDAO.getStarProfileList(sqlSession);
 	}
 }
