@@ -1,8 +1,10 @@
 package com.kh.byulmee.product.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.board.model.vo.SalesQna;
+import com.kh.byulmee.board.service.SalesQnaService;
 import com.kh.byulmee.common.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
 import com.kh.byulmee.image.model.vo.Image;
@@ -35,6 +42,9 @@ public class ProductController {
 	
 	@Autowired
 	private ReviewService rvService;
+	
+	@Autowired
+	private SalesQnaService sqService;
 	
 	@RequestMapping("plist.pd")         
     public ModelAndView productList(@RequestParam(value="page", required=false) Integer page, @RequestParam("proCategory") int proCategory, ModelAndView model) {
