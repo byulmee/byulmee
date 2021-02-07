@@ -148,11 +148,8 @@ public class MemberRestApiController {
 		/* by다혜: facebook 간편 로그인 */
 		@RequestMapping(value = "fb.me", method={ RequestMethod.GET, RequestMethod.POST })
 		public ModelAndView facebookAuth(HttpServletResponse response, Model model) {
-		 
 		      	//String result = mApiService.getFacebookToken();
-		      
 		      	//System.out.println(result);
-
 			return null;
 		}
 }

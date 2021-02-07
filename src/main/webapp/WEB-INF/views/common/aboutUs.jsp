@@ -36,7 +36,7 @@
         <div class="content-wrapper">
             <div class="content-box" data-aos="fade-right"  data-aos-easing="ease-in-out" data-aos-duration="1000">
                 <div class="content-img">
-                    <img src="resources/images/aboutUs/about1.jpg">
+                    <img class="img-item" src="resources/images/aboutUs/about1.jpg">
                 </div>
                 <div class="content-text">
                     <span>새로운 취미 탐색</span>
@@ -86,7 +86,7 @@
                     <p>취미로 일상에 변화를 주고싶다면,</p>
                     <h2>지금 바로 별미하세요!</h2>
             </div>
-            <div class="content-btn" data-aos-delay="800"  data-aos="zoom-out" data-aos-easing="ease-in-out" data-aos-duration="900">
+            <div class="content-btn" data-aos-delay="500"  data-aos="zoom-out" data-aos-easing="ease-in-out" data-aos-duration="900">
                 <span class="btn-before">취미 검색은</span>
                 <img class="btn-after bmLogo" src="resources/images/common/logo.png" alt="별미 바로가기">&nbsp;&nbsp;&nbsp;
 				<span class="btn-before">프리마켓 검색은</span>

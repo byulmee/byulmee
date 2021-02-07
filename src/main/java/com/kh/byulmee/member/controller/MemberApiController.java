@@ -78,9 +78,6 @@ public class MemberApiController {
 	@RequestMapping("checkId.me")
 	@ResponseBody
 	public boolean checkId(@RequestParam("memId") String memId, HttpServletResponse response) {
-		System.out.println(memId);
-		System.out.println(mService.checkId(memId) == 0 ? true : false);
-		
 		return mService.checkId(memId) == 0 ? true : false;
 	}
 	

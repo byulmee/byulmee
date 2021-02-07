@@ -21,16 +21,20 @@
 	getMainContent().then((data) => {
 		//인기 활동
 		let popActList = loadList(data.popularActList);
-		document.querySelector('#popularActList').innerHTML += popActList;
+		if(popActList.length > 0) {
+			document.querySelector('#popularActList').innerHTML += popActList;
+		}
 		
 		//마감일 임박 활동
 		let neActList = loadList(data.nearEndDateActList);
-		document.querySelector('#nearEndDateActList').innerHTML += neActList;
-		
+		if(neActList.length > 0) {
+			document.querySelector('#nearEndDateActList').innerHTML += neActList;
+		}
 		//인기 상품
 		let popProList = loadList(data.popularProList);
-		document.querySelector('#popularProduct').innerHTML += popProList;
-	
+		if(popProList.length > 0) {
+ 			document.querySelector('#popularProduct').innerHTML += popProList;
+		}
 		//배너
 		let imgDataList = data.bannerList;
 		let bannerSection = document.querySelector('#ban');

@@ -101,16 +101,16 @@ public class ActivityDAO {
 		return sqlSession.update("activityMapper.updateActRatingCnt", a);
 	}
 	
-	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession,PageInfo pi) {
+	public ArrayList<Activity> selectList(SqlSessionTemplate sqlSession,PageInfo pi, int actCategory) {
 		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList) sqlSession.selectList("activityMapper.selectActBoardList",pi,rowBounds);
+		return (ArrayList) sqlSession.selectList("activityMapper.selectActBoardList", actCategory,rowBounds);
 		
 	}
 	
-	public int getActBoardListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("activityMapper.getActBoardListCount");		
+	public int getActBoardListCount(SqlSessionTemplate sqlSession, int actCategory) {
+		return sqlSession.selectOne("activityMapper.getActBoardListCount",actCategory);		
 	}
 	
 }
