@@ -47,12 +47,6 @@ public class ActivityController {
 	@Autowired 
 	private ReviewService rvService;
 
-	
-//	@RequestMapping("activityList.ac")
-//	public String activityListView() {
-//		return "activityList";
-//	}
-//	
 	@RequestMapping("activityDetail.ac")
 	public ModelAndView activityDetail(@RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
 		
@@ -111,6 +105,9 @@ public class ActivityController {
 			}
 		}
 		
+		ArrayList<Activity> popularActList = aService.getPopularActList();
+		System.out.println("포퓰러" + popularActList);
+		
 		if(activity != null && image != null) {
 			mv.addObject("activity", activity)
 			  .addObject("category", category)
@@ -125,6 +122,7 @@ public class ActivityController {
 			  .addObject("reviewNum", reviewNum)
 			  .addObject("ratingAvg", ratingAvg)
 			  .addObject("possibleNum", possibleNum)
+			  .addObject("popularActList", popularActList)
 			  .setViewName("activityDetail");
 		} else {
 			throw new ActivityException("활동 조회에 실패하였습니다.");
@@ -136,8 +134,6 @@ public class ActivityController {
 	@RequestMapping("salesQnaList.ac")
 	public void getQnaList(@RequestParam("acId") int acId, HttpServletResponse response) {
 		ArrayList<SalesQna> sqList = sqService.selectQnaList(acId);
-		
-		System.out.println(acId);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -170,7 +166,6 @@ public class ActivityController {
 	@RequestMapping("salesQnaDetail.ac")
 	public void getQnaDetail(@RequestParam("qnaNo") int qnaNo, HttpServletResponse response) {
 		SalesQna sq = sqService.selectQnaDetail(qnaNo);
-		System.out.println(sq);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

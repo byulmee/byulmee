@@ -275,6 +275,7 @@ td{
 }
 .personal-info-check{
 	margin-top: 10px;
+	margin-bottom: 10px;
 	font-size: 13px;
 	color: #6D6D6D;
 }
@@ -287,34 +288,32 @@ td{
 	cursor: pointer;
 }
 #orderButton{
-	margin-top: 15px;
-	border: 1px solid #FF6833; 
-	background: #FF6833; 
-	border-radius: 5px; 
-	color: white; 
 	width: 60px; 
-	height: 35px; 
-	text-align: center; 
-	font-size: 13px;
-	margin-left: 7px;
-	outline: 0;
-	cursor: pointer; 
+	height: 2.5rem;
+    border-style: none;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 0.2rem;
+    color: white;
+    cursor: pointer; 
+	background: #FF6833; 
 	font-weight: bold;
+    border: 0;
+    outline: 0;	
 }
 #cancleButton{
-	margin-top: 15px;
-	border: 1px solid #EFEFEF; 
 	background: #EFEFEF; 
-	border-radius: 5px; 
 	color: #5A5A5A; 
 	width: 60px; 
-	height: 35px; 
-	text-align: center; 
-	font-size: 13px;
-	margin-left: 7px;
-	outline: 0;
-	cursor: pointer; 
-	font-weight: bold;
+	height: 2.5rem;
+    border-style: none;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: 0;
+    outline: 0;     
 }
 
 </style>
@@ -322,7 +321,7 @@ td{
 <body>
 	<c:import url="../common/gnb.jsp"/>
    <div class="outer" align="center">
-   <form id="payment" action="payment.pt" method="post">
+   <form id="payment" name="payment" action="payment.pt" method="post" onSubmit="return CheckForm(this)">
           <div class="product-check" align="left">활동 신청 확인</div>
           
        <!-- 상단 섬네일, 상품 정보 -->
@@ -492,30 +491,29 @@ td{
             <input type="hidden" value="${ amount }" name="ordCount">
             <input type="hidden" value="${ activity.actPrice }" name="ordPay">
 	       <span>구매 동의 : 활동 신청 정보, 취소 및 환불 정책, 개인 정보 제공 동의 등을 최종 확인하고 구매에 동의합니다.(필수)</span>
-	       <span><input type="checkbox" id="check"></span>
+	       <span><input type="checkbox" name="check" id="check"></span>
        </div>
-       	<input type="submit" id="orderButton" value="결제">
-       	<input type="button" id="cancleButton" value="취소">
-       	</form>
+       <c:if test="${ !empty loginUser }">
+       		<input type="submit" id="orderButton" value="결제">
+       </c:if>		
+       <c:if test="${ empty loginUser }">
+       		<input type="button" id="orderButton" value="결제" onclick="alert('로그인 후 이용 가능합니다.')">
+       </c:if>		
+       		<input type="button" id="cancleButton" value="취소" onclick="history.back()">
+       </form>
 	</div>
-	
+
 		<script>
-	
-	// 결제 페이지 이동
-	/* $(document).ready(function(){
-		var acId = $(this).val();
-		console.log(acId);
-		$('#orderButton').click(function(){
-			location.href = "payment.py";
-		});
-	}); */
-// 	$('#orderButton').click(function(){
-// 		var acId = $(this).parent().children('.personal-info-check').children('.acId').val();
-// 		var memNo = $(this).parent().children('.personal-info-check').children('.memNo').val();
-// // 		location.href = "payment.pt?acId=" + acId + "&memNo=" + memNo;
-// 		location.href = "payment.pt";
-// 	});
-	</script>	
+	    //체크박스 체크여부 확인
+		function CheckForm(Join){
+	        var chk = document.payment.check.checked;
+	        
+	        if(!chk){
+	            alert('약관에 동의해 주세요.');
+	            return false;
+	        } 
+		}    
+		</script>
 	
 		<!-- 네이버 지도 api -->
 		<script>
