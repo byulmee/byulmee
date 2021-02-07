@@ -23,7 +23,7 @@ import com.kh.byulmee.review.model.service.ReviewService;
 import com.kh.byulmee.review.model.vo.Review;
 
 @Controller
-public class productController {
+public class ProductController {
 	@Autowired
 	private ProductService pService;
 	
