@@ -22,6 +22,7 @@ import com.kh.byulmee.banner.model.vo.Banner;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.image.model.service.ImageService;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.main.model.exception.MainException;
 import com.kh.byulmee.member.model.service.MemberService;
 import com.kh.byulmee.product.model.service.ProductService;
@@ -74,6 +75,7 @@ public class MainCotroller {
 		
 		ArrayList<Activity> starList = mService.getStarSearchResult(starListPi, keywords);
 		ArrayList<Activity> actList = aService.getActSearchResult(actListPi, keywords);
+		ArrayList<Image> starImgList = mService.getStarProfileList();
 		
 		System.out.println(starList);
 		System.out.println(actList);
@@ -85,7 +87,8 @@ public class MainCotroller {
 			mv.addObject("actListPi", actListPi);
 			mv.addObject("starList", starList);
 			mv.addObject("actList", actList);
-			mv.setViewName("/activity/activityList");
+			mv.addObject("starImgList", starImgList);
+			mv.setViewName("activity/activitySearchList");
 			
 			return mv;
 		} else {
@@ -124,20 +127,23 @@ public class MainCotroller {
 		System.out.println(starList);
 		System.out.println(proList);
 		
+		System.out.println("hi!");
+		System.out.println(keywords);
+		
 		if(starList != null && proList != null) {
-			
+			System.out.println("hi!");
+			System.out.println(keywords);
 			mv.addObject("keywords", keywords);
 			mv.addObject("starListPi", starListPi);
 			mv.addObject("proListPi", proListPi);
 			mv.addObject("starList", starList);
 			mv.addObject("proList", proList);
-			mv.setViewName("activityList");
-	
-			
-			return mv;
+			mv.setViewName("/activity/productSearchList");
 		} else {
-			throw new ActivityException("검색 결과 조회에 실패했습니다.\n오류가 지속되면 관리자에게 문의해주세요.");
+			mv.addObject("msg", "검색 결과 조회에 실패했습니다.");
+			mv.setViewName("/activity/productSearchList");
 		}
+		return mv;
 	}
 	
 	@RequestMapping("loadMainContent.do")

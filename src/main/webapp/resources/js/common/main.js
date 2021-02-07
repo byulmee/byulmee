@@ -73,7 +73,7 @@
 			                  	+	'<span>' + randomList[i].member.memNickname + '</span>'
 			                  	+	'<div class="list-cate">[' + getCategoryString(randomList[i].actCategory) + '] ' + randomList[i].actTitle + '</div>'
 			                  	+	'<span class="list-price"><i class="fas fa-receipt"></i>' + addComma(randomList[i].actPrice) + '원</span>'
-			                  	+	'<span class="list-social">⭐ <b>' + randomList[i].actRating + '</b>  ' + addComma(randomList[i].actReviewCnt) + '개의 평가</span>'
+			                  	+	'<span class="list-social">⭐ <b>' + (randomList[i].actRating).toFixed(2) + '</b>  ' + addComma(randomList[i].actReviewCnt) + '개의 평가</span>'
 			           		  	+'</li>';
 					resultView += listTag;
 				} else {

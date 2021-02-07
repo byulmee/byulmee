@@ -19,6 +19,36 @@
 	  	<result property="memLoginType" column="mem_login_type"/>
 	</resultMap>
 	
+	<resultMap type="Member" id="memberSearchResultSet">
+	  	<id property="memNo" column="mem_no"/>
+	  	<result property="memId" column="mem_id"/>
+	  	<result property="memPwd" column="mem_pwd"/>
+	  	<result property="memName" column="mem_name"/>
+	  	<result property="memPostcode" column="mem_postcode"/>
+	  	<result property="memBasicAddr" column="mem_basicaddr"/>
+	  	<result property="memDetailAddr" column="mem_detailaddr"/>
+	  	<result property="memPhone" column="mem_phone"/>
+	  	<result property="memNickname" column="mem_nickname"/>
+	  	<result property="memEmail" column="mem_email"/>
+	  	<result property="memLevel" column="mem_level"/>
+	  	<result property="memDate" column="mem_Date"/>
+	  	<result property="memStatus" column="mem_status"/>
+	  	<result property="memLoginType" column="mem_login_type"/>
+	  	<collection property="image" resultMap="imageResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Image" id="imageResultSet">
+	  	<id property="imgNo" column="IMG_NO"/>
+	  	<result property="imgOrigin" column="IMG_ORIGIN"/>
+	  	<result property="imgName" column="IMG_NAME"/>
+	  	<result property="imgPath" column="IMG_PATH"/>
+	  	<result property="imgDate" column="IMG_DATE"/>
+	  	<result property="imgLevel" column="IMG_LEVEL"/>
+	  	<result property="imgStatus" column="IMG_STATUS"/>
+	  	<result property="imgRefcode" column="IMG_REFCODE"/>
+	  	<result property="imgRefno" column="IMG_REFNO"/>
+	</resultMap>
+	
 	<insert id="insertMember">
 		insert into member
 		values(SEQ_MEMID.nextval, #{memId}, #{memPwd}, #{memName}, #{memPostcode}, #{memBasicAddr}, #{memDetailAddr},
@@ -125,6 +155,12 @@
 		  			mem_nickname like '%' || #{arr} || '%' 
 		  		</foreach>
 	  		and mem_status='Y'
+	</select>
+	
+	<select id="getStarProfileList" resultMap="imageResultSet">
+		select img_name, img_refno
+		from image
+		where img_status='Y' and img_refcode = 0 and img_level = 0
 	</select>
 	
 	<select id="selectMemberWithNo" resultMap="memberResultSet">

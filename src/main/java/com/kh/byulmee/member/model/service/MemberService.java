@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
 
 public interface MemberService {
@@ -39,4 +40,6 @@ public interface MemberService {
 	Member selectMemberWithNo(int memNo);
 
 	Member selectProductWriter(int pdId);
+
+	ArrayList<Image> getStarProfileList();
 }

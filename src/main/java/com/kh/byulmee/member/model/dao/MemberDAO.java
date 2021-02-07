@@ -1,6 +1,7 @@
 package com.kh.byulmee.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.byulmee.activity.model.vo.Activity;
 import com.kh.byulmee.board.model.vo.PageInfo;
+import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
 
 /* by다혜: 회원 정보 처리 DAO */
@@ -80,5 +82,9 @@ public class MemberDAO {
 
 	public Member selectMemberWithNo(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.selectMemberWithNo", memNo);
+	}
+
+	public ArrayList<Image> getStarProfileList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.getStarProfileList");
 	}
 }
