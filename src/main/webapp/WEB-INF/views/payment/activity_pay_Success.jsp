@@ -121,7 +121,6 @@ $( document ).ready(function() {
       </script>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp"/>
    <nav>
    <ul>
       <li style="color: orange;">주문/결제 ><strong> 주문완료 </strong></li>
@@ -177,8 +176,8 @@ $( document ).ready(function() {
   			</td>
   			<td class="tdContent">
   				<c:choose>
-		      	<c:when test="${ o.ordPayWay eq 0 }">카드</c:when>
-		      	<c:when test="${ o.ordPayWay eq 1 }">페이</c:when>
+		      	<c:when test="${ o.ordPayWay eq 0 }">페이</c:when>
+		      	<c:when test="${ o.ordPayWay eq 1 }">카드</c:when>
 		      </c:choose>
   			</td>
   		</tr>

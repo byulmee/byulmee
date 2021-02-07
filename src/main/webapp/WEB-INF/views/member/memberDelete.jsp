@@ -365,7 +365,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -405,8 +405,7 @@
 							</td>
 						</tr>
 					</table>
-					<button type="button" class="button"
-						onclick="location.href='myPageMainView.me'">취소</button>
+					<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
 					<button type="button" class="button" onclick="checkValidate(this)">탈퇴</button>
 				</div>
 			</div>

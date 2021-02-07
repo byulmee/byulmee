@@ -448,7 +448,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -461,9 +461,9 @@
 			<div class="listArea">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href='myFavActView.me'">고객 문의</li>
-						<li onclick="location.href='myFavProView.me'">활동 문의</li>
-						<li onclick="location.href='myFavStarView.me'" class="selected">상품 문의</li>
+						<li onclick="location.href='myQnaCusListView.me'">고객 문의</li>
+						<li onclick="location.href='myQnaActListView.me'">활동 문의</li>
+						<li onclick="location.href='myQnaProListView.me'" class="selected">상품 문의</li>
 					</ul>
 				</div>
 			<!-- 찜한 활동이 없는 경우 -->

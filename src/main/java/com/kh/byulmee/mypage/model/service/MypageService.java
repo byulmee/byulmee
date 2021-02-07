@@ -3,6 +3,7 @@ package com.kh.byulmee.mypage.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
@@ -68,6 +69,14 @@ public interface MypageService {
 	ArrayList<Image> selectRevDetailImg(int revNo);
 
 	int changeImgLevel(RevImgChange ric);
+
+	void deleteRev(Review r);
+
+	int deleteReviewStatus(Review r);
+
+	int getQnACusListCount(CustomerQna cus);
+
+	ArrayList<CustomerQna> selectQnACusList(PageInfo pi, String id);
 
 
 }

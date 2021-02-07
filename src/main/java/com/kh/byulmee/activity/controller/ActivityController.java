@@ -204,7 +204,7 @@ public class ActivityController {
 	@RequestMapping("salesReviewDetail.ac")
 	public void getReviewDetail(@RequestParam("revNo") int revNo, HttpServletResponse response) {
 		Review review = rvService.selectReviewDetail(revNo);
-		
+		System.out.println("review : " + review);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {

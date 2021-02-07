@@ -99,6 +99,7 @@ $(document).ready(function(){
 			<div class="form-group row">
 				<input type="hidden" name="cusqnaNo" value="${ customer.cusqnaNo }">
 				<input type="hidden" name="page" value="${ page }">
+				<input type="hidden" name="from" value="${ from }">
 				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory" value="${ customer.cusqnaCategory }">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
@@ -133,7 +134,7 @@ $(document).ready(function(){
 			</div>
 			<div id="buttonArea">
 				<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">수정</button>
-				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='cusQnADetail.bo?cusqnaNo=${ customer.cusqnaNo }&page=${ page }'">취소</button>
+				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='cusQnADetail.bo?cusqnaNo=${ customer.cusqnaNo }&page=${ page }&from=${ from }'">취소</button>
 			</div>
 		</form>
 	</div>

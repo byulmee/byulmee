@@ -290,6 +290,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		border-collapse: collapse;
+		table-layout: fixed;
 	}
 	.nothing {
 		width: 100%;
@@ -352,6 +353,73 @@
 		opacity: 1;
 	}
 
+	#listArea {
+		width: 100%;
+	}
+	thead {
+		background-color: #F4F4F4;
+	}
+	tbody {
+		min-height: 250px;
+	}
+	tr {
+		text-align: center;
+	}
+	th {
+		height: 41px;
+		border-bottom: 2px solid #D4D4D4;
+	}
+	.boardTd {
+		font-size: 14px;
+		height: 40px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	#titleTd {
+		text-align: left;
+	}
+	.pagingArea {
+		text-align: center; 
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.pageBtn {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+	}
+	.pageBtn:hover {
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnSelected {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnEnd {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+		corsur: default;
+	}
 </style>
 </head>
 <body>
@@ -448,7 +516,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -461,49 +529,57 @@
 			<div class="listArea">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href='myFavActView.me'" class="selected">고객 문의</li>
-						<li onclick="location.href='myFavProView.me'">활동 문의</li>
-						<li onclick="location.href='myFavStarView.me'">상품 문의</li>
+						<li onclick="location.href='myQnaCusListView.me'" class="selected">고객 문의</li>
+						<li onclick="location.href='myQnaActListView.me'">활동 문의</li>
+						<li onclick="location.href='myQnaProListView.me'">상품 문의</li>
 					</ul>
 				</div>
-			<!-- 찜한 활동이 없는 경우 -->
-				<%-- <c:if test="${ f.size() == 0 }">
+			<!-- 작성한 고객 문의가 없는 경우 -->
+				<c:if test="${ list.size() ==0 }">
 					<div id="wrap">
 						<table>
 							<tr>
 								<td class="nothing">
-									찜한 활동이 없습니다.
+									작성한 고객 문의가 없습니다.
 								</td>
 							</tr>
 						</table>
 					</div>
-				</c:if> --%>
-			<!-- 찜한 활동이 있는 경우 반복문 시작 -->	
-				<%-- <c:if test="${ f.size() > 0 }">
-					<c:forEach var="f" items="${ f }">
-						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ f.activity.actNo }'">
-								<div class="imgDiv">
-									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ f.image.imgName }">
-								</div>
-								<div class="textDiv">
-									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
-									<input type="hidden" class="actNo" value="${ f.activity.actNo }" name="actNo">
-									<p class="text">${ f.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
-									<p class="text">${ f.favDate } 찜</p>
-								</div>
-							</div>
-							<div class="btnDiv">
-								<!-- 구매하기 버튼 -->
-							</div>
-							<div class="delBtnDiv">
-								<div class="delBtn">
-									<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-								</div>
-							</div>
-						</div>
-					</c:forEach>
+				</c:if>
+			<!-- 찜한 활동이 있는 경우 반복문 시작 -->
+				<c:if test="${ list.size() > 0 }">
+					<div id="noticeFrame">
+						<table class="table table-hover" id="listArea">
+							<thead>
+								<tr>
+									<th scope="col" class="text-center" width="5%">No</th>
+									<th scope="col" class="text-center" width="10%">분류</th>
+									<th scope="col" class="text-center" width="7%">조회수</th>
+									<th scope="col" class="text-center" width="43%">제목</th>
+									<th scope="col" class="text-center" width="10%">등록일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="q" items="${ list }">
+									<tr class="QnAValue">
+										<td class="boardTd">${ q.cusqnaNo }</td>
+										<td class="boardTd"><c:choose>
+												<c:when test="${ q.cusqnaCategory eq '0' }">배송</c:when>
+												<c:when test="${ q.cusqnaCategory eq '1' }">환불/반품</c:when>
+												<c:when test="${ q.cusqnaCategory eq '2' }">주문/결제</c:when>
+												<c:when test="${ q.cusqnaCategory eq '3' }">상품정보</c:when>
+												<c:when test="${ q.cusqnaCategory eq '4' }">마이페이지</c:when>
+												<c:when test="${ q.cusqnaCategory eq '5' }">기타</c:when>
+												<c:when test="${ q.cusqnaCategory eq '6' }">신고</c:when>
+											</c:choose></td>
+										<td class="boardTd">${ q.cusqnaCount }</td>
+										<td class="boardTd" id="titleTd">${ q.cusqnaTitle }</td>
+										<td class="boardTd">${ q.cusqnaDate }</td>
+										<tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 					<table class="pagingArea">
 						<tr align="center" height="20">
 							<td colspan="6">
@@ -512,7 +588,7 @@
 									<a class="pageBtnEnd">&lt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="before" value="myFavActView.me">
+									<c:url var="before" value="myQnaCusListView.me">
 										<c:param name="page" value="${ pi.currentPage - 1 }"/>
 									</c:url>
 									<a href="${ before }" class="pageBtn">&lt;</a>
@@ -525,7 +601,7 @@
 									</c:if>
 									
 									<c:if test="${ p ne pi.currentPage }">
-										<c:url var="pagination" value="myFavActView.me">
+										<c:url var="pagination" value="myQnaCusListView.me">
 											<c:param name="page" value="${ p }"/>
 										</c:url>
 										<a href="${ pagination }" class="pageBtn">${ p }</a>
@@ -537,7 +613,7 @@
 									<a class="pageBtnEnd">&gt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage < pi.maxPage }">
-									<c:url var="after" value="myFavActView.me">
+									<c:url var="after" value="myQnaCusListView.me">
 										<c:param name="page" value="${ pi.currentPage + 1 }"/>
 									</c:url> 
 									<a href="${ after }" class="pageBtn">&gt;</a>
@@ -546,7 +622,7 @@
 						</tr>
 					</table>
 					<hr class="line">
-				</c:if> --%>
+				</c:if>
 			<!-- 반복문 종료 -->
 			</div>
 		</div>
@@ -555,14 +631,16 @@
 	<c:import url="../common/footer.jsp"/>
 	
 	<script>
-		$(".delBtn").click(function() {
-			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
-			var favNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favNo").val();
-			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
-			
-			if(bool) {
-				location.href='deleteFavAct.me?favNo=' + favNo + '&favRefno=' + favRefno;
-			}			
+		$(function() {
+			$('.QnAValue').mouseenter(function(){
+				$(this).css({'color': '#FF6833', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': 'black'});
+			}).click(function(){
+				var cusqnaNo=$(this).children('td').eq(0).text();
+				console.log(cusqnaNo);
+				location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage} + '&from=' + 1;
+			});
 		});
 	</script>
 </body>

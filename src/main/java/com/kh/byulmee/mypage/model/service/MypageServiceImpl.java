@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
@@ -164,6 +165,26 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int changeImgLevel(RevImgChange ric) {
 		return mpDAO.changeImgLevel(sqlSession, ric);
+	}
+
+	@Override
+	public void deleteRev(Review r) {
+		mpDAO.deleteRev(sqlSession, r);
+	}
+
+	@Override
+	public int deleteReviewStatus(Review r) {
+		return mpDAO.deleteReviewStatus(sqlSession, r);
+	}
+
+	@Override
+	public int getQnACusListCount(CustomerQna cus) {
+		return mpDAO.getQnACusListCount(sqlSession, cus);
+	}
+
+	@Override
+	public ArrayList<CustomerQna> selectQnACusList(PageInfo pi, String id) {
+		return mpDAO.selectQnACusList(sqlSession, pi, id);
 	}
 
 }

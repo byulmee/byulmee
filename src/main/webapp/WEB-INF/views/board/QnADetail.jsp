@@ -208,9 +208,19 @@ tr > .secondTitle {
 		<div class="buttonArea">
 			<c:if test="${ loginUser.memId eq customerqna.memId }">
 				<button type="button" id="delBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
-				<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }'">수정</button>
+				<c:if test="${ from eq 0 }">
+					<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }'">수정</button>
+				</c:if>
+				<c:if test="${ from eq 1 }">
+					<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }'">수정</button>
+				</c:if>
 			</c:if>
-			<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
+			<c:if test="${ from eq 0 }">
+				<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
+			</c:if>
+			<c:if test="${ from eq 1 }">
+				<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='myQnaCusListView.me?page=${ page }'">목록으로</button>
+			</c:if>
 		</div>
 	</div>
 	<script>
@@ -293,7 +303,7 @@ tr > .secondTitle {
          $('#delBtn').click(function(){
             var chk = confirm("정말 삭제하시겠습니까?");
             if(chk){
-               location.href="deleteCusQna.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }";
+               location.href="deleteCusQna.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }";
             }
          });
       });

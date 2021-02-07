@@ -9,14 +9,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="resources/js/member/jquery.validate.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		margin: 0;
-		overflow:scroll;
+		overflow:scroll
 	}
 	
 	.outer {
@@ -170,13 +169,14 @@
 		border-bottom: 2px solid #FF6833;
 	}
 	.button {
-		width: 80px;
-		margin-top: 5px;
+		height: 60px;
+		width: 150px;
 		padding: 5px;
-		padding-bottom: 2px;
 		border: 1px solid #C4C4C4;
 		background: white;
+		color: #747474;
 		font-family: "Gmarket Sans TTF";
+		font-size: 16px;
 		cursor:pointer;
 		outline: 0;
 	}
@@ -196,70 +196,18 @@
 	}
 	.tab-box li {
 		float: left;
-		width: 25%;
+		width: 100%;
 		height: 40px;
-		line-height: 40px;
+		line-height: 40px; /* 중앙정렬 */
 		text-align: center;
 		font-size: 18px;
 		background: #FF6833;
-		color: rgba(255, 255, 255, 0.5);
-		cursor: pointer;
-	}
-	.tab-box li:hover {
-		background: #FF6833;
-		color: rgba(255, 255, 255, 1);
-		cursor: pointer;
-	}
-	.tab-box li.selected {
 		color: white;
-		background: #FF6833;
-	}
-	#title {
-		font-size: 22px;
-		margin: 0px;
-		padding: 10px;
-	}
-	#text {
-		font-size: 12px;
-		margin: 0px;
-		padding: 0px 10px 10px 10px;
 	}
 	table {
 		margin-left: auto;
 		margin-right: auto;
-		border-collapse: collapse;
-	}
-	.tdName {
-		border: 1px solid #C4C4C4;
-		width: 120px;
-		text-align: left;
-		background: #F4F4F4;
-		padding: 5px;
-	}
-	.tdContent {
-		border: 1px solid #C4C4C4;
-		width: 320px;
-		text-align: left;
-		padding: 5px;
-	}
-	.inputPwdField {
-		width: 314px;
-		outline: 0;
-		border: none;
-	}
-	label.error {
-		/* position: absolute;
-		left: 760px; */
-		font-family: 'GmarketSansLight';
-		font-weight: bold;
-		color: rgb(59, 59, 59);
-		font-size: 0.7rem;
-		padding-bottom: 0.4rem;
-		line-height: 0.9rem;
-		color: #FF6833;
-	}
-	input.error {
-		border: 1px solid #FF6833;
+		border-spacing: 10px;
 	}
 	#wrap {
 		display: table-cell;
@@ -297,13 +245,13 @@
 			<div class="sideMenuList">
 				<ul class="sideMenuUl">
 					<li>
-						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn" id="selectedBtn">개인정보 관리</button>
+						<button onclick="location.href='myPageMainView.me'" class="sideMenuBtn">개인정보 관리</button>
 						<ul class="myinfoDropdown">
 							<li>
 								<button onclick="location.href='myInfoPwdCheckView.me'" class="sideMenuBtn">개인정보 변경</button>
 							</li>
 							<li>
-								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn" id="selectedBtn">비밀번호 변경</button>
+								<button onclick="location.href='myPwdUpdateView.me'" class="sideMenuBtn">비밀번호 변경</button>
 							</li>
 							<li>
 								<button onclick="location.href='profileImageUpdateView.me'" class="sideMenuBtn">프로필사진 변경</button>
@@ -374,92 +322,35 @@
 				</ul>
 			</div>
 		</div>
-		<form id="join" action="myPwdUpdate.me" method="post">
-			<div class="content">
-				<div class="tab-box">
-					<ul>
-						<li onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</li>
-						<li onclick="location.href='myPwdUpdateView.me'" class="selected">비밀번호 변경</li>
-						<li onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</li>
-						<li onclick="location.href='memberDeleteView.me'">회원 탈퇴</li>
-					</ul>
-				</div>
-				<div id="wrap">
-					<p id="title">
-						비밀번호 변경
-					</p>
-					<p id="text">
-						비밀번호는 8자~20자 이내여야 하고, 영문자/특수문자/숫자가 반드시 하나 이상 포함되어야 합니다.
-					</p>
-					<table>
-						<tr>
-							<td class="tdName">
-								현재 비밀번호
-							</td>
-							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="beforePwd">
-							</td>
-						</tr>
-						<tr>
-							<td class="tdName">
-								새 비밀번호
-							</td>
-							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="memPwd">
-							</td>
-						</tr>
-						<tr>
-							<td class="tdName">
-								새 비밀번호 확인
-							</td>
-							<td class="tdContent">
-								<input type="password" class="inputPwdField" name="pwdCheck">
-							</td>
-						</tr>
-					</table>
-					<button type="button" class="button" onclick="location.href='myPageMainView.me'">취소</button>
-					<button type="submit" class="button">확인</button>
-				</div>
+		<div class="content">
+			<div class="tab-box">
+				<ul>
+					<li>스타 신청</li>
+				</ul>
 			</div>
-		</form>
+			<div id="wrap">
+				<table>
+					<tr>
+						<td>
+							<button class="button" onclick="location.href='myInfoPwdCheckView.me'">개인정보 변경</button>
+						</td>
+						<td>
+							<button class="button" onclick="location.href='myPwdUpdateView.me'">비밀번호 변경</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="button" onclick="location.href='profileImageUpdateView.me'">프로필사진 변경</button>
+						</td>
+						<td>
+							<button class="button" onclick="location.href='memberDeleteView.me'">회원 탈퇴</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
-
-	<script>
-		$.validator.addMethod("checkPwd", function(value, element) {
-			return this.optional(element) || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[*:;\\"\\'\-_!@#$%^&~`₩+=\\(\\)/?\{\}\[\]])./g.test(value);
-		},"영문자, 숫자, 특수문자가 반드시 1자 이상 포함되어있어야 합니다.");
-		
-		$.validator.addMethod("pwdCheck",  function( value, element ) {
-			return this.optional(element) || /^.(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).$/.test(value);
-		});
-		
-		$('#join').validate({
-			rules : {
-				memPwd : {
-					required : true,
-					minlength : 8,
-					maxlength : 20,
-					checkPwd : true
-				},
-				pwdCheck : {
-					required : true,
-					equalTo : "[name='memPwd']"
-				},
-			},
-			messages : {
-				memPwd : {
-					required : "비밀번호는 필수 입력입니다.",
-					minlength : "비밀번호는 8자 이상이어야 합니다.",
-					maxlength : "비밀번호는 20자 이내여야 합니다.",
-				},
-				pwdCheck : {
-					required : "비밀번호를 한 번 더 확인해주세요.",
-					equalTo : "비밀번호가 일치하지 않습니다."
-				},
-			}
-		});
-	</script>
 </body>
 </html>

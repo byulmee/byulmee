@@ -240,7 +240,7 @@ $(document).ready(function(){
 			}).click(function(){
 				var cusqnaNo=$(this).children('td').eq(0).text();
 				console.log(cusqnaNo);
-				location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage};
+				location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage} + '&from=' + 0;
 			});
 		});
 

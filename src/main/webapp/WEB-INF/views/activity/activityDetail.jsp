@@ -315,6 +315,7 @@ hr {
 }
 #starMessage2{
 	line-height: 120%;
+	width: 800px;
 }
 .reviewArea {
 	width: 800px;
@@ -656,6 +657,19 @@ hr {
 	padding: 20px;
 	background: white;
 }
+
+.qnablack_bg {
+   display: none;
+   position: fixed;
+   content: "";
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   top: 0;
+   left: 0;
+   z-index: 999;
+}
+
 
 .qna_wrap {
 	display: none;
@@ -1024,7 +1038,7 @@ hr {
 			<div id="place">Q 어디에서 진행되나요?</div>
 			<div id="map" style="width:800px; height:400px;"></div>
 			<div id="starMessage">스타 한마디</div>
-			<div id="starMessage2">${ contentText }</div>
+			<div id="starMessage2" align="left">${ contentText }</div>
 		</div>
 
 		<!-- 네이버 지도 api -->
@@ -1232,189 +1246,168 @@ hr {
 			</div>
 		</div>
 		
-		<script>
-			var acId = "<c:out value='${ activity.actNo}'/>";
-			
-			$.ajax({
-				url: 'salesReviewList.ac',
-				data: {acId:acId},
-				success: function(data){
-					
-					console.log(data);
-					
-					$review = $('.review_flex tbody');
-					
-					var $tr;
-					var $tr2;
-					var $div;
-					var $memId;
-					var $revDate;
-					var $revRating;
-					var $revContent;
-					var $revNo;	
-					var $expand;
-					
-					if(data.length > 0){
-						for(var i in data){
-							$tr = $('<tr class="trReview">');
-							$tr2 = $('<tr class="trReviewContent">');
-							$memId = $('<td id="reviewWriter">').text(data[i].member.memNickname);
-							$revDate = $('<td id="reviewDate">').text(data[i].revDate);
-							$revRating = $('<td id="reviewStar">').text(data[i].revRating);
-							$revNo = $('<td id="reviewNo">').text(data[i].revNo);
-							$revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
-							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
-							
-							if(data[i].img != "" ){
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].img.imgName + "'>");
-// 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
-							} else{
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
-							}
-							
-							if(data[i].revRating == 0.5){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star1.png'>");
-							} else if(data[i].revRating == 1){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star2.png'>");
-							} else if(data[i].revRating == 1.5){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star3.png'>");
-							} else if(data[i].revRating == 2){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star4.png'>");
-							} else if(data[i].revRating == 2.5){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star5.png'>");
-							} else if(data[i].revRating == 3){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star6.png'>");
-							} else if(data[i].revRating == 3.5){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star7.png'>");
-							} else if(data[i].revRating == 4){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star8.png'>");
-							} else if(data[i].revRating == 4.5){
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star9.png'>");
-							} else {
-								$revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star10.png'>");
-							}
-							
-							$tr.append($div);
-							$tr.append($memId);
-							$tr.append($revRating);
-							$tr.append($revDate);
-							$tr.append($revNo);
-							$tr.append($expand);
-							$review.append($tr);
-							$tr2.append($revContent);
-							$review.append($tr2);
-							
-						}
-					} else{
-						$tr = $('<tr>');
-						$revContent = $('<td>').text('등록된 후기가 없습니다.');
-						
-						$tr.append($revContent);
-						$review.append($tr);
-					}
-				}
-			});
-		</script>
+		      <script>
+         var acId = "<c:out value='${ activity.actNo}'/>";
+         
+         $.ajax({
+            url: 'salesReviewList.ac',
+            data: {acId:acId},
+            success: function(data){
+               
+               console.log(data);
+               
+               $review = $('.review_flex tbody');
+               
+               var $tr;
+               var $tr2;
+               var $div;
+               var $memId;
+               var $revDate;
+               var $revRating;
+               var $revContent;
+               var $revNo;   
+               var $expand;
+               
+               if(data.length > 0){
+                  for(var i in data){
+                     $tr = $('<tr class="trReview">');
+                     $tr2 = $('<tr class="trReviewContent">');
+                     $memId = $('<td id="reviewWriter">').text(data[i].member.memNickname);
+                     $revDate = $('<td id="reviewDate">').text(data[i].revDate);
+                     $revRating = $('<td id="reviewStar">').text(data[i].revRating);
+                     $revNo = $('<td id="reviewNo">').text(data[i].revNo);
+                     $revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
+                     $expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
+                     
+                     if(data[i].img != "" ){
+                        $div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].img.imgName + "'>");
+                     } else{
+                        $div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
+                     }
+                     
+                     if(data[i].revRating == 0.5){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star1.png'>");
+                     } else if(data[i].revRating == 1){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star2.png'>");
+                     } else if(data[i].revRating == 1.5){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star3.png'>");
+                     } else if(data[i].revRating == 2){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star4.png'>");
+                     } else if(data[i].revRating == 2.5){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star5.png'>");
+                     } else if(data[i].revRating == 3){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star6.png'>");
+                     } else if(data[i].revRating == 3.5){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star7.png'>");
+                     } else if(data[i].revRating == 4){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star8.png'>");
+                     } else if(data[i].revRating == 4.5){
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star9.png'>");
+                     } else {
+                        $revRating = $('<td id="reviewStar">').html("<img class='rating' src='resources\\images\\rating\\star10.png'>");
+                     }
+                     
+                     $tr.append($div);
+                     $tr.append($memId);
+                     $tr.append($revRating);
+                     $tr.append($revDate);
+                     $tr.append($revNo);
+                     $tr.append($expand);
+                     $review.append($tr);
+                     $tr2.append($revContent);
+                     $review.append($tr2);
+                     
+                  }
+               } else{
+                  $tr = $('<tr>');
+                  $revContent = $('<td class="noreview">').text('등록된 후기가 없습니다.');
+                  
+                  $tr.append($revContent);
+                  $review.append($tr);
+               }
+            }
+         });
+      </script>
+            
+      <script>
+      $(document).on("click", ".expandButton", function(){ 
+         var revNo = $(this).prev().text();
+         console.log(revNo);
+         
+         $.ajax({
+            url: 'salesReviewDetail.ac',
+            data: {revNo:revNo},
+            success: function(data){
+               console.log(data);
+               
+               $review = $('.review_modal tbody');
+               
+               var $tr;
+               var $tr2;
+               var $tr3;
+               var $div1;
+               var $div2;
+               var $div3;
+               var $memId;
+               var $revDate;
+               var $revRating;
+               var $revContent;
+               
+               $tr = $('<tr height="30px" class="trMdReview">');
+               $tr2 = $('<tr class="trMdReviewContent">');
+               $tr3 = $('<tr class="reviewMdImageArea">');
+               $memId = $('<td id="reviewMdWriter">').text("작성자 : " + data.member.memNickname);
+               $revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
+               $revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
+               
+               if(data.img != ""){
+                  $div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+                  $div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+                  $div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+               } else{
+                  $div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+                  $div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+                  $div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+               }
+               
+               
+               if(data.revRating == 0.5){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star1.png'>");
+               } else if(data.revRating == 1){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star2.png'>");
+               } else if(data.revRating == 1.5){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star3.png'>");
+               } else if(data.revRating == 2){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star4.png'>");
+               } else if(data.revRating == 2.5){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star5.png'>");
+               } else if(data.revRating == 3){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star6.png'>");
+               } else if(data.revRating == 3.5){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star7.png'>");
+               } else if(data.revRating == 4){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star8.png'>");
+               } else if(data.revRating == 4.5){
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star9.png'>");
+               } else {
+                  $revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star10.png'>");
+               }
+               
+               $tr.append($memId);
+               $tr.append($revRating);
+               $tr.append($revDate);
+               $review.append($tr);
+               $tr2.append($revContent);
+               $review.append($tr2);
+               $tr3.append($div1);
+               $tr3.append($div2);
+               $tr3.append($div3);
+               $review.append($tr3);
+            }
+         });
+      });
+      </script>
 				
-		<script>
-		$(document).on("click", ".expandButton", function(){ 
-			var revNo = $(this).prev().text();
-			console.log(revNo);
-			
-			$.ajax({
-				url: 'salesReviewDetail.ac',
-				data: {revNo:revNo},
-				success: function(data){
-					console.log(data);
-					
-					$review = $('.review_modal tbody');
-					
-					var $tr;
-					var $tr2;
-					var $tr3;
-					var $div1;
-					var $div2;
-					var $div3;
-					var $memId;
-					var $revDate;
-					var $revRating;
-					var $revContent;
-					
-					$tr = $('<tr height="30px" class="trMdReview">');
-					$tr2 = $('<tr class="trMdReviewContent">');
-					$tr3 = $('<tr class="reviewMdImageArea">');
-					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data.member.memNickname);
-					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
-					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
-					
-					if(data.img != ""){
-						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
-						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
-						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
-					} else{
-						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
-						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
-						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
-					}
-					
-					
-					if(data.revRating == 0.5){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star1.png'>");
-					} else if(data.revRating == 1){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star2.png'>");
-					} else if(data.revRating == 1.5){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star3.png'>");
-					} else if(data.revRating == 2){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star4.png'>");
-					} else if(data.revRating == 2.5){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star5.png'>");
-					} else if(data.revRating == 3){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star6.png'>");
-					} else if(data.revRating == 3.5){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star7.png'>");
-					} else if(data.revRating == 4){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star8.png'>");
-					} else if(data.revRating == 4.5){
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star9.png'>");
-					} else {
-						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star10.png'>");
-					}
-					
-					$tr.append($memId);
-					$tr.append($revRating);
-					$tr.append($revDate);
-					$review.append($tr);
-					$tr2.append($revContent);
-					$review.append($tr2);
-					$tr3.append($div1);
-					$tr3.append($div2);
-					$tr3.append($div3);
-					$review.append($tr3);
-				}
-			});
-		});
-		</script>
-				
-		<!-- 후기 모달 열기 -->
-		<script>
-			window.onload = function(){
-				function onClick(){
-					document.querySelector('.review_wrap').style.display = 'block';
-					document.querySelector('.black_bg').style.display = 'block';
-				}
-				function offClick(){
-					document.querySelector('.review_wrap').style.display = 'none';
-					document.querySelector('.black_bg').style.display = 'none';
-					$( '.review_wrap tbody').empty();
-				}
-				
-				var expand = document.querySelectorAll('.expandButton');
-				for(var i = 0; i < expand.length; i++){
-					expand[i].addEventListener('click', onClick);
-					document.querySelector('.review_close').addEventListener('click', offClick);
-				}
-			}
-		</script>
 
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
@@ -1432,257 +1425,248 @@ hr {
 			</div>
 		</div>
 		
-		<!-- 별미 문의 -->
-		<div class="qnaArea">
-			<table class="question">
-				<colgroup>
-				  	<col style="width:18%"/>
-				  	<col style="width:57%"/>
-				  	<col style="width:15%"/>
-				  	<col style="width:10%"/>
-				</colgroup>
-				<thead>
-					<tr>
-					</tr>			
-				</thead>
-				<tbody></tbody>
-			</table>
-			
-			<table class="questionExcept">
-				<colgroup>
-				  	<col style="width:18%"/>
-				  	<col style="width:57%"/>
-				  	<col style="width:15%"/>
-				  	<col style="width:10%"/>
-				</colgroup>
-				<thead>
-					<tr>
-					</tr>			
-				</thead>
-				<tbody></tbody>
-			</table>
-			
-			<div class="expand" align="right">
-				
-				<div class="black_bg"></div>
-				
-				<div class="qna_wrap">
-					<div class="qna_close">
-						<a href="javascript:;"></a>
-							<table class="qna_modal">
-								<thead>
-									<tr></tr>			
-								</thead>
-								<tbody></tbody>
-							</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-
-		
-		<div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
-
-		<script>
-			var acId = "<c:out value='${ activity.actNo}'/>";
-			
-			$.ajax({
-				url: 'salesQnaList.ac',
-				data: {acId:acId},
-				success: function(data){
-					console.log(data);
-					
-					$question = $('.question tbody');
-					
-					var $tr;
-					var $memId;
-					var $salqnaTitle;
-					var $salqnaDate;
-					var $salqnaDetail;
-					var $salqnaNo;
-					var $noqna;
-					
-					if(data.length > 0){
-						for(var i in data){
-							$tr = $('<tr class="trQuestion">');
-							$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
-							$memId = $('<td id="memId">').text(data[i].member.memNickname);
-							$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
-							$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
-							$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
-							
-							$tr.append($memId);
-							$tr.append($salqnaTitle);
-							$tr.append($salqnaDate);
-							$tr.append($salqnaDetail);
-							$tr.append($salqnaNo);
-							$question.append($tr);
-						}
-					} else{
-						$tr = $('<tr class="noqna">');
-						$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
-						
-						$tr.append($noqna);
-						$question.append($tr);
-					}
-				}
-			});
-		</script>
-		
-		<script>
-		$(document).on("click", ".salqnaDetail", function(){ 
-			var qnaNo = $(this).next().text();
-			console.log(qnaNo);
-			
-			// 문의게시판 토글
-	        $(function(){
-	            var article = (".question .show"); 
-	            var article2 = (".question .show2"); 
-	            $(".question .trQuestion td").on("click", function() { 
-	                var myArticle =$(this).parents().next("tr"); 
-	                var myArticle2 =$(this).parents().next().next("tr");
-	                if($(myArticle).hasClass('trContent') && $(myArticle2).hasClass('salqnaReply')) { 
-	                    $(article).removeClass('show').addClass('trContent'); 
-	                    $(article2).removeClass('show2').addClass('salqnaReply'); 
-	                    $(myArticle).removeClass('trContent').addClass('show'); 
-	                    $(myArticle2).removeClass('salqnaReply').addClass('show2'); 
-	                    $('.questionExcept .show td').removeClass('show').addClass('trContent');
-	                    $('.questionExcept .show2 td').removeClass('show2').addClass('salqnaReply');
-	                } 
-	                else { 
-	                    $(myArticle).addClass('trContent').removeClass('show');
-	                    $(myArticle2).addClass('salqnaReply').removeClass('show2');
-	                } 
-	            }); 
-	        });
-			
-			// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
-			$.ajax({
-				url: 'salesQnaDetail.ac',
-				data: {qnaNo:qnaNo},
-				success: function(data){
-					console.log(data);
-					
-					$qna = $('.qna_modal tbody');
-					
-					var $tr;
-					var $tr2;
-					var $tr3;
-					var $tr4;
-					var $memId;
-					var $salqnaTitle;
-					var $salqnaContent;
-					var $salqnaReply;
-					var $noqna;
-					
-						$tr = $('<tr class="trMdQuestion">');
-						$tr2 = $('<tr class="trMdContent">');
-						$tr3 = $('<tr class="salqnaMdReply">');
-						$tr4 = $('<tr class="salqnaMdTitle">');
-						$memId = $('<td width="200px" id="MdmemId">').text("작성자 : " + data.member.memNickname);
-						$salqnaTitle = $('<td colspan="2" id="MdsalqnaTitle">').text("제　목 : " + data.salqnaTitle);
-						$salqnaContent = $('<td colspan="2" id="MdqnaContent">').text("내　용 : " + data.salqnaContent);
-						
-						if(data.reply.repContent != null){
-							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("스타답변 : " + data.reply.repContent);
-						} else{
-							$salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("등록된 스타의 	답변이 없습니다.");
-						}
-						
-						$tr.append($memId);
-						$qna.append($tr);
-						$tr4.append($salqnaTitle);
-						$qna.append($tr4);
-						$tr2.append($salqnaContent);
-						$qna.append($tr2);
-						$tr3.append($salqnaReply);
-						$qna.append($tr3);
-				}	
-			});
-		});
-		</script>
-		
-		<script>
-		// 문의 전체보기 토글버튼
+		      <!-- 별미 문의 -->
+      <div class="qnaArea">
+         <table class="question">
+            <colgroup>
+                 <col style="width:18%"/>
+                 <col style="width:57%"/>
+                 <col style="width:15%"/>
+                 <col style="width:10%"/>
+            </colgroup>
+            <thead>
+               <tr>
+               </tr>         
+            </thead>
+            <tbody></tbody>
+         </table>
+         
+         <table class="questionExcept">
+            <colgroup>
+                 <col style="width:18%"/>
+                 <col style="width:57%"/>
+                 <col style="width:15%"/>
+                 <col style="width:10%"/>
+            </colgroup>
+            <thead>
+               <tr>
+               </tr>         
+            </thead>
+            <tbody></tbody>
+         </table>
+         
+         <div class="expand" align="right">
+            
+            <div class="qnablack_bg"></div>
+            
+            <div class="qna_wrap">
+               <div class="qna_close">
+                  <a href="javascript:;"></a>
+                     <table class="qna_modal">
+                        <thead>
+                           <tr></tr>         
+                        </thead>
+                        <tbody></tbody>
+                     </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <div id="all-question" onclick="toggleQuestion();">+문의 전체보기</div>
+      
+      <script>
+         var acId = "<c:out value='${ activity.actNo}'/>";
+         
+         $.ajax({
+            url: 'salesQnaList.ac',
+            data: {acId:acId},
+            success: function(data){
+               console.log(data);
+               
+               $question = $('.question tbody');
+               
+               var $tr;
+               var $memId;
+               var $salqnaTitle;
+               var $salqnaDate;
+               var $salqnaDetail;
+               var $salqnaNo;
+               var $noqna;
+               
+               if(data.length > 0){
+                  for(var i in data){
+                     $tr = $('<tr class="trQuestion">');
+                     $salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
+                     $memId = $('<td id="memId">').text(data[i].member.memNickname);
+                     $salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
+                     $salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
+                     $salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
+                     
+                     $tr.append($memId);
+                     $tr.append($salqnaTitle);
+                     $tr.append($salqnaDate);
+                     $tr.append($salqnaDetail);
+                     $tr.append($salqnaNo);
+                     $question.append($tr);
+                  }
+               } else{
+                  $tr = $('<tr class="noqna">');
+                  $noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
+                  
+                  $tr.append($noqna);
+                  $question.append($tr);
+               }
+            }
+         });
+      </script>
+      
+      <script>
+      $(document).on("click", ".salqnaDetail", function(){ 
+         var qnaNo = $(this).next().text();
+         console.log(qnaNo);
+         
+         $.ajax({
+            url: 'salesQnaDetail.ac',
+            data: {qnaNo:qnaNo},
+            success: function(data){
+               console.log(data);
+               
+               $qna = $('.qna_modal tbody');
+               
+               var $tr;
+               var $tr2;
+               var $tr3;
+               var $tr4;
+               var $memId;
+               var $salqnaTitle;
+               var $salqnaContent;
+               var $salqnaReply;
+               var $noqna;
+               
+                  $tr = $('<tr class="trMdQuestion">');
+                  $tr2 = $('<tr class="trMdContent">');
+                  $tr3 = $('<tr class="salqnaMdReply">');
+                  $tr4 = $('<tr class="salqnaMdTitle">');
+                  $memId = $('<td width="200px" id="MdmemId">').text("작성자 : " + data.member.memNickname);
+                  $salqnaTitle = $('<td colspan="2" id="MdsalqnaTitle">').text("제　목 : " + data.salqnaTitle);
+                  $salqnaContent = $('<td colspan="2" id="MdqnaContent">').text("내　용 : " + data.salqnaContent);
+                  
+                  if(data.reply.repContent != null){
+                     $salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("스타답변 : " + data.reply.repContent);
+                  } else{
+                     $salqnaReply = $('<td colspan="5" colspan="5" id="MdqnaReply">').text("등록된 스타의    답변이 없습니다.");
+                  }
+                  
+                  $tr.append($memId);
+                  $qna.append($tr);
+                  $tr4.append($salqnaTitle);
+                  $qna.append($tr4);
+                  $tr2.append($salqnaContent);
+                  $qna.append($tr2);
+                  $tr3.append($salqnaReply);
+                  $qna.append($tr3);
+            }   
+         });
+      });
+      </script>
+      
+      <script>
+      // 문의 전체보기 토글버튼
         function toggleQuestion(){
-        	var toggleBtn = document.getElementById("all-question").innerHTML;
-        	
-        	if(toggleBtn == '+문의 전체보기'){
-					$('.questionExcept').css("visibility", "visible");
-					$('#all-question').html("-접기");	        		
-        	} else{
-					$('.questionExcept').css("visibility", "collapse");
-					$('#all-question').html("+문의 전체보기");	 	        		
-        	}
+           var toggleBtn = document.getElementById("all-question").innerHTML;
+           
+           if(toggleBtn == '+문의 전체보기'){
+               $('.questionExcept').css("visibility", "visible");
+               $('#all-question').html("-접기");                 
+           } else{
+               $('.questionExcept').css("visibility", "collapse");
+               $('#all-question').html("+문의 전체보기");                     
+           }
         }
-		</script>
+      </script>
+      
+      <script>
+      // 문의 리스트 불러오기 (최근 5개 제외한 나머지)
+      $.ajax({
+         url: 'salesQnaExceptList.ac',
+         data: {acId:acId},
+         success: function(data){
+            console.log(data);
+            
+            $question = $('.questionExcept tbody');
+            
+            var $tr;
+            var $memId;
+            var $salqnaTitle;
+            var $salqnaDate;
+            var $salqnaDetail;
+            var $salqnaNo;
+            var $noqna;
+            
+            if(data.length > 0){
+               for(var i in data){
+                  $tr = $('<tr class="trQuestion">');
+                  $salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
+                  $memId = $('<td id="memId">').text(data[i].member.memNickname);
+                  $salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
+                  $salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
+                  $salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
+                  
+                  $tr.append($memId);
+                  $tr.append($salqnaTitle);
+                  $tr.append($salqnaDate);
+                  $tr.append($salqnaDetail);
+                  $tr.append($salqnaNo);
+                  $question.append($tr);
+               }
+            } else{
+               $tr = $('<tr class="noqna">');
+               $noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
+               
+               $tr.append($noqna);
+               $question.append($tr);
+            }
+         }
+      });
+      </script>
 		
-		<script>
-		// 문의 리스트 불러오기 (최근 5개 제외한 나머지)
-		$.ajax({
-			url: 'salesQnaExceptList.ac',
-			data: {acId:acId},
-			success: function(data){
-				console.log(data);
-				
-				$question = $('.questionExcept tbody');
-				
-				var $tr;
-				var $memId;
-				var $salqnaTitle;
-				var $salqnaDate;
-				var $salqnaDetail;
-				var $salqnaNo;
-				var $noqna;
-				
-				if(data.length > 0){
-					for(var i in data){
-						$tr = $('<tr class="trQuestion">');
-						$salqnaNo = $('<td id="salqnaNo">').text(data[i].salqnaNo);
-						$memId = $('<td id="memId">').text(data[i].member.memNickname);
-						$salqnaTitle = $('<td id="salqnaTitle">').text(data[i].salqnaTitle);
-						$salqnaDate = $('<td id="salqnaDate">').text(data[i].salqnaDate);
-						$salqnaDetail = $('<td class="salqnaDetail">').text("+내용보기");
-						
-						$tr.append($memId);
-						$tr.append($salqnaTitle);
-						$tr.append($salqnaDate);
-						$tr.append($salqnaDetail);
-						$tr.append($salqnaNo);
-						$question.append($tr);
-					}
-				} else{
-					$tr = $('<tr class="noqna">');
-					$noqna = $('<td colspan="4" class="noqna">').text('등록된 질문이 없습니다.');
-					
-					$tr.append($noqna);
-					$question.append($tr);
-				}
-			}
-		});
-		</script>
-		
-		<!-- 문의 모달 열기 -->
-		<script>
-			window.onload = function(){
-				function onClick(){
-					document.querySelector('.qna_wrap').style.display = 'block';
-					document.querySelector('.black_bg').style.display = 'block';
-				}
-				function offClick(){
-					document.querySelector('.qna_wrap').style.display = 'none';
-					document.querySelector('.black_bg').style.display = 'none';
-					$( '.qna_wrap tbody').empty();
-				}
-				
-				var expand = document.querySelectorAll('.salqnaDetail');
-				for(var i = 0; i < expand.length; i++){
-					expand[i].addEventListener('click', onClick);
-					document.querySelector('.qna_close').addEventListener('click', offClick);
-				}
-			}
-		</script>
+		      <!-- 후기/문의 모달 열기 -->
+      <script>
+         window.onload = function(){
+            function qnaonClick(){
+               document.querySelector('.qna_wrap').style.display = 'block';
+               document.querySelector('.qnablack_bg').style.display = 'block';
+            }
+            function qnaoffClick(){
+               document.querySelector('.qna_wrap').style.display = 'none';
+               document.querySelector('.qnablack_bg').style.display = 'none';
+               $( '.qna_wrap tbody').empty();
+            }
+            
+            var qnaexpand = document.querySelectorAll('.salqnaDetail');
+            for(var i = 0; i < qnaexpand.length; i++){
+               qnaexpand[i].addEventListener('click', qnaonClick);
+               document.querySelector('.qna_close').addEventListener('click', qnaoffClick);
+            }
+            
+            function onClick(){
+               document.querySelector('.review_wrap').style.display = 'block';
+               document.querySelector('.black_bg').style.display = 'block';
+            }
+            function offClick(){
+               document.querySelector('.review_wrap').style.display = 'none';
+               document.querySelector('.black_bg').style.display = 'none';
+               $( '.review_wrap tbody').empty();
+            }
+            
+            var expand = document.querySelectorAll('.expandButton');
+            for(var i = 0; i < expand.length; i++){
+               expand[i].addEventListener('click', onClick);
+               document.querySelector('.review_close').addEventListener('click', offClick);
+            }
+         }
+      </script>
 		
 		
 		<c:if test="${ !empty loginUser }">

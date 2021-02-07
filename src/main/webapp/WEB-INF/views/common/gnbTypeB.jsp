@@ -32,7 +32,7 @@
             	</c:if>
             	<c:if test="${ sessionScope.loginUser.memLevel eq 0 || sessionScope.loginUser.memLevel eq 1}">
                 	<li onclick="location.href='logout.me'">로그아웃</li>
-               		<li onclick="location.hef='myPageMainView.me'">마이페이지</li>
+               		<li onclick="location.href='myPageMainView.me'">마이페이지</li>
 	            </c:if>
 	            <c:if test="${ sessionScope.loginUser.memLevel eq 2 }">
 	           		<li onclick="location.href='logout.me'">로그아웃</li>

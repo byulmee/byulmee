@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
@@ -155,6 +156,25 @@ public class MypageDAO {
 
 	public int changeImgLevel(SqlSessionTemplate sqlSession, RevImgChange ric) {
 		return sqlSession.update("mypageMapper.changeImgLevel", ric);
+	}
+
+	public void deleteRev(SqlSessionTemplate sqlSession, Review r) {
+		sqlSession.delete("mypageMapper.deleteRev", r);
+	}
+
+	public int deleteReviewStatus(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("mypageMapper.deleteReviewStatus", r);
+	}
+
+	public int getQnACusListCount(SqlSessionTemplate sqlSession, CustomerQna cus) {
+		return sqlSession.selectOne("mypageMapper.getQnACusListCount", cus);
+	}
+
+	public ArrayList<CustomerQna> selectQnACusList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectQnACusList", id, rowBounds);
 	}
 
 }

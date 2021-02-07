@@ -353,6 +353,7 @@ hr {
 
 #starMessage2{
 	line-height: 120%;
+	width: 800px;
 }
 
 .reviewArea {
@@ -908,13 +909,13 @@ hr {
 					<input type="button" id="button1" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="상품 찜하기"> 
 					</c:if>
 					<c:if test="${ !empty loginUser }">
-					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기">
+					<input type="submit" id="button2" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="구매하기">
 					</c:if>
 					<c:if test="${ empty loginUser }">
 					<input type="button" id="button3" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="상품 찜하기" onclick="alert('로그인 후 이용 가능합니다.')"> 
 					</c:if>
 					<c:if test="${ empty loginUser }">
-					<input type="button" id="button4" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="신청하기" onclick="alert('로그인 후 이용 가능합니다.')">
+					<input type="button" id="button4" style="padding: 5px; line-height:100%; text-align:center; font-family: 'GmarketSansMedium';" value="구매하기" onclick="alert('로그인 후 이용 가능합니다.')">
 					</c:if>
 				</div>
 				<div class="starInfo">
@@ -1034,7 +1035,7 @@ hr {
 			<img src="${ content3 }" class="titleImg">
 			<img src="${ content4 }" class="titleImg">
 			<div id="starMessage">스타 한마디</div>
-			<div id="starMessage2">${ contentText }</div>
+			<div id="starMessage2" align="left">${ contentText }</div>
 		</div>
 
 		<!-- 메뉴바 -->

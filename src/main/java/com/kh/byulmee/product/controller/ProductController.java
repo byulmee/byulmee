@@ -138,4 +138,58 @@ public class productController {
 		}
 		return mv;
 	}
+	
+   // 상품 주문 페이지
+   @RequestMapping("productCheck.pd")
+   public ModelAndView productCheckView(@RequestParam("pdId") int pdId, @RequestParam("amount") int amount, @RequestParam("all-price2") String price, ModelAndView mv, HttpServletRequest request) {
+      
+      // 상품 게시판 디테일 내용 조회
+      Product product = pService.selectProduct(pdId);
+      // 상품 게시판 이미지리스트 조회
+      ArrayList<Image> image = iService.selectProductImage(pdId);
+      // 상품 게시판 작성자 조회
+      Member writer = mService.selectProductWriter(pdId);
+      
+      // 전체 리뷰 평균 별점 조회
+      ArrayList<Review> review = rvService.selectProductReviewAll(pdId);
+      int reviewNum = review.size();
+      int ratingSum = 0;
+      for(int i = 0; i < review.size(); i++) {
+         ratingSum += review.get(i).getRevRating();
+      }
+      double ratingAvg = (double)ratingSum / reviewNum;
+      
+      String category = null;
+      switch(product.getProCategory()) {
+         case 0: category = "액티비티"; break;
+         case 1: category = "리빙";  break;
+         case 2: category = "건강/미용"; break;
+         case 3: category = "힐링"; break;
+         case 4: category = "푸드"; break;
+         case 5: category = "커리어"; break;
+      }
+      
+      // 섬네일 이미지
+      String thumb = null;
+      for(int i = 0; i < image.size(); i++) {
+         if(image.get(i).getImgLevel() == 0) {
+            thumb = "resources\\auploadFiles\\" + image.get(i).getImgName();
+         } 
+      }
+      
+      if(product != null && image != null) {
+         mv.addObject("product", product)
+           .addObject("category", category)
+           .addObject("thumb", thumb)
+           .addObject("writer", writer)
+           .addObject("amount", amount)
+           .addObject("price", price)
+           .addObject("reviewNum", reviewNum)
+           .addObject("ratingAvg", ratingAvg)
+           .setViewName("productCheck");
+      } else {
+         throw new ProductException("상품 구매페이지 조회에 실패하였습니다.");
+      }
+      return mv;
+   }
 }

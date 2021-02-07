@@ -322,7 +322,7 @@ td{
 <body>
 	<c:import url="../common/gnb.jsp"/>
    <div class="outer" align="center">
-   <form id="payment" action="payment.pt" method="post">
+   <form id="payment" name="payment" action="payment.pt" method="post" onSubmit="return CheckForm(this)">
           <div class="product-check" align="left">활동 신청 확인</div>
           
        <!-- 상단 섬네일, 상품 정보 -->
@@ -488,16 +488,26 @@ td{
        </div>
        <div class="personal-info-check">
        	    <input type="hidden" value="${ activity.actNo }" name="acId">
-           <input type="hidden" value="${ writer.memNo }" name="memNo">
             <input type="hidden" value="${ amount }" name="ordCount">
             <input type="hidden" value="${ activity.actPrice }" name="ordPay">
 	       <span>구매 동의 : 활동 신청 정보, 취소 및 환불 정책, 개인 정보 제공 동의 등을 최종 확인하고 구매에 동의합니다.(필수)</span>
-	       <span><input type="checkbox" id="check"></span>
+	       <span><input type="checkbox" name="check" id="check"></span>
        </div>
-       	<input type="submit" id="orderButton" value="결제">
-       	<input type="button" id="cancleButton" value="취소">
+			<input type="submit" id="orderButton" value="결제"> <input type="button" id="cancleButton" value="취소">
        	</form>
 	</div>
+	
+	<script>
+	    //체크박스 체크여부 확인
+		function CheckForm(Join){
+			 var chk = document.payment.check.checked;
+	        
+	        if(!chk){
+	            alert('구매 동의에 체크해 주세요.');
+	            return false;
+	        } 
+		}    
+	</script>
 	
 		<script>
 	

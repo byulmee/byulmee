@@ -574,7 +574,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -599,11 +599,12 @@
 									<td colspan="3" class="reviewTitleTd">
 										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
 										<input type="hidden" class="memId" value="${ r.memId }" name="memId" >
+										<input type="hidden" class="revRating" value="${ r.revRating }" name="revRating">
 										<input type="hidden" class="revRefcode" value="1" name="revRefcode">
 										<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
 										<input type="hidden" class="ordNo" value="${ r.ordNo }" name="ordNo">
-										<input type="hidden" class="revLastRating" value="${ r.revLastRating }" name="revLastRating">
-										활동은 만족하셨나요?
+										<input type="hidden" class="revLastRating" value="${ r.revRating }" name="revLastRating">
+										상품은 만족하셨나요?
 									</td>
 								</tr>
 								<tr>
@@ -611,15 +612,15 @@
 										<div class="star-input">
 											<div class="input">
 												<input type="radio" name="revRating" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
-												<input type="radio" name="revRating" id="p2" value="1" class="radio"><label for="p2" class="label">1.0</label>
+												<input type="radio" name="revRating" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
 												<input type="radio" name="revRating" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
-												<input type="radio" name="revRating" id="p4" value="2" class="radio"><label for="p4" class="label">2.0</label>
+												<input type="radio" name="revRating" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
 												<input type="radio" name="revRating" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
-												<input type="radio" name="revRating" id="p6" value="3" class="radio"><label for="p6" class="label">3.0</label>
+												<input type="radio" name="revRating" id="p6" value="3" class="radio"><label for="p6" class="label">3</label>
 												<input type="radio" name="revRating" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
-												<input type="radio" name="revRating" id="p8" value="4" class="radio"><label for="p8" class="label">4.0</label>
+												<input type="radio" name="revRating" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
 												<input type="radio" name="revRating" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
-												<input type="radio" name="revRating" id="p10" value="5" class="radio"><label for="p10" class="label">5.0</label>
+												<input type="radio" name="revRating" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
 											</div>
 										</div>
 									</td>
@@ -643,7 +644,7 @@
 								</tr>
 								<tr>
 									<td colspan="3" class="reviewTitleTd">
-										활동에 대한 사진을 등록해주세요.
+										상품에 대한 사진을 등록해주세요.
 									</td>
 								</tr>
 								<tr>
@@ -770,7 +771,7 @@
 							</table>
 						</div>	
 						<div class="reviewBtnDiv">
-							<button type="button" class="reviewBtn" id="cancelBtn">취소</button>
+							<button type="button" class="reviewBtn" id="cancelBtn" onclick="location.href='myRevProListView.me'">취소</button>
 							<button type="button" class="reviewBtn" id="deleteBtn">삭제</button>
 							<button type="submit" class="reviewBtn" id="finishBtn">수정 완료</button>
 						</div>
@@ -790,6 +791,27 @@
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+	
+	<script>
+		$("#deleteBtn").click(function() {
+			var revNo = $(".reviewTitleTd").children(".revNo").val();
+			var revLastRating = $(".reviewTitleTd").children(".revLastRating").val();
+			var revRefcode = $(".reviewTitleTd").children(".revRefcode").val();
+			var revRefno = $(".reviewTitleTd").children(".revRefno").val();
+			var ordNo = $(".reviewTitleTd").children(".ordNo").val();
+			
+			console.log(revNo);
+			console.log(revLastRating);
+			console.log(revRefcode);
+			console.log(revRefno);
+			console.log(ordNo);
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			if(bool) {
+				location.href='deleteRev.me?revNo=' + revNo + '&revLastRating=' + revLastRating + '&revRefcode=' + revRefcode
+								+ '&revRefno=' + revRefno + '&ordNo=' + ordNo;
+			}			
+		});
+	</script>
 	
 	<script>
 		// star rating
@@ -823,7 +845,7 @@
 	<script>
 		// 파일 첨부 창 팝업
 		$(function() {
-			//$("#fileArea").hide(); // 파일 업로드 부분 숨김
+			$("#fileArea").hide(); // 파일 업로드 부분 숨김
 
 			$("#reviewImg1").click(function() {
 				$("#reviewImgFile1").click();
@@ -892,17 +914,5 @@
 			console.log(imgName3);
 		});
 	</script>
-	
-<!-- 	<script>
-		$("#reviewImgDel1").click(function() {
-			if($("#reviewImgDelDiv2").css("display") == ("none") || $("#reviewImgDelDiv3").css("display") == ("none")) {
-				alert("두 번째, 세 번째 사진을 먼저 삭제해주세요.");
-			}
-		});
-		
-		$("#reviewImgDel2").click(function() {
-				alert("세 번째 사진을 사진을 먼저 삭제해주세요.");
-		});
-	</script> -->
 </body>
 </html>

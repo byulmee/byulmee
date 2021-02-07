@@ -30,6 +30,8 @@ import com.google.gson.JsonIOException;
 import com.kh.byulmee.activity.model.exception.ActivityException;
 import com.kh.byulmee.activity.model.service.ActivityService;
 import com.kh.byulmee.activity.model.vo.Activity;
+import com.kh.byulmee.board.model.exception.BoardException;
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.SalesQna;
 import com.kh.byulmee.board.service.SalesQnaService;
@@ -122,7 +124,7 @@ public class MyPageContoller {
 		int listCount = mpService.getOrderListCount(ord);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		ArrayList<Order> o = mpService.selectProOrderList(pi, id);
-
+		
 		if(o != null) {
 			mv.addObject("o", o);
 			mv.addObject("pi", pi);
@@ -142,7 +144,7 @@ public class MyPageContoller {
 	@RequestMapping("detailAct.me")
 	public void detailAct(@RequestParam("ordNo") int ordNo, HttpServletResponse response) {
 		ArrayList<Order> oDetail = mpService.selectActDetailList(ordNo);
-
+		System.out.println("act oDetail: " + oDetail);
 		response.setContentType("application/json; charset=UTF-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -175,8 +177,8 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("deletePur.me")
-	public String deletePurAct(HttpServletRequest request, Model model,
-							   @RequestParam("ordNo") int ordNo, @RequestParam("ordRefcode") int ordRefcode) {
+	public String deletePur(HttpServletRequest request, Model model,
+							@RequestParam("ordNo") int ordNo, @RequestParam("ordRefcode") int ordRefcode) {
 		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		
 		Order o = new Order();
@@ -601,7 +603,6 @@ public class MyPageContoller {
 		Favorite fav = new Favorite();
 		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		fav.setMemId(id);
-		fav.setFavRefcode(1);
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -633,7 +634,6 @@ public class MyPageContoller {
 		Favorite fav = new Favorite();
 		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		fav.setMemId(id);
-		fav.setFavRefcode(2);
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -665,7 +665,6 @@ public class MyPageContoller {
 		Favorite fav = new Favorite();
 		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		fav.setMemId(id);
-		fav.setFavRefcode(0);
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -689,12 +688,10 @@ public class MyPageContoller {
 	}
 	
 	@RequestMapping("deleteFav.me")
-	public String deleteFavStar(HttpServletRequest request, Model model,
-								@RequestParam("favNo") int favNo,
-								@RequestParam("favRefcode") int favRefcode) {
+	public String deleteFav(HttpServletRequest request, Model model,
+							@RequestParam("favNo") int favNo,
+							@RequestParam("favRefcode") int favRefcode) {
 		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
-		System.out.println("favNo : " + favNo);
-		System.out.println("favRefcode : " + favRefcode);
 		Favorite f = new Favorite();
 		
 		f.setFavNo(favNo);
@@ -733,7 +730,6 @@ public class MyPageContoller {
 		int listCount = mpService.getReviewListCount(rev);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 		ArrayList<Review> r = mpService.selectRevActList(pi, id);
-
 		if(r != null) {
 			mv.addObject("r", r);
 			mv.addObject("pi", pi);
@@ -755,7 +751,7 @@ public class MyPageContoller {
 		Review rev = new Review();
 		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
 		rev.setMemId(id);
-		rev.setRevRefcode(0);
+		rev.setRevRefcode(1);
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -787,7 +783,6 @@ public class MyPageContoller {
 		
 		int revNo = review.getRevNo();
 		Review r = mpService.selectRevActDetail(revNo);
-		System.out.println("ri : " + ri);
 		
 		mv.addObject("r", r);
 		mv.addObject("ri", ri);
@@ -806,7 +801,6 @@ public class MyPageContoller {
 		
 		int revNo = review.getRevNo();
 		Review r = mpService.selectRevProDetail(revNo);
-		System.out.println("ri : " + ri);
 		
 		mv.addObject("r", r);
 		mv.addObject("ri", ri);
@@ -837,6 +831,7 @@ public class MyPageContoller {
 							   @RequestParam("sendImgName1") String sendImgName1,
 							   @RequestParam("sendImgName2") String sendImgName2,
 							   @RequestParam("sendImgName3") String sendImgName3,
+							   @RequestParam("revLastRating") double revLastRating,
 							   Model model) {
 		int result1 = 0;
 		int result2 = 0;
@@ -844,14 +839,6 @@ public class MyPageContoller {
 		int revNo = r.getRevNo();
 		int revRefcode = r.getRevRefcode();
 		int revRefno = r.getRevRefno();
-		double revLastRating = r.getRevLastRating();
-		
-		System.out.println("reviewImgFile1 : " + reviewImgFile1);
-		System.out.println("reviewImgFile2 : " + reviewImgFile2);
-		System.out.println("reviewImgFile3 : " + reviewImgFile3);
-		System.out.println("sendImgName1 : " + sendImgName1);
-		System.out.println("sendImgName2 : " + sendImgName2);
-		System.out.println("sendImgName3 : " + sendImgName3);
 		
 		int result = mpService.updateRevAct(r);
 		
@@ -887,7 +874,6 @@ public class MyPageContoller {
 		
 		if(ri.size() == 1) {
 			int imgLevel1 = ri.get(0).getImgLevel();
-			System.out.println("imgLevel1 : " + imgLevel1);
 			if(imgLevel1 == 1) {
 				RevImgChange ric = new RevImgChange();
 				ric.setRevNo(revNo);
@@ -907,8 +893,6 @@ public class MyPageContoller {
 		if(ri.size() == 2) {
 			int imgLevel1 = ri.get(0).getImgLevel();
 			int imgLevel2 = ri.get(1).getImgLevel();
-			System.out.println("imgLevel1 : " + imgLevel1);
-			System.out.println("imgLevel2 : " + imgLevel2);
 			if(imgLevel1 == 1) {
 				RevImgChange ric = new RevImgChange();
 				ric.setRevNo(revNo);
@@ -936,9 +920,6 @@ public class MyPageContoller {
 			int imgLevel1 = ri.get(0).getImgLevel();
 			int imgLevel2 = ri.get(1).getImgLevel();
 			int imgLevel3 = ri.get(2).getImgLevel();
-			System.out.println("imgLevel1 : " + imgLevel1);
-			System.out.println("imgLevel2 : " + imgLevel2);
-			System.out.println("imgLevel3 : " + imgLevel3);
 			if(imgLevel1 == 1) {
 				RevImgChange ric = new RevImgChange();
 				ric.setRevNo(revNo);
@@ -1016,7 +997,6 @@ public class MyPageContoller {
 			result3 = iService.insertImage(i);
 		}
 		
-		System.out.println("revRefcode : " + revRefcode);
 		if(revNo > 0) {
 			if(revRefcode == 0) {
 				int acId = revRefno;
@@ -1066,50 +1046,13 @@ public class MyPageContoller {
 			return "../common/alert";
 		}
 	}
-	
-	@RequestMapping("myQnaCusListView.me")
-	public ModelAndView myQnaCusListView(@RequestParam(value="page", required=false) Integer page,
-									  ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myQnaCusList");
-		
-		return mv;
-	}
-	
-	@RequestMapping("myQnaActListView.me")
-	public ModelAndView myQnaActListView(@RequestParam(value="page", required=false) Integer page,
-									  ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myQnaActList");
-		
-		return mv;
-	}
-	
-	@RequestMapping("myQnaProListView.me")
-	public ModelAndView myQnaProListView(@RequestParam(value="page", required=false) Integer page,
-									  ModelAndView mv, HttpServletRequest request) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
-		Image img = mpService.selectProfileImg(memNo);
-		
-		mv.addObject("img", img);
-		mv.setViewName("myQnaProList");
-		
-		return mv;
-	}
+
 	@RequestMapping("checkChangeNickname.me")
 	@ResponseBody
 	public boolean checkChangeNickname(@RequestParam("nickname") String nickname,
 								 HttpServletResponse response,
 								 HttpServletRequest request) {
 		String nowNickname = ((Member)request.getSession().getAttribute("loginUser")).getMemNickname();
-		System.out.println("nowNickname : " + nowNickname);
-		System.out.println("nickname : " + nickname);
 		if(nickname.equals(nowNickname)) {
 			return mService.checkNickname(nickname) < 1 ? false : true;
 		} else {
@@ -1123,8 +1066,6 @@ public class MyPageContoller {
 									HttpServletResponse response,
 									HttpServletRequest request) {
 		String nowEmail = ((Member)request.getSession().getAttribute("loginUser")).getMemEmail();
-		System.out.println("nowEmail : " + nowEmail);
-		System.out.println("email : " + email);
 		if(email.equals(nowEmail)) {
 			return mService.checkEmail(email) < 1 ? false : true;
 		} else {
@@ -1162,6 +1103,129 @@ public class MyPageContoller {
 		} else {
 			throw new ActivityException("활동 문의 등록에 실패하였습니다.");
 		}
+		return mv;
+	}
+	
+	@RequestMapping("deleteRev.me")
+	public String deleteRev(HttpServletRequest request, Model model,
+							@RequestParam("revNo") int revNo, @RequestParam("revRating") double revRating,
+							@RequestParam("revRefcode") int revRefcode, @RequestParam("revRefno") int revRefno, 
+							@RequestParam("ordNo") int ordNo) {
+		String memId = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		
+		Review r = new Review();
+		
+		r.setRevNo(revNo);
+		r.setMemId(memId);
+		r.setRevRefcode(revRefcode);
+		r.setRevRefno(revRefno);
+		r.setOrdNo(ordNo);
+		
+		mpService.deleteReviewStatus(r);
+		mpService.deleteRev(r);
+		
+		if(revRefcode == 0) {
+			int acId = revRefno;
+			
+			Activity a = aService.selectActivity(acId);
+
+			double actTotalScore = a.getActTotalScore() - revRating;
+			int actReviewCnt = a.getActReviewCnt() - 1;
+			double actRating = actTotalScore / actReviewCnt;
+			
+			a.setActTotalScore(actTotalScore);
+			a.setActReviewCnt(actReviewCnt);
+			a.setActRating(actRating);
+			
+			aService.updateActRatingCnt(a);
+			
+			return "redirect:myRevActListView.me";
+		} else if (revRefcode == 1) {
+			int proNo = revRefno;
+			
+			Product p = pService.selectPro(proNo);
+
+			double proTotalScore = p.getProTotalScore() + revRating;
+			int proReviewCnt = p.getProReviewCnt() - 1;
+			double proRating = proTotalScore / proReviewCnt;
+			
+			p.setProTotalScore(proTotalScore);
+			p.setProReviewCnt(proReviewCnt);
+			p.setProRating(proRating);
+			
+			pService.updateProRatingCnt(p);
+			return "redirect:myRevProListView.me";
+		} else {
+			throw new MemberException("후기 삭제에 실패했습니다.");
+		}
+	}
+	
+	@RequestMapping("myQnaCusListView.me")
+	public ModelAndView myQnaCusListView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		CustomerQna cus = new CustomerQna();
+		String id = ((Member)request.getSession().getAttribute("loginUser")).getMemId();
+		cus.setMemId(id);
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mpService.getQnACusListCount(cus);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+		
+		ArrayList<CustomerQna> list = mpService.selectQnACusList(pi, id);
+		
+		if(list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("img", img);
+			mv.setViewName("myQnaCusList");
+		} else {
+			throw new BoardException("고객 QnA 전체 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("myQnaActListView.me")
+	public ModelAndView myQnaActListView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myQnaActList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myQnaProListView.me")
+	public ModelAndView myQnaProListView(@RequestParam(value="page", required=false) Integer page,
+									  ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("myQnaProList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("starRequestView.me")
+	public ModelAndView starRequestView(@RequestParam(value="page", required=false) Integer page,
+									    ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		Image img = mpService.selectProfileImg(memNo);
+		
+		mv.addObject("img", img);
+		mv.setViewName("starRequest");
+		
 		return mv;
 	}
 }

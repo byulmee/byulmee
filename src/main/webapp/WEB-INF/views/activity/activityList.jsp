@@ -9,20 +9,20 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
-	rel="stylesheet" />
+   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+   rel="stylesheet" />
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+   crossorigin="anonymous">
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+   crossorigin="anonymous"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+   crossorigin="anonymous"></script>
 </head>
 <style>
 @font-face {
@@ -67,70 +67,66 @@ body {
         padding: 0.2rem 0;
     }
 </style>
-<body>
-	
-   <c:import url="../common/gnb.jsp" />
 
+
+<body>   
+   <c:import url="../common/gnb.jsp" />
    <div class="outer">
       <div class="listMain" style="font-size: 20px; font-weight: bold;">
          <span style="color: orange;">별</span>난취<span style="color: orange;">미</span> 리스트
       </div>
-      
       <br>
-      
       <table>
          <tr>
             <th style="background-color: #eeeeee;"
-               width="490px;"></th>	
+               width="490px;"></th>   
             <th style="background-color: orange;"
                width="300px;"></th>
             <th style="background-color: #eeeeee;"
                width="490px;"></th>
          </tr>
       </table>
-      
       <div id="searchArea" align="right">
          <select id="searchCondition" name="searchCondition">
-            <option value="popularity">인기순</option>
-            <option value="newest" onclick="location.href='alist.ac?acId=1'">최신순</option>
+            <option value="popularity" class="popularity">인기순</option>
+            <option value="newest">최신순</option>
             <option value="price">가격순</option>
             <option value="review">리뷰순</option>
          </select>
       </div>
-     
       <br>
-
-         <c:forEach items="${ list }" varStatus="status" var="val">
-            <div class="rec-list" style="display: inline-block;">
-              <ul class="list" style="list-style: none;">
-            	  <c:if test="${status.index mod 5 eq 0}">
-			          </c:if>
-                  <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
-                    <div class="img-frame">
-                      <c:forEach var="i" items="${ ilist }">
-				         <c:if test="${ val.actNo eq i.imgRefno and i.imgLevel eq '0'}">
-					          <img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }" alt="zz" width="210px;">
-				         </c:if>
-			          </c:forEach>
-            </div> 
-            <span>${val.memId }</span>
-            <div class="list-cate">[<c:choose>
-                <c:when test="${ val.actCategory eq '0' }">액티비티</c:when>	
-                <c:when test="${ val.actCategory eq '1' }">리빙</c:when>
-                <c:when test="${ val.actCategory eq '2' }">건강/미용</c:when>
-                <c:when test="${ val.actCategory eq '3' }">힐링</c:when>
-                <c:when test="${ val.actCategory eq '4' }">푸드</c:when>
-                <c:when test="${ val.actCategory eq '5' }">커리어</c:when>					
-						  </c:choose>]&nbsp;${val.actTitle }</div>
+    
+        <c:forEach items="${ list }" varStatus="status" var="val">
+         <div class="rec-list" style="display: inline-block;">
+            <ul class="list" style="list-style: none;">
+               <c:if test="${status.index mod 5 eq 0}">
+             </c:if>
+               <li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo }'">
+                  <div class="img-frame">
+                  <c:forEach var="i" items="${ ilist }">
+                     <c:if test="${ val.actNo eq i.imgRefno and i.imgLevel eq '0'}">
+                        <img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ i.imgName }" alt="이미지" width="210px;">
+                     </c:if>
+                  </c:forEach>          
+                  </div> 
+                  <span>[${val.actReviewCnt }] ${val.memId }</span>
+                  <div class="list-cate">[<c:choose>
+                     <c:when test="${ val.actCategory eq '0' }">액티비티</c:when>   
+                     <c:when test="${ val.actCategory eq '1' }">리빙</c:when>
+                     <c:when test="${ val.actCategory eq '2' }">건강/미용</c:when>
+                     <c:when test="${ val.actCategory eq '3' }">힐링</c:when>
+                     <c:when test="${ val.actCategory eq '4' }">푸드</c:when>
+                     <c:when test="${ val.actCategory eq '5' }">커리어</c:when>               
+                  </c:choose>]&nbsp;${val.actTitle }</div>
                   <span class="list-price"><i class="fas fa-receipt"></i>${val.actPrice }원</span><br>
-                  <span class="list-social">⭐️4.9 9999개의 평가</span>
+                  <span class="list-social">${val.actRating }</span>
                </li>
                <c:if test="${(status.index + 1) mod 5 eq 0}">
             </ul>
             </c:if>
          </div>
          </c:forEach>
-		<br><br>
+      <br><br>
 
       <!-- 페이징 처리 -->
       <div id="paging" align="center">
@@ -139,8 +135,10 @@ body {
                <td>
                   <!-- [이전] --> <c:if test="${ pi.currentPage <= 1 }">
                [이전] &nbsp;
-            </c:if> <c:if test="${ pi.currentPage > 1 }">
+            </c:if> 
+            <c:if test="${ pi.currentPage > 1 }">
                      <c:url var="before" value="alist.ac">
+                        <c:param name="actCategory" value="${ actCategory }"/>
                         <c:param name="page" value="${ pi.currentPage - 1 }" />
                      </c:url>
                      <a href="${ before }">[이전]</a> &nbsp;
@@ -149,9 +147,9 @@ body {
                      <c:if test="${ p eq pi.currentPage }">
                         <font color="red" size="4"><b>[${ p }]</b></font>
                      </c:if>
-
                      <c:if test="${ p ne pi.currentPage }">
                         <c:url var="pagination" value="alist.ac">
+                        <c:param name="actCategory" value="${ actCategory }"/>
                            <c:param name="page" value="${ p }" />
                         </c:url>
                         <a href="${ pagination }">${ p }</a> &nbsp;
@@ -160,6 +158,7 @@ body {
                [다음]
             </c:if> <c:if test="${ pi.currentPage < pi.maxPage }">
                      <c:url var="after" value="alist.ac">
+                     <c:param name="actCategory" value="${ actCategory }"/>
                         <c:param name="page" value="${ pi.currentPage + 1 }" />
                      </c:url>
                      <a href="${ after }">[다음]</a>
@@ -170,12 +169,23 @@ body {
       </div>
    </div>
    <c:import url="../common/footer.jsp" />
+   
+   <script>
+   $(document).ready(function(){
+      $('#searchArea option:checked').click(function(){
+         
+         })
+         
+      });
+      /*  var text = $("#searchArea option:checked").text();
+         if(text == ){
+            location.href='alistarray.ac';
+            }
+         
+ */
+      
+   </script>
 </body>
-<!-- <script>
-	.ready(function(){
-		$('#popularity').click(function(){
-			
-		}
-	}
-	</script> -->
+   
+   
 </html>

@@ -85,7 +85,6 @@ $( document ).ready(function() {
 		</script>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp" />
 	<nav>
 	<ul>
 		<li style="color: orange;">주문/결제 ><strong> 주문완료 </strong></li>

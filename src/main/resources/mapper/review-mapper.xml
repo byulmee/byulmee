@@ -51,7 +51,7 @@
 		    from review r
 		    	left outer join member m on r.mem_id = m.mem_id
 		    	left outer join image i on i.img_refno = r.rev_no
-		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y'
+		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y' and i.img_refcode = 3
 		    order by rev_no desc
 		    )
 		<![CDATA[where rownum <= 6]]>
@@ -75,7 +75,7 @@
 		from review r
 		    left outer join member m on r.mem_id = m.mem_id
 			left outer join image i on i.img_refno = r.rev_no
-		where rev_no = #{revNo} and r.rev_refcode = 0
+		where rev_no = #{revNo} and r.rev_refcode = 0 and i.img_refcode=3
 	</select>
 	
 	<select id="salesProductReviewDetail" resultMap="reviewResultSet">

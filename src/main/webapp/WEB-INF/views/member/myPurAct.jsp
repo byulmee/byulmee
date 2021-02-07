@@ -243,10 +243,15 @@
 	}
 	.textDiv {
 		position: absolute;
-		width: 350px;
+		width: 450px;
 		height: 130px;
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
+	}
+	p {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	.btnDiv {
 		width: 90px;
@@ -713,7 +718,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -753,9 +758,9 @@
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
 									<input type="hidden" class="ordRefcode" value="0" name="ordRefcode">
-									
+									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
 									<p class="text">${ o.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
+									<p class="text">결제금액 : <fmt:formatNumber value="${ o.ordPay }"/> 원</p>
 									<p class="text">${ o.ordDate } 신청</p>
 								</div>
 							</div>
@@ -863,15 +868,15 @@
 							<div class="star-input">
 								<div class="input">
 									<input type="radio" name="revRating" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
-									<input type="radio" name="revRating" id="p2" value="1.0" class="radio"><label for="p2" class="label">1.0</label>
+									<input type="radio" name="revRating" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
 									<input type="radio" name="revRating" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
-									<input type="radio" name="revRating" id="p4" value="2.0" class="radio"><label for="p4" class="label">2.0</label>
+									<input type="radio" name="revRating" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
 									<input type="radio" name="revRating" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
-									<input type="radio" name="revRating" id="p6" value="3.0" class="radio"><label for="p6" class="label">3.0</label>
+									<input type="radio" name="revRating" id="p6" value="3" class="radio"><label for="p6" class="label">3</label>
 									<input type="radio" name="revRating" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
-									<input type="radio" name="revRating" id="p8" value="4.0" class="radio"><label for="p8" class="label">4.0</label>
+									<input type="radio" name="revRating" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
 									<input type="radio" name="revRating" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
-									<input type="radio" name="revRating" id="p10" value="5.0" class="radio"><label for="p10" class="label">5.0</label>
+									<input type="radio" name="revRating" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
 								</div>
 							</div>
 						</td>
@@ -1042,12 +1047,12 @@
  	<script>
 		$(".detailActBtn").click(function(){
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-
+			console.log(ordNo);
 			$.ajax({
 				url : "detailAct.me",
 				data : {ordNo : ordNo},
 				success : function(data) {
-					
+					console.log(data[0]);
 					// 금액 , 표시 //////////////////////////////////////////////////////////
 					function currencyFormat(val) {
 						return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1081,9 +1086,9 @@
 					
 					var ordPayWay = "";
 					if (data[0].ordPayWay == 0) {
-						ordPayWay = "카드";
-					} else if (data[1].ordPayWay == 1) {
 						ordPayWay = "페이";
+					} else if (data[0].ordPayWay == 1) {
+						ordPayWay = "카드";
 					}
 					
 					$tableBody.append($("<tr>").append($actInfoTd).append($("<td class='tdName2'>").text("활동명")).append($("<td class='tdContent'>").text(data[0].activity.actTitle)));

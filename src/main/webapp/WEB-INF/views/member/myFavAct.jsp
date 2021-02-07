@@ -242,10 +242,15 @@
 	}
 	.textDiv {
 		position: absolute;
-		width: 350px;
+		width: 450px;
 		height: 130px;
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
+	}
+	p {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	.btnDiv {
 		width: 90px;
@@ -448,7 +453,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -490,7 +495,7 @@
 									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
 									<input type="hidden" class="favRefcode" value="1" name="favRefcode">
 									<p class="text">${ f.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
+									<p class="text"><fmt:formatNumber value="${ f.activity.actPrice }"/> 원</p>
 									<p class="text">${ f.favDate } 찜</p>
 								</div>
 							</div>
