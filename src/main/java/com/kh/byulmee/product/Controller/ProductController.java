@@ -1,4 +1,4 @@
-package com.kh.byulmee.product.controller;
+package com.kh.byulmee.product.Controller;
 
 import java.util.ArrayList;
 

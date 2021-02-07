@@ -919,7 +919,6 @@ public class MyPageContoller {
 		if(ri.size() == 3) {
 			int imgLevel1 = ri.get(0).getImgLevel();
 			int imgLevel2 = ri.get(1).getImgLevel();
-			int imgLevel3 = ri.get(2).getImgLevel();
 			if(imgLevel1 == 1) {
 				RevImgChange ric = new RevImgChange();
 				ric.setRevNo(revNo);
