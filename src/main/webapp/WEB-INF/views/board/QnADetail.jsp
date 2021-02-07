@@ -9,112 +9,112 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
-	rel="stylesheet" />
+   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+   rel="stylesheet" />
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+   crossorigin="anonymous">
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+   crossorigin="anonymous"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+   crossorigin="anonymous"></script>
 <style>
 .outer {
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-left: auto;
-	margin-right: auto;
-	overflow: hidden;
-	position: relative;
-	width: 800px;
-	font-family: "G마켓 산스 TTF Medium";
+   margin-top: 50px;
+   margin-bottom: 50px;
+   margin-left: auto;
+   margin-right: auto;
+   overflow: hidden;
+   position: relative;
+   width: 800px;
+   font-family: "G마켓 산스 TTF Medium";
 }
 
 .MainText {
-	color: #585858;
-	font-size: 20px;
-	font-weight: bold;
+   color: #585858;
+   font-size: 20px;
+   font-weight: bold;
 }
 
 #TableArea {
-	border: 1px solid; 
-	min-height: 650px;
+   border: 1px solid; 
+   min-height: 650px;
 }
 
 tr > .mainTitle {
-	
-	margin-top: 15px;
+   
+   margin-top: 15px;
 }
 
 tr > .secondTitle {
-	font-size: 9px;
+   font-size: 9px;
 }
 
 .buttonArea {
-	float: right;
+   float: right;
 }
 
 .category {
-	font-size: 9px;
+   font-size: 9px;
 }
 
 .textArea {
-	height: 300px;
+   height: 300px;
 }
 .
 .answerArea {
-	height: 100px;
+   height: 100px;
 }
 
 .answerName {
-	font-size: 12px;
-	padding-top: 15px;
-	padding-left: 15px;
-	font-weight: bold;
+   font-size: 12px;
+   padding-top: 15px;
+   padding-left: 15px;
+   font-weight: bold;
 }
 .answerText {
-	font-size: 13px;
-	font-weight: bold;
-	padding-top: 10px;
-	padding-left: 15px;
-	min-height: 150px;
+   font-size: 13px;
+   font-weight: bold;
+   padding-top: 10px;
+   padding-left: 15px;
+   min-height: 150px;
 }
 
 .ReplyArea {
-	float: right;
-	margin-right: 20px;
-	margin-top: 20px;
+   float: right;
+   margin-right: 20px;
+   margin-top: 20px;
 }
 
 #repUpdateBtn {
-	background-color: #FF6833; 
-	color: white;
-	margin-left: 8px;
-	margin-right: 15px;
-	font-size: 13px;
+   background-color: #FF6833; 
+   color: white;
+   margin-left: 8px;
+   margin-right: 15px;
+   font-size: 13px;
 }
 
 #repDelBtn {
-	background-color: #EFEFEF; 
-	color: #5A5A5A;
-	font-size: 11px;
+   background-color: #EFEFEF; 
+   color: #5A5A5A;
+   font-size: 11px;
 } 
 
 .replybtn {
-	float: right;
-	margin-top: 10px;
+   float: right;
+   margin-top: 10px;
 }
 
 .table-active {
-	height: 50px;
-	padding-top: 15px;
-	padding-left: 15px;
-	font-weight: bold;
+   height: 50px;
+   padding-top: 15px;
+   padding-left: 15px;
+   font-weight: bold;
 }
 </style>
 </head>
@@ -161,7 +161,7 @@ tr > .secondTitle {
 						</div>
 						
 					</div>
-				</c:if>
+				</c:if> 
 			</div>	
 			</c:if>
 			<c:if test="${ !empty reply }">
@@ -208,95 +208,105 @@ tr > .secondTitle {
 		<div class="buttonArea">
 			<c:if test="${ loginUser.memId eq customerqna.memId }">
 				<button type="button" id="delBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A">삭제</button>
-				<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }'">수정</button>
+				<c:if test="${ from eq 0 }">
+					<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }'">수정</button>
+				</c:if>
+				<c:if test="${ from eq 1 }">
+					<button type="button" id="updateBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='cusUpdateForm.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }'">수정</button>
+				</c:if>
 			</c:if>
-			<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
+			<c:if test="${ from eq 0 }">
+				<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='QnAView.bo?page=${ page }'">목록으로</button>
+			</c:if>
+			<c:if test="${ from eq 1 }">
+				<button type="button" id="listBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white" onclick="location.href='myQnaCusListView.me?page=${ page }'">목록으로</button>
+			</c:if>
 		</div>
 	</div>
 	<script>
 
-		$(document).ready(function(){
-			var Content = $('#answerText').text();
-			console.log(Content);
-			Content = Content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-			$('#answerText').html(Content);
-		});
-	
-		$('#insertBtn').click(function(){
-			var memId = 'admin';
-			var repContent = $('#repContent').val();
-			var repRefno = ${ customerqna.cusqnaNo };
+      $(document).ready(function(){
+         var Content = $('#answerText').text();
+         console.log(Content);
+         Content = Content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+         $('#answerText').html(Content);
+      });
+   
+      $('#insertBtn').click(function(){
+         var memId = 'admin';
+         var repContent = $('#repContent').val();
+         var repRefno = ${ customerqna.cusqnaNo };
 
-			$.ajax({
-				url: 'repInsert.bo',
-				data: {memId:memId, repContent:repContent, repRefno:repRefno},
-				success: function(data){
-					if(data == 'success'){
-						window.location.reload();
-					}
-				}
-			});
-		});
+         $.ajax({
+            url: 'repInsert.bo',
+            data: {memId:memId, repContent:repContent, repRefno:repRefno},
+            success: function(data){
+               if(data == 'success'){
+                  window.location.reload();
+               }
+            }
+         });
+      });
 
-		$('#repUpdateBtn').on("click", function(){
-			var repContent = $('#reRepContent').val();
-			var repNo = $('#reRepNo').val();
-			var repRefno = ${ customerqna.cusqnaNo };
-			console.log(repContent);
-			console.log(repNo);
-			
-			$("#moRepNo").val(repNo); 
-			$("#moRepContent").val(repContent); 
-			$("#moRepRefno").val(repRefno); 
-			
-		});
+      $('#repUpdateBtn').on("click", function(){
+         var repContent = $('#reRepContent').val();
+         var repNo = $('#reRepNo').val();
+         var repRefno = ${ customerqna.cusqnaNo };
+         console.log(repContent);
+         console.log(repNo);
+         
+         $("#moRepNo").val(repNo); 
+         $("#moRepContent").val(repContent); 
+         $("#moRepRefno").val(repRefno); 
+         
+      });
 
-		$('.modalModBtn').on("click", function(){
-			var repNo = $('#moRepNo').val();
-			var repRefno = $('#moRepRefno').val();
-			var repContent = $('#moRepContent').val();
+      $('.modalModBtn').on("click", function(){
+         var repNo = $('#moRepNo').val();
+         var repRefno = $('#moRepRefno').val();
+         var repContent = $('#moRepContent').val();
 
-			console.log(repContent);
-			
-			$.ajax({
-			 	url: 'updateCusReply.bo',
-				data: {repNo:repNo, repRefno:repRefno, repContent:repContent},
-				success: function(data){
-					console.log(data);
-					if(data == 'success') {
-						alert("답글 수정 완료");
-						$("#modifyModal").modal("hide");
-						window.location.reload();
-						//location.href="cusQnADetail.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }";
-					}
-				} 
-			}); 
-		});
+         console.log(repContent);
+         
+         $.ajax({
+             url: 'updateCusReply.bo',
+            data: {repNo:repNo, repRefno:repRefno, repContent:repContent},
+            success: function(data){
+               console.log(data);
+               if(data == 'success') {
+                  alert("답글 수정 완료");
+                  $("#modifyModal").modal("hide");
+                  window.location.reload();
+                  //location.href="cusQnADetail.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }";
+               }
+            } 
+         }); 
+      });
 
-		$('.modalDelBtn').on("click", function(){
-			var chk = confirm("정말 삭제하시겠습니까?");
-			var repNo = $('#moRepNo').val();
-			if(chk){
-				$.ajax({
-					url: 'delCusReply.bo',
-					data: {repNo:repNo},
-					success: function(data){
-						alert("답글 삭제 완료");
-						$("#modifyModal").modal("hide");
-						window.location.reload();
-					}
-				});
-			}
-		});
+      $('.modalDelBtn').on("click", function(){
+         var chk = confirm("정말 삭제하시겠습니까?");
+         var repNo = $('#moRepNo').val();
+         if(chk){
+            $.ajax({
+               url: 'delCusReply.bo',
+               data: {repNo:repNo},
+               success: function(data){
+                  alert("답글 삭제 완료");
+                  $("#modifyModal").modal("hide");
+                  window.location.reload();
+               }
+            });
+         }
+      });
 
-		$(function(){
-			$('#delBtn').click(function(){
-				var chk = confirm("정말 삭제하시겠습니까?");
-				if(chk){
-					location.href="deleteCusQna.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }";
-				}
-			});
-		});
-	</script>
+      $(function(){
+         $('#delBtn').click(function(){
+            var chk = confirm("정말 삭제하시겠습니까?");
+            if(chk){
+               location.href="deleteCusQna.bo?cusqnaNo=${ customerqna.cusqnaNo }&page=${ page }&from=${ from }";
+            }
+         });
+      });
+   </script>
 </body>
 </html>

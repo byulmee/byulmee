@@ -247,12 +247,6 @@
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
 	}
-/* 	.text {
-		display: inline-block;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	} */
 	.conTable {
 		width: 460px;
 		height: 130px;
@@ -273,7 +267,7 @@
 		vertical-align: middle;
 		text-align: right;
 	}
-	.button, .detailActBtn, .reviewActBtn {
+	.button, .detailActBtn {
 		margin: 5px;
 		padding: 5px;
 		padding-bottom: 2px;
@@ -285,7 +279,7 @@
 		outline: 0;
 		vertical-align: middle;
 	}
-	.button:hover, .detailActBtn:hover ,.reviewActBtn:hover {
+	.button:hover, .detailActBtn:hover {
 		background: #FF6833;
 		color: white;
 		cursor: pointer;
@@ -449,13 +443,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -472,7 +466,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -518,7 +512,11 @@
 									<div class="textDiv">
 										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
 										<input type="hidden" class="memId" value="${ r.memId }" name="memId">
-										<input type="hidden" class="revRefcode" value="${ r.revRefcode }" name="revRefcode">
+										<input type="hidden" class="revRating" value="${ r.revRating }" name="revRating">
+										<input type="hidden" class="revDate" value="${ r.revDate }" name="revDate">
+										<input type="hidden" class="revRefcode" value="0" name="revRefcode">
+										<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
+										<input type="hidden" class="ordNo" value="${ r.ordNo }" name="ordNo">
 										<table class="conTable">
 											<tr>
 												<td class="conTd">
@@ -527,8 +525,6 @@
 											</tr>
 											<tr>
 												<td class="conTd">
-													<input type="hidden" class="revRating" value="${ r.revRating }" name="revRating">
-													<input type="hidden" class="revDate" value="${ r.revDate }" name="revDate">
 													<span class="star"><img class='rating' src='${ pageContext.servletContext.contextPath }/resources/images/myPage/star${ r.revRating }.png'></span>
 													&nbsp;${ r.revRating }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${ r.revDate } 작성
 												</td>
@@ -540,7 +536,6 @@
 												</td>
 											</tr>
 										</table>
-										<!-- <p class="text"></p> -->
 									</div>
 								</div>
 								<div class="btnDiv">
@@ -603,5 +598,21 @@
 	</div>
 	
 	<c:import url="../common/footer.jsp"/>
+
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var revNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revNo").val();
+			var revRating = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRating").val();
+			var revRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRefcode").val();
+			var revRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRefno").val();
+			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
+			
+			if(bool) {
+				location.href='deleteRev.me?revNo=' + revNo + '&revRating=' + revRating + '&revRefcode=' + revRefcode
+								+ '&revRefno=' + revRefno + '&ordNo=' + ordNo;
+			}			
+		});
+	</script>
 </body>
 </html>

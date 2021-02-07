@@ -631,7 +631,6 @@ hr {
 	font-size: 22px;
 	font-weight: bold;
 }
-  
 /* 후기 모달창 */
 .review_wrap {
 	display: none;
@@ -657,6 +656,45 @@ hr {
 	background: white;
 }
 
+.black_bg {
+	display: none;
+	position: fixed;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.qnablack_bg {
+	display: none;
+	position: fixed;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+
+.review_close {
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	top: -30px;
+	right: 0;
+}
+
+.review_close>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+	text-indent: -9999px;
+}
+
 .qna_wrap {
 	display: none;
 	width: 650px;
@@ -680,26 +718,6 @@ hr {
 	padding: 20px;
 	background: white;
 }
-  
-.black_bg {
-	display: none;
-	position: fixed;
-	content: "";
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	top: 0;
-	left: 0;
-	z-index: 999;
-}
-
-.review_close {
-	width: 26px;
-	height: 26px;
-	position: absolute;
-	top: -30px;
-	right: 0;
-}
 
 .qna_close {
 	width: 26px;
@@ -707,14 +725,6 @@ hr {
 	position: absolute;
 	top: -30px;
 	right: 0;
-}
-
-.review_close>a {
-	display: block;
-	width: 100%;
-	height: 100%;
-	background: url(https://img.icons8.com/metro/26/000000/close-window.png);
-	text-indent: -9999px;
 }
 
 .qna_close>a {
@@ -1273,9 +1283,8 @@ hr {
 							$revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
 							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
 							
-							if(data[i].img != "" ){
-								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].img.imgName + "'>");
-// 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\202101262000005802.jpg'>");
+							if(data[i].image != "" ){
+								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image[0].imgName + "'>");
 							} else{
 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\images\\detail\\x.png'>");
 							}
@@ -1333,8 +1342,6 @@ hr {
 				url: 'salesReviewDetail.ac',
 				data: {revNo:revNo},
 				success: function(data){
-					console.log(data);
-					
 					$review = $('.review_modal tbody');
 					
 					var $tr;
@@ -1351,14 +1358,14 @@ hr {
 					$tr = $('<tr height="30px" class="trMdReview">');
 					$tr2 = $('<tr class="trMdReviewContent">');
 					$tr3 = $('<tr class="reviewMdImageArea">');
-					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data.member.memNickname);
-					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
-					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
+					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data[0].member.memNickname);
+					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data[0].revDate);
+					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data[0].revContent);
 					
-					if(data.img != ""){
-						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
-						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
-						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.img.imgName + "'>");
+					if(data.image != ""){
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[0].imgName + "'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[1].imgName + "'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[2].imgName + "'>");
 					} else{
 						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
 						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
@@ -1366,23 +1373,23 @@ hr {
 					}
 					
 					
-					if(data.revRating == 0.5){
+					if(data[0].revRating == 0.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star1.png'>");
-					} else if(data.revRating == 1){
+					} else if(data[0].revRating == 1){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star2.png'>");
-					} else if(data.revRating == 1.5){
+					} else if(data[0].revRating == 1.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star3.png'>");
-					} else if(data.revRating == 2){
+					} else if(data[0].revRating == 2){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star4.png'>");
-					} else if(data.revRating == 2.5){
+					} else if(data[0].revRating == 2.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star5.png'>");
-					} else if(data.revRating == 3){
+					} else if(data[0].revRating == 3){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star6.png'>");
-					} else if(data.revRating == 3.5){
+					} else if(data[0].revRating == 3.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star7.png'>");
-					} else if(data.revRating == 4){
+					} else if(data[0].revRating == 4){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star8.png'>");
-					} else if(data.revRating == 4.5){
+					} else if(data[0].revRating == 4.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star9.png'>");
 					} else {
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star10.png'>");
@@ -1403,26 +1410,6 @@ hr {
 		});
 		</script>
 				
-		<!-- 후기 모달 열기 -->
-		<script>
-			window.onload = function(){
-				function onClick(){
-					document.querySelector('.review_wrap').style.display = 'block';
-					document.querySelector('.black_bg').style.display = 'block';
-				}
-				function offClick(){
-					document.querySelector('.review_wrap').style.display = 'none';
-					document.querySelector('.black_bg').style.display = 'none';
-					$( '.review_wrap tbody').empty();
-				}
-				
-				var expand = document.querySelectorAll('.expandButton');
-				for(var i = 0; i < expand.length; i++){
-					expand[i].addEventListener('click', onClick);
-					document.querySelector('.review_close').addEventListener('click', offClick);
-				}
-			}
-		</script>
 
 		<!-- 메뉴바 -->
 		<div class="nav-area" align="center">
@@ -1472,7 +1459,7 @@ hr {
 			
 			<div class="expand" align="right">
 				
-				<div class="black_bg"></div>
+				<div class="qnablack_bg"></div>
 				
 				<div class="qna_wrap">
 					<div class="qna_close">
@@ -1646,23 +1633,39 @@ hr {
 		});
 		</script>
 		
-		<!-- 문의 모달 열기 -->
+		<!-- 후기/문의 모달 열기 -->
 		<script>
 			window.onload = function(){
-				function onClick(){
+				function qnaonClick(){
 					document.querySelector('.qna_wrap').style.display = 'block';
-					document.querySelector('.black_bg').style.display = 'block';
+					document.querySelector('.qnablack_bg').style.display = 'block';
 				}
-				function offClick(){
+				function qnaoffClick(){
 					document.querySelector('.qna_wrap').style.display = 'none';
-					document.querySelector('.black_bg').style.display = 'none';
+					document.querySelector('.qnablack_bg').style.display = 'none';
 					$( '.qna_wrap tbody').empty();
 				}
 				
-				var expand = document.querySelectorAll('.salqnaDetail');
+				var qnaexpand = document.querySelectorAll('.salqnaDetail');
+				for(var i = 0; i < qnaexpand.length; i++){
+					qnaexpand[i].addEventListener('click', qnaonClick);
+					document.querySelector('.qna_close').addEventListener('click', qnaoffClick);
+				}
+				
+				function onClick(){
+					document.querySelector('.review_wrap').style.display = 'block';
+					document.querySelector('.black_bg').style.display = 'block';
+				}
+				function offClick(){
+					document.querySelector('.review_wrap').style.display = 'none';
+					document.querySelector('.black_bg').style.display = 'none';
+					$( '.review_wrap tbody').empty();
+				}
+				
+				var expand = document.querySelectorAll('.expandButton');
 				for(var i = 0; i < expand.length; i++){
 					expand[i].addEventListener('click', onClick);
-					document.querySelector('.qna_close').addEventListener('click', offClick);
+					document.querySelector('.review_close').addEventListener('click', offClick);
 				}
 			}
 		</script>

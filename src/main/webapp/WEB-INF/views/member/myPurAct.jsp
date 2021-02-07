@@ -243,10 +243,15 @@
 	}
 	.textDiv {
 		position: absolute;
-		width: 350px;
+		width: 450px;
 		height: 130px;
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
+	}
+	p {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	.btnDiv {
 		width: 90px;
@@ -690,13 +695,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -713,7 +718,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -752,17 +757,16 @@
 								</div>
 								<div class="textDiv">
 									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
+									<input type="hidden" class="ordRefcode" value="0" name="ordRefcode">
 									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
-									<input type="hidden" class="actTitle" value="${ o.activity.actTitle }" name="actTitle">
-									
 									<p class="text">${ o.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
+									<p class="text">결제금액 : <fmt:formatNumber value="${ o.ordPay }"/> 원</p>
 									<p class="text">${ o.ordDate } 신청</p>
 								</div>
 							</div>
 							<div class="btnDiv">
 								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
-								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.activity.actNo }'">문의하기</button>
+								<button class="button" onclick="location.href='salesQnaInsertView.me?acId=${ o.activity.actNo }'">문의하기</button>
 								<c:if test="${ o.ordReview == 'N' }">
 									<button class="reviewActBtn" onclick="openModal('reviewWrite')">후기작성</button>
 								</c:if>
@@ -856,7 +860,7 @@
 							<input type="hidden" class="revRefcode" value="0" name="revRefcode">
 							<input type="hidden" class="revRefno" value="" name="revRefno">
 							<input type="hidden" class="ordNo" value="" name="ordNo">
-							상품은 만족하셨나요?
+							활동은 만족하셨나요?
 						</td>
 					</tr>
 					<tr>
@@ -864,15 +868,15 @@
 							<div class="star-input">
 								<div class="input">
 									<input type="radio" name="revRating" id="p1" value="0.5" class="radio"><label for="p1" class="label">0.5</label>
-									<input type="radio" name="revRating" id="p2" value="1.0" class="radio"><label for="p2" class="label">1.0</label>
+									<input type="radio" name="revRating" id="p2" value="1" class="radio"><label for="p2" class="label">1</label>
 									<input type="radio" name="revRating" id="p3" value="1.5" class="radio"><label for="p3" class="label">1.5</label>
-									<input type="radio" name="revRating" id="p4" value="2.0" class="radio"><label for="p4" class="label">2.0</label>
+									<input type="radio" name="revRating" id="p4" value="2" class="radio"><label for="p4" class="label">2</label>
 									<input type="radio" name="revRating" id="p5" value="2.5" class="radio"><label for="p5" class="label">2.5</label>
-									<input type="radio" name="revRating" id="p6" value="3.0" class="radio"><label for="p6" class="label">3.0</label>
+									<input type="radio" name="revRating" id="p6" value="3" class="radio"><label for="p6" class="label">3</label>
 									<input type="radio" name="revRating" id="p7" value="3.5" class="radio"><label for="p7" class="label">3.5</label>
-									<input type="radio" name="revRating" id="p8" value="4.0" class="radio"><label for="p8" class="label">4.0</label>
+									<input type="radio" name="revRating" id="p8" value="4" class="radio"><label for="p8" class="label">4</label>
 									<input type="radio" name="revRating" id="p9" value="4.5" class="radio"><label for="p9" class="label">4.5</label>
-									<input type="radio" name="revRating" id="p10" value="5.0" class="radio"><label for="p10" class="label">5.0</label>
+									<input type="radio" name="revRating" id="p10" value="5" class="radio"><label for="p10" class="label">5</label>
 								</div>
 							</div>
 						</td>
@@ -940,16 +944,6 @@
 		</div>
 	</div>
 	
- 	<!-- <script>
-		$("#finishBtn").click(function(){
-			var chk1 = $('reviewImgFile1').val();
-			if(chk1 == null) {
-				alert("최소 1개 이상의 사진을 등록해주세요.");
-				return false;
-			}
-		});
-	</script> -->
-	
 	<script>
 		function openModal(modalname) {
 			document.get
@@ -979,10 +973,10 @@
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-			var ordRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
+			var ordRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordRefcode").val();
 			
 			if(bool) {
-				location.href='deletePurAct.me?ordNo=' + ordNo + '&ordRefno=' + ordRefno;
+				location.href='deletePur.me?ordNo=' + ordNo + '&ordRefcode=' + ordRefcode;
 			}			
 		});
 	</script>
@@ -1053,22 +1047,23 @@
  	<script>
 		$(".detailActBtn").click(function(){
 			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
-
+			console.log(ordNo);
 			$.ajax({
 				url : "detailAct.me",
 				data : {ordNo : ordNo},
 				success : function(data) {
-					
+					console.log(data[0]);
 					// 금액 , 표시 //////////////////////////////////////////////////////////
 					function currencyFormat(val) {
 						return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					}
 
-					var num1 = data[0].ordPay;
-					var num2 = data[0].activity.actPrice;
+					var num1 = data[0].activity.actPrice;
+					var num2 = data[0].activity.actPrice * data[0].ordCount;
 
-					var ordPay = currencyFormat(num1);
-					var actPrice = currencyFormat(num2);
+					var actPrice = currencyFormat(num1);
+					var totalPrice = currencyFormat(num2);
+					
 					//////////////////////////////////////////////////////////////////////
 					
 					// 전화번호 - 표시 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1091,9 +1086,9 @@
 					
 					var ordPayWay = "";
 					if (data[0].ordPayWay == 0) {
-						ordPayWay = "카드";
-					} else if (data[1].ordPayWay == 1) {
 						ordPayWay = "페이";
+					} else if (data[0].ordPayWay == 1) {
+						ordPayWay = "카드";
 					}
 					
 					$tableBody.append($("<tr>").append($actInfoTd).append($("<td class='tdName2'>").text("활동명")).append($("<td class='tdContent'>").text(data[0].activity.actTitle)));
@@ -1103,7 +1098,7 @@
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("활동 장소")).append($("<td class='tdContent'>").text(data[0].activity.actPlace)));
 					$tableBody.append($("<tr>").append($payInfoTd).append($("<td class='tdName2'>").text("① 1인당 활동비")).append($("<td class='tdContent'>").text(actPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("② 신청 인원")).append($("<td class='tdContent'>").text(data[0].ordCount + " 명")));
-					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("③ 총 결제 금액 (① × ②)")).append($("<td class='tdContent'>").text(ordPay + ' 원')));
+					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("③ 총 결제 금액 (① × ②)")).append($("<td class='tdContent'>").text(totalPrice + ' 원')));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("결제 수단")).append($("<td class='tdContent'>").text(ordPayWay)));
 					$tableBody.append($("<tr>").append($reqInfoTd).append($("<td class='tdName2'>").text("신청자")).append($("<td class='tdContent'>").text(data[0].ordName)));
 					$tableBody.append($("<tr>").append($("<td class='tdName2'>").text("연락처")).append($("<td class='tdContent'>").text(ordPhone)));

@@ -1,4 +1,3 @@
-<!-- ajax 방식 -->
 <!--
 	메인컬러 - #FF6833
 	메인폰트 - font-family: "Gmarket Sans TTF";
@@ -7,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -199,6 +199,83 @@
 		color: white;
 		background: #FF6833;
 	}
+	.listArea {
+		min-height: 480px;
+	}
+	.list {
+		display: inline-block;
+		width: 100%;
+		height: 160px;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	.hoverDiv {
+		display: inline-block;
+		width: 620px;
+		height: 160px;
+		vertical-align: middle;
+	}
+	.hoverDiv:hover {
+		opacity: 0.6;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.imgDiv {
+		display: inline-block;
+		position: relative;
+		width: 136px;
+		height: 136px;
+		margin-top: 10px;
+		overflow: hidden;
+		border: 2px solid gray;
+		background: black;
+		left: 10px;
+	}
+	.img {
+		position: absolute;
+		width: 136px;
+		height: auto;
+		margin: auto;
+		left: -100%;
+		right: -100%;
+		top: -100%;
+		bottom: -100%;
+	}
+	.textDiv {
+		position: absolute;
+		width: 350px;
+		height: 130px;
+		display: inline-block;
+		padding: 15px 0px 0px 20px;
+	}
+	.btnDiv {
+		width: 90px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: right;
+	}
+	.button {
+		margin: 5px;
+		padding: 5px;
+		padding-bottom: 2px;
+		border: 1px solid #9F9F9F;
+		background: white;
+		font-size: 15px;
+		font-family: "Gmarket Sans TTF";
+		cursor: pointer;
+		outline: 0;
+		vertical-align: middle;
+	}
+	.button:hover {
+		background: #FF6833;
+		color: white;
+		cursor: pointer;
+	}
+	.delBtnDiv {
+		width: 30px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: right;
+	}
 	#wrap {
 		display: table-cell;
 		margin: 0;
@@ -213,6 +290,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		border-collapse: collapse;
+		table-layout: fixed;
 	}
 	.nothing {
 		width: 100%;
@@ -221,6 +299,86 @@
 	.line {
 		border: 1px solid #FF6833;
 		margin: 0px;
+	}
+	.pagingArea {
+		text-align: center; 
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.pageBtn {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+	}
+	.pageBtn:hover {
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnSelected {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #FF6833;
+		color: white;
+		font-weight: bold;
+	}
+	.pageBtnEnd {
+		display: inline-block;
+		font-family: initial;
+		font-size: 11px;
+		padding-top: 3px;
+		width: 22px;
+		height: 20px;
+		background: #E4E4E4;
+		corsur: default;
+	}
+	.xImg {
+		padding: 10px 10px 0px 0px;
+		width: 15px;
+		height: 15px;
+		object-fit: cover;
+		cursor: pointer;
+		opacity: 0.2;
+	}
+	.xImg:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+
+	#listArea {
+		width: 100%;
+	}
+	thead {
+		background-color: #F4F4F4;
+	}
+	tbody {
+		min-height: 250px;
+	}
+	tr {
+		text-align: center;
+	}
+	th {
+		height: 41px;
+		border-bottom: 2px solid #D4D4D4;
+	}
+	.boardTd {
+		font-size: 14px;
+		height: 40px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		border-bottom: 1px solid #D4D4D4;
+	}
+	#titleTd {
+		text-align: left;
 	}
 	.pagingArea {
 		text-align: center; 
@@ -271,7 +429,7 @@
 		<!-- 사이드 메뉴 -->
 		<div class="sideMenu">
 	    	<div class="profile">
-	    		<div class="profileDiv">
+    			<div class="profileDiv">
 					<c:if test="${ empty img }">
 						<img class="profileImg" name="profileImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
     				</c:if>
@@ -335,13 +493,13 @@
 						<button class="sideMenuBtn" style="cursor: default;" id="selectedBtn">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn" id="selectedBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn" id="selectedBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -358,7 +516,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -371,13 +529,13 @@
 			<div class="listArea">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href=''" class="selected">고객 문의</li>
-						<li onclick="location.href=''">활동 문의</li>
-						<li onclick="location.href=''">상품 문의</li>
+						<li onclick="location.href='myQnaCusListView.me'" class="selected">고객 문의</li>
+						<li onclick="location.href='myQnaActListView.me'">활동 문의</li>
+						<li onclick="location.href='myQnaProListView.me'">상품 문의</li>
 					</ul>
 				</div>
 			<!-- 작성한 고객 문의가 없는 경우 -->
-				<%-- <c:if test="${ o.size() == 0 }">
+				<c:if test="${ list.size() ==0 }">
 					<div id="wrap">
 						<table>
 							<tr>
@@ -387,49 +545,41 @@
 							</tr>
 						</table>
 					</div>
-				</c:if> --%>
-					<div id="wrap">
-						<table>
-							<tr>
-								<td class="nothing">
-									작성한 고객 문의가 없습니다.
-								</td>
-							</tr>
+				</c:if>
+			<!-- 찜한 활동이 있는 경우 반복문 시작 -->
+				<c:if test="${ list.size() > 0 }">
+					<div id="noticeFrame">
+						<table class="table table-hover" id="listArea">
+							<thead>
+								<tr>
+									<th scope="col" class="text-center" width="5%">No</th>
+									<th scope="col" class="text-center" width="10%">분류</th>
+									<th scope="col" class="text-center" width="7%">조회수</th>
+									<th scope="col" class="text-center" width="43%">제목</th>
+									<th scope="col" class="text-center" width="10%">등록일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="q" items="${ list }">
+									<tr class="QnAValue">
+										<td class="boardTd">${ q.cusqnaNo }</td>
+										<td class="boardTd"><c:choose>
+												<c:when test="${ q.cusqnaCategory eq '0' }">배송</c:when>
+												<c:when test="${ q.cusqnaCategory eq '1' }">환불/반품</c:when>
+												<c:when test="${ q.cusqnaCategory eq '2' }">주문/결제</c:when>
+												<c:when test="${ q.cusqnaCategory eq '3' }">상품정보</c:when>
+												<c:when test="${ q.cusqnaCategory eq '4' }">마이페이지</c:when>
+												<c:when test="${ q.cusqnaCategory eq '5' }">기타</c:when>
+												<c:when test="${ q.cusqnaCategory eq '6' }">신고</c:when>
+											</c:choose></td>
+										<td class="boardTd">${ q.cusqnaCount }</td>
+										<td class="boardTd" id="titleTd">${ q.cusqnaTitle }</td>
+										<td class="boardTd">${ q.cusqnaDate }</td>
+										<tr>
+								</c:forEach>
+							</tbody>
 						</table>
 					</div>
-			<!-- 작성한 고객 문의가 있는 경우 반복문 시작 -->
-				<%-- <c:if test="${ o.size() > 0 }">
-					<c:forEach var="o" items="${ o }">
-						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ o.activity.actNo }'">
-								<div class="imgDiv">
-									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ o.image.imgName }">
-								</div>
-								<div class="textDiv">
-									<input type="hidden" class="ordNo" value="${ o.ordNo }" name="ordNo">
-									<input type="hidden" class="actNo" value="${ o.activity.actNo }" name="actNo">
-									<p class="text">${ o.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ o.ordPay }"/> 원</p>
-									<p class="text">${ o.ordDate } 신청</p>
-								</div>
-							</div>
-							<div class="btnDiv">
-								<button class="detailActBtn" onclick="openModal('detail')">상세내역</button>
-								<button class="button" onclick="location.href='salesQnaInsertView.sq?acId=${ o.activity.actNo }'">문의하기</button>
-								<c:if test="${ o.ordReview == 'N' }">
-									<button class="reviewActBtn" onclick="openModal('reviewWrite')">리뷰작성</button>
-								</c:if>
-								<c:if test="${ o.ordReview == 'Y' }">
-									<button class="button" disabled>작성완료</button>
-								</c:if>
-							</div>
-							<div class="delBtnDiv">
-								<div class="delBtn">
-									<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-								</div>
-							</div>
-						</div>
-					</c:forEach>
 					<table class="pagingArea">
 						<tr align="center" height="20">
 							<td colspan="6">
@@ -438,7 +588,7 @@
 									<a class="pageBtnEnd">&lt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="before" value="myPurActView.me">
+									<c:url var="before" value="myQnaCusListView.me">
 										<c:param name="page" value="${ pi.currentPage - 1 }"/>
 									</c:url>
 									<a href="${ before }" class="pageBtn">&lt;</a>
@@ -451,7 +601,7 @@
 									</c:if>
 									
 									<c:if test="${ p ne pi.currentPage }">
-										<c:url var="pagination" value="myPurActView.me">
+										<c:url var="pagination" value="myQnaCusListView.me">
 											<c:param name="page" value="${ p }"/>
 										</c:url>
 										<a href="${ pagination }" class="pageBtn">${ p }</a>
@@ -463,7 +613,7 @@
 									<a class="pageBtnEnd">&gt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage < pi.maxPage }">
-									<c:url var="after" value="myPurActView.me">
+									<c:url var="after" value="myQnaCusListView.me">
 										<c:param name="page" value="${ pi.currentPage + 1 }"/>
 									</c:url> 
 									<a href="${ after }" class="pageBtn">&gt;</a>
@@ -472,10 +622,26 @@
 						</tr>
 					</table>
 					<hr class="line">
-				</c:if> --%>
+				</c:if>
 			<!-- 반복문 종료 -->
 			</div>
 		</div>
 	</div>
+	
+	<c:import url="../common/footer.jsp"/>
+	
+	<script>
+		$(function() {
+			$('.QnAValue').mouseenter(function(){
+				$(this).css({'color': '#FF6833', 'cursor': 'pointer'});
+			}).mouseout(function(){
+				$(this).css({'color': 'black'});
+			}).click(function(){
+				var cusqnaNo=$(this).children('td').eq(0).text();
+				console.log(cusqnaNo);
+				location.href='cusQnADetail.bo?cusqnaNo=' + cusqnaNo + '&page=' + ${pi.currentPage} + '&from=' + 1;
+			});
+		});
+	</script>
 </body>
 </html>

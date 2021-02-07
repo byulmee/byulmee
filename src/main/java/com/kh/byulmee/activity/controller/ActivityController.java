@@ -199,7 +199,7 @@ public class ActivityController {
 	@RequestMapping("salesReviewDetail.ac")
 	public void getReviewDetail(@RequestParam("revNo") int revNo, HttpServletResponse response) {
 		Review review = rvService.selectReviewDetail(revNo);
-		
+		System.out.println("review : " + review);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -267,12 +267,12 @@ public class ActivityController {
 	}
 	
 
-	@RequestMapping("alist.ac")         
+	@RequestMapping("alist.ac")
     public ModelAndView activityList(@RequestParam(value="page", required=false) Integer page, @RequestParam("actCategory") int actCategory , ModelAndView model) {
                      
 		int currentPage = 1;
-		if(page != null) {
-		     currentPage = page;
+		if (page != null) {
+			currentPage = page;
 		}
 		  
 		int listCount = aService.getActBoardListCount(actCategory);

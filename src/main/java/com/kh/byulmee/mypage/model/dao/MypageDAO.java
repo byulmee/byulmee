@@ -7,10 +7,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.mypage.model.vo.RevImgChange;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -63,14 +65,10 @@ public class MypageDAO {
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectProDetailList", ordNo);
 	}
 
-	public int deletePurAct(SqlSessionTemplate sqlSession, Order o) {
-		return sqlSession.update("mypageMapper.deletePurAct", o);
+	public int deletePur(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("mypageMapper.deletePur", o);
 	}
 
-	public int deletePurPro(SqlSessionTemplate sqlSession, Order o) {
-		return sqlSession.update("mypageMapper.deletePurPro", o);
-	}
-	
 	public int insertProfileImage(SqlSessionTemplate sqlSession, Image i) {
 		return sqlSession.insert("mypageMapper.insertProfileImage", i);
 	}
@@ -118,16 +116,8 @@ public class MypageDAO {
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectFavStarList", id, rowBounds);
 	}
 
-	public int deleteFavAct(SqlSessionTemplate sqlSession, Favorite f) {
-		return sqlSession.update("mypageMapper.deleteFavAct", f);
-	}
-
-	public int deleteFavPro(SqlSessionTemplate sqlSession, Favorite f) {
-		return sqlSession.update("mypageMapper.deleteFavPro", f);
-	}
-
-	public int deleteFavStar(SqlSessionTemplate sqlSession, Favorite f) {
-		return sqlSession.update("mypageMapper.deleteFavStar", f);
+	public int deleteFav(SqlSessionTemplate sqlSession, Favorite f) {
+		return sqlSession.update("mypageMapper.deleteFav", f);
 	}
 
 	public int getReviewListCount(SqlSessionTemplate sqlSession, Review rev) {
@@ -140,6 +130,13 @@ public class MypageDAO {
 		
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevActList", id, rowBounds);
 	}
+	
+	public ArrayList<Review> selectRevProList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevProList", id, rowBounds);
+	}
 
 	public ArrayList<Image> selectRevDetailImg(SqlSessionTemplate sqlSession, int revNo) {
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectRevDetailImg", revNo);
@@ -148,10 +145,36 @@ public class MypageDAO {
 	public Review selectRevActDetail(SqlSessionTemplate sqlSession, int revNo) {
 		return sqlSession.selectOne("mypageMapper.selectRevActDetail", revNo);
 	}
+	
+	public Review selectRevProDetail(SqlSessionTemplate sqlSession, int revNo) {
+		return sqlSession.selectOne("mypageMapper.selectRevProDetail", revNo);
+	}
 
 	public int updateRevAct(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("mypageMapper.updateRevAct", r);
 	}
 
+	public int changeImgLevel(SqlSessionTemplate sqlSession, RevImgChange ric) {
+		return sqlSession.update("mypageMapper.changeImgLevel", ric);
+	}
+
+	public void deleteRev(SqlSessionTemplate sqlSession, Review r) {
+		sqlSession.delete("mypageMapper.deleteRev", r);
+	}
+
+	public int deleteReviewStatus(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("mypageMapper.deleteReviewStatus", r);
+	}
+
+	public int getQnACusListCount(SqlSessionTemplate sqlSession, CustomerQna cus) {
+		return sqlSession.selectOne("mypageMapper.getQnACusListCount", cus);
+	}
+
+	public ArrayList<CustomerQna> selectQnACusList(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectQnACusList", id, rowBounds);
+	}
 
 }

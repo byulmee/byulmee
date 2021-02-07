@@ -56,7 +56,7 @@
 	<div id="mainFrame" style="padding-left: 10%; padding-right: 10%;">
 		<h2 align="center" style="padding-top: 15px; font-weight: bold">활동 문의 등록</h2>
 		<hr>
-		<form action="salesQnaInsert.sq" method="post">
+		<form action="salesQnaInsert.me" method="post">
 			<div class="form-group row">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<input type="hidden" name="memId" value="${ loginUser.memId }">

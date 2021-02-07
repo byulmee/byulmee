@@ -8,36 +8,36 @@
 <title>고객센터</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
-	rel="stylesheet" />
+   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+   rel="stylesheet" />
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+   crossorigin="anonymous">
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+   crossorigin="anonymous"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+   crossorigin="anonymous"></script>
 
 <style>
 #mainFrame {
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-left: auto;
-	margin-right: auto;
-	overflow: hidden;
-	position: relative;
-	width: 1000px;
-	font-family: "G마켓 산스 TTF Medium";
-	
+   margin-top: 50px;
+   margin-bottom: 50px;
+   margin-left: auto;
+   margin-right: auto;
+   overflow: hidden;
+   position: relative;
+   width: 1000px;
+   font-family: "G마켓 산스 TTF Medium";
+   
 }
 
 #buttonArea {
-	text-align: center;
+   text-align: center;
 }
 
 .select-script{position:relative; width:200px; height:40px; line-height:40px; border:1px solid #606976; border-radius:4px; text-transform:uppercase; background:#fff;}
@@ -47,46 +47,46 @@
 </style>
 <script>
 $(document).ready(function(){
-	//카테고리 초기 세팅
-	var setCategory = $('#cusqnaCategory').val();
-	if(setCategory == "0"){
-		$("label[for='selectbox']").text("배송");
-	} else if(setCategory == "1"){
-		$("label[for='selectbox']").text("환불/반품");
-	} else if(setCategory == "2"){
-		$("label[for='selectbox']").text("주문/결제");
-	} else if(setCategory == "3"){
-		$("label[for='selectbox']").text("상품 정보");
-	} else if(setCategory == "4"){
-		$("label[for='selectbox']").text("마이페이지");
-	} else if(setCategory == "5"){
-		$("label[for='selectbox']").text("기타");
-	} else {
-		$("label[for='selectbox']").text("신고");
-	}
-	//카테고리 변경시 
+   //카테고리 초기 세팅
+   var setCategory = $('#cusqnaCategory').val();
+   if(setCategory == "0"){
+      $("label[for='selectbox']").text("배송");
+   } else if(setCategory == "1"){
+      $("label[for='selectbox']").text("환불/반품");
+   } else if(setCategory == "2"){
+      $("label[for='selectbox']").text("주문/결제");
+   } else if(setCategory == "3"){
+      $("label[for='selectbox']").text("상품 정보");
+   } else if(setCategory == "4"){
+      $("label[for='selectbox']").text("마이페이지");
+   } else if(setCategory == "5"){
+      $("label[for='selectbox']").text("기타");
+   } else {
+      $("label[for='selectbox']").text("신고");
+   }
+   //카테고리 변경시 
     var select = $('.select-script select');
     select.change(function(){
          var select_name = $(this).children('option:selected').text();
         $(this).siblings("label").text(select_name);
         console.log(select_name);
         if(select_name == "배송"){
-			$('#cusqnaCategory').val("0");
+         $('#cusqnaCategory').val("0");
         } else if(select_name == "환불/반품") {
-        	$('#cusqnaCategory').val("1");
+           $('#cusqnaCategory').val("1");
         } else if(select_name == "주문/결제") {
-        	$('#cusqnaCategory').val("2");
+           $('#cusqnaCategory').val("2");
         } else if(select_name == "상품정보") {
-        	$('#cusqnaCategory').val("3");
+           $('#cusqnaCategory').val("3");
         } else if(select_name == "마이페이지") {
-        	$('#cusqnaCategory').val("4");
+           $('#cusqnaCategory').val("4");
         } else if(select_name == "기타") {
-        	$('#cusqnaCategory').val("5");
+           $('#cusqnaCategory').val("5");
         } else {
-        	$('#cusqnaCategory').val("6");
+           $('#cusqnaCategory').val("6");
         } 
     });
- 	
+    
 });
 </script>
 </head>
@@ -99,6 +99,7 @@ $(document).ready(function(){
 			<div class="form-group row">
 				<input type="hidden" name="cusqnaNo" value="${ customer.cusqnaNo }">
 				<input type="hidden" name="page" value="${ page }">
+				<input type="hidden" name="from" value="${ from }">
 				<input type="hidden" name="cusqnaCategory" id="cusqnaCategory" value="${ customer.cusqnaCategory }">
 				<label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
 				<div class="col-sm-10">
@@ -133,7 +134,7 @@ $(document).ready(function(){
 			</div>
 			<div id="buttonArea">
 				<button type="submit" id="insertBtn" class="btn btn mb-3" style="background-color: #FF6833; color: white">수정</button>
-				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='cusQnADetail.bo?cusqnaNo=${ customer.cusqnaNo }&page=${ page }'">취소</button>
+				<button type="button" id="cancelBtn" class="btn btn mb-3" style="background-color: #EFEFEF; color: #5A5A5A" onclick="location.href='cusQnADetail.bo?cusqnaNo=${ customer.cusqnaNo }&page=${ page }&from=${ from }'">취소</button>
 			</div>
 		</form>
 	</div>

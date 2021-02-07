@@ -33,10 +33,12 @@ public class PaymentController {
 	private OrderService odService;
 	
 	@RequestMapping("payment.pt")
-	public ModelAndView getPayment(@ModelAttribute Order o, @RequestParam("acId") int acId, @RequestParam("memNo") int memNo, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView getPayment(@ModelAttribute Order o,@RequestParam("acId") int acId, @RequestParam("ordCount") int ordCount, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Activity a = aService.selectActivity(acId);
 		Member m = mService.selectMemberWithNo(memNo);
 		
+		o.setOrdCount(ordCount);
 		mv.addObject("a", a);
 		mv.addObject("m", m);
 		mv.addObject("o", o);
@@ -55,7 +57,8 @@ public class PaymentController {
 //	}
 	
 	@RequestMapping("payment-success.pt")
-	public ModelAndView getpaymentSuccess(@RequestParam("ordPay") int ordPay, @RequestParam("ordCount") int ordCount, @RequestParam("acId") int acId, @RequestParam("memNo") int memNo, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView getpaymentSuccess(@RequestParam("ordPay") int ordPay, @RequestParam("ordCount") int ordCount, @RequestParam("acId") int acId, ModelAndView mv, HttpServletRequest request) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		Activity a = aService.selectActivity(acId);
 		Member m = mService.selectMemberWithNo(memNo);
 		Order o = new Order();

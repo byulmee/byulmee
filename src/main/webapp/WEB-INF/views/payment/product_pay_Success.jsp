@@ -85,7 +85,6 @@ $( document ).ready(function() {
 		</script>
 </head>
 <body>
-	<c:import url="../common/gnb.jsp" />
 	<nav>
 	<ul>
 		<li style="color: orange;">주문/결제 ><strong> 주문완료 </strong></li>
@@ -132,5 +131,7 @@ $( document ).ready(function() {
          </p>  
       </div>
     </div>
+    
+    <div class="btn" align="center"><button onclick="location.href='home.do'">완료</button></div>
 </body>
 </html>

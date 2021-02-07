@@ -599,11 +599,12 @@
 									<td colspan="3" class="reviewTitleTd">
 										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
 										<input type="hidden" class="memId" value="${ r.memId }" name="memId" >
-										<input type="hidden" class="revRefcode" value="0" name="revRefcode">
+										<input type="hidden" class="revRating" value="${ r.revRating }" name="revRating">
+										<input type="hidden" class="revRefcode" value="1" name="revRefcode">
 										<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
 										<input type="hidden" class="ordNo" value="${ r.ordNo }" name="ordNo">
 										<input type="hidden" class="revLastRating" value="${ r.revRating }" name="revLastRating">
-										활동은 만족하셨나요?
+										상품은 만족하셨나요?
 									</td>
 								</tr>
 								<tr>
@@ -643,7 +644,7 @@
 								</tr>
 								<tr>
 									<td colspan="3" class="reviewTitleTd">
-										활동에 대한 사진을 등록해주세요.
+										상품에 대한 사진을 등록해주세요.
 									</td>
 								</tr>
 								<tr>
@@ -770,7 +771,7 @@
 							</table>
 						</div>	
 						<div class="reviewBtnDiv">
-							<button type="button" class="reviewBtn" id="cancelBtn" onclick="location.href='myRevActListView.me'">취소</button>
+							<button type="button" class="reviewBtn" id="cancelBtn" onclick="location.href='myRevProListView.me'">취소</button>
 							<button type="button" class="reviewBtn" id="deleteBtn">삭제</button>
 							<button type="submit" class="reviewBtn" id="finishBtn">수정 완료</button>
 						</div>

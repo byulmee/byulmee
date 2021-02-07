@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
+   
 <meta charset="UTF-8">
 <title>결제완료 페이지</title>
 <link rel="stylesheet" href="css/common/cssReset.css">
@@ -25,13 +25,13 @@
 
 
 body{
-	width: 1050px;
-	margin: 0 auto;
-	font-family: 'GmarketSansMedium';
+   width: 1050px;
+   margin: 0 auto;
+   font-family: 'GmarketSansMedium';
 }
 ul li{
-		float: right;
-		list-style: none;	
+      float: right;
+      list-style: none;   
 }
    .div{
       text-align: center;
@@ -42,7 +42,28 @@ ul li{
    
 
    #info{
-   	font-family: 'Gmarket Sans TTF';
+      font-family: 'Gmarket Sans TTF';
+   }
+   
+   .PayName {
+      text-align: center;
+      width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+   }
+   .infoTable {
+         width: 500px;
+         
+   }
+   .tdName, .tdContent {
+      text-align: left;
+   }
+   .tdName {
+         width: 110px;
+   }
+   .tdContent {
+         width: 250px;
+   		font-family: 'Gmarket Sans TTF';
    }
    
    .PayName {
@@ -70,47 +91,46 @@ ul li{
 /* span4 */
 
 $( document ).ready(function() {
-	var cardIdKindCK = '<%=request.getParameter("cardIdKind")%>'
-	var carIdkindckleng = cardIdKindCK.length;
-	var paymethod = '<%=request.getParameter("pay_method")%>'
-	
-	
-	console.log("cardIdKindCK?" , cardIdKindCK.length);
-	
-	if(carIdkindckleng != 4){
-		$("#span4").html("고객님의 입금계좌는 ");
-		$("#span5").html(cardIdKindCK);
-	}
+   var cardIdKindCK = '<%=request.getParameter("cardIdKind")%>'
+   var carIdkindckleng = cardIdKindCK.length;
+   var paymethod = '<%=request.getParameter("pay_method")%>'
+   
+   
+   console.log("cardIdKindCK?" , cardIdKindCK.length);
+   
+   if(carIdkindckleng != 4){
+      $("#span4").html("고객님의 입금계좌는 ");
+      $("#span5").html(cardIdKindCK);
+   }
 
-	if(paymethod == "card"){
-		$("#paymethod").html("카드");
-	}
-	else if(paymethod == "virtual"){
-		$("#paymethod").html("무통장 입금");
-	}
-	else {
-		$("#paymethod").html("휴대폰 결제");
-	}
+   if(paymethod == "card"){
+      $("#paymethod").html("카드");
+   }
+   else if(paymethod == "virtual"){
+      $("#paymethod").html("무통장 입금");
+   }
+   else {
+      $("#paymethod").html("휴대폰 결제");
+   }
 
-	
+   
 
 });
 
 
-		</script>
+      </script>
 </head>
 <body>
+   <nav>
+   <ul>
+      <li style="color: orange;">주문/결제 ><strong> 주문완료 </strong></li>
+      <li> 주문/결제 > </li>
+      
 
-	<nav>
-	<ul>
-		<li style="color: orange;">주문/결제 ><strong> 주문완료 </strong></li>
-		<li> 주문/결제 > </li>
-		
-
-	</ul>
+   </ul>
 </nav><br>
 <hr>
- 	
+
  <span style="text-align: left; font-size: 30px;"><strong>주문 완료</strong></span><br><br>			
  
       
@@ -156,8 +176,8 @@ $( document ).ready(function() {
   			</td>
   			<td class="tdContent">
   				<c:choose>
-		      	<c:when test="${ o.ordPayWay eq 0 }">카드</c:when>
-		      	<c:when test="${ o.ordPayWay eq 1 }">페이</c:when>
+		      	<c:when test="${ o.ordPayWay eq 0 }">페이</c:when>
+		      	<c:when test="${ o.ordPayWay eq 1 }">카드</c:when>
 		      </c:choose>
   			</td>
   		</tr>
@@ -189,12 +209,14 @@ $( document ).ready(function() {
 
       </div>
      	 <p>
+
            <a href="#" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-home"></span> 
            </a>
          </p>  
       </div>
     </div>
+
     <div class="btn" align="center"><button onclick="location.href='home.do'">완료</button></div>
 </body>
 </html>

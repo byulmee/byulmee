@@ -7,11 +7,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.byulmee.board.model.vo.CustomerQna;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Favorite;
 import com.kh.byulmee.member.model.vo.Member;
 import com.kh.byulmee.mypage.model.dao.MypageDAO;
+import com.kh.byulmee.mypage.model.vo.RevImgChange;
 import com.kh.byulmee.order.model.vo.Order;
 import com.kh.byulmee.review.model.vo.Review;
 
@@ -70,13 +72,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 	
 	@Override
-	public int deletePurAct(Order o) {
-		return mpDAO.deletePurAct(sqlSession, o);
-	}
-	
-	@Override
-	public int deletePurPro(Order o) {
-		return mpDAO.deletePurPro(sqlSession, o);
+	public int deletePur(Order o) {
+		return mpDAO.deletePur(sqlSession, o);
 	}
 
 	@Override
@@ -126,18 +123,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int deleteFavAct(Favorite f) {
-		return mpDAO.deleteFavAct(sqlSession, f);
-	}
-
-	@Override
-	public int deleteFavPro(Favorite f) {
-		return mpDAO.deleteFavPro(sqlSession, f);
-	}
-
-	@Override
-	public int deleteFavStar(Favorite f) {
-		return mpDAO.deleteFavStar(sqlSession, f);
+	public int deleteFav(Favorite f) {
+		return mpDAO.deleteFav(sqlSession, f);
 	}
 
 	@Override
@@ -148,6 +135,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public ArrayList<Review> selectRevActList(PageInfo pi, String id) {
 		return mpDAO.selectRevActList(sqlSession, pi, id);
+	}
+	
+	@Override
+	public ArrayList<Review> selectRevProList(PageInfo pi, String id) {
+		return mpDAO.selectRevProList(sqlSession, pi, id);
 	}
 
 	@Override
@@ -161,9 +153,38 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
+	public Review selectRevProDetail(int revNo) {
+		return mpDAO.selectRevProDetail(sqlSession, revNo);
+	}
+
+	@Override
 	public int updateRevAct(Review r) {
 		return mpDAO.updateRevAct(sqlSession, r);
 	}
 
+	@Override
+	public int changeImgLevel(RevImgChange ric) {
+		return mpDAO.changeImgLevel(sqlSession, ric);
+	}
+
+	@Override
+	public void deleteRev(Review r) {
+		mpDAO.deleteRev(sqlSession, r);
+	}
+
+	@Override
+	public int deleteReviewStatus(Review r) {
+		return mpDAO.deleteReviewStatus(sqlSession, r);
+	}
+
+	@Override
+	public int getQnACusListCount(CustomerQna cus) {
+		return mpDAO.getQnACusListCount(sqlSession, cus);
+	}
+
+	@Override
+	public ArrayList<CustomerQna> selectQnACusList(PageInfo pi, String id) {
+		return mpDAO.selectQnACusList(sqlSession, pi, id);
+	}
 
 }

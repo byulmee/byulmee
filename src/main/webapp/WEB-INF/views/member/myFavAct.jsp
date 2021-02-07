@@ -242,10 +242,15 @@
 	}
 	.textDiv {
 		position: absolute;
-		width: 350px;
+		width: 450px;
 		height: 130px;
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
+	}
+	p {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	.btnDiv {
 		width: 90px;
@@ -425,13 +430,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -448,7 +453,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="#" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -488,9 +493,9 @@
 								</div>
 								<div class="textDiv">
 									<input type="hidden" class="favNo" value="${ f.favNo }" name="favNo">
-									<input type="hidden" class="actNo" value="${ f.activity.actNo }" name="actNo">
+									<input type="hidden" class="favRefcode" value="1" name="favRefcode">
 									<p class="text">${ f.activity.actTitle }</p>
-									<p class="text"><fmt:formatNumber value="${ f.order.ordPay }"/> 원</p>
+									<p class="text"><fmt:formatNumber value="${ f.activity.actPrice }"/> 원</p>
 									<p class="text">${ f.favDate } 찜</p>
 								</div>
 							</div>
@@ -558,10 +563,10 @@
 		$(".delBtn").click(function() {
 			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
 			var favNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favNo").val();
-			var favRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".actNo").val();
+			var favRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".favRefcode").val();
 			
 			if(bool) {
-				location.href='deleteFavAct.me?favNo=' + favNo + '&favRefno=' + favRefno;
+				location.href='deleteFav.me?favNo=' + favNo + '&favRefcode=' + favRefcode;
 			}			
 		});
 	</script>

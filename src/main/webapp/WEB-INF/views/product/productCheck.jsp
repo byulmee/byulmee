@@ -513,7 +513,7 @@ button {
 	        var chk = document.payment.check.checked;
 	        
 	        if(!chk){
-	            alert('약관에 동의해 주세요.');
+	            alert('구매 동의에 체크해 주세요.');
 	            return false;
 	        } 
 		}    

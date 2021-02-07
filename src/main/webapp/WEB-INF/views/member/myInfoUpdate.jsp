@@ -374,13 +374,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -397,7 +397,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>

@@ -189,7 +189,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("cusQnADetail.bo")
-	public ModelAndView CusQnAdetail(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView CusQnAdetail(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page,
+									 @RequestParam("from") int from, ModelAndView mv) {
 		
 		int result = bService.updateCusCount(cusqnaNo);
 		
@@ -209,6 +210,7 @@ public class BoardController {
 		if(customerqna != null) {
 			mv.addObject("customerqna", customerqna);
 			mv.addObject("page", page);
+			mv.addObject("from", from);
 			mv.addObject("reply", reply);
 			mv.setViewName("QnADetail");
 		} else {
@@ -262,13 +264,15 @@ public class BoardController {
 	}
 	
 	@RequestMapping("cusUpdateForm.bo")
-	public ModelAndView cusUpdateForm(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView cusUpdateForm(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page,
+									  @RequestParam("from") int from, ModelAndView mv) {
 		
 		CustomerQna customerqna = bService.selectCusQnA(cusqnaNo);
 		
 		if(customerqna != null) {
 			mv.addObject("customer", customerqna);
 			mv.addObject("page", page);
+			mv.addObject("from", from);
 			mv.setViewName("QnAUpdate");
 		} else {
 			throw new BoardException("고객 QnA 업데이트에 실패했습니다.");
@@ -278,13 +282,15 @@ public class BoardController {
 	}
 
 	@RequestMapping("cusUpdate.bo")
-	public ModelAndView cusUpdate(@ModelAttribute CustomerQna c, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView cusUpdate(@ModelAttribute CustomerQna c, @RequestParam("page") int page,
+								  @RequestParam("from") int from, ModelAndView mv) {
 		
 		int result = bService.updateCusQna(c);
 		
 		if(result > 0) {
 			mv.addObject("cusqnaNo", c.getCusqnaNo());
 			mv.addObject("page", page);
+			mv.addObject("from", from);
 			mv.setViewName("redirect:cusQnADetail.bo");
 		} else {
 			throw new BoardException("고객 QnA 업데이트에 실패했습니다.");
@@ -294,13 +300,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deleteCusQna.bo")
-	public ModelAndView CusQnaDelete(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView CusQnaDelete(@RequestParam("cusqnaNo") int cusqnaNo, @RequestParam("page") int page,
+									 @RequestParam("from") int from, ModelAndView mv) {
 		
 		int result = bService.cusQnaDelete(cusqnaNo);
 		
-		if(result > 0) {
+		if(result > 0 &&  from == 0) {
 			mv.addObject("page", page);
 			mv.setViewName("redirect:QnAView.bo");
+		} else if(result > 0 &&  from == 1) { 
+			mv.addObject("page", page);
+			mv.setViewName("redirect:myQnaCusListView.me");
 		} else {
 			throw new BoardException("고객 QnA 삭제에 실패했습니다.");
 		}

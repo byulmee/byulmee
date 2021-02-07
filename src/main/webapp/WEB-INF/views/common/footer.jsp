@@ -17,7 +17,7 @@
         </div>
         <div class="info">
             <p>
-                서울시 강남구 역삼동 테헤란로14길6 남도빌딩 3F<br />TEL.1544-9970 | 책임자: J.Shon
+                서울시 강남구 역삼동 테헤란로14길6 남도빌딩 3F<br />TEL.1544-9970 | 책임자: J.Son
             </p>
         </div>
         <div class="rights">

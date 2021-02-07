@@ -242,10 +242,24 @@
 	}
 	.textDiv {
 		position: absolute;
-		width: 350px;
+		width: 460px;
 		height: 130px;
 		display: inline-block;
 		padding: 15px 0px 0px 20px;
+	}
+	.conTable {
+		width: 460px;
+		height: 130px;
+		text-align: left;
+		vertical-align: middle;
+		table-layout: fixed;
+	}
+	.conTd {
+		width: 350px;
+		height: 30px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	.btnDiv {
 		width: 90px;
@@ -253,7 +267,7 @@
 		vertical-align: middle;
 		text-align: right;
 	}
-	.button, .detailActBtn, .reviewActBtn {
+	.button, .detailProBtn {
 		margin: 5px;
 		padding: 5px;
 		padding-bottom: 2px;
@@ -265,7 +279,7 @@
 		outline: 0;
 		vertical-align: middle;
 	}
-	.button:hover, .detailActBtn:hover ,.reviewActBtn:hover {
+	.button:hover, .detailProBtn:hover {
 		background: #FF6833;
 		color: white;
 		cursor: pointer;
@@ -429,13 +443,13 @@
 						<button class="sideMenuBtn" style="cursor: default;">문의 목록</button>
 						<ul class="qnaDropdown">
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">고객 문의</button>
+								<button onclick="location.href='myQnaCusListView.me'" class="sideMenuBtn">고객 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">활동 문의</button>
+								<button onclick="location.href='myQnaActListView.me'" class="sideMenuBtn">활동 문의</button>
 							</li>
 							<li>
-								<button onclick="location.href=''" class="sideMenuBtn">상품 문의</button>
+								<button onclick="location.href='myQnaProListView.me'" class="sideMenuBtn">상품 문의</button>
 							</li>
 						</ul>
 					</li>
@@ -452,7 +466,7 @@
 					</li>
 					<li>
 						<c:if test="${ loginUser.memLevel == 0 }">
-		            		<button onclick="" class="sideMenuBtn">스타 신청</button>
+		            		<button onclick="location.href='starRequestView.me'" class="sideMenuBtn">스타 신청</button>
 		            	</c:if>
 		            	<c:if test="${ loginUser.memLevel == 1 }">
 		            		<button onclick="location.href='wookroomView.wr'" class="sideMenuBtn">작업실</button>
@@ -465,12 +479,12 @@
 			<div class="listArea">
 				<div class="tab-box">
 					<ul>
-						<li onclick="location.href='myActRevListView.me'">활동 후기</li>
-						<li onclick="location.href='myProRevListView.me'" class="selected">상품 후기</li>
+						<li onclick="location.href='myRevActListView.me'">활동 후기</li>
+						<li onclick="location.href='myRevProListView.me'" class="selected">상품 후기</li>
 					</ul>
 				</div>
 			<!-- 작성한 상품 후기가 없는 경우 -->
-				<%-- <c:if test="${ o.size() == 0 }">
+				<c:if test="${ r.size() == 0 }">
 					<div id="wrap">
 						<table>
 							<tr>
@@ -480,36 +494,60 @@
 							</tr>
 						</table>
 					</div>
-				</c:if> --%>
+				</c:if>
 			<!-- 작성한 상품 후기가 있는 경우 반복문 시작 -->
 				<c:if test="${ r.size() > 0}">
 					<c:forEach var="r" items="${ r }">
-						<div class="list">
-							<div class="hoverDiv" onclick="location.href='activityDetail.ac?acId=${ r.activity.actNo }'">
-								<div class="imgDiv">
-									<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ r.image.imgName }">
+						<form action="myRevProUpdateView.me" method="post">
+							<div class="list">
+								<div class="hoverDiv" onclick="location.href='productDetail.pd?pdId=${ r.product.proNo }#menu2'">
+									<div class="imgDiv">
+										<c:if test="${ r.img.imgName ne null}">
+											<img class="img" src="${ pageContext.servletContext.contextPath }/resources/riUploadFiles/${ r.img.imgName }">
+										</c:if>
+										<c:if test="${ r.img.imgName eq null}">
+											<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/revProDefault.png">
+										</c:if>
+									</div>
+									<div class="textDiv">
+										<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
+										<input type="hidden" class="memId" value="${ r.memId }" name="memId">
+										<input type="hidden" class="revRating" value="${ r.revRating }" name="revRating">
+										<input type="hidden" class="revDate" value="${ r.revDate }" name="revDate">
+										<input type="hidden" class="revRefcode" value="1" name="revRefcode">
+										<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
+										<input type="hidden" class="ordNo" value="${ r.ordNo }" name="ordNo">
+										<table class="conTable">
+											<tr>
+												<td class="conTd">
+													${ r.product.proTitle }
+												</td>
+											</tr>
+											<tr>
+												<td class="conTd">
+													<span class="star"><img class='rating' src='${ pageContext.servletContext.contextPath }/resources/images/myPage/star${ r.revRating }.png'></span>
+													&nbsp;${ r.revRating }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${ r.revDate } 작성
+												</td>
+											</tr>
+											<tr>
+												<td class="conTd">
+													<input type="hidden" class="revContent" value="${ r.revContent }" name="revContent">
+													${ r.revContent }
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
-								<div class="textDiv">
-									<input type="hidden" class="revNo" value="${ r.revNo }" name="revNo">
-									<input type="hidden" class="revRefcode" value="${ r.revRefcode }" name="revRefcode">
-									<input type="hidden" class="revRefno" value="${ r.revRefno }" name="revRefno">
-									<p class="text">${ r.activity.actTitle }</p>
-									<p class="text">${ r.memId }</p>
-									<p class="text">${ r.revRating }</p>
-									<p class="text">${ r.revContent }</p>
-									<p class="text">${ r.revDate }</p>
+								<div class="btnDiv">
+									<button type="submit" class="detailProBtn">수정</button>
+								</div>
+								<div class="delBtnDiv">
+									<div class="delBtn">
+										<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
+									</div>
 								</div>
 							</div>
-							<div class="btnDiv">
-								<button class="detailActBtn" onclick="openModal('detail')">수정</button>
-								<button class="button" onclick="">삭제</button>
-							</div>
-							<div class="delBtnDiv">
-								<div class="delBtn">
-									<img class="xImg" src="${ pageContext.servletContext.contextPath }/resources/images/myPage/x.png">
-								</div>
-							</div>
-						</div>
+						</form>
 					</c:forEach>
 					<table class="pagingArea">
 						<tr align="center" height="20">
@@ -519,7 +557,7 @@
 									<a class="pageBtnEnd">&lt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="before" value="myReviewList.me">
+									<c:url var="before" value="myRevProListView.me">
 										<c:param name="page" value="${ pi.currentPage - 1 }"/>
 									</c:url>
 									<a href="${ before }" class="pageBtn">&lt;</a>
@@ -532,7 +570,7 @@
 									</c:if>
 									
 									<c:if test="${ p ne pi.currentPage }">
-										<c:url var="pagination" value="myReviewList.me">
+										<c:url var="pagination" value="myRevProListView.me">
 											<c:param name="page" value="${ p }"/>
 										</c:url>
 										<a href="${ pagination }" class="pageBtn">${ p }</a>
@@ -544,7 +582,7 @@
 									<a class="pageBtnEnd">&gt;</a>
 								</c:if>
 								<c:if test="${ pi.currentPage < pi.maxPage }">
-									<c:url var="after" value="myReviewList.me">
+									<c:url var="after" value="myRevProListView.me">
 										<c:param name="page" value="${ pi.currentPage + 1 }"/>
 									</c:url> 
 									<a href="${ after }" class="pageBtn">&gt;</a>
@@ -561,5 +599,20 @@
 	
 	<c:import url="../common/footer.jsp"/>
 	
+	<script>
+		$(".delBtn").click(function() {
+			var bool = confirm("삭제 된 내역은 복구할 수 없습니다. 정말로 삭제 하시겠습니까?")
+			var revNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revNo").val();
+			var revRating = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRating").val();
+			var revRefcode = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRefcode").val();
+			var revRefno = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".revRefno").val();
+			var ordNo = $(this).parent().parent().children(".hoverDiv").children(".textDiv").children(".ordNo").val();
+			
+			if(bool) {
+				location.href='deleteRev.me?revNo=' + revNo + '&revRating=' + revRating + '&revRefcode=' + revRefcode
+								+ '&revRefno=' + revRefno + '&ordNo=' + ordNo;
+			}			
+		});
+	</script>
 </body>
 </html>
