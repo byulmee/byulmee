@@ -75,6 +75,7 @@
   	<result property="ordRePay" column="ORD_REPAY"/>
  </resultMap>
 	
+ 
   	<!-- 배너 -->
   	<insert id="insertBanner">
   		insert into banner
@@ -200,8 +201,24 @@
 	 	where TO_CHAR(ord_date,'YYYYMMDD') >= TO_CHAR(SYSDATE,'YYYYMMDD')
 	 </select>
 
-
-	 
+	 <select id="getMonthlySales" parameterType="hashMap" resultType="map">			
+		<![CDATA[
+		select to_char(b.dt, 'YYYY-MM') as month, nvl(sum(a.sales), 0) as sales
+		from (SELECT TO_CHAR(ord_date, 'YYYY-MM-DD') AS month, nvl(sum(ord_pay), 0) as sales
+		   FROM orders
+		  WHERE to_char(ord_date, 'YYYY-MM-DD') BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD')
+		                     AND TO_DATE(#{end}, 'YYYY-MM-DD') 
+		  GROUP BY to_char(ord_date, 'YYYY-MM-DD')
+		) a,
+		(SELECT TO_DATE(#{start},'YYYY-MM-DD') + LEVEL - 1 AS dt FROM dual 
+		 CONNECT BY LEVEL <= (TO_DATE(#{end},'YYYY-MM-DD')
+		                    - TO_DATE(#{start},'YYYY-MM-DD') + 1)
+		) b
+		where b.dt = a.month(+)
+		group by to_char(b.dt, 'YYYY-MM')
+		order by to_char(b.dt, 'YYYY-MM')
+		]]>
+	 </select>
 	 
 
 </mapper>

@@ -1,6 +1,8 @@
 package com.kh.byulmee.admin.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -57,6 +59,6 @@ public interface AdminService {
 
 	int getOdersCount();
 
-
+	List<Map<String, String>> getMonthlySales(String year);
 
 }

@@ -2,6 +2,7 @@ package com.kh.byulmee.admin.model.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,7 +118,15 @@ return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", id , row
 		return sqlSession.selectOne("adminMapper.getOdersCount");
 	}
 
-
+	public List<Map<String, String>> getMonthlySales(SqlSessionTemplate sqlSession, String year) {
+		Map <String, Object> params = new HashMap<String, Object>();
+		params.put("start", year + "-01-01");
+		params.put("end", year + "-12-31");
+		
+		System.out.println(params);
+		List<Map<String, String>> result = sqlSession.selectList("adminMapper.getMonthlySales", params);
+		return result;
+	}
 
 }
 

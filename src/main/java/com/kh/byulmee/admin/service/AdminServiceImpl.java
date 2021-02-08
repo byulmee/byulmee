@@ -2,6 +2,8 @@ package com.kh.byulmee.admin.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -126,5 +128,8 @@ public class AdminServiceImpl implements AdminService {
 		return abDAO.getOdersCount(sqlSession);
 	}
 
-
+	@Override
+	public List<Map<String, String>> getMonthlySales(String year) {
+		return (List<Map<String, String>>) abDAO.getMonthlySales(sqlSession, year);
+	}
 }

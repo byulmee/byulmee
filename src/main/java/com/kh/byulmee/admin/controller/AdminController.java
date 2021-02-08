@@ -59,7 +59,7 @@ public class AdminController {
 			
 		}
 		else {
-			throw new BoardException("매출조회에 실패하였습니다.");
+			throw new MemberException("매출조회에 실패하였습니다.");
 		}
 		
 		return mv;
