@@ -140,7 +140,7 @@
 	$('#popularActList').on('click','li', function(event){
 		event.preventDefault();
 		let boardNo = event.currentTarget.childNodes[0].value;
-		location.href='http://localhost:9380/activityDetail.ac?acId=' + boardNo;
+		location.href='activityDetail.ac?acId=' + boardNo;
 	});
 	
 	$('#nearEndDateActList').on('click','li', function(event){

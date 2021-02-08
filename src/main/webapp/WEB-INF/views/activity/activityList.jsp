@@ -11,18 +11,6 @@
 <link
    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
    rel="stylesheet" />
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-   crossorigin="anonymous">
-<script
-   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-   crossorigin="anonymous"></script>
-<script
-   src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-   crossorigin="anonymous"></script>
 </head>
 <style>
 @font-face {
@@ -56,16 +44,73 @@ body {
    margin:0 auto;
 }
 
-.listMain{
-   margin-top: 50px;
+ul, li {
+	cursor: pointer;
+	list-style: none;
+    padding-left: 0px;
 }
- .list-cate {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.8rem;
-        padding: 0.2rem 0;
-    }
+
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'GmarketSansMedium';
+}
+
+div {
+	box-sizing: border-box;
+}
+
+.outer {
+   max-width: 1050px;
+   min-width: 750px;
+   width: 80%;
+   margin: 0 auto;
+}
+
+.listMain{
+   margin-top: 80px;
+}
+
+.list {
+	width: 150px;
+	text-align: inline;
+	margin-right: 15px;
+}
+
+.list .img-frame {
+	whidth: 100%;
+	height: 155px;
+}
+
+.img-frame img {
+	width: auto;
+	height: 100%;
+}
+
+.list-item {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+	margin 20px;
+}
+
+.list-item:last-child {
+	margin-right: 0;
+}
+
+.img-frame-con{
+	width: 100%;
+	height: 100%;
+}
+
+.list-cate {
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       font-size: 0.8rem;
+       padding: 0.2rem 0;
+}
 </style>
 
 
