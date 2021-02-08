@@ -2,27 +2,16 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>별미_활동 검색 결과</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+	  rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <style>
 @font-face {
@@ -43,73 +32,204 @@
    font-style: normal;
 }
 
+ul, li {
+	cursor: pointer;
+	list-style: none;
+    padding-left: 0px;
+}
+
 body {
-   margin: 0 auto;
-   font-family: 'GmarketSansMedium';
+	padding: 0;
+	margin: 0;
+	font-family: 'GmarketSansMedium';
+}
+
+div {
+	box-sizing: border-box;
 }
 
 .outer {
-   width: 1280px;
-   min-height: auto;
-   text-align:center; 
-   position:relative; 
-   margin:0 auto;
+   max-width: 1050px;
+   min-width: 750px;
+   width: 80%;
+   margin: 0 auto;
 }
 
 .listMain{
-   margin-top: 50px;
+   margin-top: 80px;
 }
- .list-cate {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.8rem;
-        padding: 0.2rem 0;
-    }
+
+.list {
+	width: 150px;
+	text-align: inline;
+	margin-right: 15px;
+}
+
+.list .img-frame {
+	whidth: 100%;
+	height: 155px;
+}
+
+.img-frame img {
+	width: auto;
+	height: 100%;
+}
+
+.list-item {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+	margin 20px;
+}
+
+.list-item:last-child {
+	margin-right: 0;
+}
+
+
+.list-item:last-child {
+	margin-right: 0;
+}
+
+.img-frame-con{
+	width: 100%;
+	height: 100%;
+}
+
+.list-cate {
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       font-size: 0.8rem;
+       padding: 0.2rem 0;
+}
+
+.show-keyword {
+	margin: 80px;
+	color: #676D71;
+	text-align: left;
+	margin: 30px auto;
+	margin-top: 80px;
+}
+
+.show-keyword span{
+	color: #FF6933;
+}
+
+.star-ul {
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 100px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	overflow-x: scroll;
+}
+
+.division {
+	border-bottom: 1px solid silver;
+	padding: 5px 0;
+}
+
+.star-li {
+	width: 160px;
+	height: 185px;
+	margin-right: 30px;
+	text-align: center;
+	color: #464646;
+}
+
+.star-li span {
+	margin-top: 5px;
+}
+
+.star-img-frame {
+	width: 160px;
+	height: 160px;
+	border-radius: 70%;
+	overflow: hidden;
+}
+
+.star-img-frame img{
+	width: 100%;
+	height: auto;
+}
+
+.result-not-found {
+	margin: 50px auto;
+	line-height: 50vh;
+	height: 50vh;
+}
+
+.outer .result-not-found {
+	text-align: center;
+}
+
+.sear-star-title {
+	font-size: 1.2rem;
+	padding: 10px 0;
+	text-align: left;
+	margin: auto;
+	margin-top: 50px;
+	color: #FFA500
+}
+
+.star-li {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-item: space-around;
+}
 </style>
 <body>
 	
    <c:import url="../common/gnb.jsp" />
 
 	<div class="outer">
-	<c:if test="${actList eq null}">
-		<div>검색 결과가 없습니다.</div>
-	</c:if>
+		<div class="show-keyword">
+			💬<span>"${keyword}"</span>에 대한 검색 결과 (${ (fn:length(starList)) +  (fn:length(actList))} 건)
+		</div>
    
-	<c:if test="${ starList ne null }">
-		<ul>
-			<c:forEach items="${ starList }" var="val">
-				<li>
-					<div>
+   	<!-- 검색 결과 1개 이상 존재 -->
+	<c:if test="${fn:length(starList) > 0 }">
+		<div class="sear-star-title">스타의 작업실 방문하기</div>
+		<div class="division"></div>
+		<ul class="star-ul">
+			<c:forEach items="${ starList }" var="star">
+				<li class="star-li">
+					<input type="hidden" name="memId" value="${ star.memId }">
+					<input type="hidden" name="memNo" value="${ star.memNo }">
+					<c:if test="${fn:length(starImgList) > 0 }">
 						<c:forEach var="i" items="${ starImgList }">
-					         <c:if test="${ starImgList.imgRefcode eq val.memNo}">
-						          <img src="${ pageContext.servletContext.contextPath }/resources/images/myPage/${ val.image.imgName }">
-					         </c:if>
-					    	<c:if test="${ val.image.imgName eq null }">
-								<img src="${ pageContext.servletContext.contextPath }/resources/images/myPage/${ val.image.imgName }">
-							</c:if>
+					         <c:choose>
+					         	<c:when test="${ i.imgRefno eq star.memNo }">
+						        	<div class="star-img-frame">
+						        		<img src="${ pageContext.servletContext.contextPath }/resources/piUploadFiles/${ i.imgName }">
+					         		</div>
+					         	</c:when>
+					    		<c:otherwise>
+					    			<div class="star-img-frame">
+										<img src="${ pageContext.servletContext.contextPath }/resources/images/myPage/basic.png">
+									</div>
+								</c:otherwise>
+							</c:choose>
 					    </c:forEach>
-					</div>
-					<span>${ val.memNickname }</span>
+					</c:if>
+					<span>${ star.memNickname }</span>
 				</li>	
 			</c:forEach>
 		</ul>
 	</c:if>
 	
-	<c:if test="${actList ne null}">
+	<!-- 검색 결과 1개 이상 존재할  -->
+	<c:if test="${fn:length(actList) > 0}">
+		
 		<div class="listMain" style="font-size: 20px; font-weight: bold;">
-			<span style="color: orange;">별</span>난취<span style="color: orange;">미</span> 리스트
+			<span style="color: orange;">활동 바로가기</span>
 		</div>
-	
-		<br>
-	   
-	   <table>
-			<tr>
-				<th style="background-color: #eeeeee;" width="490px;"></th>	
-				<th style="background-color: orange;" width="300px;"></th>
-				<th style="background-color: #eeeeee;" width="490px;"></th>
-			</tr>
-		</table>
+	   	<div class="division"></div>
 	
 		<div id="searchArea" align="right">
 		   <select id="searchCondition" name="searchCondition">
@@ -128,7 +248,7 @@ body {
 					<c:if test="${status.index mod 5 eq 0}"> <!--  한 줄에 5개 리스트 생성 -->
 		    			<li class="list-item item1" onclick="location.href='activityDetail.ac?acId=${val.actNo}'">
 		      				<div class="img-frame">
-								<img class="img" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ val.image.imgName }" alt="${ val.actTitle }" width="210px;">
+								<img class="img-frame-con" src="${ pageContext.servletContext.contextPath }/resources/auploadFiles/${ val.image.imgName }" alt="${ val.actTitle }" width="210px;">
 							</div> 
 							<span>${val.memId}</span>
 							<div class="list-cate">[
@@ -150,50 +270,73 @@ body {
 	 			</c:if>
 			</div>
 	  	</c:forEach>
-	</c:if>
-	<br><br>
 	
-	<!-- 페이징 처리 -->
-	   <div id="paging" align="center">
-	      <table>
-	         <tr height="20" id="buttonTab">
-	            <td>
-					<!-- [이전] -->
-					<c:if test="${ pi.currentPage <= 1 }">[이전] &nbsp;</c:if>
-					<c:if test="${ pi.currentPage > 1 }">
-					   <c:url var="before" value="alist.ac">
-					      <c:param name="page" value="${ pi.currentPage - 1 }" />
-					   </c:url>
-					   <a href="${ before }">[이전]</a> &nbsp;
-					</c:if> 
-					<!-- 페이지 -->
-					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<c:if test="${ p eq pi.currentPage }">
-		                	<font color="red" size="4"><b>[${ p }]</b></font>
-		                </c:if>
-		                
-						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="alist.ac">
-							   <c:param name="page" value="${ p }" />
-							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
-						</c:if>
-					</c:forEach>
-					<!-- [다음] -->
-					<c:if test="${ pi.currentPage >= pi.maxPage }">[다음]</c:if>
-					<c:if test="${ pi.currentPage < pi.maxPage }">
-	                  <c:url var="after" value="alist.ac">
-	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
-	                  </c:url>
-	                  <a href="${ after }">[다음]</a>
-	               </c:if>
-	            </td>
-	         </tr>
-	      </table>
-	   </div>
+		<br><br>
+	
+		<!-- 페이징 처리 -->
+		   <div id="paging" align="center">
+		      <table>
+		         <tr height="20" id="buttonTab">
+		            <td>
+						<!-- [이전] -->
+						<c:if test="${ pi.currentPage <= 1 }">[이전] &nbsp;</c:if>
+						<c:if test="${ pi.currentPage > 1 }">
+						   <c:url var="before" value="alist.ac">
+						      <c:param name="page" value="${ pi.currentPage - 1 }" />
+						   </c:url>
+						   <a href="${ before }">[이전]</a> &nbsp;
+						</c:if> 
+						<!-- 페이지 -->
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:if test="${ p eq pi.currentPage }">
+			                	<font color="red" size="4"><b>[${ p }]</b></font>
+			                </c:if>
+			                
+							<c:if test="${ p ne pi.currentPage }">
+								<c:url var="pagination" value="alist.ac">
+								   <c:param name="page" value="${ p }" />
+								</c:url>
+								<a href="${ pagination }">${ p }</a> &nbsp;
+							</c:if>
+						</c:forEach>
+						<!-- [다음] -->
+						<c:if test="${ pi.currentPage >= pi.maxPage }">[다음]</c:if>
+						<c:if test="${ pi.currentPage < pi.maxPage }">
+		                  <c:url var="after" value="alist.ac">
+		                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+		                  </c:url>
+		                  <a href="${ after }">[다음]</a>
+		               </c:if>
+		            </td>
+		         </tr>
+		      </table>
+		   </div>
+	   </c:if>
+	   
+		<!-- 검색 결과 1개 이상 존재할  -->
+		<c:if test="${(fn:length(actList) <= 0) && (fn:length(starList) <= 0)}">
+			<div class="result-not-found">검색 결과가 없습니다.</div>
+		</c:if>
 	</div>
 	
 	<c:import url="../common/footer.jsp" />
-	
+	<script>
+		$('.star-ul').on('click','li', function(event){
+			console.log(event.currentTarget);
+			event.preventDefault();
+			
+			let memId = event.currentTarget.childNodes[1].value;
+			let memNo = event.currentTarget.childNodes[3].value;
+			
+			const loginUser = '${ sessionScope.loginUser }';
+			console.log(loginUser);
+			if(loginUser !== '') {
+				location.href='acWorkRoomMain.wr?memId='+ memId +'&memNo=' + memNo;
+			} else {
+				alert('로그인 후에 이용할 수 있습니다.');
+				location.href='loginView.me';
+			}
+		});
+	</script>
 </body>
 </html>

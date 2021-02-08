@@ -1,6 +1,9 @@
 package com.kh.byulmee.admin.model.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -14,6 +17,7 @@ import com.kh.byulmee.board.model.vo.Notice;
 import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.image.model.vo.Image;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.order.model.vo.Order;
 
 @Repository("abDAO")
 public class AdminDAO {
@@ -92,5 +96,43 @@ return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", id , row
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectSerachMemberList", searchId, rowBounds);
 	}
+
+	public int getMemberCount(SqlSessionTemplate sqlSession) {
 	
+		return sqlSession.selectOne("adminMapper.getMemberCount");
+	}
+
+	public int getMemberTotal(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.getMemberTotal");
+	}
+
+	public int getActivityCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.getActivityCount");
+	}
+
+	public int getProductCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.getProductCount");
+	}
+
+	public int getOdersCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.getOdersCount");
+	}
+
+	public List<Map<String, String>> getMonthlySales(SqlSessionTemplate sqlSession, String year) {
+		Map <String, Object> params = new HashMap<String, Object>();
+		params.put("start", year + "-01-01");
+		params.put("end", year + "-12-31");
+		
+		System.out.println(params);
+		List<Map<String, String>> result = sqlSession.selectList("adminMapper.getMonthlySales", params);
+		return result;
+	}
+
 }
+
+
+
+
+
+
+	

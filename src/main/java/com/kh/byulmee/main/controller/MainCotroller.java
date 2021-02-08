@@ -82,7 +82,7 @@ public class MainCotroller {
 		
 		if(starList != null && actList != null) {
 			mv.addObject("test", "테스트합니다.");
-			mv.addObject("keywords", keywords);
+			mv.addObject("keyword", keyword);
 			mv.addObject("starListPi", starListPi);
 			mv.addObject("actListPi", actListPi);
 			mv.addObject("starList", starList);

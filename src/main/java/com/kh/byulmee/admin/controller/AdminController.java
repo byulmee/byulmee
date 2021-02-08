@@ -26,6 +26,7 @@ import com.kh.byulmee.board.model.vo.PageInfo;
 import com.kh.byulmee.board.model.vo.Pagination;
 import com.kh.byulmee.member.model.exception.MemberException;
 import com.kh.byulmee.member.model.vo.Member;
+import com.kh.byulmee.order.model.vo.Order;
 
 @Controller
 public class AdminController {
@@ -33,9 +34,35 @@ public class AdminController {
 	@Autowired
 	private AdminService abService;
 
+//	@RequestMapping("adminMain.ad")
+//	public String adminMain() {
+//		
+//		return "admin_main";
+//	
+//	}
 	@RequestMapping("adminMain.ad")
-	public String adminMain() {
-		return "admin_main";
+	public ModelAndView adminMainList( ModelAndView mv,HttpServletRequest request) {
+		int mResult = abService.getMemberCount();
+		int tmResult = abService.getMemberTotal();
+		int aoResult = abService.getActivityCount();
+		int poResult = abService.getProductCount();
+		int oResult = abService.getOdersCount();
+		
+		if (mResult > 0 && tmResult > 0 && aoResult > 0 && poResult > 0 && oResult > 0 ) {
+			mv.addObject("mResult", mResult);
+			mv.addObject("tmResult", tmResult);
+			mv.addObject("aoResult", aoResult);
+			mv.addObject("poResult", poResult);
+			mv.addObject("oResult", oResult);
+			mv.setViewName("admin_main");
+			
+			
+		}
+		else {
+			throw new MemberException("매출조회에 실패하였습니다.");
+		}
+		
+		return mv;
 	
 	}
 	

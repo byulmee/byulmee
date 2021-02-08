@@ -154,7 +154,7 @@
 	  		or <foreach item="arr" collection="array" open="(" separator="or" close=")">
 		  			mem_nickname like '%' || #{arr} || '%' 
 		  		</foreach>
-	  		and mem_status='Y'
+	  		and mem_status='Y' and mem_level = 1
 	</select>
 	
 	<select id="getStarProfileList" resultMap="imageResultSet">

@@ -1,13 +1,18 @@
 package com.kh.byulmee.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.byulmee.admin.service.AdminService;
+import com.kh.byulmee.order.model.vo.Order;
 
 @RestController
 public class AdminApiController {
@@ -46,5 +51,11 @@ public class AdminApiController {
         param.put("open", open);
 
         this.abService.updateAdminBannerOpenById(param);
+    }
+    
+    @GetMapping("/api/admin/orders/monthly/sales")
+    @ResponseBody
+    public List<Map<String,String>> getMonthlySales(@RequestParam("year") String year) {
+    	return this.abService.getMonthlySales(year);
     }
 }

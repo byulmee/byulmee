@@ -47,19 +47,19 @@
     margin: auto;
 }
 
-#menu-list{
+#menu- {
     font-size: 0.8rem;
     padding-top: 5px;
 }
 
-#menu-list li{
+#menu-list li {
     font-size: 0.7rem;
     display: inline-block;
     vertical-align: center;
     padding: 0 0.1rem;
 }
 
-#searchBox{
+#searchBox {
     width: 60vw;
     max-width: 580px;
     padding: 0.4rem;
@@ -320,14 +320,6 @@ hr{
 		height: 1.2rem;
 	}
 	
-    /* #gnb-cate li{
-        width: 20%;
-    }
-    #gnb-cate li>i{
-        font-size: 1.8rem;
-    }
-    #gnb-cate li>span{
-        font-size: 0.6rem;
     } */
     #searchBar {
         width: 85%;
@@ -336,5 +328,4 @@ hr{
     #ban img {
 		width: 100%;
 	}
-
 }

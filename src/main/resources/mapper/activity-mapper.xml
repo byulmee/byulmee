@@ -107,11 +107,11 @@
 	</select>
 	
 
- <select id="getUserListCount" resultType="_int">
- 	select count(*)
-  	from activity
-  	where mem_id = #{memId} and act_status = 'Y'
- </select>
+	 <select id="getUserListCount" resultType="_int">
+	 	select count(*)
+	  	from activity
+	  	where mem_id = #{memId} and act_status = 'Y'
+	 </select>
   
   <select id="getListCount" resultType="_int">
   	select count(*)
@@ -193,7 +193,7 @@
 	  			and act_status='Y'
 	</select>
 	
-  <select id="actSearchLsit" resultMap="activityListResultSet">
+  	<select id="actSearchLsit" resultMap="activityListResultSet">
 	  	select a.act_no, a.mem_id, a.act_title, a.act_price, a.act_rating, a.act_review_cnt, m.mem_no, m.mem_nickname, i.img_no, i.img_name, i.img_level, i.img_status, i.img_refcode, i.img_refno
 		from activity a 
 		    inner join image i on i.img_refno = a.act_no
