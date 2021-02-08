@@ -2,18 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reviewMapper">
 
-	<resultMap type="Review" id="reviewResultSet">
-		<id property="revNo" column="REV_NO"/>
-		<result property="memId" column="MEM_ID"/>
-		<result property="revRating" column="REV_RATING"/>
-		<result property="revDate" column="REV_DATE"/>
-		<result property="revContent" column="REV_CONTENT"/>
-		<result property="revStatus" column="REV_STATUS"/>
-		<result property="revRefcode" column="REV_REFCODE"/>
-		<result property="revRefno" column="REV_REFNO"/>
-		<collection property="member" resultMap="memberResultSet"></collection>
-		<collection property="img" resultMap="imageResultSet"></collection>
-	</resultMap>
+   <resultMap type="Review" id="reviewResultSet">
+      <id property="revNo" column="REV_NO"/>
+      <result property="memId" column="MEM_ID"/>
+      <result property="revRating" column="REV_RATING"/>
+      <result property="revDate" column="REV_DATE"/>
+      <result property="revContent" column="REV_CONTENT"/>
+      <result property="revStatus" column="REV_STATUS"/>
+      <result property="revRefcode" column="REV_REFCODE"/>
+      <result property="revRefno" column="REV_REFNO"/>
+      <collection property="member" resultMap="memberResultSet"></collection>
+      <collection property="img" resultMap="imageResultSet"></collection>
+      <collection property="image" resultMap="imageListResultSet"></collection>
+   </resultMap>
+	
 	
 	<resultMap type="Member" id="memberResultSet">
 	  	<id property="memNo" column="mem_no"/>
@@ -44,6 +46,17 @@
 		<result property="imgRefno" column="IMG_REFNO"/>
 	</resultMap>
 
+	 <resultMap type="Image" id="imageListResultSet">
+      <id property="imgNo" column="IMG_NO"/>
+      <result property="imgOrigin" column="IMG_ORIGIN"/>
+      <result property="imgName" column="IMG_NAME"/>
+      <result property="imgPath" column="IMG_PATH"/>
+      <result property="imgDate" column="IMG_DATE"/>
+      <result property="imgLevel" column="IMG_LEVEL"/>
+      <result property="imgStatus" column="IMG_STATUS"/>
+      <result property="imgRefcode" column="IMG_REFCODE"/>
+      <result property="imgRefno" column="IMG_REFNO"/>
+   </resultMap>
 	<select id="selectReviewList" resultMap="reviewResultSet">
 		select *
 		from (
@@ -51,7 +64,7 @@
 		    from review r
 		    	left outer join member m on r.mem_id = m.mem_id
 		    	left outer join image i on i.img_refno = r.rev_no
-		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y' and i.img_refcode = 3
+		    where rev_refcode = 0 and rev_refno = #{acId} and rev_status = 'Y' and i.img_refcode = 3 and i.img_level=0
 		    order by rev_no desc
 		    )
 		<![CDATA[where rownum <= 6]]>
@@ -76,6 +89,7 @@
 		    left outer join member m on r.mem_id = m.mem_id
 			left outer join image i on i.img_refno = r.rev_no
 		where rev_no = #{revNo} and r.rev_refcode = 0 and i.img_refcode=3
+		order by i.img_level
 	</select>
 	
 	<select id="salesProductReviewDetail" resultMap="reviewResultSet">

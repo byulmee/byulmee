@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public int getListCount() {
-		return pDAO.getListCount(sqlSession);
+	public int getListCount(String memId) {
+		return pDAO.getListCount(sqlSession, memId);
 	}
 
 	@Override

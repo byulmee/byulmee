@@ -51,12 +51,18 @@
                 <li class="cate liv" onclick="location.href='alist.ac?actCategory=1'">
                     <i class="fas fa-chair"></i><br><span class="cate-name">리빙</span>
                 </li>
-                <li class="cate bea" onclick="location.href='alist.ac?actCategory=2'">
+                <li class="cate bea" onclick="">
+                    <i class="fas fa-spray-can"></i><br><span class="cate-name">건강/미용</span>
+                </li>
+                <li class="cate hel" onclick="">
+                    <i class="fas fa-heartbeat"></i><br><span class="cate-name">힐링</span>
+                </li>
+                <!-- <li class="cate bea" onclick="location.href='alist.ac?actCategory=2'">
                     <i class="fas fa-spray-can"></i><br><span class="cate-name">건강/미용</span>
                 </li>
                 <li class="cate hel" onclick="location.href='alist.ac?actCategory=3'">
                     <i class="fas fa-heartbeat"></i><br><span class="cate-name">힐링</span>
-                </li>
+                </li> -->
                 <li class="cate fod" onclick="location.href='alist.ac?actCategory=4'">
                     <i class="fas fa-utensils"></i><br><span class="cate-name">푸드</span>
                 </li>

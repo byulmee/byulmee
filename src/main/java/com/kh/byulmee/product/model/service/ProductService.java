@@ -11,7 +11,7 @@ public interface ProductService {
 
 	int insertProduct(Product b);
 
-	int getListCount();
+	int getListCount(String memId);
 
 	ArrayList<Product> selectList(PageInfo pi, String memId);
 

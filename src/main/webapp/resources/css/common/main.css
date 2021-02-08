@@ -84,8 +84,9 @@
 }
 
 #searchBar::placeholder{
-    color: #DBDBDB;
-    height: 1rem;
+    color: #A0A0A0;
+    height: 1.5rem;
+    font-weight: bold;
 }
 
 #searchBox>i{
@@ -188,9 +189,11 @@ hr{
         width: 80vw;
         margin:  55px auto;
         max-width: 980px;
+        text-align: center;
     }
 
     .list{
+    	display: inline-block;
         white-space: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
@@ -199,7 +202,8 @@ hr{
     .list-item {
         width: 170px;
         display: inline-block;
-        margin-right: 1.2rem;
+        margin-right: 0.6rem;
+        margin-left: 0.6rem;
     }
 	
     .item5 {

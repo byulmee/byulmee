@@ -1282,7 +1282,8 @@ hr {
 							$revNo = $('<td id="reviewNo">').text(data[i].revNo);
 							$revContent = $('<td colspan="5" class="reviewDetail_Main">').text(data[i].revContent);
 							$expand = $('<td class="expandButton" text-align="right">').text("+내용보기");
-							
+							console.log('data[i]');
+							console.log(data[i]);
 							if(data[i].image != "" ){
 								$div = $('<td rowspan="2" class="reviewImageArea_Main">').html("<img class='reviewThumb' src='resources\\riUploadFiles\\" + data[i].image[0].imgName + "'>");
 							} else{
@@ -1342,6 +1343,7 @@ hr {
 				url: 'salesReviewDetail.ac',
 				data: {revNo:revNo},
 				success: function(data){
+					
 					$review = $('.review_modal tbody');
 					
 					var $tr;
@@ -1354,42 +1356,50 @@ hr {
 					var $revDate;
 					var $revRating;
 					var $revContent;
-					
+					console.log(data.member);
 					$tr = $('<tr height="30px" class="trMdReview">');
 					$tr2 = $('<tr class="trMdReviewContent">');
 					$tr3 = $('<tr class="reviewMdImageArea">');
-					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data[0].member.memNickname);
-					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data[0].revDate);
-					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data[0].revContent);
+					$memId = $('<td id="reviewMdWriter">').text("작성자 : " + data.member.memNickname);
+					$revDate = $('<td id="reviewMdDate">').text("작성일 : " + data.revDate);
+					$revContent = $('<td colspan="3">').html("<pre class='reviewMdDetail_Main'>" + data.revContent);
 					
-					if(data.image != ""){
-						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[0].imgName + "'>");
-						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[1].imgName + "'>");
-						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data[0].image[2].imgName + "'>");
-					} else{
-						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
-						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+					if(data.image[0] == null && data.image[1] == null && data.image[2] == null) {
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\white.png'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\white.png'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\white.png'>");
+					} else if(data.image[0] != null && data.image[1] == null && data.image[2] == null){
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[0].imgName + "'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\white.png'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\white.png'>");
+					} else if(data.image[0] != null && data.image[1] != null && data.image[2] == null) {
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[0].imgName + "'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[1].imgName + "'>");
 						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\images\\detail\\x.png'>");
+					} else if(data.image[0] != null && data.image[1] != null && data.image[2] != null) {
+						$div1 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[0].imgName + "'>");
+						$div2 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[1].imgName + "'>");
+						$div3 = $('<td class="reviewMdImageArea_Main">').html("<img class='reviewMdThumb' src='resources\\riUploadFiles\\" + data.image[2].imgName + "'>");
 					}
 					
 					
-					if(data[0].revRating == 0.5){
+					if(data.revRating == 0.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star1.png'>");
-					} else if(data[0].revRating == 1){
+					} else if(data.revRating == 1){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star2.png'>");
-					} else if(data[0].revRating == 1.5){
+					} else if(data.revRating == 1.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star3.png'>");
-					} else if(data[0].revRating == 2){
+					} else if(data.revRating == 2){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star4.png'>");
-					} else if(data[0].revRating == 2.5){
+					} else if(data.revRating == 2.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star5.png'>");
-					} else if(data[0].revRating == 3){
+					} else if(data.revRating == 3){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star6.png'>");
-					} else if(data[0].revRating == 3.5){
+					} else if(data.revRating == 3.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star7.png'>");
-					} else if(data[0].revRating == 4){
+					} else if(data.revRating == 4){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star8.png'>");
-					} else if(data[0].revRating == 4.5){
+					} else if(data.revRating == 4.5){
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star9.png'>");
 					} else {
 						$revRating = $('<td id="reviewMdStar">').html("별점 : " + "<img class='rating' src='resources\\images\\rating\\star10.png'>");

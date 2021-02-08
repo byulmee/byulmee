@@ -45,11 +45,16 @@
         <div id="gnb-cate" class="typeB">
             <ul id="cate">
                 <li class="cate act" onclick="location.href='plist.pd?proCategory=0'">액티비티</li>
-                <li class="cate liv" onclick="location.href='plist.pd?proCategory=1'">리빙</li>
+                <li class="cate liv" onclick="">리빙</li>
+                <li class="cate bea" onclick="">건강/미용</li>
+                <li class="cate hel" onclick="">힐링</li>
+                <li class="cate fod" onclick="">푸드</li>
+                <li class="cate cur" onclick="">커리어</li>
+               <!-- <li class="cate liv" onclick="location.href='plist.pd?proCategory=1'">리빙</li>
                 <li class="cate bea" onclick="location.href='plist.pd?proCategory=2'">건강/미용</li>
                 <li class="cate hel" onclick="location.href='plist.pd?proCategory=3'">힐링</li>
                 <li class="cate fod" onclick="location.href='plist.pd?proCategory=4'">푸드</li>
-                <li class="cate cur" onclick="location.href='plist.pd?proCategory=5'">커리어</li>
+                <li class="cate cur" onclick="location.href='plist.pd?proCategory=5'">커리어</li> -->
             </ul>
         </div>
     </nav>

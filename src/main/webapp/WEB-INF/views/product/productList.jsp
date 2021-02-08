@@ -73,7 +73,7 @@ body {
 
    <div class="outer">
       <div class="listMain" style="font-size: 20px; font-weight: bold;">
-         <span style="color: orange;">별</span>난취<span style="color: orange;">미</span> 리스트
+         <span style="color: black;">별미마켓</span> 리스트
       </div>
       <br>
       <table>

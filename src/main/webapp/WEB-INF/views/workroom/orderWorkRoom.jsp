@@ -323,10 +323,10 @@
 								</c:choose>
 								<c:choose>
 									 <c:when test="${ od.ordPayWay eq 0 }">
-									 	<td>카드</td>
+									 	<td>페이</td>
 									 </c:when>
 									 <c:when test="${ od.ordPayWay eq 1 }">
-									 	<td>페이</td>
+									 	<td>카드</td>
 									 </c:when>
 								</c:choose>
 								<c:choose>

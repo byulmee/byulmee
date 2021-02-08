@@ -46,8 +46,10 @@
             <ul id="cate">
                	<li class="cate act" onclick="location.href='alist.ac?actCategory=0'">액티비티</li>
                 <li class="cate liv" onclick="location.href='alist.ac?actCategory=1'">리빙</li>
-                <li class="cate bea" onclick="location.href='alist.ac?actCategory=2'">건강/미용</li>
-                <li class="cate hel" onclick="location.href='alist.ac?actCategory=3'">힐링</li>
+                <li class="cate bea" onclick="">건강/미용</li>
+                <!-- <li class="cate bea" onclick="location.href='alist.ac?actCategory=2'">건강/미용</li> -->
+                <li class="cate hel" onclick="">힐링</li>
+                <!-- <li class="cate hel" onclick="location.href='alist.ac?actCategory=3'">힐링</li> -->
                 <li class="cate fod" onclick="location.href='alist.ac?actCategory=4'">푸드</li>
                 <li class="cate cur" onclick="location.href='alist.ac?actCategory=5'">커리어</li>
             </ul>

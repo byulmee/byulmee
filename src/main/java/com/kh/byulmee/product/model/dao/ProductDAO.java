@@ -20,8 +20,8 @@ public class ProductDAO {
 		return proNo;
 	}
 
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("productMapper.getListCount");
+	public int getListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("productMapper.getListCount", memId);
 	}
 
 	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {

@@ -567,7 +567,7 @@ public class WorkRoomController {
 			currentPage = page;
 		}
 		int code = 2;
-		int listCount = pService.getListCount();
+		int listCount = pService.getListCount(memId);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
 		
