@@ -52,6 +52,30 @@
   		<result property="banBgc" column="BAN_BGC"/>
   	</resultMap>
   	
+ <resultMap type="Order" id="orderResultSet">
+ 	<id property="ordNo" column="ORD_NO"/>
+  	<result property="memId" column="MEM_ID"/>
+  	<result property="ordCount" column="ORD_COUNT"/>
+  	<result property="ordDate" column="ORD_DATE"/>
+  	<result property="ordName" column="ORD_NAME"/>
+  	<result property="ordPhone" column="ORD_PHONE"/>
+  	<result property="ordPostcode" column="ORD_POSTCODE"/>
+  	<result property="ordBasicaddr" column="ORD_BASICADDR"/>
+  	<result property="ordDetailaddr" column="ORD_DETAILADDR"/>
+  	<result property="ordRequest" column="ORD_REQUEST"/>
+  	<result property="ordPayno" column="ORD_PAYNO"/>
+  	<result property="ordPay" column="ORD_PAY"/>
+  	<result property="ordPayWay" column="ORD_PAY_WAY"/>
+  	<result property="ordReview" column="ORD_REVIEW"/>
+  	<result property="ordStatus" column="ORD_STATUS"/>
+  	<result property="ordRefcode" column="ORD_REFCODE"/>
+  	<result property="ordRefno" column="ORD_REFNO"/>
+  	<result property="ordStarcode" column="ORD_STARCODE"/>
+  	<result property="ordParcelcode" column="ORD_PARCELCODE"/>
+  	<result property="ordRePay" column="ORD_REPAY"/>
+ </resultMap>
+	
+ 
   	<!-- 배너 -->
   	<insert id="insertBanner">
   		insert into banner
@@ -145,4 +169,56 @@
 		order by mem_id desc
 	</select>
 	
+	<!-- 관리자 메인 -->
+	 <select id="getMemberCount" resultType="_int">
+	 	select count(*)
+	 	from member
+	 	where TO_CHAR(mem_date,'YYYYMMDD') >= TO_CHAR(SYSDATE,'YYYYMMDD')
+	 </select>
+	 
+	 <select id="getMemberTotal" resultType="_int">
+	 	select count(*)
+	 	from member
+	 </select>
+	 
+	 <select id="getActivityCount" resultType="_int">
+	 	select sum(ord_pay)
+	 	from orders
+	 	where TO_CHAR(ord_date,'YYYYMMDD') >= TO_CHAR(SYSDATE,'YYYYMMDD')
+	 	and ord_refcode = 0
+	 </select>
+	 
+	 <select id="getProductCount" resultType="_int">
+	 	select sum(ord_pay)
+	 	from orders
+	 	where TO_CHAR(ord_date,'YYYYMMDD') >= TO_CHAR(SYSDATE,'YYYYMMDD')
+	 	and ord_refcode = 1
+	 </select>
+	
+	 <select id="getOdersCount" resultType="_int">
+	 	select sum(ord_pay)
+	 	from orders
+	 	where TO_CHAR(ord_date,'YYYYMMDD') >= TO_CHAR(SYSDATE,'YYYYMMDD')
+	 </select>
+
+	 <select id="getMonthlySales" parameterType="hashMap" resultType="map">			
+		<![CDATA[
+		select to_char(b.dt, 'YYYY-MM') as month, nvl(sum(a.sales), 0) as sales
+		from (SELECT TO_CHAR(ord_date, 'YYYY-MM-DD') AS month, nvl(sum(ord_pay), 0) as sales
+		   FROM orders
+		  WHERE to_char(ord_date, 'YYYY-MM-DD') BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD')
+		                     AND TO_DATE(#{end}, 'YYYY-MM-DD') 
+		  GROUP BY to_char(ord_date, 'YYYY-MM-DD')
+		) a,
+		(SELECT TO_DATE(#{start},'YYYY-MM-DD') + LEVEL - 1 AS dt FROM dual 
+		 CONNECT BY LEVEL <= (TO_DATE(#{end},'YYYY-MM-DD')
+		                    - TO_DATE(#{start},'YYYY-MM-DD') + 1)
+		) b
+		where b.dt = a.month(+)
+		group by to_char(b.dt, 'YYYY-MM')
+		order by to_char(b.dt, 'YYYY-MM')
+		]]>
+	 </select>
+	 
+
 </mapper>
