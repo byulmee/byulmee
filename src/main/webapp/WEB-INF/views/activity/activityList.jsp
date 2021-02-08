@@ -61,7 +61,7 @@ div {
 }
 
 .outer {
-   max-width: 1050px;
+   max-width: 900px;
    min-width: 750px;
    width: 80%;
    margin: 0 auto;
@@ -155,7 +155,7 @@ div {
                      </c:if>
                   </c:forEach>          
                   </div> 
-                  <span>[${val.actReviewCnt }] ${val.memId }</span>
+                  <span>${val.memId }</span>
                   <div class="list-cate">[<c:choose>
                      <c:when test="${ val.actCategory eq '0' }">액티비티</c:when>   
                      <c:when test="${ val.actCategory eq '1' }">리빙</c:when>

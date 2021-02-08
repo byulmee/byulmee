@@ -296,7 +296,7 @@
 	#phone-error {
 		position: absolute;
 		top: 351px;
-		left: 788px;
+		left: 705px;
 	}
 	input.error {
 		border: 1px solid #FF6833;
@@ -459,7 +459,7 @@
 						</td>
 						<td class="colContentTd">
 							<input type="text" name="memPhone" id="phone" class="input" value="<c:out value="${ loginUser.memPhone }"/>">
-							<button class="button" onclick="">인증</button>
+							<!-- <button class="button" onclick="">인증</button> -->
 						</td>
 					</tr>
 					<tr>
