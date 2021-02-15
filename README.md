@@ -30,7 +30,7 @@ __Database:__ Oracle11g
 __Development Tool:__ Eclipse 4.16.0, sqlDeveloper version 20.2.0.175  
 __Development Language:__ JAVA 1.8, HTML5, CSS3, JavaScript, jQuery, SQL, JSP, Servlet  
 __Framework:__ Spring  
-__Collaboration Tool:__ [git](https://github.com/byulmee/byulmee), [slack](java-spring-2020.slack.com), erd-cloud, figma, google docs  
+__Collaboration Tool:__ [git](https://github.com/byulmee/byulmee), slack, erd-cloud, figma, google docs  
 __Open API:__
 
 <br />
