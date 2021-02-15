@@ -31,7 +31,7 @@ __Development Tool:__ Eclipse 4.16.0, sqlDeveloper version 20.2.0.175
 __Development Language:__ JAVA 1.8, HTML5, CSS3, JavaScript, jQuery, SQL, JSP, Servlet  
 __Framework:__ Spring  
 __Collaboration Tool:__ [git](https://github.com/byulmee/byulmee), slack, erd-cloud, figma, google docs  
-__Open API:__
+__Open API:__ Kakao Map, kakao login, Daum Postcode, Naver SENS, NAVER Maps, Swiper, Google Charts, Import 결제
 
 <br />
 
