@@ -43,3 +43,8 @@ __Open API:__ Kakao Map, kakao login, Daum Postcode, Naver SENS, NAVER Maps, Swi
 12/04 - 12/08|DB 설계 [erd 보기](https://www.erdcloud.com/d/z5y2f8HTtvYjmF8Yx)
 12/09 - 12/20|화면 구현
 12/21 - 12/--|기능 구현
+
+<br />
+
+### 실행용 WAR 및 sql 파일
+[다운로드 링크](https://www.notion.so/WAR-DB-sql-23d747f5a8e94ce092ca384d34ddbff2)
