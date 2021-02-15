@@ -39,7 +39,7 @@ __Open API:__
 일정 | 작업 내용
 ---|---
 11/23 - 11/26|서비스 기획
-11/27 - 12/03|UI 설계 [설계 보기](https://www.figma.com/file/HcppgGZXvYijJi7rsYqxzs/%EB%B3%84%EB%82%9C%EC%B7%A8%EB%AF%B8?node-id=0%)
-12/04 - 12/08|DB 설계 [erd 보기](https://www.erdcloud.com/d/Lz2X3tQZPNPAnG7Jd)
+11/27 - 12/03|UI 설계
+12/04 - 12/08|DB 설계 [erd 보기](https://www.erdcloud.com/d/z5y2f8HTtvYjmF8Yx)
 12/09 - 12/20|화면 구현
 12/21 - 12/--|기능 구현
