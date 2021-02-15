@@ -46,5 +46,5 @@ __Open API:__ Kakao Map, kakao login, Daum Postcode, Naver SENS, NAVER Maps, Swi
 
 <br />
 
-### 실행용 WAR 및 sql 파일
-[다운로드 링크](https://www.notion.so/WAR-DB-sql-23d747f5a8e94ce092ca384d34ddbff2)
+### 실행용 프로젝트 파일
+[다운로드 링크](https://www.notion.so/23d747f5a8e94ce092ca384d34ddbff2)
